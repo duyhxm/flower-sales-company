@@ -1,0 +1,12 @@
+E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DTO.deps.json
+E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DTO.dll
+E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DTO.pdb
+E:\01 Projects\flower-sales-company\DTO\obj\Debug\net8.0\DTO.GeneratedMSBuildEditorConfig.editorconfig
+E:\01 Projects\flower-sales-company\DTO\obj\Debug\net8.0\DTO.AssemblyInfoInputs.cache
+E:\01 Projects\flower-sales-company\DTO\obj\Debug\net8.0\DTO.AssemblyInfo.cs
+E:\01 Projects\flower-sales-company\DTO\obj\Debug\net8.0\DTO.csproj.CoreCompileInputs.cache
+E:\01 Projects\flower-sales-company\DTO\obj\Debug\net8.0\DTO.sourcelink.json
+E:\01 Projects\flower-sales-company\DTO\obj\Debug\net8.0\DTO.dll
+E:\01 Projects\flower-sales-company\DTO\obj\Debug\net8.0\refint\DTO.dll
+E:\01 Projects\flower-sales-company\DTO\obj\Debug\net8.0\DTO.pdb
+E:\01 Projects\flower-sales-company\DTO\obj\Debug\net8.0\ref\DTO.dll

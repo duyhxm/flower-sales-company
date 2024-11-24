@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login_Form));
             lbl_username = new Label();
             lbl_password = new Label();
             btn_login = new Button();
@@ -37,62 +38,41 @@
             // 
             // lbl_username
             // 
-            lbl_username.AutoSize = true;
-            lbl_username.Font = new Font("Arial", 12F);
+            resources.ApplyResources(lbl_username, "lbl_username");
             lbl_username.ForeColor = Color.Black;
-            lbl_username.Location = new Point(96, 171);
             lbl_username.Name = "lbl_username";
-            lbl_username.Size = new Size(122, 27);
-            lbl_username.TabIndex = 0;
-            lbl_username.Text = "Username";
             // 
             // lbl_password
             // 
-            lbl_password.AutoSize = true;
-            lbl_password.Font = new Font("Arial", 12F);
-            lbl_password.Location = new Point(96, 226);
+            resources.ApplyResources(lbl_password, "lbl_password");
             lbl_password.Name = "lbl_password";
-            lbl_password.Size = new Size(117, 27);
-            lbl_password.TabIndex = 1;
-            lbl_password.Text = "Password";
             // 
             // btn_login
             // 
-            btn_login.Location = new Point(261, 307);
+            resources.ApplyResources(btn_login, "btn_login");
             btn_login.Name = "btn_login";
-            btn_login.Size = new Size(158, 46);
-            btn_login.TabIndex = 2;
-            btn_login.Text = "Login";
             btn_login.UseVisualStyleBackColor = true;
             // 
             // txtBx_username
             // 
-            txtBx_username.Location = new Point(244, 164);
+            resources.ApplyResources(txtBx_username, "txtBx_username");
             txtBx_username.Name = "txtBx_username";
-            txtBx_username.Size = new Size(339, 40);
-            txtBx_username.TabIndex = 3;
             // 
             // txtBx_password
             // 
-            txtBx_password.Location = new Point(244, 219);
+            resources.ApplyResources(txtBx_password, "txtBx_password");
             txtBx_password.Name = "txtBx_password";
-            txtBx_password.Size = new Size(339, 40);
-            txtBx_password.TabIndex = 4;
             // 
             // Login_Form
             // 
-            AutoScaleDimensions = new SizeF(16F, 32F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(678, 576);
             Controls.Add(txtBx_password);
             Controls.Add(txtBx_username);
             Controls.Add(btn_login);
             Controls.Add(lbl_password);
             Controls.Add(lbl_username);
-            Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Margin = new Padding(4);
             Name = "Login_Form";
-            Text = "Login_Form";
             Load += Login_Form_Load;
             ResumeLayout(false);
             PerformLayout();

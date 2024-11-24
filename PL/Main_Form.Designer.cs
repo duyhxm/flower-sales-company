@@ -32,12 +32,14 @@
             // 
             // Main_Form
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(16F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1602, 576);
+            Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Margin = new Padding(5, 4, 5, 4);
             Name = "Main_Form";
             Text = "Form1";
-            Load += this.Main_Form_Load;
+            Load += Main_Form_Load;
             ResumeLayout(false);
         }
 

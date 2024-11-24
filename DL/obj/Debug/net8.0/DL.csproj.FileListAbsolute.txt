@@ -1,0 +1,15 @@
+E:\01 Projects\flower-sales-company\bin\Debug\net8.0\appsettings.json
+E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.deps.json
+E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.dll
+E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.pdb
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.csproj.AssemblyReference.cache
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.GeneratedMSBuildEditorConfig.editorconfig
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.AssemblyInfoInputs.cache
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.AssemblyInfo.cs
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.csproj.CoreCompileInputs.cache
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.sourcelink.json
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.csproj.Up2Date
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.dll
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\refint\DL.dll
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.pdb
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\ref\DL.dll

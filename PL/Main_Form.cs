@@ -1,3 +1,5 @@
+using BL;
+
 namespace PL
 {
     public partial class Main_Form : Form
@@ -11,6 +13,8 @@ namespace PL
         {
             Login_Form loginForm = new Login_Form();
             loginForm.ShowDialog();
+            Sales_Form salesForm = new Sales_Form();
+            salesForm.ShowDialog();
         }
     }
 
