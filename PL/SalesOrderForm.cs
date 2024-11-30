@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PL
 {
-    public partial class Sales_Form : Form
+    public partial class SalesOrderForm : Form
     {
-        public Sales_Form()
+        public SalesOrderForm()
         {
             InitializeComponent();
         }

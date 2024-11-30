@@ -33,9 +33,7 @@ E:\01 Projects\flower-sales-company\bin\Debug\net8.0-windows\PL.pdb
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0-windows\vi\PL.resources.dll
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.csproj.AssemblyReference.cache
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.Login_Form.resources
-E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.Main_Form.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.Properties.Resources.resources
-E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.Sales_Form.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.Login_Form.vi.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.csproj.GenerateResource.cache
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.GeneratedMSBuildEditorConfig.editorconfig
@@ -50,3 +48,6 @@ E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\refint\PL.dll
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.pdb
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.genruntimeconfig.cache
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\ref\PL.dll
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.InventoryForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesOrderForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreMainForm.resources

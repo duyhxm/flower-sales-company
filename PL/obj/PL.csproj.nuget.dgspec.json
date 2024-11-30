@@ -264,6 +264,24 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "C1.Win.FlexChart": {
+              "target": "Package",
+              "version": "[8.0.20242.688, )"
+            },
+            "ModernUI": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Syncfusion.Tools.Windows": {
+              "target": "Package",
+              "version": "[27.2.4, )"
+            },
+            "WinForms.DataVisualization": {
+              "target": "Package",
+              "version": "[1.9.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

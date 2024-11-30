@@ -2,5 +2,11 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)system.text.json\9.0.0\buildTransitive\net8.0\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\9.0.0\buildTransitive\net8.0\System.Text.Json.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.winforms.designer.sdk\1.6.0\build\netcoreapp3.1\Microsoft.WinForms.Designer.SDK.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.winforms.designer.sdk\1.6.0\build\netcoreapp3.1\Microsoft.WinForms.Designer.SDK.targets')" />
+    <Import Project="$(NuGetPackageRoot)c1.win\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.targets" Condition="Exists('$(NuGetPackageRoot)c1.win\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.targets')" />
+    <Import Project="$(NuGetPackageRoot)c1.win.ribbon\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Ribbon.targets" Condition="Exists('$(NuGetPackageRoot)c1.win.ribbon\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Ribbon.targets')" />
+    <Import Project="$(NuGetPackageRoot)c1.win.input\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Input.targets" Condition="Exists('$(NuGetPackageRoot)c1.win.input\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Input.targets')" />
+    <Import Project="$(NuGetPackageRoot)c1.win.dx\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.DX.targets" Condition="Exists('$(NuGetPackageRoot)c1.win.dx\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.DX.targets')" />
+    <Import Project="$(NuGetPackageRoot)c1.win.flexchart\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.FlexChart.targets" Condition="Exists('$(NuGetPackageRoot)c1.win.flexchart\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.FlexChart.targets')" />
   </ImportGroup>
 </Project>

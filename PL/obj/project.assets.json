@@ -47,6 +47,126 @@
           }
         }
       },
+      "C1.Win/8.0.20242.688": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0-windows7.0/C1.Win.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/C1.Win.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/net8.0-windows7.0/ja/C1.Win.8.resources.dll": {
+            "locale": "ja"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0-windows7.0/C1.Win.targets": {}
+        }
+      },
+      "C1.Win.DX/8.0.20242.688": {
+        "type": "package",
+        "dependencies": {
+          "C1.Win": "8.0.20242.688"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/C1.Win.DX.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/C1.Win.DX.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0-windows7.0/C1.Win.DX.targets": {}
+        }
+      },
+      "C1.Win.FlexChart/8.0.20242.688": {
+        "type": "package",
+        "dependencies": {
+          "C1.Win.DX": "8.0.20242.688",
+          "C1.Win.Input": "8.0.20242.688",
+          "C1.Win.Ribbon": "8.0.20242.688"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/C1.Win.FlexChart.8.dll": {
+            "related": ".xml"
+          },
+          "lib/net8.0-windows7.0/C1.Win.FlexChart.Toolbar.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/C1.Win.FlexChart.8.dll": {
+            "related": ".xml"
+          },
+          "lib/net8.0-windows7.0/C1.Win.FlexChart.Toolbar.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/net8.0-windows7.0/ja/C1.Win.FlexChart.8.resources.dll": {
+            "locale": "ja"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0-windows7.0/C1.Win.FlexChart.targets": {}
+        }
+      },
+      "C1.Win.Input/8.0.20242.688": {
+        "type": "package",
+        "dependencies": {
+          "C1.Win": "8.0.20242.688"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/C1.Win.Input.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/C1.Win.Input.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/net8.0-windows7.0/ja/C1.Win.Input.8.resources.dll": {
+            "locale": "ja"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0-windows7.0/C1.Win.Input.targets": {}
+        }
+      },
+      "C1.Win.Ribbon/8.0.20242.688": {
+        "type": "package",
+        "dependencies": {
+          "C1.Win": "8.0.20242.688"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/C1.Win.Ribbon.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/C1.Win.Ribbon.8.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/net8.0-windows7.0/ja/C1.Win.Ribbon.8.resources.dll": {
+            "locale": "ja"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0-windows7.0/C1.Win.Ribbon.targets": {}
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
         "type": "package",
         "compile": {
@@ -486,7 +606,7 @@
           }
         }
       },
-      "Microsoft.NETCore.Platforms/1.1.0": {
+      "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
           "lib/netstandard1.0/_._": {}
@@ -517,6 +637,182 @@
           }
         }
       },
+      "Microsoft.Win32.SystemEvents/4.7.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0"
+        },
+        "compile": {
+          "ref/netstandard2.0/_._": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "Microsoft.WinForms.Designer.SDK/1.6.0": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "4.6.0",
+          "System.Composition": "6.0.0"
+        },
+        "compile": {
+          "ref/netcoreapp3.1/Microsoft.DotNet.DesignTools.Protocol.dll": {
+            "related": ".xml"
+          },
+          "ref/netcoreapp3.1/Microsoft.DotNet.DesignTools.Server.dll": {
+            "related": ".xml"
+          },
+          "ref/netcoreapp3.1/Microsoft.WinForms.Utilities.Shared.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/netcoreapp3.1/Microsoft.WinForms.Designer.SDK.props": {},
+          "build/netcoreapp3.1/Microsoft.WinForms.Designer.SDK.targets": {}
+        }
+      },
+      "ModernUI/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Drawing.Common": "4.7.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/MetroFramework.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/MetroFramework.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
+      "Syncfusion.Grid.Windows/27.2.4": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.WinForms.Designer.SDK": "1.6.0",
+          "Syncfusion.Licensing": "27.2.4",
+          "Syncfusion.Shared.Base": "27.2.4",
+          "Syncfusion.Shared.Windows": "27.2.4"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.Grid.Windows.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.Grid.Windows.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.Licensing/27.2.4": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {}
+        }
+      },
+      "Syncfusion.Shared.Base/27.2.4": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.WinForms.Designer.SDK": "1.6.0",
+          "Syncfusion.Licensing": "27.2.4"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.Base.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.Base.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.Shared.Windows/27.2.4": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "27.2.4",
+          "Syncfusion.Shared.Base": "27.2.4"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.Windows.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.Windows.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.SpellChecker.Base/27.2.4": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "27.2.4"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.SpellChecker.Base.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.SpellChecker.Base.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.Tools.Base/27.2.4": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "27.2.4",
+          "Syncfusion.Shared.Base": "27.2.4"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.Tools.Base.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.Tools.Base.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.Tools.Windows/27.2.4": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.WinForms.Designer.SDK": "1.6.0",
+          "Syncfusion.Grid.Windows": "27.2.4",
+          "Syncfusion.Licensing": "27.2.4",
+          "Syncfusion.Shared.Base": "27.2.4",
+          "Syncfusion.Shared.Windows": "27.2.4",
+          "Syncfusion.SpellChecker.Base": "27.2.4",
+          "Syncfusion.Tools.Base": "27.2.4"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.Tools.Windows.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.Tools.Windows.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.ClientModel/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -532,6 +828,123 @@
           "lib/net6.0/System.ClientModel.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "System.CodeDom/4.6.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "System.Composition/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Composition.AttributedModel": "6.0.0",
+          "System.Composition.Convention": "6.0.0",
+          "System.Composition.Hosting": "6.0.0",
+          "System.Composition.Runtime": "6.0.0",
+          "System.Composition.TypedParts": "6.0.0"
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
+        }
+      },
+      "System.Composition.AttributedModel/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/System.Composition.AttributedModel.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.Composition.AttributedModel.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
+        }
+      },
+      "System.Composition.Convention/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Composition.AttributedModel": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/System.Composition.Convention.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.Composition.Convention.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
+        }
+      },
+      "System.Composition.Hosting/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Composition.Runtime": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/System.Composition.Hosting.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.Composition.Hosting.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
+        }
+      },
+      "System.Composition.Runtime/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/System.Composition.Runtime.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.Composition.Runtime.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
+        }
+      },
+      "System.Composition.TypedParts/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Composition.AttributedModel": "6.0.0",
+          "System.Composition.Hosting": "6.0.0",
+          "System.Composition.Runtime": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/System.Composition.TypedParts.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.Composition.TypedParts.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
       "System.Configuration.ConfigurationManager/9.0.0": {
@@ -594,6 +1007,31 @@
             "rid": "win"
           },
           "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Drawing.Common/4.7.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0",
+          "Microsoft.Win32.SystemEvents": "4.7.0"
+        },
+        "compile": {
+          "ref/netcoreapp3.0/System.Drawing.Common.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Drawing.Common.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -879,6 +1317,25 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "WinForms.DataVisualization/1.9.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0-windows7.0/WinForms.DataVisualization.Utilities.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net8.0-windows7.0/WinForms.DataVisualization.dll": {
+            "related": ".pdb;.Utilities.pdb;.Utilities.xml;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/WinForms.DataVisualization.Utilities.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net8.0-windows7.0/WinForms.DataVisualization.dll": {
+            "related": ".pdb;.Utilities.pdb;.Utilities.xml;.xml"
+          }
+        }
+      },
       "BL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -960,6 +1417,176 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "C1.Win/8.0.20242.688": {
+      "sha512": "DgpBE40parnrPbYFCfdsgRckV2/lEOEbSv4hvFz9NWx0Wb4rAHhPjLsRZv7jmhrXbUuAxT4VECb29DOdKX/DWA==",
+      "type": "package",
+      "path": "c1.win/8.0.20242.688",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "buildTransitive/net462/C1.Win.targets",
+        "buildTransitive/net48/C1.Win.targets",
+        "buildTransitive/net6.0-windows7.0/C1.Win.targets",
+        "buildTransitive/net8.0-windows7.0/C1.Win.targets",
+        "c1.win.8.0.20242.688.nupkg.sha512",
+        "c1.win.nuspec",
+        "docs/readme.md",
+        "images/NuGetIcon.png",
+        "lib/net462/C1.Win.4.6.2.dll",
+        "lib/net462/C1.Win.4.6.2.xml",
+        "lib/net462/ja/C1.Win.4.6.2.resources.dll",
+        "lib/net48/C1.Win.4.8.dll",
+        "lib/net48/C1.Win.4.8.xml",
+        "lib/net48/ja/C1.Win.4.8.resources.dll",
+        "lib/net6.0-windows7.0/C1.Win.6.dll",
+        "lib/net6.0-windows7.0/C1.Win.6.xml",
+        "lib/net6.0-windows7.0/Design/WinForms/C1.Win.6.Design.Client.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/C1.Win.6.Design.Protocol.Client.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/Server/C1.Win.6.Design.Protocol.Server.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/Server/C1.Win.6.Design.Server.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/ja/C1.Win.6.Design.Client.resources.dll",
+        "lib/net6.0-windows7.0/ja/C1.Win.6.resources.dll",
+        "lib/net8.0-windows7.0/C1.Win.8.dll",
+        "lib/net8.0-windows7.0/C1.Win.8.xml",
+        "lib/net8.0-windows7.0/Design/WinForms/C1.Win.8.Design.Client.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/C1.Win.8.Design.Protocol.Client.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/Server/C1.Win.8.Design.Protocol.Server.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/Server/C1.Win.8.Design.Server.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/ja/C1.Win.8.Design.Client.resources.dll",
+        "lib/net8.0-windows7.0/ja/C1.Win.8.resources.dll",
+        "license.txt",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
+    "C1.Win.DX/8.0.20242.688": {
+      "sha512": "kCFifCImExCU9PrQekbzrR84q7KitN7KBflMf8gTPFSbjBkfMMUQAlbkJWHi/1Pv2LVoBIHiC1hTHwO2MIrrAQ==",
+      "type": "package",
+      "path": "c1.win.dx/8.0.20242.688",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "buildTransitive/net6.0-windows7.0/C1.Win.DX.targets",
+        "buildTransitive/net8.0-windows7.0/C1.Win.DX.targets",
+        "c1.win.dx.8.0.20242.688.nupkg.sha512",
+        "c1.win.dx.nuspec",
+        "docs/readme.md",
+        "images/NuGetIcon.png",
+        "lib/net6.0-windows7.0/C1.Win.DX.6.dll",
+        "lib/net6.0-windows7.0/C1.Win.DX.6.xml",
+        "lib/net8.0-windows7.0/C1.Win.DX.8.dll",
+        "lib/net8.0-windows7.0/C1.Win.DX.8.xml",
+        "license.txt",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
+    "C1.Win.FlexChart/8.0.20242.688": {
+      "sha512": "zIlM5zFbId2Qs6XUxMOioLPXPpyJimo7hlN8qmzb/GfSF0cqOuNArzOT2UiL5QWmbU451vT2nCOo8hRUmwLorA==",
+      "type": "package",
+      "path": "c1.win.flexchart/8.0.20242.688",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "buildTransitive/net462/C1.Win.FlexChart.targets",
+        "buildTransitive/net48/C1.Win.FlexChart.targets",
+        "buildTransitive/net6.0-windows7.0/C1.Win.FlexChart.targets",
+        "buildTransitive/net8.0-windows7.0/C1.Win.FlexChart.targets",
+        "c1.win.flexchart.8.0.20242.688.nupkg.sha512",
+        "c1.win.flexchart.nuspec",
+        "docs/readme.md",
+        "images/NuGetIcon.png",
+        "lib/net462/C1.Win.FlexChart.4.6.2.dll",
+        "lib/net462/C1.Win.FlexChart.4.6.2.xml",
+        "lib/net462/C1.Win.FlexChart.Toolbar.4.6.2.dll",
+        "lib/net462/C1.Win.FlexChart.Toolbar.4.6.2.xml",
+        "lib/net462/ja/C1.Win.FlexChart.4.6.2.resources.dll",
+        "lib/net48/C1.Win.FlexChart.4.8.dll",
+        "lib/net48/C1.Win.FlexChart.4.8.xml",
+        "lib/net48/C1.Win.FlexChart.Toolbar.4.8.dll",
+        "lib/net48/C1.Win.FlexChart.Toolbar.4.8.xml",
+        "lib/net48/ja/C1.Win.FlexChart.4.8.resources.dll",
+        "lib/net6.0-windows7.0/C1.Win.FlexChart.6.dll",
+        "lib/net6.0-windows7.0/C1.Win.FlexChart.6.xml",
+        "lib/net6.0-windows7.0/C1.Win.FlexChart.Toolbar.6.dll",
+        "lib/net6.0-windows7.0/C1.Win.FlexChart.Toolbar.6.xml",
+        "lib/net6.0-windows7.0/Design/WinForms/Server/C1.Win.FlexChart.6.Design.Server.dll",
+        "lib/net6.0-windows7.0/ja/C1.Win.FlexChart.6.resources.dll",
+        "lib/net8.0-windows7.0/C1.Win.FlexChart.8.dll",
+        "lib/net8.0-windows7.0/C1.Win.FlexChart.8.xml",
+        "lib/net8.0-windows7.0/C1.Win.FlexChart.Toolbar.8.dll",
+        "lib/net8.0-windows7.0/C1.Win.FlexChart.Toolbar.8.xml",
+        "lib/net8.0-windows7.0/Design/WinForms/Server/C1.Win.FlexChart.8.Design.Server.dll",
+        "lib/net8.0-windows7.0/ja/C1.Win.FlexChart.8.resources.dll",
+        "license.txt",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
+    "C1.Win.Input/8.0.20242.688": {
+      "sha512": "1o4DSVptGJCCgXQ+gFnXUUb6OPfH6WAk70T4j0tEJGqsacklE9ICWXo3pE+vpMKFz7wb5g0ucc5NtTfR5WYJuQ==",
+      "type": "package",
+      "path": "c1.win.input/8.0.20242.688",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "buildTransitive/net6.0-windows7.0/C1.Win.Input.targets",
+        "buildTransitive/net8.0-windows7.0/C1.Win.Input.targets",
+        "c1.win.input.8.0.20242.688.nupkg.sha512",
+        "c1.win.input.nuspec",
+        "docs/readme.md",
+        "images/NuGetIcon.png",
+        "lib/net6.0-windows7.0/C1.Win.Input.6.dll",
+        "lib/net6.0-windows7.0/C1.Win.Input.6.xml",
+        "lib/net6.0-windows7.0/Design/WinForms/Server/C1.Win.Input.6.Design.Server.dll",
+        "lib/net6.0-windows7.0/ja/C1.Win.Input.6.resources.dll",
+        "lib/net8.0-windows7.0/C1.Win.Input.8.dll",
+        "lib/net8.0-windows7.0/C1.Win.Input.8.xml",
+        "lib/net8.0-windows7.0/Design/WinForms/Server/C1.Win.Input.8.Design.Server.dll",
+        "lib/net8.0-windows7.0/ja/C1.Win.Input.8.resources.dll",
+        "license.txt",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
+    "C1.Win.Ribbon/8.0.20242.688": {
+      "sha512": "RRz4ZZoZ/qzFjiVtrG4VHzmDFbOWEuGpilEpsewVaZTZhU9/3/F97EyRJhb9hLv0eBzF8wsufVppl/uN05yHYQ==",
+      "type": "package",
+      "path": "c1.win.ribbon/8.0.20242.688",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "buildTransitive/net462/C1.Win.Ribbon.targets",
+        "buildTransitive/net48/C1.Win.Ribbon.targets",
+        "buildTransitive/net6.0-windows7.0/C1.Win.Ribbon.targets",
+        "buildTransitive/net8.0-windows7.0/C1.Win.Ribbon.targets",
+        "c1.win.ribbon.8.0.20242.688.nupkg.sha512",
+        "c1.win.ribbon.nuspec",
+        "docs/readme.md",
+        "images/NuGetIcon.png",
+        "lib/net462/C1.Win.Ribbon.4.6.2.dll",
+        "lib/net462/C1.Win.Ribbon.4.6.2.xml",
+        "lib/net462/ja/C1.Win.Ribbon.4.6.2.resources.dll",
+        "lib/net48/C1.Win.Ribbon.4.8.dll",
+        "lib/net48/C1.Win.Ribbon.4.8.xml",
+        "lib/net48/ja/C1.Win.Ribbon.4.8.resources.dll",
+        "lib/net6.0-windows7.0/C1.Win.Ribbon.6.dll",
+        "lib/net6.0-windows7.0/C1.Win.Ribbon.6.xml",
+        "lib/net6.0-windows7.0/Design/WinForms/C1.Win.Ribbon.6.Design.Client.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/Server/C1.Win.Ribbon.6.Design.Server.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/ja/C1.Win.Ribbon.6.Design.Client.resources.dll",
+        "lib/net6.0-windows7.0/ja/C1.Win.Ribbon.6.resources.dll",
+        "lib/net8.0-windows7.0/C1.Win.Ribbon.8.dll",
+        "lib/net8.0-windows7.0/C1.Win.Ribbon.8.xml",
+        "lib/net8.0-windows7.0/Design/WinForms/C1.Win.Ribbon.8.Design.Client.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/Server/C1.Win.Ribbon.8.Design.Server.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/ja/C1.Win.Ribbon.8.Design.Client.resources.dll",
+        "lib/net8.0-windows7.0/ja/C1.Win.Ribbon.8.resources.dll",
+        "license.txt",
+        "tools/VisualStudioToolsManifest.xml"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
@@ -1620,19 +2247,21 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
-    "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+    "Microsoft.NETCore.Platforms/3.1.0": {
+      "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
       "type": "package",
-      "path": "microsoft.netcore.platforms/1.1.0",
+      "path": "microsoft.netcore.platforms/3.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "ThirdPartyNotices.txt",
-        "dotnet_library_license.txt",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard1.0/_._",
-        "microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+        "microsoft.netcore.platforms.3.1.0.nupkg.sha512",
         "microsoft.netcore.platforms.nuspec",
-        "runtime.json"
+        "runtime.json",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "Microsoft.NETCore.Targets/1.1.0": {
@@ -1668,6 +2297,250 @@
         "microsoft.sqlserver.server.nuspec"
       ]
     },
+    "Microsoft.Win32.SystemEvents/4.7.0": {
+      "sha512": "mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
+      "type": "package",
+      "path": "microsoft.win32.systemevents/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.Win32.SystemEvents.dll",
+        "lib/net461/Microsoft.Win32.SystemEvents.xml",
+        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
+        "microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+        "microsoft.win32.systemevents.nuspec",
+        "ref/net461/Microsoft.Win32.SystemEvents.dll",
+        "ref/net461/Microsoft.Win32.SystemEvents.xml",
+        "ref/net472/Microsoft.Win32.SystemEvents.dll",
+        "ref/net472/Microsoft.Win32.SystemEvents.xml",
+        "ref/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
+        "ref/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
+        "runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.xml",
+        "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.xml",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "Microsoft.WinForms.Designer.SDK/1.6.0": {
+      "sha512": "BDIY84GbvQ4ensnD1zuZUmWIypl2muqUm4SM9qZ48OmaN8G5dmos38Dt35aEzMy0sN2Ci6UaJPiY1gwmw5eo7A==",
+      "type": "package",
+      "path": "microsoft.winforms.designer.sdk/1.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PackageLicense.txt",
+        "build/netcoreapp3.1/Microsoft.WinForms.Designer.SDK.props",
+        "build/netcoreapp3.1/Microsoft.WinForms.Designer.SDK.targets",
+        "microsoft.winforms.designer.sdk.1.6.0.nupkg.sha512",
+        "microsoft.winforms.designer.sdk.nuspec",
+        "readme.md",
+        "ref/net472/Microsoft.DotNet.DesignTools.Client.dll",
+        "ref/net472/Microsoft.DotNet.DesignTools.Client.xml",
+        "ref/net472/Microsoft.DotNet.DesignTools.Protocol.dll",
+        "ref/net472/Microsoft.DotNet.DesignTools.Protocol.xml",
+        "ref/net472/Microsoft.WinForms.Utilities.Shared.dll",
+        "ref/net472/Microsoft.WinForms.Utilities.Shared.xml",
+        "ref/netcoreapp3.1/Microsoft.DotNet.DesignTools.Protocol.dll",
+        "ref/netcoreapp3.1/Microsoft.DotNet.DesignTools.Protocol.xml",
+        "ref/netcoreapp3.1/Microsoft.DotNet.DesignTools.Server.dll",
+        "ref/netcoreapp3.1/Microsoft.DotNet.DesignTools.Server.xml",
+        "ref/netcoreapp3.1/Microsoft.WinForms.Utilities.Shared.dll",
+        "ref/netcoreapp3.1/Microsoft.WinForms.Utilities.Shared.xml"
+      ]
+    },
+    "ModernUI/2.0.0": {
+      "sha512": "uFs5caxyT0YXJ08jXI80LlP7TE7LpMUXB2duD1TU697zUl+QCJAFCiu+b9wmzwUFkjsNvmed7okNK94yKv6pVA==",
+      "type": "package",
+      "path": "modernui/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/MetroFramework.dll",
+        "lib/netcoreapp3.0/MetroFramework.dll",
+        "lib/netcoreapp3.1/MetroFramework.dll",
+        "modernui.2.0.0.nupkg.sha512",
+        "modernui.nuspec"
+      ]
+    },
+    "Syncfusion.Grid.Windows/27.2.4": {
+      "sha512": "+tEOJM7U6Sa1oDn35qhYs0SzsIu3j0VHC0K4n5hQIcbAZ5WkxYK9GVbJprepDd93p+yivSVIP3Tics0+tQNmrg==",
+      "type": "package",
+      "path": "syncfusion.grid.windows/27.2.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net40/Syncfusion.Grid.Windows.dll",
+        "lib/net40/Syncfusion.Grid.Windows.xml",
+        "lib/net462/Syncfusion.Grid.Windows.dll",
+        "lib/net462/Syncfusion.Grid.Windows.xml",
+        "lib/net6.0-windows7.0/Syncfusion.Grid.Windows.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Grid.Windows.xml",
+        "lib/net8.0-windows7.0/Syncfusion.Grid.Windows.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Grid.Windows.xml",
+        "lib/net9.0-windows7.0/Syncfusion.Grid.Windows.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Grid.Windows.xml",
+        "syncfusion.grid.windows.27.2.4.nupkg.sha512",
+        "syncfusion.grid.windows.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
+    "Syncfusion.Licensing/27.2.4": {
+      "sha512": "oEVuQxESW7cchhWfuILy1C5DnFFgnY4wyOWupulhObG4+RzcMhbonUkguDSE35nORPNQTBtvQ0fGKCRXHJ0p3g==",
+      "type": "package",
+      "path": "syncfusion.licensing/27.2.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/MonoAndroid90/Syncfusion.Licensing.dll",
+        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
+        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
+        "lib/net40/Syncfusion.Licensing.dll",
+        "lib/net45/Syncfusion.Licensing.dll",
+        "lib/net462/Syncfusion.Licensing.dll",
+        "lib/net6.0/Syncfusion.Licensing.dll",
+        "lib/net7.0/Syncfusion.Licensing.dll",
+        "lib/net8.0/Syncfusion.Licensing.dll",
+        "lib/net9.0/Syncfusion.Licensing.dll",
+        "lib/netstandard2.0/Syncfusion.Licensing.dll",
+        "lib/uap10.0/Syncfusion.Licensing.dll",
+        "syncfusion.licensing.27.2.4.nupkg.sha512",
+        "syncfusion.licensing.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.Shared.Base/27.2.4": {
+      "sha512": "+gmTYyucE4Vc2+aJKp+1UQfY581WBT5WxqEryTg4A9qmPm/PC4U6gULp6z3ugt70FmVawmHWEk1upG0XFObDlw==",
+      "type": "package",
+      "path": "syncfusion.shared.base/27.2.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net40/Syncfusion.Shared.Base.dll",
+        "lib/net40/Syncfusion.Shared.Base.xml",
+        "lib/net462/Syncfusion.Shared.Base.dll",
+        "lib/net462/Syncfusion.Shared.Base.xml",
+        "lib/net6.0-windows7.0/Syncfusion.Shared.Base.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Shared.Base.xml",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.Base.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.Base.xml",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.Base.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.Base.xml",
+        "syncfusion.shared.base.27.2.4.nupkg.sha512",
+        "syncfusion.shared.base.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
+    "Syncfusion.Shared.Windows/27.2.4": {
+      "sha512": "A6AX78t42oVy4t8mD09qczhwHTd+KtH6nj0gBZrl0QwlOJTZ8RgMLeZN3VzVd+FI3v4Cb9n0aGmQuo0YCp/V7g==",
+      "type": "package",
+      "path": "syncfusion.shared.windows/27.2.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/net40/Syncfusion.Shared.Windows.dll",
+        "lib/net40/Syncfusion.Shared.Windows.xml",
+        "lib/net462/Syncfusion.Shared.Windows.dll",
+        "lib/net462/Syncfusion.Shared.Windows.xml",
+        "lib/net6.0-windows7.0/Syncfusion.Shared.Windows.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Shared.Windows.xml",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.Windows.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.Windows.xml",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.Windows.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.Windows.xml",
+        "syncfusion.shared.windows.27.2.4.nupkg.sha512",
+        "syncfusion.shared.windows.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.SpellChecker.Base/27.2.4": {
+      "sha512": "O7oObMGkLGfQ91rOZWOt00DhE87WsqNQZWzSKwfjai3daBTGg9sYQ4R4N0ox71UVqFkG3apTmmhB9GXFGKt8Xg==",
+      "type": "package",
+      "path": "syncfusion.spellchecker.base/27.2.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/net40/Syncfusion.SpellChecker.Base.dll",
+        "lib/net40/Syncfusion.SpellChecker.Base.xml",
+        "lib/net462/Syncfusion.SpellChecker.Base.dll",
+        "lib/net462/Syncfusion.SpellChecker.Base.xml",
+        "lib/net6.0-windows7.0/Syncfusion.SpellChecker.Base.dll",
+        "lib/net6.0-windows7.0/Syncfusion.SpellChecker.Base.xml",
+        "lib/net8.0-windows7.0/Syncfusion.SpellChecker.Base.dll",
+        "lib/net8.0-windows7.0/Syncfusion.SpellChecker.Base.xml",
+        "lib/net9.0-windows7.0/Syncfusion.SpellChecker.Base.dll",
+        "lib/net9.0-windows7.0/Syncfusion.SpellChecker.Base.xml",
+        "syncfusion.spellchecker.base.27.2.4.nupkg.sha512",
+        "syncfusion.spellchecker.base.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.Tools.Base/27.2.4": {
+      "sha512": "7KaWOs4KfQ8PUBiDeG6SU9drCaSY8mnoDzU3zNGag2BbX6fAxBQiJWcd3WxEhGjARaSKykIAwNkB1EDMB015Gg==",
+      "type": "package",
+      "path": "syncfusion.tools.base/27.2.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/net40/Syncfusion.Tools.Base.dll",
+        "lib/net40/Syncfusion.Tools.Base.xml",
+        "lib/net462/Syncfusion.Tools.Base.dll",
+        "lib/net462/Syncfusion.Tools.Base.xml",
+        "lib/net6.0-windows7.0/Syncfusion.Tools.Base.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Tools.Base.xml",
+        "lib/net8.0-windows7.0/Syncfusion.Tools.Base.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Tools.Base.xml",
+        "lib/net9.0-windows7.0/Syncfusion.Tools.Base.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Tools.Base.xml",
+        "syncfusion.tools.base.27.2.4.nupkg.sha512",
+        "syncfusion.tools.base.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.Tools.Windows/27.2.4": {
+      "sha512": "i2/97cObxOOckrZDNhJUbc6Hi0LcXuVw+OlsWj0gnhHLAavVkPWf9vHWqIPtrh5TlSVEjdXgKm39zw7sasiZnA==",
+      "type": "package",
+      "path": "syncfusion.tools.windows/27.2.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net40/Syncfusion.Tools.Windows.dll",
+        "lib/net40/Syncfusion.Tools.Windows.xml",
+        "lib/net462/Syncfusion.Tools.Windows.dll",
+        "lib/net462/Syncfusion.Tools.Windows.xml",
+        "lib/net6.0-windows7.0/Syncfusion.Tools.Windows.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Tools.Windows.xml",
+        "lib/net8.0-windows7.0/Syncfusion.Tools.Windows.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Tools.Windows.xml",
+        "lib/net9.0-windows7.0/Syncfusion.Tools.Windows.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Tools.Windows.xml",
+        "syncfusion.tools.windows.27.2.4.nupkg.sha512",
+        "syncfusion.tools.windows.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
     "System.ClientModel/1.0.0": {
       "sha512": "I3CVkvxeqFYjIVEP59DnjbeoGNfo/+SZrCLpRz2v/g0gpCHaEMPtWSY0s9k/7jR1rAsLNg2z2u1JRB76tPjnIw==",
       "type": "package",
@@ -1684,6 +2557,161 @@
         "lib/netstandard2.0/System.ClientModel.xml",
         "system.clientmodel.1.0.0.nupkg.sha512",
         "system.clientmodel.nuspec"
+      ]
+    },
+    "System.CodeDom/4.6.0": {
+      "sha512": "ArWGZOxPhOaJUd4YgvbTxGZDbVDJHPAOQNiJIpbRDPW6v2NT5xkallQv1zpu8Rwwb5Z3iZ1jwWA4gSQuWgR+jw==",
+      "type": "package",
+      "path": "system.codedom/4.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/System.CodeDom.dll",
+        "lib/net461/System.CodeDom.xml",
+        "lib/netstandard2.0/System.CodeDom.dll",
+        "lib/netstandard2.0/System.CodeDom.xml",
+        "ref/net461/System.CodeDom.dll",
+        "ref/net461/System.CodeDom.xml",
+        "ref/netstandard2.0/System.CodeDom.dll",
+        "ref/netstandard2.0/System.CodeDom.xml",
+        "system.codedom.4.6.0.nupkg.sha512",
+        "system.codedom.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "System.Composition/6.0.0": {
+      "sha512": "d7wMuKQtfsxUa7S13tITC8n1cQzewuhD5iDjZtK2prwFfKVzdYtgrTHgjaV03Zq7feGQ5gkP85tJJntXwInsJA==",
+      "type": "package",
+      "path": "system.composition/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/netcoreapp2.0/System.Composition.targets",
+        "buildTransitive/netcoreapp3.1/_._",
+        "system.composition.6.0.0.nupkg.sha512",
+        "system.composition.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Composition.AttributedModel/6.0.0": {
+      "sha512": "WK1nSDLByK/4VoC7fkNiFuTVEiperuCN/Hyn+VN30R+W2ijO1d0Z2Qm0ScEl9xkSn1G2MyapJi8xpf4R8WRa/w==",
+      "type": "package",
+      "path": "system.composition.attributedmodel/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/netcoreapp2.0/System.Composition.AttributedModel.targets",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/System.Composition.AttributedModel.dll",
+        "lib/net461/System.Composition.AttributedModel.xml",
+        "lib/net6.0/System.Composition.AttributedModel.dll",
+        "lib/net6.0/System.Composition.AttributedModel.xml",
+        "lib/netstandard2.0/System.Composition.AttributedModel.dll",
+        "lib/netstandard2.0/System.Composition.AttributedModel.xml",
+        "system.composition.attributedmodel.6.0.0.nupkg.sha512",
+        "system.composition.attributedmodel.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Composition.Convention/6.0.0": {
+      "sha512": "XYi4lPRdu5bM4JVJ3/UIHAiG6V6lWWUlkhB9ab4IOq0FrRsp0F4wTyV4Dj+Ds+efoXJ3qbLqlvaUozDO7OLeXA==",
+      "type": "package",
+      "path": "system.composition.convention/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/netcoreapp2.0/System.Composition.Convention.targets",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/System.Composition.Convention.dll",
+        "lib/net461/System.Composition.Convention.xml",
+        "lib/net6.0/System.Composition.Convention.dll",
+        "lib/net6.0/System.Composition.Convention.xml",
+        "lib/netstandard2.0/System.Composition.Convention.dll",
+        "lib/netstandard2.0/System.Composition.Convention.xml",
+        "system.composition.convention.6.0.0.nupkg.sha512",
+        "system.composition.convention.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Composition.Hosting/6.0.0": {
+      "sha512": "w/wXjj7kvxuHPLdzZ0PAUt++qJl03t7lENmb2Oev0n3zbxyNULbWBlnd5J5WUMMv15kg5o+/TCZFb6lSwfaUUQ==",
+      "type": "package",
+      "path": "system.composition.hosting/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/netcoreapp2.0/System.Composition.Hosting.targets",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/System.Composition.Hosting.dll",
+        "lib/net461/System.Composition.Hosting.xml",
+        "lib/net6.0/System.Composition.Hosting.dll",
+        "lib/net6.0/System.Composition.Hosting.xml",
+        "lib/netstandard2.0/System.Composition.Hosting.dll",
+        "lib/netstandard2.0/System.Composition.Hosting.xml",
+        "system.composition.hosting.6.0.0.nupkg.sha512",
+        "system.composition.hosting.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Composition.Runtime/6.0.0": {
+      "sha512": "qkRH/YBaMPTnzxrS5RDk1juvqed4A6HOD/CwRcDGyPpYps1J27waBddiiq1y93jk2ZZ9wuA/kynM+NO0kb3PKg==",
+      "type": "package",
+      "path": "system.composition.runtime/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/netcoreapp2.0/System.Composition.Runtime.targets",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/System.Composition.Runtime.dll",
+        "lib/net461/System.Composition.Runtime.xml",
+        "lib/net6.0/System.Composition.Runtime.dll",
+        "lib/net6.0/System.Composition.Runtime.xml",
+        "lib/netstandard2.0/System.Composition.Runtime.dll",
+        "lib/netstandard2.0/System.Composition.Runtime.xml",
+        "system.composition.runtime.6.0.0.nupkg.sha512",
+        "system.composition.runtime.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Composition.TypedParts/6.0.0": {
+      "sha512": "iUR1eHrL8Cwd82neQCJ00MpwNIBs4NZgXzrPqx8NJf/k4+mwBO0XCRmHYJT4OLSwDDqh5nBLJWkz5cROnrGhRA==",
+      "type": "package",
+      "path": "system.composition.typedparts/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/netcoreapp2.0/System.Composition.TypedParts.targets",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/System.Composition.TypedParts.dll",
+        "lib/net461/System.Composition.TypedParts.xml",
+        "lib/net6.0/System.Composition.TypedParts.dll",
+        "lib/net6.0/System.Composition.TypedParts.xml",
+        "lib/netstandard2.0/System.Composition.TypedParts.dll",
+        "lib/netstandard2.0/System.Composition.TypedParts.xml",
+        "system.composition.typedparts.6.0.0.nupkg.sha512",
+        "system.composition.typedparts.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
     "System.Configuration.ConfigurationManager/9.0.0": {
@@ -1771,6 +2799,45 @@
         "system.diagnostics.eventlog.9.0.0.nupkg.sha512",
         "system.diagnostics.eventlog.nuspec",
         "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Drawing.Common/4.7.0": {
+      "sha512": "v+XbyYHaZjDfn0ENmJEV1VYLgGgCTx1gnfOBcppowbpOAriglYgGCvFCPr2EEZyBvXlpxbEsTwkOlInl107ahA==",
+      "type": "package",
+      "path": "system.drawing.common/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net461/System.Drawing.Common.dll",
+        "lib/netstandard2.0/System.Drawing.Common.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net461/System.Drawing.Common.dll",
+        "ref/netcoreapp3.0/System.Drawing.Common.dll",
+        "ref/netcoreapp3.0/System.Drawing.Common.xml",
+        "ref/netstandard2.0/System.Drawing.Common.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll",
+        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll",
+        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.xml",
+        "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
+        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll",
+        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.xml",
+        "system.drawing.common.4.7.0.nupkg.sha512",
+        "system.drawing.common.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "System.Formats.Asn1/9.0.0": {
@@ -2461,6 +3528,55 @@
         "version.txt"
       ]
     },
+    "WinForms.DataVisualization/1.9.2": {
+      "sha512": "e1aPoWqPS1GThTK2ZpI4GkIhteorW7smNQ5SP3y5EaODL7W2u21nX0hlHtmkerBWi9gpy6Rw8I53jvo5CF+4rA==",
+      "type": "package",
+      "path": "winforms.datavisualization/1.9.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "NuGetReadme.md",
+        "lib/net6.0-windows7.0/Design/WinForms/Server/WinForms.DataVisualization.Designer.ClientServerProtocol.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/Server/WinForms.DataVisualization.Designer.Server.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/Server/WinForms.DataVisualization.Utilities.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/WinForms.DataVisualization.Designer.Client.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/WinForms.DataVisualization.Designer.ClientServerProtocol.dll",
+        "lib/net6.0-windows7.0/Design/WinForms/WinForms.DataVisualization.Utilities.dll",
+        "lib/net6.0-windows7.0/WinForms.DataVisualization.Utilities.dll",
+        "lib/net6.0-windows7.0/WinForms.DataVisualization.Utilities.pdb",
+        "lib/net6.0-windows7.0/WinForms.DataVisualization.Utilities.xml",
+        "lib/net6.0-windows7.0/WinForms.DataVisualization.dll",
+        "lib/net6.0-windows7.0/WinForms.DataVisualization.pdb",
+        "lib/net6.0-windows7.0/WinForms.DataVisualization.xml",
+        "lib/net7.0-windows7.0/Design/WinForms/Server/WinForms.DataVisualization.Designer.ClientServerProtocol.dll",
+        "lib/net7.0-windows7.0/Design/WinForms/Server/WinForms.DataVisualization.Designer.Server.dll",
+        "lib/net7.0-windows7.0/Design/WinForms/Server/WinForms.DataVisualization.Utilities.dll",
+        "lib/net7.0-windows7.0/Design/WinForms/WinForms.DataVisualization.Designer.Client.dll",
+        "lib/net7.0-windows7.0/Design/WinForms/WinForms.DataVisualization.Designer.ClientServerProtocol.dll",
+        "lib/net7.0-windows7.0/Design/WinForms/WinForms.DataVisualization.Utilities.dll",
+        "lib/net7.0-windows7.0/WinForms.DataVisualization.Utilities.dll",
+        "lib/net7.0-windows7.0/WinForms.DataVisualization.Utilities.pdb",
+        "lib/net7.0-windows7.0/WinForms.DataVisualization.Utilities.xml",
+        "lib/net7.0-windows7.0/WinForms.DataVisualization.dll",
+        "lib/net7.0-windows7.0/WinForms.DataVisualization.pdb",
+        "lib/net7.0-windows7.0/WinForms.DataVisualization.xml",
+        "lib/net8.0-windows7.0/Design/WinForms/Server/WinForms.DataVisualization.Designer.ClientServerProtocol.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/Server/WinForms.DataVisualization.Designer.Server.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/Server/WinForms.DataVisualization.Utilities.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/WinForms.DataVisualization.Designer.Client.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/WinForms.DataVisualization.Designer.ClientServerProtocol.dll",
+        "lib/net8.0-windows7.0/Design/WinForms/WinForms.DataVisualization.Utilities.dll",
+        "lib/net8.0-windows7.0/WinForms.DataVisualization.Utilities.dll",
+        "lib/net8.0-windows7.0/WinForms.DataVisualization.Utilities.pdb",
+        "lib/net8.0-windows7.0/WinForms.DataVisualization.Utilities.xml",
+        "lib/net8.0-windows7.0/WinForms.DataVisualization.dll",
+        "lib/net8.0-windows7.0/WinForms.DataVisualization.pdb",
+        "lib/net8.0-windows7.0/WinForms.DataVisualization.xml",
+        "winforms.datavisualization.1.9.2.nupkg.sha512",
+        "winforms.datavisualization.nuspec"
+      ]
+    },
     "BL/1.0.0": {
       "type": "project",
       "path": "../BL/BL.csproj",
@@ -2480,7 +3596,11 @@
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
       "BL >= 1.0.0",
-      "DTO >= 1.0.0"
+      "C1.Win.FlexChart >= 8.0.20242.688",
+      "DTO >= 1.0.0",
+      "ModernUI >= 2.0.0",
+      "Syncfusion.Tools.Windows >= 27.2.4",
+      "WinForms.DataVisualization >= 1.9.2"
     ]
   },
   "packageFolders": {
@@ -2533,6 +3653,24 @@
     "frameworks": {
       "net8.0-windows7.0": {
         "targetAlias": "net8.0-windows",
+        "dependencies": {
+          "C1.Win.FlexChart": {
+            "target": "Package",
+            "version": "[8.0.20242.688, )"
+          },
+          "ModernUI": {
+            "target": "Package",
+            "version": "[2.0.0, )"
+          },
+          "Syncfusion.Tools.Windows": {
+            "target": "Package",
+            "version": "[27.2.4, )"
+          },
+          "WinForms.DataVisualization": {
+            "target": "Package",
+            "version": "[1.9.2, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

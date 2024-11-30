@@ -12,4 +12,17 @@
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="C:\Users\USER\.nuget\packages\" />
   </ItemGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)microsoft.winforms.designer.sdk\1.6.0\build\netcoreapp3.1\Microsoft.WinForms.Designer.SDK.props" Condition="Exists('$(NuGetPackageRoot)microsoft.winforms.designer.sdk\1.6.0\build\netcoreapp3.1\Microsoft.WinForms.Designer.SDK.props')" />
+  </ImportGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgSyncfusion_Shared_Base Condition=" '$(PkgSyncfusion_Shared_Base)' == '' ">C:\Users\USER\.nuget\packages\syncfusion.shared.base\27.2.4</PkgSyncfusion_Shared_Base>
+    <PkgSyncfusion_Grid_Windows Condition=" '$(PkgSyncfusion_Grid_Windows)' == '' ">C:\Users\USER\.nuget\packages\syncfusion.grid.windows\27.2.4</PkgSyncfusion_Grid_Windows>
+    <PkgSyncfusion_Tools_Windows Condition=" '$(PkgSyncfusion_Tools_Windows)' == '' ">C:\Users\USER\.nuget\packages\syncfusion.tools.windows\27.2.4</PkgSyncfusion_Tools_Windows>
+    <PkgC1_Win Condition=" '$(PkgC1_Win)' == '' ">C:\Users\USER\.nuget\packages\c1.win\8.0.20242.688</PkgC1_Win>
+    <PkgC1_Win_Ribbon Condition=" '$(PkgC1_Win_Ribbon)' == '' ">C:\Users\USER\.nuget\packages\c1.win.ribbon\8.0.20242.688</PkgC1_Win_Ribbon>
+    <PkgC1_Win_Input Condition=" '$(PkgC1_Win_Input)' == '' ">C:\Users\USER\.nuget\packages\c1.win.input\8.0.20242.688</PkgC1_Win_Input>
+    <PkgC1_Win_DX Condition=" '$(PkgC1_Win_DX)' == '' ">C:\Users\USER\.nuget\packages\c1.win.dx\8.0.20242.688</PkgC1_Win_DX>
+    <PkgC1_Win_FlexChart Condition=" '$(PkgC1_Win_FlexChart)' == '' ">C:\Users\USER\.nuget\packages\c1.win.flexchart\8.0.20242.688</PkgC1_Win_FlexChart>
+  </PropertyGroup>
 </Project>

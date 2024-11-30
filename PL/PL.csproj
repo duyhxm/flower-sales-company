@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="C1.Win.FlexChart" Version="8.0.20242.688" />
+    <PackageReference Include="ModernUI" Version="2.0.0" />
+    <PackageReference Include="Syncfusion.Tools.Windows" Version="27.2.4" />
+    <PackageReference Include="WinForms.DataVisualization" Version="1.9.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\DTO\DTO.csproj" />
   </ItemGroup>
