@@ -29,44 +29,44 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StoreMainForm));
-            splitContainer_mainInterface = new SplitContainer();
+            splConStoreMainForm = new SplitContainer();
             pictureBox_notificationBell = new PictureBox();
-            btn_task = new Button();
+            btnDailyTask = new Button();
             txtBx_currentUser = new TextBox();
-            btn_orderHistory = new Button();
-            btn_preOrderList = new Button();
-            btn_productList = new Button();
-            btn_inventory = new Button();
+            btnOrderHistory = new Button();
+            btnPreOrderList = new Button();
+            btnProductList = new Button();
+            btnInventory = new Button();
             btnCreateOrder = new Button();
-            btn_createProduct = new Button();
-            ((System.ComponentModel.ISupportInitialize)splitContainer_mainInterface).BeginInit();
-            splitContainer_mainInterface.Panel1.SuspendLayout();
-            splitContainer_mainInterface.SuspendLayout();
+            btnCreateProduct = new Button();
+            ((System.ComponentModel.ISupportInitialize)splConStoreMainForm).BeginInit();
+            splConStoreMainForm.Panel1.SuspendLayout();
+            splConStoreMainForm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_notificationBell).BeginInit();
             SuspendLayout();
             // 
-            // splitContainer_mainInterface
+            // splConStoreMainForm
             // 
-            splitContainer_mainInterface.Dock = DockStyle.Fill;
-            splitContainer_mainInterface.Location = new Point(0, 0);
-            splitContainer_mainInterface.Margin = new Padding(3, 4, 3, 4);
-            splitContainer_mainInterface.Name = "splitContainer_mainInterface";
+            splConStoreMainForm.Dock = DockStyle.Fill;
+            splConStoreMainForm.Location = new Point(0, 0);
+            splConStoreMainForm.Margin = new Padding(3, 4, 3, 4);
+            splConStoreMainForm.Name = "splConStoreMainForm";
             // 
-            // splitContainer_mainInterface.Panel1
+            // splConStoreMainForm.Panel1
             // 
-            splitContainer_mainInterface.Panel1.BackColor = SystemColors.ActiveCaption;
-            splitContainer_mainInterface.Panel1.Controls.Add(pictureBox_notificationBell);
-            splitContainer_mainInterface.Panel1.Controls.Add(btn_task);
-            splitContainer_mainInterface.Panel1.Controls.Add(txtBx_currentUser);
-            splitContainer_mainInterface.Panel1.Controls.Add(btn_orderHistory);
-            splitContainer_mainInterface.Panel1.Controls.Add(btn_preOrderList);
-            splitContainer_mainInterface.Panel1.Controls.Add(btn_productList);
-            splitContainer_mainInterface.Panel1.Controls.Add(btn_inventory);
-            splitContainer_mainInterface.Panel1.Controls.Add(btnCreateOrder);
-            splitContainer_mainInterface.Panel1.Controls.Add(btn_createProduct);
-            splitContainer_mainInterface.Size = new Size(1898, 944);
-            splitContainer_mainInterface.SplitterDistance = 241;
-            splitContainer_mainInterface.TabIndex = 1;
+            splConStoreMainForm.Panel1.BackColor = SystemColors.ActiveCaption;
+            splConStoreMainForm.Panel1.Controls.Add(pictureBox_notificationBell);
+            splConStoreMainForm.Panel1.Controls.Add(btnDailyTask);
+            splConStoreMainForm.Panel1.Controls.Add(txtBx_currentUser);
+            splConStoreMainForm.Panel1.Controls.Add(btnOrderHistory);
+            splConStoreMainForm.Panel1.Controls.Add(btnPreOrderList);
+            splConStoreMainForm.Panel1.Controls.Add(btnProductList);
+            splConStoreMainForm.Panel1.Controls.Add(btnInventory);
+            splConStoreMainForm.Panel1.Controls.Add(btnCreateOrder);
+            splConStoreMainForm.Panel1.Controls.Add(btnCreateProduct);
+            splConStoreMainForm.Size = new Size(1898, 944);
+            splConStoreMainForm.SplitterDistance = 241;
+            splConStoreMainForm.TabIndex = 1;
             // 
             // pictureBox_notificationBell
             // 
@@ -79,16 +79,16 @@
             pictureBox_notificationBell.TabIndex = 8;
             pictureBox_notificationBell.TabStop = false;
             // 
-            // btn_task
+            // btnDailyTask
             // 
-            btn_task.Location = new Point(0, 331);
-            btn_task.Margin = new Padding(3, 4, 3, 4);
-            btn_task.Name = "btn_task";
-            btn_task.Size = new Size(186, 59);
-            btn_task.TabIndex = 7;
-            btn_task.Text = "Daily Task";
-            btn_task.TextAlign = ContentAlignment.MiddleLeft;
-            btn_task.UseVisualStyleBackColor = true;
+            btnDailyTask.Location = new Point(0, 331);
+            btnDailyTask.Margin = new Padding(3, 4, 3, 4);
+            btnDailyTask.Name = "btnDailyTask";
+            btnDailyTask.Size = new Size(186, 59);
+            btnDailyTask.TabIndex = 7;
+            btnDailyTask.Text = "Daily Task";
+            btnDailyTask.TextAlign = ContentAlignment.MiddleLeft;
+            btnDailyTask.UseVisualStyleBackColor = true;
             // 
             // txtBx_currentUser
             // 
@@ -98,50 +98,50 @@
             txtBx_currentUser.Size = new Size(221, 39);
             txtBx_currentUser.TabIndex = 6;
             // 
-            // btn_orderHistory
+            // btnOrderHistory
             // 
-            btn_orderHistory.Location = new Point(0, 729);
-            btn_orderHistory.Margin = new Padding(3, 4, 3, 4);
-            btn_orderHistory.Name = "btn_orderHistory";
-            btn_orderHistory.Size = new Size(186, 59);
-            btn_orderHistory.TabIndex = 5;
-            btn_orderHistory.Text = "Order History";
-            btn_orderHistory.TextAlign = ContentAlignment.MiddleLeft;
-            btn_orderHistory.UseVisualStyleBackColor = true;
+            btnOrderHistory.Location = new Point(0, 729);
+            btnOrderHistory.Margin = new Padding(3, 4, 3, 4);
+            btnOrderHistory.Name = "btnOrderHistory";
+            btnOrderHistory.Size = new Size(186, 59);
+            btnOrderHistory.TabIndex = 5;
+            btnOrderHistory.Text = "Order History";
+            btnOrderHistory.TextAlign = ContentAlignment.MiddleLeft;
+            btnOrderHistory.UseVisualStyleBackColor = true;
             // 
-            // btn_preOrderList
+            // btnPreOrderList
             // 
-            btn_preOrderList.Location = new Point(0, 663);
-            btn_preOrderList.Margin = new Padding(3, 4, 3, 4);
-            btn_preOrderList.Name = "btn_preOrderList";
-            btn_preOrderList.Size = new Size(186, 59);
-            btn_preOrderList.TabIndex = 4;
-            btn_preOrderList.Text = "Pre-Order List";
-            btn_preOrderList.TextAlign = ContentAlignment.MiddleLeft;
-            btn_preOrderList.UseVisualStyleBackColor = true;
+            btnPreOrderList.Location = new Point(0, 663);
+            btnPreOrderList.Margin = new Padding(3, 4, 3, 4);
+            btnPreOrderList.Name = "btnPreOrderList";
+            btnPreOrderList.Size = new Size(186, 59);
+            btnPreOrderList.TabIndex = 4;
+            btnPreOrderList.Text = "Pre-Order List";
+            btnPreOrderList.TextAlign = ContentAlignment.MiddleLeft;
+            btnPreOrderList.UseVisualStyleBackColor = true;
             // 
-            // btn_productList
+            // btnProductList
             // 
-            btn_productList.Location = new Point(0, 596);
-            btn_productList.Margin = new Padding(3, 4, 3, 4);
-            btn_productList.Name = "btn_productList";
-            btn_productList.Size = new Size(186, 59);
-            btn_productList.TabIndex = 3;
-            btn_productList.Text = "Product List";
-            btn_productList.TextAlign = ContentAlignment.MiddleLeft;
-            btn_productList.UseVisualStyleBackColor = true;
+            btnProductList.Location = new Point(0, 596);
+            btnProductList.Margin = new Padding(3, 4, 3, 4);
+            btnProductList.Name = "btnProductList";
+            btnProductList.Size = new Size(186, 59);
+            btnProductList.TabIndex = 3;
+            btnProductList.Text = "Product List";
+            btnProductList.TextAlign = ContentAlignment.MiddleLeft;
+            btnProductList.UseVisualStyleBackColor = true;
             // 
-            // btn_inventory
+            // btnInventory
             // 
-            btn_inventory.Location = new Point(0, 530);
-            btn_inventory.Margin = new Padding(3, 4, 3, 4);
-            btn_inventory.Name = "btn_inventory";
-            btn_inventory.Size = new Size(186, 59);
-            btn_inventory.TabIndex = 2;
-            btn_inventory.Text = "Inventory";
-            btn_inventory.TextAlign = ContentAlignment.MiddleLeft;
-            btn_inventory.UseVisualStyleBackColor = true;
-            btn_inventory.Click += btn_inventory_Click;
+            btnInventory.Location = new Point(0, 530);
+            btnInventory.Margin = new Padding(3, 4, 3, 4);
+            btnInventory.Name = "btnInventory";
+            btnInventory.Size = new Size(186, 59);
+            btnInventory.TabIndex = 2;
+            btnInventory.Text = "Inventory";
+            btnInventory.TextAlign = ContentAlignment.MiddleLeft;
+            btnInventory.UseVisualStyleBackColor = true;
+            btnInventory.Click += btnInventory_Click;
             // 
             // btnCreateOrder
             // 
@@ -153,49 +153,48 @@
             btnCreateOrder.Text = "Create Order";
             btnCreateOrder.TextAlign = ContentAlignment.MiddleLeft;
             btnCreateOrder.UseVisualStyleBackColor = true;
-            btnCreateOrder.Click += this.btnCreateOrder_Click;
+            btnCreateOrder.Click += btnCreateOrder_Click;
             // 
-            // btn_createProduct
+            // btnCreateProduct
             // 
-            btn_createProduct.Location = new Point(0, 397);
-            btn_createProduct.Margin = new Padding(3, 4, 3, 4);
-            btn_createProduct.Name = "btn_createProduct";
-            btn_createProduct.Size = new Size(186, 59);
-            btn_createProduct.TabIndex = 0;
-            btn_createProduct.Text = "Create Product";
-            btn_createProduct.TextAlign = ContentAlignment.MiddleLeft;
-            btn_createProduct.UseVisualStyleBackColor = true;
+            btnCreateProduct.Location = new Point(0, 397);
+            btnCreateProduct.Margin = new Padding(3, 4, 3, 4);
+            btnCreateProduct.Name = "btnCreateProduct";
+            btnCreateProduct.Size = new Size(186, 59);
+            btnCreateProduct.TabIndex = 0;
+            btnCreateProduct.Text = "Create Product";
+            btnCreateProduct.TextAlign = ContentAlignment.MiddleLeft;
+            btnCreateProduct.UseVisualStyleBackColor = true;
             // 
             // StoreMainForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1898, 944);
-            Controls.Add(splitContainer_mainInterface);
+            Controls.Add(splConStoreMainForm);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
             Name = "StoreMainForm";
             Text = "Store Management";
-            Load += Main_Form_Load;
-            splitContainer_mainInterface.Panel1.ResumeLayout(false);
-            splitContainer_mainInterface.Panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer_mainInterface).EndInit();
-            splitContainer_mainInterface.ResumeLayout(false);
+            splConStoreMainForm.Panel1.ResumeLayout(false);
+            splConStoreMainForm.Panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)splConStoreMainForm).EndInit();
+            splConStoreMainForm.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox_notificationBell).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private SplitContainer splitContainer_mainInterface;
-        private Button btn_createProduct;
-        private Button btn_productList;
-        private Button btn_inventory;
+        private SplitContainer splConStoreMainForm;
+        private Button btnCreateProduct;
+        private Button btnProductList;
+        private Button btnInventory;
         private Button btnCreateOrder;
-        private Button btn_orderHistory;
-        private Button btn_preOrderList;
+        private Button btnOrderHistory;
+        private Button btnPreOrderList;
         private TextBox txtBx_currentUser;
-        private Button btn_task;
+        private Button btnDailyTask;
         private PictureBox pictureBox_notificationBell;
     }
 }

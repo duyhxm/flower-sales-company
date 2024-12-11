@@ -30,65 +30,70 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InventoryForm));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            toolStripNavigationBar = new ToolStrip();
-            toolStripButtonMaterial = new ToolStripButton();
-            toolStripButtonProduct = new ToolStripButton();
-            dataGridViewItemInventory = new DataGridView();
-            columnOrder = new DataGridViewTextBoxColumn();
-            columnID = new DataGridViewTextBoxColumn();
-            columnName = new DataGridViewTextBoxColumn();
-            columnStockQuantity = new DataGridViewTextBoxColumn();
+            tolStrNavigationBar = new ToolStrip();
+            tolStrBtnMaterial = new ToolStripButton();
+            tolStrSep = new ToolStripSeparator();
+            tolStrBtnProduct = new ToolStripButton();
+            dgvItemInventory = new DataGridView();
+            colOrder = new DataGridViewTextBoxColumn();
+            colID = new DataGridViewTextBoxColumn();
+            colName = new DataGridViewTextBoxColumn();
+            colStockQuantity = new DataGridViewTextBoxColumn();
             lblFilter = new Label();
             lblStore = new Label();
             lblMaterialType = new Label();
-            comboBoxMaterials = new ComboBox();
-            comboBoxStores = new ComboBox();
-            panelHorizontalLine = new Panel();
-            toolStripSeparator1 = new ToolStripSeparator();
-            toolStripNavigationBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewItemInventory).BeginInit();
+            cmbBxMaterials = new ComboBox();
+            cmbBxStores = new ComboBox();
+            plHorizontalLine = new Panel();
+            tolStrNavigationBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvItemInventory).BeginInit();
             SuspendLayout();
             // 
-            // toolStripNavigationBar
+            // tolStrNavigationBar
             // 
-            toolStripNavigationBar.BackColor = SystemColors.GradientInactiveCaption;
-            toolStripNavigationBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            toolStripNavigationBar.ImageScalingSize = new Size(24, 24);
-            toolStripNavigationBar.Items.AddRange(new ToolStripItem[] { toolStripButtonMaterial, toolStripSeparator1, toolStripButtonProduct });
-            toolStripNavigationBar.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            toolStripNavigationBar.Location = new Point(0, 0);
-            toolStripNavigationBar.Name = "toolStripNavigationBar";
-            toolStripNavigationBar.Padding = new Padding(0, 0, 3, 0);
-            toolStripNavigationBar.RenderMode = ToolStripRenderMode.Professional;
-            toolStripNavigationBar.Size = new Size(1653, 41);
-            toolStripNavigationBar.TabIndex = 0;
-            toolStripNavigationBar.Text = "toolStrip1";
+            tolStrNavigationBar.BackColor = SystemColors.GradientInactiveCaption;
+            tolStrNavigationBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tolStrNavigationBar.ImageScalingSize = new Size(24, 24);
+            tolStrNavigationBar.Items.AddRange(new ToolStripItem[] { tolStrBtnMaterial, tolStrSep, tolStrBtnProduct });
+            tolStrNavigationBar.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            tolStrNavigationBar.Location = new Point(0, 0);
+            tolStrNavigationBar.Name = "tolStrNavigationBar";
+            tolStrNavigationBar.Padding = new Padding(0, 0, 3, 0);
+            tolStrNavigationBar.RenderMode = ToolStripRenderMode.Professional;
+            tolStrNavigationBar.Size = new Size(1653, 41);
+            tolStrNavigationBar.TabIndex = 0;
+            tolStrNavigationBar.Text = "toolStrip1";
             // 
-            // toolStripButtonMaterial
+            // tolStrBtnMaterial
             // 
-            toolStripButtonMaterial.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripButtonMaterial.Image = (Image)resources.GetObject("toolStripButtonMaterial.Image");
-            toolStripButtonMaterial.ImageTransparentColor = Color.Magenta;
-            toolStripButtonMaterial.Name = "toolStripButtonMaterial";
-            toolStripButtonMaterial.Size = new Size(105, 36);
-            toolStripButtonMaterial.Text = "Material";
-            toolStripButtonMaterial.Click += toolStripButton1_Click;
+            tolStrBtnMaterial.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            tolStrBtnMaterial.Image = (Image)resources.GetObject("tolStrBtnMaterial.Image");
+            tolStrBtnMaterial.ImageTransparentColor = Color.Magenta;
+            tolStrBtnMaterial.Name = "tolStrBtnMaterial";
+            tolStrBtnMaterial.Size = new Size(105, 36);
+            tolStrBtnMaterial.Text = "Material";
+            tolStrBtnMaterial.Click += tolStrBtnMaterial_Click;
             // 
-            // toolStripButtonProduct
+            // tolStrSep
             // 
-            toolStripButtonProduct.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripButtonProduct.Image = (Image)resources.GetObject("toolStripButtonProduct.Image");
-            toolStripButtonProduct.ImageTransparentColor = Color.Magenta;
-            toolStripButtonProduct.Name = "toolStripButtonProduct";
-            toolStripButtonProduct.Size = new Size(100, 36);
-            toolStripButtonProduct.Text = "Product";
-            toolStripButtonProduct.Click += toolStripButton2_Click;
+            tolStrSep.Name = "tolStrSep";
+            tolStrSep.Size = new Size(6, 41);
             // 
-            // dataGridViewItemInventory
+            // tolStrBtnProduct
             // 
-            dataGridViewItemInventory.BackgroundColor = SystemColors.Menu;
-            dataGridViewItemInventory.BorderStyle = BorderStyle.None;
-            dataGridViewItemInventory.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            tolStrBtnProduct.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            tolStrBtnProduct.Image = (Image)resources.GetObject("tolStrBtnProduct.Image");
+            tolStrBtnProduct.ImageTransparentColor = Color.Magenta;
+            tolStrBtnProduct.Name = "tolStrBtnProduct";
+            tolStrBtnProduct.Size = new Size(100, 36);
+            tolStrBtnProduct.Text = "Product";
+            tolStrBtnProduct.Click += tolStrBtnProduct_Click;
+            // 
+            // dgvItemInventory
+            // 
+            dgvItemInventory.BackgroundColor = SystemColors.Menu;
+            dgvItemInventory.BorderStyle = BorderStyle.None;
+            dgvItemInventory.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -96,46 +101,46 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridViewItemInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewItemInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewItemInventory.Columns.AddRange(new DataGridViewColumn[] { columnOrder, columnID, columnName, columnStockQuantity });
-            dataGridViewItemInventory.Location = new Point(77, 262);
-            dataGridViewItemInventory.Name = "dataGridViewItemInventory";
-            dataGridViewItemInventory.RowHeadersWidth = 62;
-            dataGridViewItemInventory.Size = new Size(782, 641);
-            dataGridViewItemInventory.TabIndex = 1;
+            dgvItemInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvItemInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvItemInventory.Columns.AddRange(new DataGridViewColumn[] { colOrder, colID, colName, colStockQuantity });
+            dgvItemInventory.Location = new Point(78, 262);
+            dgvItemInventory.Name = "dgvItemInventory";
+            dgvItemInventory.RowHeadersWidth = 62;
+            dgvItemInventory.Size = new Size(782, 641);
+            dgvItemInventory.TabIndex = 1;
             // 
-            // columnOrder
+            // colOrder
             // 
-            columnOrder.HeaderText = "#";
-            columnOrder.MinimumWidth = 8;
-            columnOrder.Name = "columnOrder";
-            columnOrder.Resizable = DataGridViewTriState.False;
-            columnOrder.Width = 80;
+            colOrder.HeaderText = "#";
+            colOrder.MinimumWidth = 8;
+            colOrder.Name = "colOrder";
+            colOrder.Resizable = DataGridViewTriState.False;
+            colOrder.Width = 80;
             // 
-            // columnID
+            // colID
             // 
-            columnID.HeaderText = "ID";
-            columnID.MinimumWidth = 8;
-            columnID.Name = "columnID";
-            columnID.Resizable = DataGridViewTriState.False;
-            columnID.Width = 150;
+            colID.HeaderText = "ID";
+            colID.MinimumWidth = 8;
+            colID.Name = "colID";
+            colID.Resizable = DataGridViewTriState.False;
+            colID.Width = 150;
             // 
-            // columnName
+            // colName
             // 
-            columnName.HeaderText = "Name";
-            columnName.MinimumWidth = 8;
-            columnName.Name = "columnName";
-            columnName.Resizable = DataGridViewTriState.False;
-            columnName.Width = 250;
+            colName.HeaderText = "Name";
+            colName.MinimumWidth = 8;
+            colName.Name = "colName";
+            colName.Resizable = DataGridViewTriState.False;
+            colName.Width = 250;
             // 
-            // columnStockQuantity
+            // colStockQuantity
             // 
-            columnStockQuantity.HeaderText = "StockQuantity";
-            columnStockQuantity.MinimumWidth = 8;
-            columnStockQuantity.Name = "columnStockQuantity";
-            columnStockQuantity.Resizable = DataGridViewTriState.False;
-            columnStockQuantity.Width = 200;
+            colStockQuantity.HeaderText = "StockQuantity";
+            colStockQuantity.MinimumWidth = 8;
+            colStockQuantity.Name = "colStockQuantity";
+            colStockQuantity.Resizable = DataGridViewTriState.False;
+            colStockQuantity.Width = 200;
             // 
             // lblFilter
             // 
@@ -164,80 +169,74 @@
             lblMaterialType.TabIndex = 5;
             lblMaterialType.Text = "Material Type:";
             // 
-            // comboBoxMaterials
+            // cmbBxMaterials
             // 
-            comboBoxMaterials.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxMaterials.FormattingEnabled = true;
-            comboBoxMaterials.Items.AddRange(new object[] { "all", "flower", "accessory" });
-            comboBoxMaterials.Location = new Point(622, 168);
-            comboBoxMaterials.Name = "comboBoxMaterials";
-            comboBoxMaterials.Size = new Size(204, 40);
-            comboBoxMaterials.TabIndex = 6;
+            cmbBxMaterials.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbBxMaterials.FormattingEnabled = true;
+            cmbBxMaterials.Items.AddRange(new object[] { "all", "flower", "accessory" });
+            cmbBxMaterials.Location = new Point(622, 168);
+            cmbBxMaterials.Name = "cmbBxMaterials";
+            cmbBxMaterials.Size = new Size(204, 40);
+            cmbBxMaterials.TabIndex = 6;
             // 
-            // comboBoxStores
+            // cmbBxStores
             // 
-            comboBoxStores.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxStores.FormattingEnabled = true;
-            comboBoxStores.Items.AddRange(new object[] { "current", "store 01", "store 02", "store 03", "store 04", "store 05" });
-            comboBoxStores.Location = new Point(224, 168);
-            comboBoxStores.Name = "comboBoxStores";
-            comboBoxStores.Size = new Size(204, 40);
-            comboBoxStores.TabIndex = 7;
+            cmbBxStores.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbBxStores.FormattingEnabled = true;
+            cmbBxStores.Items.AddRange(new object[] { "current", "store 01", "store 02", "store 03", "store 04", "store 05" });
+            cmbBxStores.Location = new Point(224, 168);
+            cmbBxStores.Name = "cmbBxStores";
+            cmbBxStores.Size = new Size(204, 40);
+            cmbBxStores.TabIndex = 7;
             // 
-            // panelHorizontalLine
+            // plHorizontalLine
             // 
-            panelHorizontalLine.BackColor = SystemColors.ActiveBorder;
-            panelHorizontalLine.Location = new Point(145, 150);
-            panelHorizontalLine.Name = "panelHorizontalLine";
-            panelHorizontalLine.Size = new Size(730, 1);
-            panelHorizontalLine.TabIndex = 8;
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 41);
+            plHorizontalLine.BackColor = SystemColors.ActiveBorder;
+            plHorizontalLine.Location = new Point(145, 150);
+            plHorizontalLine.Name = "plHorizontalLine";
+            plHorizontalLine.Size = new Size(730, 1);
+            plHorizontalLine.TabIndex = 8;
             // 
             // InventoryForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1653, 944);
-            Controls.Add(panelHorizontalLine);
-            Controls.Add(comboBoxStores);
-            Controls.Add(comboBoxMaterials);
+            Controls.Add(plHorizontalLine);
+            Controls.Add(cmbBxStores);
+            Controls.Add(cmbBxMaterials);
             Controls.Add(lblMaterialType);
             Controls.Add(lblStore);
             Controls.Add(lblFilter);
-            Controls.Add(dataGridViewItemInventory);
-            Controls.Add(toolStripNavigationBar);
+            Controls.Add(dgvItemInventory);
+            Controls.Add(tolStrNavigationBar);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
             Name = "InventoryForm";
-            Load += Inventory_Form_Load;
-            toolStripNavigationBar.ResumeLayout(false);
-            toolStripNavigationBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewItemInventory).EndInit();
+            tolStrNavigationBar.ResumeLayout(false);
+            tolStrNavigationBar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvItemInventory).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private ToolStrip toolStripNavigationBar;
-        private ToolStripButton toolStripButtonMaterial;
-        private ToolStripButton toolStripButtonProduct;
-        private DataGridView dataGridViewItemInventory;
+        private ToolStrip tolStrNavigationBar;
+        private ToolStripButton tolStrBtnMaterial;
+        private ToolStripButton tolStrBtnProduct;
+        private DataGridView dgvItemInventory;
         private Label lblFilter;
         private Label lblStore;
         private Label lblMaterialType;
-        private ComboBox comboBoxMaterials;
-        private ComboBox comboBoxStores;
-        private Panel panelHorizontalLine;
-        private DataGridViewTextBoxColumn columnOrder;
-        private DataGridViewTextBoxColumn columnID;
-        private DataGridViewTextBoxColumn columnName;
-        private DataGridViewTextBoxColumn columnStockQuantity;
-        private ToolStripSeparator toolStripSeparator1;
+        private ComboBox cmbBxMaterials;
+        private ComboBox cmbBxStores;
+        private Panel plHorizontalLine;
+        private ToolStripSeparator tolStrSep;
+        private DataGridViewTextBoxColumn colOrder;
+        private DataGridViewTextBoxColumn colID;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colStockQuantity;
     }
 }

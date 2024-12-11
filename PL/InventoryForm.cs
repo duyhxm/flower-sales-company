@@ -15,24 +15,19 @@ namespace PL
         public InventoryForm()
         {
             InitializeComponent();
-            toolStripNavigationBar.Renderer = new CustomToolStripRenderer();
+            tolStrNavigationBar.Renderer = new CustomToolStripRenderer();
         }
 
-        private void Inventory_Form_Load(object sender, EventArgs e)
+        private void tolStrBtnMaterial_Click(object sender, EventArgs e)
         {
-
+            tolStrBtnMaterial.BackColor = SystemColors.ActiveCaption;
+            tolStrBtnProduct.BackColor = SystemColors.GradientInactiveCaption;
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void tolStrBtnProduct_Click(object sender, EventArgs e)
         {
-            toolStripButtonMaterial.BackColor = SystemColors.ActiveCaption;
-            toolStripButtonProduct.BackColor = SystemColors.GradientInactiveCaption;
-        }
-
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-            toolStripButtonProduct.BackColor = SystemColors.ActiveCaption;
-            toolStripButtonMaterial.BackColor = SystemColors.GradientInactiveCaption;
+            tolStrBtnProduct.BackColor = SystemColors.ActiveCaption;
+            tolStrBtnMaterial.BackColor = SystemColors.GradientInactiveCaption;
         }
     }
 }

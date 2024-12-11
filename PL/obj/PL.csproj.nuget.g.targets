@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)system.text.json\9.0.0\buildTransitive\net8.0\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\9.0.0\buildTransitive\net8.0\System.Text.Json.targets')" />
+    <Import Project="$(NuGetPackageRoot)system.text.json\6.0.9\buildTransitive\netcoreapp3.1\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\6.0.9\buildTransitive\netcoreapp3.1\System.Text.Json.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.winforms.designer.sdk\1.6.0\build\netcoreapp3.1\Microsoft.WinForms.Designer.SDK.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.winforms.designer.sdk\1.6.0\build\netcoreapp3.1\Microsoft.WinForms.Designer.SDK.targets')" />
     <Import Project="$(NuGetPackageRoot)c1.win\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.targets" Condition="Exists('$(NuGetPackageRoot)c1.win\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.targets')" />
     <Import Project="$(NuGetPackageRoot)c1.win.ribbon\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Ribbon.targets" Condition="Exists('$(NuGetPackageRoot)c1.win.ribbon\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Ribbon.targets')" />

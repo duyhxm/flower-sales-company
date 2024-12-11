@@ -16,15 +16,5 @@ namespace PL
         {
             InitializeComponent();
         }
-
-        private void Sales_Form_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
