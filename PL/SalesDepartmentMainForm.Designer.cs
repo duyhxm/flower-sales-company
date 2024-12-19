@@ -37,6 +37,8 @@
             ClientSize = new Size(800, 450);
             Name = "SalesDepartmentMainForm";
             Text = "SalesDepartmentMainForm";
+            FormClosing += SalesDepartmentMainForm_FormClosing;
+            Load += SalesDepartmentMainForm_Load;
             ResumeLayout(false);
         }
 

@@ -176,6 +176,8 @@
             Margin = new Padding(4);
             Name = "StoreMainForm";
             Text = "Store Management";
+            FormClosing += StoreMainForm_FormClosing;
+            Load += StoreMainForm_Load;
             splConStoreMainForm.Panel1.ResumeLayout(false);
             splConStoreMainForm.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)splConStoreMainForm).EndInit();

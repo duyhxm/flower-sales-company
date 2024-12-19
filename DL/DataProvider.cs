@@ -20,7 +20,7 @@ namespace DL
                 _connectionString = ConfigurationManager.ConnectionStrings["OnPremisesSQLServer"].ConnectionString;
                 _connection = new SqlConnection(_connectionString);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 throw;
             }
@@ -63,7 +63,7 @@ namespace DL
                     return command.ExecuteScalar();
                 }
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 throw;
             }
@@ -87,7 +87,7 @@ namespace DL
                     return command.ExecuteNonQuery();
                 }
             }
-            catch(SqlException ex)
+            catch(SqlException)
             {
                 throw;
             }
@@ -109,7 +109,7 @@ namespace DL
                     return command.ExecuteReader();
                 }
             }
-            catch(SqlException ex)
+            catch(SqlException)
             {
                 throw;
             }

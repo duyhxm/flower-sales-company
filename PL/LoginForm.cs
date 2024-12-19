@@ -10,15 +10,23 @@ using System.Windows.Forms;
 using DTO;
 using BL;
 using System.Reflection;
+using Infrastructure;
+using Microsoft.DotNet.DesignTools.Services;
 
 namespace PL
 {
     public partial class LoginForm : Form
     {
+        private const string TOPIC_NAME = "DataChanges";
         private Form WorkForm { get; set; }
         private Dictionary<string, Type> Forms;
         public string Username { get; private set; } = string.Empty;
         public string Password { get; private set; } = string.Empty;
+        private ServiceBusManager _serviceBusManager;
+        private string _serviceBusConnectionString;
+        private ServiceBusHost _serviceBusHost;
+        private bool _isServiceBusHostEnabled = false;
+        private NotificationService _notificationService;
         public LoginForm()
         {
             InitializeComponent();
@@ -37,7 +45,7 @@ namespace PL
         {
             Username = txtBxUsername.Text;
             Password = txtBxPassword.Text;
-            UserAccount account = new UserAccount(Username, Password);
+            UserAccountDTO account = new UserAccountDTO(Username, Password);
 
             try
             {
@@ -51,7 +59,10 @@ namespace PL
                     WorkForm = CreateFormByName(formName);
                     WorkForm.FormClosed += (s, args) => this.Show();
                     ShowWorkForm();
+
                     this.Hide();
+
+                    StartServiceBusHost();
                 }
                 else
                 {
@@ -104,6 +115,40 @@ namespace PL
             {
                 e.Cancel = true;
             }
+            else
+            {
+                if(_isServiceBusHostEnabled == true)
+                {
+                    _serviceBusHost.Stop();
+                }
+            }
+        }
+
+        public void StartServiceBusHost()
+        {
+            _serviceBusConnectionString = new ConfigurationManager().GetServiceBusConnectionString();
+
+            try
+            {
+                _serviceBusManager = new ServiceBusManager(_serviceBusConnectionString);
+                _serviceBusHost = new ServiceBusHost(_serviceBusManager);
+                _serviceBusHost.Start(TOPIC_NAME, Username);
+                _isServiceBusHostEnabled = true;
+
+                SubscribeNotification();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(@$"An error occured!!!
+                                  Message: {ex.Message}
+                                  Stack trace: {ex.StackTrace}");
+            }
+        }
+
+        private void SubscribeNotification()
+        {
+            _notificationService = new NotificationService(_serviceBusManager, TOPIC_NAME);
+            NotificationManager.Instance.SubscribeToNotificationService(_notificationService); // Gọi hàm này để đăng ký nhận thông báo
         }
     }
 }

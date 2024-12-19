@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Infrastructure;
 
 namespace BL
 {
     public class NotificationService
     {
-        private readonly DataProvider _dataProvider;
+        //private readonly DataProvider _dataProvider;
         //private readonly Dictionary<string, Repository> _repositories;
         //public event EventHandler<DataChangedEventArgs> Notification;
 
@@ -48,5 +49,28 @@ namespace BL
         //{
         //    Notification?.Invoke(this, e);
         //}
+
+        private readonly ServiceBusManager _serviceBusManager;
+        private readonly string _topicName;
+
+        public event EventHandler<string> MessageReceived;
+
+        public NotificationService(ServiceBusManager serviceBusManager, string topicName)
+        {
+            _serviceBusManager = serviceBusManager;
+            _topicName = topicName;
+            _serviceBusManager.MessageReceived += OnMessageReceived;
+        }
+
+        public async Task NotifyDatabaseOperationAsync(string operationDetails)
+        {
+            await _serviceBusManager.SendMessageAsync(_topicName, operationDetails);
+        }
+
+        private void OnMessageReceived(object sender, string messageBody)
+        {
+            Debug.WriteLine($"Processing message: {messageBody}");
+            MessageReceived?.Invoke(this, messageBody);
+        }
     }
 }

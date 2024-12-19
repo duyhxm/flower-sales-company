@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class Employee
+    public class EmployeeDTO
     {
         public string EmployeeID { get; set; }
         public string EmployeeName { get; set; }
 
         public string JobTitleName { get; set; }
 
-        public Employee(string employeeID, string employeeName, string jobTitleName)
+        public EmployeeDTO(string employeeID, string employeeName, string jobTitleName)
         {
             EmployeeID = employeeID;
             EmployeeName = employeeName;

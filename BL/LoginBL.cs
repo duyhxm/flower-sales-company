@@ -4,19 +4,19 @@ namespace BL
 {
     public class LoginBL
     {
-        public bool Login(UserAccount account)
+        public bool Login(UserAccountDTO account)
         {
             try
             {
                 return new LoginDL().Login(account);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
-        public Dictionary<string, string> GetLoginInfo(UserAccount account)
+        public Dictionary<string, string> GetLoginInfo(UserAccountDTO account)
         {
             Dictionary<string, string> accountInfo = new Dictionary<string, string>();
             Dictionary<string, string> additionalInfo = GetAdditionalInfo(account);
@@ -32,13 +32,13 @@ namespace BL
             return accountInfo;
         }
 
-        public Dictionary<string, string> GetAdditionalInfo(UserAccount account)
+        public Dictionary<string, string> GetAdditionalInfo(UserAccountDTO account)
         {
             try
             {
                 return new LoginDL().GetAdditionalInfo(account);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

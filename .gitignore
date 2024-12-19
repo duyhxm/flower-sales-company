@@ -6,3 +6,4 @@
 .vs/
 bin/
 /PL/App.config
+/Infrastructure/appsettings.json

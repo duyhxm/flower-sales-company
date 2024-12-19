@@ -1,5 +1,6 @@
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\appsettings.json
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.deps.json
+E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.runtimeconfig.json
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.dll
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.pdb
 E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.csproj.AssemblyReference.cache
@@ -12,4 +13,5 @@ E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.csproj.Up2Date
 E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.dll
 E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\refint\DL.dll
 E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.pdb
+E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.genruntimeconfig.cache
 E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\ref\DL.dll

@@ -12,7 +12,7 @@ namespace DL
 {
     public class LoginDL : DataProvider
     {
-        public bool Login(UserAccount account)
+        public bool Login(UserAccountDTO account)
         {
             try
             {
@@ -31,13 +31,13 @@ namespace DL
 
                 return result;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 throw;
             }
         }
 
-        public Dictionary<string, string> GetAdditionalInfo(UserAccount account)
+        public Dictionary<string, string> GetAdditionalInfo(UserAccountDTO account)
         {
             Dictionary<string, string> info = new Dictionary<string, string>();
 
@@ -73,9 +73,9 @@ namespace DL
                     }
                 }    
             }
-            catch (Exception ex)
+            catch (SqlException)
             {
-                throw new Exception("Error while fetching additional info", ex);
+                throw;
             }
             finally
             {

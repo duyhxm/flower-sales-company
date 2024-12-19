@@ -1,0 +1,7 @@
+E:\01 Projects\flower-sales-company\InfrastructureTests2\bin\Debug\net8.0\CoverletSourceRootsMapping_InfrastructureTests2
+E:\01 Projects\flower-sales-company\InfrastructureTests2\obj\Debug\net8.0\InfrastructureTests2.csproj.AssemblyReference.cache
+E:\01 Projects\flower-sales-company\InfrastructureTests2\obj\Debug\net8.0\InfrastructureTests2.GeneratedMSBuildEditorConfig.editorconfig
+E:\01 Projects\flower-sales-company\InfrastructureTests2\obj\Debug\net8.0\InfrastructureTests2.AssemblyInfoInputs.cache
+E:\01 Projects\flower-sales-company\InfrastructureTests2\obj\Debug\net8.0\InfrastructureTests2.AssemblyInfo.cs
+E:\01 Projects\flower-sales-company\InfrastructureTests2\obj\Debug\net8.0\InfrastructureTests2.csproj.CoreCompileInputs.cache
+E:\01 Projects\flower-sales-company\InfrastructureTests2\obj\Debug\net8.0\InfrastructureTests2.sourcelink.json

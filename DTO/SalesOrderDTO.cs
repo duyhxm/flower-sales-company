@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    internal class Material
+    public class SalesOrderDTO
     {
+
     }
 }
