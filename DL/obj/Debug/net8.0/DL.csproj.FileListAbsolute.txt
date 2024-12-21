@@ -1,4 +1,3 @@
-E:\01 Projects\flower-sales-company\bin\Debug\net8.0\appsettings.json
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.deps.json
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.runtimeconfig.json
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\DL.dll

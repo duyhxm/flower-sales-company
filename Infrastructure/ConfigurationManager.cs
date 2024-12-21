@@ -31,9 +31,16 @@ namespace Infrastructure
                 throw new Exception("Service bus connection string is null");
         }
 
-        public Dictionary<string, DatabaseConnection>? GetDbConnectionString()
+        public Dictionary<string, DatabaseConnection> GetDbConnectionString()
         {
-            return _configuration.GetSection("DbConnectionStrings").Get<Dictionary<string, DatabaseConnection>>();
+            try
+            {
+                return _configuration.GetSection("DbConnectionStrings").Get<Dictionary<string, DatabaseConnection>>() ?? throw new InvalidOperationException("Failed to retrieve the configuration section.");
+            }
+            catch(NullReferenceException)
+            {
+                throw;
+            }
         }
     }
 }

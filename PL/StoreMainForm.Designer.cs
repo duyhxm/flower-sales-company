@@ -39,8 +39,10 @@
             btnInventory = new Button();
             btnCreateOrder = new Button();
             btnCreateProduct = new Button();
+            btnTestServiceBus = new Button();
             ((System.ComponentModel.ISupportInitialize)splConStoreMainForm).BeginInit();
             splConStoreMainForm.Panel1.SuspendLayout();
+            splConStoreMainForm.Panel2.SuspendLayout();
             splConStoreMainForm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_notificationBell).BeginInit();
             SuspendLayout();
@@ -64,6 +66,10 @@
             splConStoreMainForm.Panel1.Controls.Add(btnInventory);
             splConStoreMainForm.Panel1.Controls.Add(btnCreateOrder);
             splConStoreMainForm.Panel1.Controls.Add(btnCreateProduct);
+            // 
+            // splConStoreMainForm.Panel2
+            // 
+            splConStoreMainForm.Panel2.Controls.Add(btnTestServiceBus);
             splConStoreMainForm.Size = new Size(1898, 944);
             splConStoreMainForm.SplitterDistance = 241;
             splConStoreMainForm.TabIndex = 1;
@@ -166,6 +172,16 @@
             btnCreateProduct.TextAlign = ContentAlignment.MiddleLeft;
             btnCreateProduct.UseVisualStyleBackColor = true;
             // 
+            // btnTestServiceBus
+            // 
+            btnTestServiceBus.Location = new Point(255, 655);
+            btnTestServiceBus.Name = "btnTestServiceBus";
+            btnTestServiceBus.Size = new Size(271, 74);
+            btnTestServiceBus.TabIndex = 0;
+            btnTestServiceBus.Text = "Test Service Bus";
+            btnTestServiceBus.UseVisualStyleBackColor = true;
+            btnTestServiceBus.Click += btnTestServiceBus_Click;
+            // 
             // StoreMainForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -180,6 +196,7 @@
             Load += StoreMainForm_Load;
             splConStoreMainForm.Panel1.ResumeLayout(false);
             splConStoreMainForm.Panel1.PerformLayout();
+            splConStoreMainForm.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splConStoreMainForm).EndInit();
             splConStoreMainForm.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox_notificationBell).EndInit();
@@ -198,5 +215,6 @@
         private TextBox txtBx_currentUser;
         private Button btnDailyTask;
         private PictureBox pictureBox_notificationBell;
+        private Button btnTestServiceBus;
     }
 }

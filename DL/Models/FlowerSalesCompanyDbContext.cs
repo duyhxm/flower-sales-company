@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
+using Infrastructure;
 
 namespace DL.Models;
 
@@ -148,20 +148,17 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     public virtual DbSet<WorkShiftDistribution> WorkShiftDistributions { get; set; }
 
-    public string getConnectionString()
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["OnPremisesSQLServer"].ConnectionString;
-
         try
         {
-            return connectionString;
+            optionsBuilder.UseSqlServer(DbContextHelper.GetConnectionString("SQLServer"));
         }
-        catch(Exception)
+        catch (Exception)
         {
             throw;
         }
-    }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer(getConnectionString());
+    } 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -15,7 +15,6 @@ namespace PL
         public InventoryForm()
         {
             InitializeComponent();
-            tolStrNavigationBar.Renderer = new CustomToolStripRenderer();
         }
 
         private void tolStrBtnMaterial_Click(object sender, EventArgs e)

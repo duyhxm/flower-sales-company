@@ -16,6 +16,7 @@ namespace Infrastructure.Tests
         {
             ConfigurationManager manager = new ConfigurationManager();
 
+            var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
             string? s = manager.GetServiceBusConnectionString();
 
             var o = manager.GetDbConnectionString();

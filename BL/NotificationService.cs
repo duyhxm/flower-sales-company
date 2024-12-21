@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Infrastructure;
+using Azure.Messaging.ServiceBus;
+using DTO;
 
 namespace BL
 {
@@ -53,24 +55,24 @@ namespace BL
         private readonly ServiceBusManager _serviceBusManager;
         private readonly string _topicName;
 
-        public event EventHandler<string> MessageReceived;
+        public event EventHandler<DataChangedEventArgs> MessageReceived;
 
         public NotificationService(ServiceBusManager serviceBusManager, string topicName)
         {
             _serviceBusManager = serviceBusManager;
             _topicName = topicName;
-            _serviceBusManager.MessageReceived += OnMessageReceived;
+            _serviceBusManager.DataChanged += OnMessageReceived;
         }
 
-        public async Task NotifyDatabaseOperationAsync(string operationDetails)
+        public async Task NotifyDatabaseOperationAsync(ServiceBusMessage message)
         {
-            await _serviceBusManager.SendMessageAsync(_topicName, operationDetails);
+            await _serviceBusManager.SendMessageAsync(_topicName, message);
         }
 
-        private void OnMessageReceived(object sender, string messageBody)
+        private void OnMessageReceived(object sender, DataChangedEventArgs e)
         {
-            Debug.WriteLine($"Processing message: {messageBody}");
-            MessageReceived?.Invoke(this, messageBody);
+            Debug.WriteLine($"Processing message: {e.Message}");
+            MessageReceived?.Invoke(this, e);
         }
     }
 }

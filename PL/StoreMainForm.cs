@@ -32,7 +32,7 @@ namespace PL
             NotificationManager.Instance.UnregisterForm(this);
         }
 
-        public void HandleNotification(string message)
+        public void HandleNotification(Dictionary<string, object> message)
         {
             // Handle the notification and update the UI
             MessageBox.Show($"CEOMainForm received message: {message}");
@@ -66,6 +66,11 @@ namespace PL
             InventoryForm inventoryForm = new InventoryForm();
 
             addFormInPanel("InventoryForm", inventoryForm);
+        }
+
+        private void btnTestServiceBus_Click(object sender, EventArgs e)
+        {
+            new LoginForm().Perform();
         }
         //private void OnNotification(object sender, DataChangedEventArgs e)
         //{

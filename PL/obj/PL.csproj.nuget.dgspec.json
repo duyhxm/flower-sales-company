@@ -54,6 +54,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Azure.Messaging.ServiceBus": {
+              "target": "Package",
+              "version": "[7.18.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -100,6 +106,9 @@
             "projectReferences": {
               "E:\\01 Projects\\flower-sales-company\\DTO\\DTO.csproj": {
                 "projectPath": "E:\\01 Projects\\flower-sales-company\\DTO\\DTO.csproj"
+              },
+              "E:\\01 Projects\\flower-sales-company\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "E:\\01 Projects\\flower-sales-company\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -259,7 +268,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "E:\\01 Projects\\flower-sales-company\\DTO\\DTO.csproj": {
+                "projectPath": "E:\\01 Projects\\flower-sales-company\\DTO\\DTO.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -376,10 +389,6 @@
             "ModernUI": {
               "target": "Package",
               "version": "[2.0.0, )"
-            },
-            "Syncfusion.Tools.Windows": {
-              "target": "Package",
-              "version": "[27.2.4, )"
             },
             "WinForms.DataVisualization": {
               "target": "Package",

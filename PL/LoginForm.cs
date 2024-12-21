@@ -11,7 +11,7 @@ using DTO;
 using BL;
 using System.Reflection;
 using Infrastructure;
-using Microsoft.DotNet.DesignTools.Services;
+using Azure.Messaging.ServiceBus;
 
 namespace PL
 {
@@ -27,6 +27,7 @@ namespace PL
         private ServiceBusHost _serviceBusHost;
         private bool _isServiceBusHostEnabled = false;
         private NotificationService _notificationService;
+        private NotificationManager _notificationManager;
         public LoginForm()
         {
             InitializeComponent();
@@ -132,7 +133,7 @@ namespace PL
             {
                 _serviceBusManager = new ServiceBusManager(_serviceBusConnectionString);
                 _serviceBusHost = new ServiceBusHost(_serviceBusManager);
-                _serviceBusHost.Start(TOPIC_NAME, Username);
+                _serviceBusHost.Start(TOPIC_NAME, "UserA_Subscription");
                 _isServiceBusHostEnabled = true;
 
                 SubscribeNotification();
@@ -148,7 +149,19 @@ namespace PL
         private void SubscribeNotification()
         {
             _notificationService = new NotificationService(_serviceBusManager, TOPIC_NAME);
-            NotificationManager.Instance.SubscribeToNotificationService(_notificationService); // Gọi hàm này để đăng ký nhận thông báo
+            //NotificationManager.Instance.OnNotificationReceived(_notificationService); // Gọi hàm này để đăng ký nhận thông báo
+            _notificationManager = new NotificationManager(_notificationService);
+        }
+
+        public async Task Perform()
+        {
+            ServiceBusMessage message = new ServiceBusMessage("test")
+            {
+                SessionId = "1234",
+                Subject = "Database Change Notification",
+                ApplicationProperties = { { "Action", "Insert" } }
+            };
+            await _notificationService.NotifyDatabaseOperationAsync(message);
         }
     }
 }
