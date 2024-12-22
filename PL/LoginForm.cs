@@ -20,14 +20,13 @@ namespace PL
         private const string TOPIC_NAME = "DataChanges";
         private Form WorkForm { get; set; }
         private Dictionary<string, Type> Forms;
-        public string Username { get; private set; } = string.Empty;
-        public string Password { get; private set; } = string.Empty;
         private ServiceBusManager _serviceBusManager;
-        private string _serviceBusConnectionString;
+        private string _connectionString;
         private ServiceBusHost _serviceBusHost;
         private bool _isServiceBusHostEnabled = false;
-        private NotificationService _notificationService;
-        private NotificationManager _notificationManager;
+        public string Username { get; private set; } = string.Empty;
+        public string Password { get; private set; } = string.Empty;
+        
         public LoginForm()
         {
             InitializeComponent();
@@ -40,6 +39,17 @@ namespace PL
                 { "SalesDepartmentMainForm", typeof(SalesDepartmentMainForm)}
             };
             WorkForm = new Form();
+
+            try
+            {
+                _connectionString = new ConfigurationManager().GetServiceBusConnectionString();
+                _serviceBusManager = new ServiceBusManager(_connectionString);
+                _serviceBusHost = new ServiceBusHost(_serviceBusManager);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Message: {e.Message} \n Stack trace: {e.StackTrace}");
+            }
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -55,15 +65,16 @@ namespace PL
 
                 if (canLogin)
                 {
+                    StartServiceBusHost();
+                    SubscribeNotification();
+
                     Dictionary<string, string> infor = login.GetLoginInfo(account);
                     string formName = infor["AccessibleFormName"];
                     WorkForm = CreateFormByName(formName);
                     WorkForm.FormClosed += (s, args) => this.Show();
                     ShowWorkForm();
 
-                    this.Hide();
-
-                    StartServiceBusHost();
+                    this.Hide(); 
                 }
                 else
                 {
@@ -80,7 +91,18 @@ namespace PL
         {
             if (Forms.ContainsKey(formName))
             {
-                return (Form)Activator.CreateInstance(Forms[formName]);
+                try
+                {
+                    var form = Activator.CreateInstance(Forms[formName]);
+                    if (form != null)
+                    {
+                        return (Form)form;
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                    throw;
+                }  
             }
 
             throw new ArgumentException($"Form with name '{formName}' not registered.");
@@ -125,43 +147,25 @@ namespace PL
             }
         }
 
-        public void StartServiceBusHost()
+        private void StartServiceBusHost()
         {
-            _serviceBusConnectionString = new ConfigurationManager().GetServiceBusConnectionString();
-
             try
             {
-                _serviceBusManager = new ServiceBusManager(_serviceBusConnectionString);
-                _serviceBusHost = new ServiceBusHost(_serviceBusManager);
                 _serviceBusHost.Start(TOPIC_NAME, "UserA_Subscription");
                 _isServiceBusHostEnabled = true;
-
-                SubscribeNotification();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 MessageBox.Show(@$"An error occured!!!
-                                  Message: {ex.Message}
-                                  Stack trace: {ex.StackTrace}");
+                                  Message: {e.Message}
+                                  Stack trace: {e.StackTrace}");
             }
         }
 
         private void SubscribeNotification()
         {
-            _notificationService = new NotificationService(_serviceBusManager, TOPIC_NAME);
-            //NotificationManager.Instance.OnNotificationReceived(_notificationService); // Gọi hàm này để đăng ký nhận thông báo
-            _notificationManager = new NotificationManager(_notificationService);
-        }
-
-        public async Task Perform()
-        {
-            ServiceBusMessage message = new ServiceBusMessage("test")
-            {
-                SessionId = "1234",
-                Subject = "Database Change Notification",
-                ApplicationProperties = { { "Action", "Insert" } }
-            };
-            await _notificationService.NotifyDatabaseOperationAsync(message);
+            NotificationServiceSingleton.Initialize(_serviceBusManager, TOPIC_NAME);
+            NotificationManager.Initialize();
         }
     }
 }

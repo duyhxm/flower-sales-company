@@ -11,18 +11,45 @@ namespace PL
 {
     public class NotificationManager
     {
-        private static NotificationManager _instance;
+        private static NotificationManager? _instance;
+        private static readonly object _lock = new object();
         private Form? _activeForm;
         private NotificationService _notificationService;
 
-        public NotificationManager(NotificationService notificationService)
+        // Private constructor to prevent direct instantiation
+        private NotificationManager(NotificationService notificationService)
         {
             _notificationService = notificationService;
             _notificationService.MessageReceived += OnNotificationReceived;
         }
 
-        public NotificationManager() { }
-        public static NotificationManager Instance => _instance ??= new NotificationManager();
+        // Public static method to initialize the singleton instance
+        public static void Initialize()
+        {
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new NotificationManager(NotificationServiceSingleton.Instance);
+                    }
+                }
+            }
+        }
+
+        // Singleton instance property
+        public static NotificationManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new InvalidOperationException("NotificationManager is not initialized. Call Initialize() first.");
+                }
+                return _instance;
+            }
+        }
 
         public void RegisterForm(Form form)
         {
@@ -45,29 +72,15 @@ namespace PL
             }
         }
 
-        public void SubscribeToNotificationService(NotificationService notificationService)
+        public void OnNotificationReceived(object? sender, DataChangedEventArgs e)
         {
-            notificationService.MessageReceived += (sender, message) =>
+            Dictionary<string, object> formattedMessage = new Dictionary<string, object>()
             {
-                Dictionary<string, object> formattedMessage = new Dictionary<string, object>();
-
-                formattedMessage.Add("Message", message.Message);
-                formattedMessage.Add("OperationName", message.OperationName);
-                formattedMessage.Add("TableName", message.TableName);
-                formattedMessage.Add("AffectedRows", message.AffectedRows);
-
-                Notify(formattedMessage);
+                { "Message", e.Message},
+                { "OperationName", e.OperationName},
+                { "TableName", e.TableName},
+                { "AffectedRows", e.AffectedRows }
             };
-        }
-
-        public void OnNotificationReceived(object sender, DataChangedEventArgs e)
-        {
-            Dictionary<string, object> formattedMessage = new Dictionary<string, object>();
-
-            formattedMessage.Add("Message", e.Message);
-            formattedMessage.Add("OperationName", e.OperationName);
-            formattedMessage.Add("TableName", e.TableName);
-            formattedMessage.Add("AffectedRows", e.AffectedRows);
 
             Notify(formattedMessage);
         }

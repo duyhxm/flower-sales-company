@@ -13,45 +13,6 @@ namespace BL
 {
     public class NotificationService
     {
-        //private readonly DataProvider _dataProvider;
-        //private readonly Dictionary<string, Repository> _repositories;
-        //public event EventHandler<DataChangedEventArgs> Notification;
-
-        //public NotificationService(IEnumerable<String> functionNames)
-        //{
-        //    _dataProvider = new DataProvider();
-
-        //    _repositories = new Dictionary<string, Repository>();
-        //    foreach (var functionName in functionNames)
-        //    {
-        //        var repository = new Repository(_dataProvider);
-        //        repository.DataChanged += OnDataChanged;
-        //        _repositories[functionName] = repository;
-        //    }
-        //}
-
-        //public void StartTracking()
-        //{
-        //    foreach (var functionName in _repositories.Keys)
-        //    {
-        //        var repo = _repositories[functionName];
-        //        if (repo != null)
-        //        {
-        //            repo.TrackChanges(functionName);
-        //        }
-        //        else
-        //        {
-        //            // Handle the case where the repository is null
-        //            Debug.WriteLine($"Repository for function '{functionName}' is null.");
-        //        }
-        //    }
-        //}
-
-        //private void OnDataChanged(object sender, DataChangedEventArgs e)
-        //{
-        //    Notification?.Invoke(this, e);
-        //}
-
         private readonly ServiceBusManager _serviceBusManager;
         private readonly string _topicName;
 
@@ -66,13 +27,36 @@ namespace BL
 
         public async Task NotifyDatabaseOperationAsync(ServiceBusMessage message)
         {
-            await _serviceBusManager.SendMessageAsync(_topicName, message);
+            try
+            {
+                await _serviceBusManager.SendMessageAsync(_topicName, message);
+            }
+            catch(Exception)
+            {
+                throw;
+            } 
         }
 
-        private void OnMessageReceived(object sender, DataChangedEventArgs e)
+        private void OnMessageReceived(object? sender, DataChangedEventArgs e)
         {
             Debug.WriteLine($"Processing message: {e.Message}");
             MessageReceived?.Invoke(this, e);
+        }
+
+        public ServiceBusMessage CreateMessage(string message, string sessionId, string subject, IDictionary<string, object> applicationProperties)
+        {
+            ServiceBusMessage serviceBusMessage = new ServiceBusMessage(message)
+            {
+                SessionId = sessionId,
+                Subject = subject,
+            };
+
+            foreach (var property in applicationProperties)
+            {
+                serviceBusMessage.ApplicationProperties[property.Key] = property.Value;
+            }
+
+            return serviceBusMessage;
         }
     }
 }

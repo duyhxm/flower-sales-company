@@ -1,25 +1,21 @@
-﻿using BL;
+﻿using Azure.Messaging.ServiceBus;
+using BL;
 using DL;
 using System.Collections.Generic;
+using Infrastructure;
 
 namespace PL
 {
     public partial class StoreMainForm : Form, INotifiable
     {
         private Dictionary<string, Form> formInstances;
-        //private readonly NotificationService _notificationService;
+        private NotificationService _notificationService;
 
         public StoreMainForm()
         {
             InitializeComponent();
-
             formInstances = new Dictionary<string, Form>();
-            //var functionNames = new List<string> {"dbo.fn_getProduct()"};
-            //_notificationService = new NotificationService(functionNames);
-
-            //_notificationService.Notification += OnNotification;
-
-            //_notificationService.StartTracking();
+            _notificationService = NotificationServiceSingleton.Instance;
         }
 
         private void StoreMainForm_Load(object sender, EventArgs e)
@@ -35,7 +31,7 @@ namespace PL
         public void HandleNotification(Dictionary<string, object> message)
         {
             // Handle the notification and update the UI
-            MessageBox.Show($"CEOMainForm received message: {message}");
+            MessageBox.Show($"StoreMainForm received message: {message}");
         }
 
         private void addFormInPanel(string formName, Form form)
@@ -68,46 +64,28 @@ namespace PL
             addFormInPanel("InventoryForm", inventoryForm);
         }
 
-        private void btnTestServiceBus_Click(object sender, EventArgs e)
+        private async void btnTestServiceBus_Click(object sender, EventArgs e)
         {
-            new LoginForm().Perform();
+            await SendMessageToServiceBusTest();
         }
-        //private void OnNotification(object sender, DataChangedEventArgs e)
-        //{
-        //    Invoke((Action)(() =>
-        //    {
-        //        switch (e.FunctionName)
-        //        {
-        //            case "dbo.GetOrder":
-        //                HandleOrderChange(e);
-        //                break;
-        //            case "dbo.GetProduct":
-        //                HandleProductChange(e);
-        //                break;
-        //            case "dbo.GetCustomer":
-        //                HandleCustomerChange(e);
-        //                break;
-        //        }
-        //    }));
-        //}
+        private async Task SendMessageToServiceBusTest()
+        {
+            IDictionary<string, object> applicationProperties = new Dictionary<string, object>()
+            {
+                {"Action", "Insert"}
+            };
+            ServiceBusMessage message = _notificationService.CreateMessage("test", "1234", "Database Change Notification", applicationProperties);
 
-        //private void HandleOrderChange(DataChangedEventArgs e)
-        //{
-        //    // Handle order updates
-        //    MessageBox.Show("Order data has changed!");
-        //}
+            try
+            {
+                await _notificationService.NotifyDatabaseOperationAsync(message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Message: {ex.Message} \n Stack trace: {ex.StackTrace}");
+            }
 
-        //private void HandleProductChange(DataChangedEventArgs e)
-        //{
-        //    // Handle product updates
-        //    MessageBox.Show("Product data has changed!");
-        //}
-
-        //private void HandleCustomerChange(DataChangedEventArgs e)
-        //{
-        //    // Handle customer updates
-        //    MessageBox.Show("Customer data has changed!");
-        //}
+        }
     }
 
 }

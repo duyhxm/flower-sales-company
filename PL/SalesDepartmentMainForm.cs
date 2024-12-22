@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,14 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DTO;
+using Infrastructure;
 
 namespace PL
 {
     public partial class SalesDepartmentMainForm : Form, INotifiable
     {
+        private NotificationService _notificationService;
         public SalesDepartmentMainForm()
         {
             InitializeComponent();
+            _notificationService = NotificationServiceSingleton.Instance;
         }
 
         private void SalesDepartmentMainForm_Load(object sender, EventArgs e)

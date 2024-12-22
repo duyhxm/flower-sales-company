@@ -40,7 +40,7 @@ namespace Infrastructure
         }
 
         // Logic chạy trong nền
-        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
             var worker = sender as BackgroundWorker;
 

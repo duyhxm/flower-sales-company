@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,14 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Infrastructure;
+using DTO;
 
 namespace PL
 {
     public partial class CEOMainForm : Form, INotifiable
     {
+        private NotificationService _notificationService;
         public CEOMainForm()
         {
             InitializeComponent();
+            _notificationService = NotificationServiceSingleton.Instance;
         }
 
         private void CEOMainForm_Load(object sender, EventArgs e)

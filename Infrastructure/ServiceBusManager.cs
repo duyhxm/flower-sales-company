@@ -104,22 +104,6 @@ namespace Infrastructure
             if (_client != null) await _client.DisposeAsync();
         }
 
-        public ServiceBusMessage CreateMessage(string message, string sessionId, string subject, IDictionary<string, object> applicationProperties)
-        {
-            ServiceBusMessage serviceBusMessage = new ServiceBusMessage(message)
-            {
-                SessionId = sessionId,
-                Subject = subject,
-            };
-
-            foreach (var property in applicationProperties)
-            {
-                serviceBusMessage.ApplicationProperties[property.Key] = property.Value;
-            }
-
-            return serviceBusMessage;
-        }
-
         protected virtual void OnDataChanged(DataChangedEventArgs e)
         {
             DataChanged?.Invoke(this, e);

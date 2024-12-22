@@ -16,3 +16,4 @@ E:\01 Projects\flower-sales-company\bin\Debug\net8.0\appsettings.json
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\Infrastructure.deps.json
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\Infrastructure.dll
 E:\01 Projects\flower-sales-company\bin\Debug\net8.0\Infrastructure.pdb
+E:\01 Projects\flower-sales-company\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date

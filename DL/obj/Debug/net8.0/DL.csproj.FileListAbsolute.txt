@@ -14,3 +14,4 @@ E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\refint\DL.dll
 E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.pdb
 E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\DL.genruntimeconfig.cache
 E:\01 Projects\flower-sales-company\DL\obj\Debug\net8.0\ref\DL.dll
+E:\01 Projects\flower-sales-company\bin\Debug\net8.0\appsettings.json
