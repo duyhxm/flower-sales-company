@@ -19,7 +19,7 @@ namespace PL
         public SalesDepartmentMainForm()
         {
             InitializeComponent();
-            _notificationService = NotificationServiceSingleton.Instance;
+            _notificationService = NotificationService.Instance;
         }
 
         private void SalesDepartmentMainForm_Load(object sender, EventArgs e)

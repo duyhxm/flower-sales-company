@@ -32,7 +32,7 @@ namespace PL
                 {
                     if (_instance == null)
                     {
-                        _instance = new NotificationManager(NotificationServiceSingleton.Instance);
+                        _instance = new NotificationManager(NotificationService.Instance);
                     }
                 }
             }

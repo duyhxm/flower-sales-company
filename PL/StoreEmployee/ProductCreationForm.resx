@@ -117,21 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pictureBox_notificationBell.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAI1SURBVFhHtdc9
-        aBMBGMbxExUHUcRFcNI6OCii2Lu0k+3lWj+QOtXBSXQSN3UTRRfBuil0EVTwCxwcHAV1VIcqFUFUEF38
-        Gow1d/EDNP7f81Lk8uRyuSQP/KC0975P0uY+6vQ6lZHNK6Jy6WRY9p4g/MedicruCftZclh/Ug2GRkLf
-        +0xpvYVP1TF3W3J4oQzAFkxgC5YhDu/QpaCWKlRq0Zg3mIzlylIcxyvUUwI49cnJhSx+nirK4D6zGZtt
-        l1F8QLrYfMEiOCzcoYsy+KVxm83KXvyCKjePEScM3HOyJNvZZFzG/kY1qOKGO4jDsmup5TmUribjTVmA
-        h1Cl/7uHOJHvTeuS1qLAu5CMN2UXVGHaG8SJyt5BVZLJd/cn4025DFWorIMzt314JUu/NpW0Vsm6KL2E
-        KlPOIE61XDosiqRq4B5KxmS+QZUpc1iNODnPhsxPv0UVZbmP+HpgiUaHJiiZTZWap3xWdieHZUaVtHMb
-        SzCf7+Pe2sgf3Gns6+TbuaIK8pjFVnQVuwao5Xn9wV0cQEfvupFVUIuLeICO40EtK+IdOs4pqGVFbUDu
-        2Kmk7vndmELuHIVa0o0fWI+2GUYItaRb9tww/+imshEVqOFesTNiMWQeQQ312hHI2A1FDfTaRchcgRro
-        NXvQkbGbyDHcxC3hN9TCtLdQ85fQsjxPPkIVpp1HX3IDqjBtD/qSTfgJVdowg1z/6RTNPrR6Ea+xBn2P
-        /Sau4z3sxbzAaSxHwTjOX8qoHfePWGF8AAAAAElFTkSuQmCC
-</value>
-  </data>
+  <metadata name="ColMaterialId.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColMaterialName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColDecrease.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColUsageQuantity.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColIncrease.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColFlowerId.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColFlowerName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColFloralType.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColFloralColor.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColFloralCharacteristic.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColFlowerSelection.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColAccessoryId.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColAccessoryName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColAccessorySelection.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

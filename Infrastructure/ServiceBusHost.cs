@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Infrastructure
 {
@@ -29,14 +30,14 @@ namespace Infrastructure
         }
 
         // Dừng các dịch vụ nền
-        public void Stop()
+        public async Task StopAsync()
         {
             if (_backgroundWorker.WorkerSupportsCancellation)
             {
                 _backgroundWorker.CancelAsync();
             }
 
-            _serviceBusManager.ShutdownAsync().Wait();
+            await _serviceBusManager.ShutdownAsync();
         }
 
         // Logic chạy trong nền
@@ -47,12 +48,14 @@ namespace Infrastructure
             if (worker == null || worker.CancellationPending)
             {
                 e.Cancel = true;
+                Debug.WriteLine("BackgroundWorker is being cancelled.");
                 return;
             }
 
             if (e.Argument == null)
             {
                 e.Cancel = true;
+                Debug.WriteLine("No arguments provided to BackgroundWorker.");
                 return;
             }
 
@@ -60,6 +63,7 @@ namespace Infrastructure
             string topicName = args.TopicName;
             string subscriptionName = args.SubscriptionName;
 
+            Debug.WriteLine("BackgroundWorker is starting ServiceBusManager.");
             _serviceBusManager.InitializeSessionProcessor(topicName, subscriptionName);
         }
     }

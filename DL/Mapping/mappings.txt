@@ -1,0 +1,8 @@
+﻿DL.Models.Product,DTO.Product.ProductDTO
+DTO.Product.ProductDTO,DL.Models.Product
+DTO.Employee.UserAccountDTO,DL.Models.UserAccount
+DL.Models.UserAccount, DTO.Employee.UserAccountDTO
+DTO.Employee.EmployeeDTO,DL.Models.Employee
+DL.Models.Employee,DTO.Employee.EmployeeDTO
+DL.Models.FloralRepresentation,DTO.Material.FloralRepresentationDTO
+DTO.Material.FloralRepresentationDTO,DL.Models.FloralRepresentation

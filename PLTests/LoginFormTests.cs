@@ -15,7 +15,7 @@ namespace PL.Tests
         public void StartServiceBusHostTest()
         {
             LoginForm loginForm = new LoginForm();
-            loginForm.StartServiceBusHost();
+            loginForm.RunServiceBusHost();
         }
     }
 }

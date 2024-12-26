@@ -128,6 +128,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "Azure.Messaging.ServiceBus": {
               "target": "Package",
               "version": "[7.18.2, )"
@@ -290,6 +294,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "Azure.Messaging.ServiceBus": {
               "target": "Package",
               "version": "[7.18.2, )"
@@ -467,6 +475,10 @@
             "C1.Win.FlexChart": {
               "target": "Package",
               "version": "[8.0.20242.688, )"
+            },
+            "FontAwesome.Sharp": {
+              "target": "Package",
+              "version": "[6.6.0, )"
             },
             "ModernUI": {
               "target": "Package",

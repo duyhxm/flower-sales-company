@@ -28,7 +28,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     public virtual DbSet<BankAccount> BankAccounts { get; set; }
 
-    public virtual DbSet<Bonu> Bonus { get; set; }
+    public virtual DbSet<Bonus> Bonus { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
 
@@ -52,7 +52,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     public virtual DbSet<EmployeeAllowance> EmployeeAllowances { get; set; }
 
-    public virtual DbSet<EmployeeBonu> EmployeeBonus { get; set; }
+    public virtual DbSet<EmployeeBonus> EmployeeBonus { get; set; }
 
     public virtual DbSet<EmployeeJobTitle> EmployeeJobTitles { get; set; }
 
@@ -74,7 +74,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     public virtual DbSet<Form> Forms { get; set; }
 
-    public virtual DbSet<Ftemployee> Ftemployees { get; set; }
+    public virtual DbSet<FTEmployee> Ftemployees { get; set; }
 
     public virtual DbSet<GoodsDistribution> GoodsDistributions { get; set; }
 
@@ -268,7 +268,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .HasConstraintName("FK_BankID_BankAccount");
         });
 
-        modelBuilder.Entity<Bonu>(entity =>
+        modelBuilder.Entity<Bonus>(entity =>
         {
             entity.HasKey(e => e.BonusId).HasName("PK__Bonus__8E554708BB47F7BC");
 
@@ -568,7 +568,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .HasConstraintName("FK_EmployeeID_EmployeeAllowance");
         });
 
-        modelBuilder.Entity<EmployeeBonu>(entity =>
+        modelBuilder.Entity<EmployeeBonus>(entity =>
         {
             entity.HasKey(e => new { e.EmployeeId, e.BonusId }).HasName("PK_EmployeeID_BonusID_EmployeeBonus");
 
@@ -816,13 +816,13 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Ftemployee>(entity =>
+        modelBuilder.Entity<FTEmployee>(entity =>
         {
-            entity.HasKey(e => e.FtemployeeId).HasName("PK__FTEmploy__8783797B080A58F3");
+            entity.HasKey(e => e.FTEmployeeID).HasName("PK__FTEmploy__8783797B080A58F3");
 
             entity.ToTable("FTEmployee");
 
-            entity.Property(e => e.FtemployeeId)
+            entity.Property(e => e.FTEmployeeID)
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength()
@@ -834,7 +834,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .HasColumnName("SalaryID");
 
             entity.HasOne(d => d.FtemployeeNavigation).WithOne(p => p.Ftemployee)
-                .HasForeignKey<Ftemployee>(d => d.FtemployeeId)
+                .HasForeignKey<FTEmployee>(d => d.FTEmployeeID)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_FTEmployeeID_FTEmployee");
 

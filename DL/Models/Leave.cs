@@ -17,5 +17,5 @@ public partial class Leave
 
     public DateOnly? EndDate { get; set; }
 
-    public virtual Ftemployee? Ftemployee { get; set; }
+    public virtual FTEmployee? Ftemployee { get; set; }
 }

@@ -8,21 +8,60 @@ using System.Diagnostics;
 using Infrastructure;
 using Azure.Messaging.ServiceBus;
 using DTO;
+using DL.Repositories.Implementations;
 
 namespace BL
 {
     public class NotificationService
     {
+        private static NotificationService? _instance;
+        private static readonly object _lock = new object();
         private readonly ServiceBusManager _serviceBusManager;
         private readonly string _topicName;
-
         public event EventHandler<DataChangedEventArgs> MessageReceived;
 
-        public NotificationService(ServiceBusManager serviceBusManager, string topicName)
+        private NotificationService(string topicName)
         {
-            _serviceBusManager = serviceBusManager;
-            _topicName = topicName;
-            _serviceBusManager.DataChanged += OnMessageReceived;
+            try
+            {
+                _serviceBusManager = SystemRepository.Instance.ServiceBusManager;
+                _topicName = topicName;
+                _serviceBusManager.DataChanged += OnMessageReceived;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static NotificationService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new InvalidOperationException("NotificationService is not initialized. Call Initialize() first.");
+                }
+                return _instance;
+            }
+        }
+
+        public static void Initialize(string topicName)
+        {
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    try
+                    {
+                        _instance = new NotificationService(topicName);
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+            }
         }
 
         public async Task NotifyDatabaseOperationAsync(ServiceBusMessage message)

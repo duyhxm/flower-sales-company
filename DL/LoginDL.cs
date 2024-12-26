@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DTO;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using DTO.Store;
+using DTO.Employee;
 
 
 namespace DL
@@ -66,9 +67,9 @@ namespace DL
                         string jobTitleName = dr.GetString(2);
                         string formName = dr.GetString(3);
 
-                        info.Add("EmployeeID", employeeID);
-                        info.Add("EmployeeName", employeeName);
-                        info.Add("JobTitleName", jobTitleName);
+                        info.Add("EmployeeId", employeeID);
+                        info.Add("FullName", employeeName);
+                        info.Add("JobTitle", jobTitleName);
                         info.Add("AccessibleFormName", formName);
                     }
                 }    
@@ -83,6 +84,11 @@ namespace DL
             }
             
             return info;
+        }
+
+        public StoreDTO GetStoreInformation(string employeeId)
+        {
+            return new StoreDTO();
         }
     }
 }

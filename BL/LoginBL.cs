@@ -1,5 +1,6 @@
-﻿using DTO;
-using DL;
+﻿using DL;
+using DTO.Store;
+using DTO.Employee;
 namespace BL
 {
     public class LoginBL
@@ -37,6 +38,18 @@ namespace BL
             try
             {
                 return new LoginDL().GetAdditionalInfo(account);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public StoreDTO GetStoreInformation(string employeeId)
+        {
+            try
+            {
+                return new LoginDL().GetStoreInformation(employeeId);
             }
             catch (Exception)
             {

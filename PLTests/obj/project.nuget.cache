@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "jsE22/xxEeI=",
+  "dgSpecHash": "SzwyjdEAtYY=",
   "success": true,
   "projectFilePath": "E:\\01 Projects\\flower-sales-company\\PLTests\\PLTests.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\USER\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\azure.core\\1.44.0\\azure.core.1.44.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\azure.core.amqp\\1.3.1\\azure.core.amqp.1.3.1.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
@@ -15,6 +16,7 @@
     "C:\\Users\\USER\\.nuget\\packages\\c1.win.ribbon\\8.0.20242.688\\c1.win.ribbon.8.0.20242.688.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\entityframework\\6.5.1\\entityframework.6.5.1.nupkg.sha512",
+    "C:\\Users\\USER\\.nuget\\packages\\fontawesome.sharp\\6.6.0\\fontawesome.sharp.6.6.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.azure.amqp\\2.6.7\\microsoft.azure.amqp.2.6.7.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",

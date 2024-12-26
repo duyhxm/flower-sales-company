@@ -9,8 +9,9 @@ namespace DL.Repositories.Interfaces
 {
     public interface IProductRepository
     {
-        Product? FindById(Product product);
+        Task<Product?> FindByIdAsync(string id);
         Task<List<Product>> GetAllProductsAsync();
-        Task AddProductAsync(Product product);
+        int AddProduct(Product product);
+        void RemoveProduct(Product product);
     }
 }

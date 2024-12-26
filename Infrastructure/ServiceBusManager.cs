@@ -17,9 +17,9 @@ namespace Infrastructure
         public event EventHandler<DataChangedEventArgs> DataChanged;
 
         //Khởi tạo ServicesBusClient với connection string
-        public ServiceBusManager(string serviceBusConnectionString)
+        public ServiceBusManager(string connectionString)
         {
-            _connectionString = serviceBusConnectionString;
+            _connectionString = connectionString;
             try
             {
                 _client = new ServiceBusClient(_connectionString);
@@ -102,11 +102,21 @@ namespace Infrastructure
         {
             if (_processor != null) await _processor.CloseAsync();
             if (_client != null) await _client.DisposeAsync();
+            Debug.WriteLine("ServiceBusManager shutdown completed.");
         }
 
         protected virtual void OnDataChanged(DataChangedEventArgs e)
         {
-            DataChanged?.Invoke(this, e);
+            if (DataChanged != null)
+            {
+                Debug.WriteLine("Raising DataChanged event.");
+                DataChanged.Invoke(this, e);
+            }
+            else
+            {
+                Debug.WriteLine("No subscribers for DataChanged event.");
+            }
+            
         }
     }
 }

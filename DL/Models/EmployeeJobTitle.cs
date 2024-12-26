@@ -13,6 +13,8 @@ public partial class EmployeeJobTitle
 
     public DateOnly? EndDate { get; set; }
 
+    public string? JobTitleStatus { get; set; }
+
     public virtual Employee Employee { get; set; } = null!;
 
     public virtual JobTitle JobTitle { get; set; } = null!;

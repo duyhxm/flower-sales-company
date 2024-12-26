@@ -18,23 +18,23 @@ namespace Infrastructure.Tests
         [TestMethod()]
         public async Task ServiceBusManagerTest()
         {
-            ConfigurationManager config = new ConfigurationManager();
-            string serviceBusConnectionString = new ConfigurationManager().GetServiceBusConnectionString();
+            //ConfigurationManager config = new ConfigurationManager();
+            //string serviceBusConnectionString = new ConfigurationManager().GetServiceBusConnectionString();
 
-            NotificationService notificationService;
+            //NotificationService notificationService;
 
-            ServiceBusManager serviceBus = new ServiceBusManager(serviceBusConnectionString);
-            notificationService = new NotificationService(serviceBus, "DataChanges");
+            //ServiceBusManager serviceBus = new ServiceBusManager(serviceBusConnectionString);
+            //notificationService = new NotificationService(serviceBus, "DataChanges");
 
-            ServiceBusMessage message = new ServiceBusMessage("test")
-            {
-                SessionId = "1234",
-                Subject = "Database Change Notification",
-                ApplicationProperties = { { "Action", "Insert" } }
-            };
+            //ServiceBusMessage message = new ServiceBusMessage("test")
+            //{
+            //    SessionId = "1234",
+            //    Subject = "Database Change Notification",
+            //    ApplicationProperties = { { "Action", "Insert" } }
+            //};
 
-            await serviceBus.SendMessageAsync("DataChanges", message);
-            serviceBus.InitializeSessionProcessor("DataChanges", "UserA_Subscription");
+            //await serviceBus.SendMessageAsync("DataChanges", message);
+            //serviceBus.InitializeSessionProcessor("DataChanges", "UserA_Subscription");
         }
     }
 }

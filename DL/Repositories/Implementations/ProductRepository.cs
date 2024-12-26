@@ -13,23 +13,75 @@ namespace DL.Repositories.Implementations
     {
         private readonly FlowerSalesCompanyDbContext _context;
 
-        public ProductRepository(FlowerSalesCompanyDbContext context)
+        public ProductRepository()
         {
-            _context = context;
+            _context = new FlowerSalesCompanyDbContext();
         }
 
-        public Product? FindById(Product product)
+        public async Task<Product?> FindByIdAsync(string productId)
         {
-            return new Product();
+            try
+            {
+                return await _context.Products.FindAsync(productId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public async Task<List<Product>> GetAllProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            try
+            {
+                return await _context.Products.ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
-        public async Task AddProductAsync(Product product)
+        public int AddProduct(Product product)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            int affectedRows = 0;
+            try
+            {
+                 affectedRows = _context.Database.ExecuteSqlInterpolated($"EXECUTE dbo.uspAddProduct {product.ProductName}, {product.FrepresentationId}");
+                _context.SaveChanges();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+
+            return affectedRows;
+        }
+
+        public void RemoveProduct(Product product)
+        {
+            try
+            {
+                _context.Products.Remove(product);
+                _context.SaveChanges();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        public string? GetLastestProductId()
+        {
+            try
+            {
+                return _context.Products
+                    .OrderByDescending(p => p.ProductId)
+                    .Select(p => p.ProductId)
+                    .FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -27,18 +27,18 @@ namespace PL
             }
         }
 
-        public static void Initialize(ServiceBusManager serviceBusManager, string topicName)
-        {
-            if (_instance == null)
-            {
-                lock (_lock)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new NotificationService(serviceBusManager, topicName);
-                    }
-                }
-            }
-        }
+        //public static void Initialize(ServiceBusManager serviceBusManager, string topicName)
+        //{
+        //    if (_instance == null)
+        //    {
+        //        lock (_lock)
+        //        {
+        //            if (_instance == null)
+        //            {
+        //                _instance = new NotificationService(serviceBusManager, topicName);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

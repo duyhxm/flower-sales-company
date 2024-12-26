@@ -7,30 +7,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DTO;
 using BL;
 using System.Reflection;
-using Infrastructure;
-using Azure.Messaging.ServiceBus;
+using DTO.Employee;
+using DTO;
+using System.Diagnostics;
 
 namespace PL
 {
     public partial class LoginForm : Form
     {
+        private static LoginForm? _instance;
+        private static readonly object _lock = new object();
+        private SystemService _systemService;
         private const string TOPIC_NAME = "DataChanges";
+
         private Form WorkForm { get; set; }
+
         private Dictionary<string, Type> Forms;
-        private ServiceBusManager _serviceBusManager;
-        private string _connectionString;
-        private ServiceBusHost _serviceBusHost;
-        private bool _isServiceBusHostEnabled = false;
+
         public string Username { get; private set; } = string.Empty;
+
         public string Password { get; private set; } = string.Empty;
-        
-        public LoginForm()
+
+        public LoginInformation LoginInformation { get; set; }
+
+        private LoginForm()
         {
             InitializeComponent();
             lblInvalidCredential.Visible = false;
+
+            SystemService.Initialize();
+            _systemService = SystemService.Instance;
 
             Forms = new Dictionary<string, Type>
             {
@@ -39,42 +47,67 @@ namespace PL
                 { "SalesDepartmentMainForm", typeof(SalesDepartmentMainForm)}
             };
             WorkForm = new Form();
+        }
 
-            try
+        public static LoginForm Instance
+        {
+            get
             {
-                _connectionString = new ConfigurationManager().GetServiceBusConnectionString();
-                _serviceBusManager = new ServiceBusManager(_connectionString);
-                _serviceBusHost = new ServiceBusHost(_serviceBusManager);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"Message: {e.Message} \n Stack trace: {e.StackTrace}");
+                return _instance!;
             }
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        public static void Initialize()
+        {
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    _instance = new LoginForm();
+                }
+            }
+        }
+
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             Username = txtBxUsername.Text;
             Password = txtBxPassword.Text;
-            UserAccountDTO account = new UserAccountDTO(Username, Password);
+
+            UserAccountDTO userAccount = new UserAccountDTO()
+            {
+                Username = Username,
+                Password = Password
+            };
 
             try
             {
-                LoginBL login = new LoginBL();
-                bool canLogin = login.Login(account);
+                UserAccountDTO? result = await _systemService.LoginAsync(userAccount);
 
-                if (canLogin)
+                Debug.WriteLine("LoginForm");
+
+                if (result != null)
                 {
-                    StartServiceBusHost();
-                    SubscribeNotification();
 
-                    Dictionary<string, string> infor = login.GetLoginInfo(account);
-                    string formName = infor["AccessibleFormName"];
-                    WorkForm = CreateFormByName(formName);
-                    WorkForm.FormClosed += (s, args) => this.Show();
-                    ShowWorkForm();
+                    LoginInformation? extraLoginInfo = await _systemService.GetExtraLoginInfo(result);
 
-                    this.Hide(); 
+                    if (extraLoginInfo != null)
+                    {
+                        LoginInformation = extraLoginInfo;
+                        LoginInformation.UserAccount = result;
+
+                        RunServiceBusHost(TOPIC_NAME, "UserA_Subscription");
+                        RunNotificationService(TOPIC_NAME);
+
+                        WorkForm = CreateFormByName(LoginInformation.AccessibleForm);
+                        WorkForm.FormClosed += (s, args) => this.Show();
+                        ShowWorkForm();
+
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hệ thống hiện tại đang bị lỗi, vui lòng liên hệ bộ phận kỹ thuật");
+                    }
                 }
                 else
                 {
@@ -129,7 +162,7 @@ namespace PL
             }
         }
 
-        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
+        private async void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             MessageBoxButtons buttons = MessageBoxButtons.YesNo;
             DialogResult results = MessageBox.Show("Bạn có chắc muốn thoát chương trình không?", "Warning", buttons);
@@ -140,19 +173,16 @@ namespace PL
             }
             else
             {
-                if(_isServiceBusHostEnabled == true)
-                {
-                    _serviceBusHost.Stop();
-                }
+                await _systemService.StopServiceBusHost();
+                e.Cancel = false;
             }
         }
 
-        private void StartServiceBusHost()
+        public void RunServiceBusHost(string topicName, string subscription)
         {
             try
             {
-                _serviceBusHost.Start(TOPIC_NAME, "UserA_Subscription");
-                _isServiceBusHostEnabled = true;
+                _systemService.RunServiceBusHost(topicName, subscription);
             }
             catch (Exception e)
             {
@@ -162,9 +192,9 @@ namespace PL
             }
         }
 
-        private void SubscribeNotification()
+        private void RunNotificationService(string topicName)
         {
-            NotificationServiceSingleton.Initialize(_serviceBusManager, TOPIC_NAME);
+            NotificationService.Initialize(topicName);
             NotificationManager.Initialize();
         }
     }

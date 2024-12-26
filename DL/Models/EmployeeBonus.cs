@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DL.Models;
 
-public partial class EmployeeBonu
+public partial class EmployeeBonus
 {
     public string EmployeeId { get; set; } = null!;
 
@@ -13,7 +13,7 @@ public partial class EmployeeBonu
 
     public DateOnly? ReceivedDate { get; set; }
 
-    public virtual Bonu Bonus { get; set; } = null!;
+    public virtual Bonus Bonus { get; set; } = null!;
 
     public virtual Employee Employee { get; set; } = null!;
 }

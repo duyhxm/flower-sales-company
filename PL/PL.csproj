@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="C1.Win.FlexChart" Version="8.0.20242.688" />
+    <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
     <PackageReference Include="ModernUI" Version="2.0.0" />
     <PackageReference Include="WinForms.DataVisualization" Version="1.9.2" />
   </ItemGroup>

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StoreMainForm));
             splConStoreMainForm = new SplitContainer();
+            btnAccountInformation = new Button();
             pictureBox_notificationBell = new PictureBox();
             btnDailyTask = new Button();
             txtBx_currentUser = new TextBox();
@@ -49,14 +50,13 @@
             // 
             // splConStoreMainForm
             // 
-            splConStoreMainForm.Dock = DockStyle.Fill;
-            splConStoreMainForm.Location = new Point(0, 0);
-            splConStoreMainForm.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(splConStoreMainForm, "splConStoreMainForm");
             splConStoreMainForm.Name = "splConStoreMainForm";
             // 
             // splConStoreMainForm.Panel1
             // 
             splConStoreMainForm.Panel1.BackColor = SystemColors.ActiveCaption;
+            splConStoreMainForm.Panel1.Controls.Add(btnAccountInformation);
             splConStoreMainForm.Panel1.Controls.Add(pictureBox_notificationBell);
             splConStoreMainForm.Panel1.Controls.Add(btnDailyTask);
             splConStoreMainForm.Panel1.Controls.Add(txtBx_currentUser);
@@ -70,128 +70,84 @@
             // splConStoreMainForm.Panel2
             // 
             splConStoreMainForm.Panel2.Controls.Add(btnTestServiceBus);
-            splConStoreMainForm.Size = new Size(1898, 944);
-            splConStoreMainForm.SplitterDistance = 241;
-            splConStoreMainForm.TabIndex = 1;
+            // 
+            // btnAccountInformation
+            // 
+            resources.ApplyResources(btnAccountInformation, "btnAccountInformation");
+            btnAccountInformation.Name = "btnAccountInformation";
+            btnAccountInformation.UseVisualStyleBackColor = true;
+            btnAccountInformation.Click += btnAccountInformation_Click;
             // 
             // pictureBox_notificationBell
             // 
-            pictureBox_notificationBell.BackgroundImage = (Image)resources.GetObject("pictureBox_notificationBell.BackgroundImage");
-            pictureBox_notificationBell.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox_notificationBell.Location = new Point(195, 339);
-            pictureBox_notificationBell.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(pictureBox_notificationBell, "pictureBox_notificationBell");
             pictureBox_notificationBell.Name = "pictureBox_notificationBell";
-            pictureBox_notificationBell.Size = new Size(30, 38);
-            pictureBox_notificationBell.TabIndex = 8;
             pictureBox_notificationBell.TabStop = false;
             // 
             // btnDailyTask
             // 
-            btnDailyTask.Location = new Point(0, 331);
-            btnDailyTask.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(btnDailyTask, "btnDailyTask");
             btnDailyTask.Name = "btnDailyTask";
-            btnDailyTask.Size = new Size(186, 59);
-            btnDailyTask.TabIndex = 7;
-            btnDailyTask.Text = "Daily Task";
-            btnDailyTask.TextAlign = ContentAlignment.MiddleLeft;
             btnDailyTask.UseVisualStyleBackColor = true;
             // 
             // txtBx_currentUser
             // 
-            txtBx_currentUser.Location = new Point(0, 1063);
-            txtBx_currentUser.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(txtBx_currentUser, "txtBx_currentUser");
             txtBx_currentUser.Name = "txtBx_currentUser";
-            txtBx_currentUser.Size = new Size(221, 39);
-            txtBx_currentUser.TabIndex = 6;
             // 
             // btnOrderHistory
             // 
-            btnOrderHistory.Location = new Point(0, 729);
-            btnOrderHistory.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(btnOrderHistory, "btnOrderHistory");
             btnOrderHistory.Name = "btnOrderHistory";
-            btnOrderHistory.Size = new Size(186, 59);
-            btnOrderHistory.TabIndex = 5;
-            btnOrderHistory.Text = "Order History";
-            btnOrderHistory.TextAlign = ContentAlignment.MiddleLeft;
             btnOrderHistory.UseVisualStyleBackColor = true;
             // 
             // btnPreOrderList
             // 
-            btnPreOrderList.Location = new Point(0, 663);
-            btnPreOrderList.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(btnPreOrderList, "btnPreOrderList");
             btnPreOrderList.Name = "btnPreOrderList";
-            btnPreOrderList.Size = new Size(186, 59);
-            btnPreOrderList.TabIndex = 4;
-            btnPreOrderList.Text = "Pre-Order List";
-            btnPreOrderList.TextAlign = ContentAlignment.MiddleLeft;
             btnPreOrderList.UseVisualStyleBackColor = true;
             // 
             // btnProductList
             // 
-            btnProductList.Location = new Point(0, 596);
-            btnProductList.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(btnProductList, "btnProductList");
             btnProductList.Name = "btnProductList";
-            btnProductList.Size = new Size(186, 59);
-            btnProductList.TabIndex = 3;
-            btnProductList.Text = "Product List";
-            btnProductList.TextAlign = ContentAlignment.MiddleLeft;
             btnProductList.UseVisualStyleBackColor = true;
             // 
             // btnInventory
             // 
-            btnInventory.Location = new Point(0, 530);
-            btnInventory.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(btnInventory, "btnInventory");
             btnInventory.Name = "btnInventory";
-            btnInventory.Size = new Size(186, 59);
-            btnInventory.TabIndex = 2;
-            btnInventory.Text = "Inventory";
-            btnInventory.TextAlign = ContentAlignment.MiddleLeft;
             btnInventory.UseVisualStyleBackColor = true;
             btnInventory.Click += btnInventory_Click;
             // 
             // btnCreateOrder
             // 
-            btnCreateOrder.Location = new Point(0, 463);
-            btnCreateOrder.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(btnCreateOrder, "btnCreateOrder");
             btnCreateOrder.Name = "btnCreateOrder";
-            btnCreateOrder.Size = new Size(186, 59);
-            btnCreateOrder.TabIndex = 1;
-            btnCreateOrder.Text = "Create Order";
-            btnCreateOrder.TextAlign = ContentAlignment.MiddleLeft;
             btnCreateOrder.UseVisualStyleBackColor = true;
             btnCreateOrder.Click += btnCreateOrder_Click;
             // 
             // btnCreateProduct
             // 
-            btnCreateProduct.Location = new Point(0, 397);
-            btnCreateProduct.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(btnCreateProduct, "btnCreateProduct");
             btnCreateProduct.Name = "btnCreateProduct";
-            btnCreateProduct.Size = new Size(186, 59);
-            btnCreateProduct.TabIndex = 0;
-            btnCreateProduct.Text = "Create Product";
-            btnCreateProduct.TextAlign = ContentAlignment.MiddleLeft;
             btnCreateProduct.UseVisualStyleBackColor = true;
+            btnCreateProduct.Click += btnCreateProduct_Click;
             // 
             // btnTestServiceBus
             // 
-            btnTestServiceBus.Location = new Point(255, 655);
+            resources.ApplyResources(btnTestServiceBus, "btnTestServiceBus");
             btnTestServiceBus.Name = "btnTestServiceBus";
-            btnTestServiceBus.Size = new Size(271, 74);
-            btnTestServiceBus.TabIndex = 0;
-            btnTestServiceBus.Text = "Test Service Bus";
             btnTestServiceBus.UseVisualStyleBackColor = true;
             btnTestServiceBus.Click += btnTestServiceBus_Click;
             // 
             // StoreMainForm
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1898, 944);
             Controls.Add(splConStoreMainForm);
-            Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Margin = new Padding(4);
             Name = "StoreMainForm";
-            Text = "Store Management";
+            WindowState = FormWindowState.Maximized;
             FormClosing += StoreMainForm_FormClosing;
             Load += StoreMainForm_Load;
             splConStoreMainForm.Panel1.ResumeLayout(false);
@@ -216,5 +172,6 @@
         private Button btnDailyTask;
         private PictureBox pictureBox_notificationBell;
         private Button btnTestServiceBus;
+        private Button btnAccountInformation;
     }
 }

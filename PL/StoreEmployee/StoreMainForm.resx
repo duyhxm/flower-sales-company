@@ -1,0 +1,533 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splConStoreMainForm.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="splConStoreMainForm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splConStoreMainForm.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="btnAccountInformation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 715</value>
+  </data>
+  <data name="btnAccountInformation.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="btnAccountInformation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 59</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnAccountInformation.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="btnAccountInformation.Text" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="btnAccountInformation.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;btnAccountInformation.Name" xml:space="preserve">
+    <value>btnAccountInformation</value>
+  </data>
+  <data name="&gt;&gt;btnAccountInformation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnAccountInformation.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;btnAccountInformation.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="pictureBox_notificationBell.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAI1SURBVFhHtdc9
+        aBMBGMbxExUHUcRFcNI6OCii2Lu0k+3lWj+QOtXBSXQSN3UTRRfBuil0EVTwCxwcHAV1VIcqFUFUEF38
+        Gow1d/EDNP7f81Lk8uRyuSQP/KC0975P0uY+6vQ6lZHNK6Jy6WRY9p4g/MedicruCftZclh/Ug2GRkLf
+        +0xpvYVP1TF3W3J4oQzAFkxgC5YhDu/QpaCWKlRq0Zg3mIzlylIcxyvUUwI49cnJhSx+nirK4D6zGZtt
+        l1F8QLrYfMEiOCzcoYsy+KVxm83KXvyCKjePEScM3HOyJNvZZFzG/kY1qOKGO4jDsmup5TmUribjTVmA
+        h1Cl/7uHOJHvTeuS1qLAu5CMN2UXVGHaG8SJyt5BVZLJd/cn4025DFWorIMzt314JUu/NpW0Vsm6KL2E
+        KlPOIE61XDosiqRq4B5KxmS+QZUpc1iNODnPhsxPv0UVZbmP+HpgiUaHJiiZTZWap3xWdieHZUaVtHMb
+        SzCf7+Pe2sgf3Gns6+TbuaIK8pjFVnQVuwao5Xn9wV0cQEfvupFVUIuLeICO40EtK+IdOs4pqGVFbUDu
+        2Kmk7vndmELuHIVa0o0fWI+2GUYItaRb9tww/+imshEVqOFesTNiMWQeQQ312hHI2A1FDfTaRchcgRro
+        NXvQkbGbyDHcxC3hN9TCtLdQ85fQsjxPPkIVpp1HX3IDqjBtD/qSTfgJVdowg1z/6RTNPrR6Ea+xBn2P
+        /Sau4z3sxbzAaSxHwTjOX8qoHfePWGF8AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="pictureBox_notificationBell.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBox_notificationBell.Location" type="System.Drawing.Point, System.Drawing">
+    <value>195, 258</value>
+  </data>
+  <data name="pictureBox_notificationBell.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="pictureBox_notificationBell.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 38</value>
+  </data>
+  <data name="pictureBox_notificationBell.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;pictureBox_notificationBell.Name" xml:space="preserve">
+    <value>pictureBox_notificationBell</value>
+  </data>
+  <data name="&gt;&gt;pictureBox_notificationBell.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBox_notificationBell.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;pictureBox_notificationBell.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnDailyTask.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 250</value>
+  </data>
+  <data name="btnDailyTask.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="btnDailyTask.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 59</value>
+  </data>
+  <data name="btnDailyTask.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="btnDailyTask.Text" xml:space="preserve">
+    <value>Daily Task</value>
+  </data>
+  <data name="btnDailyTask.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;btnDailyTask.Name" xml:space="preserve">
+    <value>btnDailyTask</value>
+  </data>
+  <data name="&gt;&gt;btnDailyTask.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnDailyTask.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;btnDailyTask.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="txtBx_currentUser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 1063</value>
+  </data>
+  <data name="txtBx_currentUser.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="txtBx_currentUser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 39</value>
+  </data>
+  <data name="txtBx_currentUser.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;txtBx_currentUser.Name" xml:space="preserve">
+    <value>txtBx_currentUser</value>
+  </data>
+  <data name="&gt;&gt;txtBx_currentUser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtBx_currentUser.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;txtBx_currentUser.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnOrderHistory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 648</value>
+  </data>
+  <data name="btnOrderHistory.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="btnOrderHistory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 59</value>
+  </data>
+  <data name="btnOrderHistory.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="btnOrderHistory.Text" xml:space="preserve">
+    <value>Order History</value>
+  </data>
+  <data name="btnOrderHistory.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;btnOrderHistory.Name" xml:space="preserve">
+    <value>btnOrderHistory</value>
+  </data>
+  <data name="&gt;&gt;btnOrderHistory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnOrderHistory.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;btnOrderHistory.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnPreOrderList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 582</value>
+  </data>
+  <data name="btnPreOrderList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="btnPreOrderList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 59</value>
+  </data>
+  <data name="btnPreOrderList.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="btnPreOrderList.Text" xml:space="preserve">
+    <value>Pre-Order List</value>
+  </data>
+  <data name="btnPreOrderList.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;btnPreOrderList.Name" xml:space="preserve">
+    <value>btnPreOrderList</value>
+  </data>
+  <data name="&gt;&gt;btnPreOrderList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnPreOrderList.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;btnPreOrderList.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="btnProductList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 515</value>
+  </data>
+  <data name="btnProductList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="btnProductList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 59</value>
+  </data>
+  <data name="btnProductList.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="btnProductList.Text" xml:space="preserve">
+    <value>Product List</value>
+  </data>
+  <data name="btnProductList.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;btnProductList.Name" xml:space="preserve">
+    <value>btnProductList</value>
+  </data>
+  <data name="&gt;&gt;btnProductList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnProductList.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;btnProductList.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="btnInventory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 449</value>
+  </data>
+  <data name="btnInventory.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="btnInventory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 59</value>
+  </data>
+  <data name="btnInventory.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="btnInventory.Text" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="btnInventory.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;btnInventory.Name" xml:space="preserve">
+    <value>btnInventory</value>
+  </data>
+  <data name="&gt;&gt;btnInventory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnInventory.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;btnInventory.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="btnCreateOrder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 382</value>
+  </data>
+  <data name="btnCreateOrder.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="btnCreateOrder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 59</value>
+  </data>
+  <data name="btnCreateOrder.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btnCreateOrder.Text" xml:space="preserve">
+    <value>Create Order</value>
+  </data>
+  <data name="btnCreateOrder.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;btnCreateOrder.Name" xml:space="preserve">
+    <value>btnCreateOrder</value>
+  </data>
+  <data name="&gt;&gt;btnCreateOrder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCreateOrder.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;btnCreateOrder.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="btnCreateProduct.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 316</value>
+  </data>
+  <data name="btnCreateProduct.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="btnCreateProduct.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 59</value>
+  </data>
+  <data name="btnCreateProduct.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnCreateProduct.Text" xml:space="preserve">
+    <value>Create Product</value>
+  </data>
+  <data name="btnCreateProduct.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;btnCreateProduct.Name" xml:space="preserve">
+    <value>btnCreateProduct</value>
+  </data>
+  <data name="&gt;&gt;btnCreateProduct.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCreateProduct.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;btnCreateProduct.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Panel1.Name" xml:space="preserve">
+    <value>splConStoreMainForm.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Panel1.Parent" xml:space="preserve">
+    <value>splConStoreMainForm</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnTestServiceBus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>255, 655</value>
+  </data>
+  <data name="btnTestServiceBus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 74</value>
+  </data>
+  <data name="btnTestServiceBus.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnTestServiceBus.Text" xml:space="preserve">
+    <value>Test Service Bus</value>
+  </data>
+  <data name="&gt;&gt;btnTestServiceBus.Name" xml:space="preserve">
+    <value>btnTestServiceBus</value>
+  </data>
+  <data name="&gt;&gt;btnTestServiceBus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnTestServiceBus.Parent" xml:space="preserve">
+    <value>splConStoreMainForm.Panel2</value>
+  </data>
+  <data name="&gt;&gt;btnTestServiceBus.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Panel2.Name" xml:space="preserve">
+    <value>splConStoreMainForm.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Panel2.Parent" xml:space="preserve">
+    <value>splConStoreMainForm</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="splConStoreMainForm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1898, 944</value>
+  </data>
+  <data name="splConStoreMainForm.SplitterDistance" type="System.Int32, mscorlib">
+    <value>241</value>
+  </data>
+  <data name="splConStoreMainForm.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Name" xml:space="preserve">
+    <value>splConStoreMainForm</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;splConStoreMainForm.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>13, 32</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1898, 944</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Store Management</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>StoreMainForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

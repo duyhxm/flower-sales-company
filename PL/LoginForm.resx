@@ -227,6 +227,9 @@
   <data name="txtBxPassword.Location" type="System.Drawing.Point, System.Drawing">
     <value>244, 219</value>
   </data>
+  <data name="txtBxPassword.PasswordChar" type="System.Char, mscorlib" xml:space="preserve">
+    <value>*</value>
+  </data>
   <data name="txtBxPassword.Size" type="System.Drawing.Size, System.Drawing">
     <value>339, 40</value>
   </data>

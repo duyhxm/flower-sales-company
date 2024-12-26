@@ -19,7 +19,7 @@ namespace PL
         public CEOMainForm()
         {
             InitializeComponent();
-            _notificationService = NotificationServiceSingleton.Instance;
+            _notificationService = NotificationService.Instance;
         }
 
         private void CEOMainForm_Load(object sender, EventArgs e)
