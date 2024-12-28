@@ -112,6 +112,7 @@
             resources.ApplyResources(btnProductList, "btnProductList");
             btnProductList.Name = "btnProductList";
             btnProductList.UseVisualStyleBackColor = true;
+            btnProductList.Click += btnProductList_Click;
             // 
             // btnInventory
             // 

@@ -109,46 +109,46 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task<List<MaterialInventoryDTO>> GetAllMaterialByStoreAsync(string storeId, string materialType = "both")
-        {
-            try
-            {
+        //public async Task<List<MaterialInventoryDTO>> GetAllMaterialByStoreAsync(string storeId, string materialType = "both")
+        //{
+        //    try
+        //    {
 
-                var materialList = _context.MaterialInventories
-                            .Where(mi => mi.StoreId == storeId)
-                            .Join(_context.Materials,
-                                   mi => mi.MaterialId,
-                                   m => m.MaterialId,
-                                   (mi, m) => new MaterialInventoryDTO
-                                   {
-                                       MaterialID = m.MaterialId,
-                                       MaterialName = m.MaterialName!,
-                                       StockMaterialQuantity = mi.StockMaterialQuantity
-                                   }
-                                   );
+        //        var materialList = _context.MaterialInventories
+        //                    .Where(mi => mi.StoreId == storeId)
+        //                    .Join(_context.Materials,
+        //                           mi => mi.MaterialId,
+        //                           m => m.MaterialId,
+        //                           (mi, m) => new MaterialInventoryDTO
+        //                           {
+        //                               MaterialID = m.MaterialId,
+        //                               MaterialName = m.MaterialName!,
+        //                               StockMaterialQuantity = mi.StockMaterialQuantity
+        //                           }
+        //                           );
 
-                if (materialType == "both")
-                {
-                    return await materialList.ToListAsync();
-                }
-                else if (materialType == "phụ liệu")
-                {
-                    return await materialList
-                                .Where(ml => ml.MaterialID.StartsWith("A"))
-                                .ToListAsync();
-                }
-                else
-                {
-                    return await materialList
-                                .Where(ml => ml.MaterialID.StartsWith("F"))
-                                .ToListAsync();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //        if (materialType == "both")
+        //        {
+        //            return await materialList.ToListAsync();
+        //        }
+        //        else if (materialType == "phụ liệu")
+        //        {
+        //            return await materialList
+        //                        .Where(ml => ml.MaterialID.StartsWith("A"))
+        //                        .ToListAsync();
+        //        }
+        //        else
+        //        {
+        //            return await materialList
+        //                        .Where(ml => ml.MaterialID.StartsWith("F"))
+        //                        .ToListAsync();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         public async Task<List<FloralRepresentationDTO>?> GetFloralRepresentationAsync()
         {

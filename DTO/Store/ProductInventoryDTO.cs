@@ -8,10 +8,10 @@ namespace DTO.Store
 {
     public class ProductInventoryDTO
     {
-        public string StoreId { get; set; } = null!;
-
-        public string ProductId { get; set; } = null!;
-
+        public string ProductId { get; set; } = string.Empty;
+        public string ProductName { get; set; } = string.Empty;
+        public DateTime StockDate { get; set; }
         public int? StockProductQuantity { get; set; }
+        public decimal UnitPrice { get; set; }
     }
 }

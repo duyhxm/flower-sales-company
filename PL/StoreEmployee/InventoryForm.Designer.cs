@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            dgvStoreInventory = new DataGridView();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            dgvMaterialInventory = new DataGridView();
             ColMaterialId = new DataGridViewTextBoxColumn();
             ColMaterialName = new DataGridViewTextBoxColumn();
             ColStockMaterialQuantity = new DataGridViewTextBoxColumn();
@@ -41,20 +42,27 @@
             tbCtrlStoreInventory = new TabControl();
             tpMaterial = new TabPage();
             tpProduct = new TabPage();
-            ((System.ComponentModel.ISupportInitialize)dgvStoreInventory).BeginInit();
+            dgvProductInventory = new DataGridView();
+            ColProductId = new DataGridViewTextBoxColumn();
+            ColProductName = new DataGridViewTextBoxColumn();
+            ColStockProductQuantity = new DataGridViewTextBoxColumn();
+            ColDetailedProductInventory = new DataGridViewImageColumn();
+            ((System.ComponentModel.ISupportInitialize)dgvMaterialInventory).BeginInit();
             tbCtrlStoreInventory.SuspendLayout();
             tpMaterial.SuspendLayout();
+            tpProduct.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvProductInventory).BeginInit();
             SuspendLayout();
             // 
-            // dgvStoreInventory
+            // dgvMaterialInventory
             // 
-            dgvStoreInventory.AllowUserToAddRows = false;
-            dgvStoreInventory.AllowUserToDeleteRows = false;
-            dgvStoreInventory.AllowUserToResizeColumns = false;
-            dgvStoreInventory.AllowUserToResizeRows = false;
-            dgvStoreInventory.BackgroundColor = SystemColors.Menu;
-            dgvStoreInventory.BorderStyle = BorderStyle.None;
-            dgvStoreInventory.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dgvMaterialInventory.AllowUserToAddRows = false;
+            dgvMaterialInventory.AllowUserToDeleteRows = false;
+            dgvMaterialInventory.AllowUserToResizeColumns = false;
+            dgvMaterialInventory.AllowUserToResizeRows = false;
+            dgvMaterialInventory.BackgroundColor = SystemColors.Window;
+            dgvMaterialInventory.BorderStyle = BorderStyle.None;
+            dgvMaterialInventory.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -62,14 +70,14 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvStoreInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgvStoreInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStoreInventory.Columns.AddRange(new DataGridViewColumn[] { ColMaterialId, ColMaterialName, ColStockMaterialQuantity, ColUnitPrice });
-            dgvStoreInventory.Location = new Point(95, 234);
-            dgvStoreInventory.Name = "dgvStoreInventory";
-            dgvStoreInventory.RowHeadersWidth = 62;
-            dgvStoreInventory.Size = new Size(899, 344);
-            dgvStoreInventory.TabIndex = 1;
+            dgvMaterialInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvMaterialInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMaterialInventory.Columns.AddRange(new DataGridViewColumn[] { ColMaterialId, ColMaterialName, ColStockMaterialQuantity, ColUnitPrice });
+            dgvMaterialInventory.Location = new Point(95, 234);
+            dgvMaterialInventory.Name = "dgvMaterialInventory";
+            dgvMaterialInventory.RowHeadersWidth = 62;
+            dgvMaterialInventory.Size = new Size(842, 589);
+            dgvMaterialInventory.TabIndex = 1;
             // 
             // ColMaterialId
             // 
@@ -82,7 +90,7 @@
             // 
             // ColMaterialName
             // 
-            ColMaterialName.HeaderText = "Name";
+            ColMaterialName.HeaderText = "Flower Name";
             ColMaterialName.MinimumWidth = 8;
             ColMaterialName.Name = "ColMaterialName";
             ColMaterialName.ReadOnly = true;
@@ -91,12 +99,12 @@
             // 
             // ColStockMaterialQuantity
             // 
-            ColStockMaterialQuantity.HeaderText = "StockQuantity";
+            ColStockMaterialQuantity.HeaderText = "Q";
             ColStockMaterialQuantity.MinimumWidth = 8;
             ColStockMaterialQuantity.Name = "ColStockMaterialQuantity";
             ColStockMaterialQuantity.ReadOnly = true;
             ColStockMaterialQuantity.Resizable = DataGridViewTriState.False;
-            ColStockMaterialQuantity.Width = 200;
+            ColStockMaterialQuantity.Width = 150;
             // 
             // ColUnitPrice
             // 
@@ -155,7 +163,8 @@
             // 
             // tpMaterial
             // 
-            tpMaterial.Controls.Add(dgvStoreInventory);
+            tpMaterial.BackColor = Color.White;
+            tpMaterial.Controls.Add(dgvMaterialInventory);
             tpMaterial.Controls.Add(plHorizontalLine);
             tpMaterial.Controls.Add(lblMaterialType);
             tpMaterial.Controls.Add(lblFilter);
@@ -166,17 +175,77 @@
             tpMaterial.Size = new Size(1645, 899);
             tpMaterial.TabIndex = 0;
             tpMaterial.Text = "Material";
-            tpMaterial.UseVisualStyleBackColor = true;
             // 
             // tpProduct
             // 
-            tpProduct.Location = new Point(4, 34);
+            tpProduct.BackColor = Color.White;
+            tpProduct.Controls.Add(dgvProductInventory);
+            tpProduct.Location = new Point(4, 41);
             tpProduct.Name = "tpProduct";
             tpProduct.Padding = new Padding(3);
-            tpProduct.Size = new Size(1645, 906);
+            tpProduct.Size = new Size(1645, 899);
             tpProduct.TabIndex = 1;
             tpProduct.Text = "Product";
-            tpProduct.UseVisualStyleBackColor = true;
+            // 
+            // dgvProductInventory
+            // 
+            dgvProductInventory.AllowUserToAddRows = false;
+            dgvProductInventory.AllowUserToDeleteRows = false;
+            dgvProductInventory.AllowUserToResizeColumns = false;
+            dgvProductInventory.AllowUserToResizeRows = false;
+            dgvProductInventory.BackgroundColor = SystemColors.ButtonHighlight;
+            dgvProductInventory.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvProductInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvProductInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProductInventory.Columns.AddRange(new DataGridViewColumn[] { ColProductId, ColProductName, ColStockProductQuantity, ColDetailedProductInventory });
+            dgvProductInventory.Location = new Point(95, 234);
+            dgvProductInventory.Name = "dgvProductInventory";
+            dgvProductInventory.RowHeadersWidth = 62;
+            dgvProductInventory.Size = new Size(791, 588);
+            dgvProductInventory.TabIndex = 0;
+            dgvProductInventory.CellClick += dgvProductInventory_CellClick;
+            // 
+            // ColProductId
+            // 
+            ColProductId.HeaderText = "ID";
+            ColProductId.MinimumWidth = 8;
+            ColProductId.Name = "ColProductId";
+            ColProductId.ReadOnly = true;
+            ColProductId.Width = 150;
+            // 
+            // ColProductName
+            // 
+            ColProductName.HeaderText = "Product Name";
+            ColProductName.MinimumWidth = 8;
+            ColProductName.Name = "ColProductName";
+            ColProductName.ReadOnly = true;
+            ColProductName.Width = 250;
+            // 
+            // ColStockProductQuantity
+            // 
+            ColStockProductQuantity.HeaderText = "Q";
+            ColStockProductQuantity.MinimumWidth = 8;
+            ColStockProductQuantity.Name = "ColStockProductQuantity";
+            ColStockProductQuantity.ReadOnly = true;
+            ColStockProductQuantity.Width = 150;
+            // 
+            // ColDetailedProductInventory
+            // 
+            ColDetailedProductInventory.HeaderText = "Details";
+            ColDetailedProductInventory.Image = Properties.Resources.details;
+            ColDetailedProductInventory.MinimumWidth = 8;
+            ColDetailedProductInventory.Name = "ColDetailedProductInventory";
+            ColDetailedProductInventory.ReadOnly = true;
+            ColDetailedProductInventory.Resizable = DataGridViewTriState.True;
+            ColDetailedProductInventory.SortMode = DataGridViewColumnSortMode.Automatic;
+            ColDetailedProductInventory.Width = 150;
             // 
             // InventoryForm
             // 
@@ -188,15 +257,17 @@
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
             Name = "InventoryForm";
-            ((System.ComponentModel.ISupportInitialize)dgvStoreInventory).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvMaterialInventory).EndInit();
             tbCtrlStoreInventory.ResumeLayout(false);
             tpMaterial.ResumeLayout(false);
             tpMaterial.PerformLayout();
+            tpProduct.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvProductInventory).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-        private DataGridView dgvStoreInventory;
+        private DataGridView dgvMaterialInventory;
         private Label lblFilter;
         private Label lblMaterialType;
         private ComboBox cmbBxMaterials;
@@ -204,9 +275,14 @@
         private TabControl tbCtrlStoreInventory;
         private TabPage tpMaterial;
         private TabPage tpProduct;
+        private DataGridView dgvProductInventory;
         private DataGridViewTextBoxColumn ColMaterialId;
         private DataGridViewTextBoxColumn ColMaterialName;
         private DataGridViewTextBoxColumn ColStockMaterialQuantity;
         private DataGridViewTextBoxColumn ColUnitPrice;
+        private DataGridViewTextBoxColumn ColProductId;
+        private DataGridViewTextBoxColumn ColProductName;
+        private DataGridViewTextBoxColumn ColStockProductQuantity;
+        private DataGridViewImageColumn ColDetailedProductInventory;
     }
 }

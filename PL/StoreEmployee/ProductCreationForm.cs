@@ -15,34 +15,39 @@ using System.Diagnostics;
 using DTO.Product;
 using DTO.Store;
 using System.Globalization;
+using DL.Models;
 
 namespace PL
 {
     public partial class ProductCreationForm : System.Windows.Forms.Form
     {
+        //khai báo biến liên quan đến việc khởi tạo
         private static ProductCreationForm? _instance;
         private static readonly object _lock = new object();
-        private NotificationService notificationService;
-        private MaterialService materialService;
-        private readonly string? storeId = LoginForm.Instance.LoginInformation.StoreID;
-        private BindingSource accessoryBs;
-        //private BindingSource productDetailsBs;
-        private bool isHandlingCellValueChangedOfProductDetails = false;
-        private ProductService _productService;
-        private List<FlowerWithStockDTO>? originalFlowerList;
 
-        private List<FloralRepresentationDTO>? fRepresentations;
-        private List<StoreInventoryDTO> storeInventory;
+        //khai báo các service sẽ dùng
+        private NotificationService _notificationService; //lấy từ bên StoreMainForm
+        private MaterialService _materialService;
+        private ProductService _productService;
+
+        //khai báo các biến sẽ sử dụng trong form
+        private readonly string? _storeId = LoginForm.Instance.LoginInformation.StoreID;
+        //private BindingSource _accessoryBs;
+        //private List<FlowerWithStockDTO>? _originalFlowerList;
+        private List<FloralRepresentationDTO>? _fRepresentations;
+        private List<FlowerDTO> _flowers;
+        private List<MaterialInventoryDTO> _accessories;
         private ProductCreationForm()
         {
+            //khởi tạo các thành phần designer
             InitializeComponent();
-            notificationService = StoreMainForm.Instance.NotificationService;
-            materialService = new MaterialService();
-            _productService = new ProductService();
-            accessoryBs = new BindingSource();
-            //productDetailsBs = new BindingSource();
 
-            //Set DataPropertyName
+            //khởi tạo các service
+            _notificationService = StoreMainForm.Instance.NotificationService;
+            _materialService = new MaterialService();
+            _productService = new ProductService();
+
+            //Cấu hình data property name cho flower 
             dgvFlowerList.Columns[0].DataPropertyName = "FlowerID";
             dgvFlowerList.Columns[1].DataPropertyName = "FlowerName";
             dgvFlowerList.Columns[2].DataPropertyName = "FTypeName";
@@ -50,10 +55,12 @@ namespace PL
             dgvFlowerList.Columns[4].DataPropertyName = "FCharacteristicName";
             dgvFlowerList.AutoGenerateColumns = false;
 
+            //cấu hình data property name cho accessory
             dgvAccessoryList.Columns[0].DataPropertyName = "MaterialID";
             dgvAccessoryList.Columns[1].DataPropertyName = "MaterialName";
             dgvAccessoryList.AutoGenerateColumns = false;
 
+            //Cấu hình cho text box 'số lượng sản phẩm'
             txtBxCreationQuantity.ReadOnly = true;
             txtBxCreationQuantity.Enabled = false;
         }
@@ -90,18 +97,8 @@ namespace PL
 
         private async void ProductCreationForm_Load(object sender, EventArgs e)
         {
-            var storeMainForm = StoreMainForm.Instance;
-            if (storeMainForm.formInstances.ContainsKey("InventoryForm"))
-            {
-                var inventoryForm = storeMainForm.formInstances["InventoryForm"] as InventoryForm;
-                if (inventoryForm != null)
-                {
-                    storeInventory = inventoryForm.storeInventory;
-                }
-            }
-
             await LoadFlowerListAsync();
-            await LoadAccessoryListAsync();
+            LoadAccessoryList();
             await LoadFloralRepresentation();
 
             MessageBox.Show("Form is load");
@@ -111,20 +108,21 @@ namespace PL
 
         private async Task LoadFloralRepresentation()
         {
-            fRepresentations = await materialService.GetFloralRepresentationAsync();
+            _fRepresentations = await _materialService.GetFloralRepresentationAsync();
 
-            if (fRepresentations != null)
+            if (_fRepresentations != null)
             {
-                foreach (var f in fRepresentations)
+                foreach (var f in _fRepresentations)
                 {
                     cmbBxFloralRepresentations.Items.Add(f.Frname!);
                 }
             }
         }
 
+        //xử lý khi user click nút tăng giảm số lượng sản phẩm
         private bool IsStockAvailableForIncrease(string materialId, int requiredAmount)
         {
-            var material = InventoryForm.Instance.storeInventory.FirstOrDefault(m => m.MaterialId == materialId);
+            var material = InventoryForm.Instance.MaterialInventory.FirstOrDefault(m => m.MaterialId == materialId);
             if (material != null)
             {
                 return requiredAmount <= material.StockMaterialQuantity;
@@ -199,9 +197,9 @@ namespace PL
 
             //Lấy floral representation id
             string? idFRepresentation = null;
-            if (fRepresentations != null)
+            if (_fRepresentations != null)
             {
-                idFRepresentation = fRepresentations
+                idFRepresentation = _fRepresentations
                                        .Where(fr => fr.Frname == floralRepresentation)
                                        .Select(fr => fr.FrepresentationId).FirstOrDefault();
             }
@@ -245,26 +243,32 @@ namespace PL
                 UnitPrice = price
             };
 
-            await _productService.AddProductAsync(product, creationHistory, storeId);
-
-            UpdateStoreInventory();
+            //Xử lý sản phẩm trả về sau khi thêm mới sản phẩm
+            ReturnedProductDTO returnedProduct = await _productService.AddProductAsync(product, creationHistory, _storeId!);
+            
+            //Sau khi thêm thành công, bắt đầu update giao diện
+            await UpdateStoreInventory();
+            await RefreshFlowerList();
+            RefreshAccessoryList();
 
             MessageBox.Show("Đã thêm thành công sản phẩm", "Thông báo");
         }
 
-        private void UpdateStoreInventory()
+        //Update store inventory sẽ bao gồm material và product
+        private async Task UpdateStoreInventory()
         {
             try
             {
                 var inventoryForm = InventoryForm.Instance;
-                var storeInventory = inventoryForm.storeInventory;
+                var storeInventory = inventoryForm.MaterialInventory;
+                var productInventory = inventoryForm.ProductInventory;
 
-                // Update storeInventory based on dgvProductDetails
+                // Update materialInventory based on dgvProductDetails
                 Dictionary<string, int> updatedQuantities = new Dictionary<string, int>();
 
                 foreach (DataGridViewRow row in dgvProductDetails.Rows)
                 {
-                    string materialId = row.Cells[0].Value.ToString();
+                    string materialId = row.Cells[0].Value.ToString()!;
                     int materialQuantity = Convert.ToInt32(row.Cells[3].Value);
                     int productQuantity = int.TryParse(txtBxCreationQuantity.Text, out int pq) ? pq : 1;
                     int requiredAmount = materialQuantity * productQuantity;
@@ -285,7 +289,7 @@ namespace PL
                 }
 
                 // Refresh InventoryForm
-                inventoryForm.RefreshStoreInventory();
+                await inventoryForm.RefreshStoreInventory();
             }
             catch (Exception ex)
             {
@@ -317,7 +321,6 @@ namespace PL
             }
         }
 
-        //Xử lý khi user nhấn Clear dữ liệu giống trên
         private void CancelSelection(DataGridView dgv)
         {
             foreach (DataGridViewRow row in dgv.Rows)
@@ -333,8 +336,7 @@ namespace PL
 
         }
 
-        //Xử lý khi user click tăng giảm số lượng
-
+        //Đồng bộ các vật liệu ở tab Flower và Accessory sang tab Product
         private bool TryFindRowById(string id, out int index)
         {
             int numberOfRows = dgvProductDetails.Rows.Count;
@@ -354,7 +356,6 @@ namespace PL
             return false;
         }
 
-        //Đồng bộ các vật liệu ở tab Flower và Accessory sang tab Product
         private void UpdateDataOfProductDetails(DataGridView dgvSource, DataGridViewCellEventArgs eOfThatDgv)
         {
             if (eOfThatDgv.RowIndex >= 0 && eOfThatDgv.ColumnIndex >= 0 && dgvSource.Columns[eOfThatDgv.ColumnIndex] is DataGridViewCheckBoxColumn)
@@ -387,13 +388,8 @@ namespace PL
         }
 
         //Kiểm tra số lượng vật liệu nhập vô
-        private void dgvProductDetails_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private async void dgvProductDetails_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (isHandlingCellValueChangedOfProductDetails)
-            {
-                return;
-            }
-
             if (e.RowIndex >= 0 && e.ColumnIndex == 3) // Assuming the quantity column index is 3
             {
                 var cellValue = dgvProductDetails.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
@@ -406,7 +402,7 @@ namespace PL
                         return;
                     }
 
-                    string materialId = dgvProductDetails.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    string materialId = dgvProductDetails.Rows[e.RowIndex].Cells[0].Value.ToString()!;
                     int productQuantity = int.TryParse(txtBxCreationQuantity.Text, out int pq) ? pq : 1;
                     int requiredAmount = newValue * productQuantity;
 
@@ -415,11 +411,15 @@ namespace PL
                         MessageBox.Show($"Số lượng sản phẩm vượt quá tồn kho của vật liệu {materialId}", "Cảnh báo");
                         dgvProductDetails.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 1; // Reset to 1 if invalid
                     }
+
+                    await CalculateAndDisplayUnitPrice();
                 }
                 else
                 {
                     MessageBox.Show("Giá trị không hợp lệ.", "Cảnh báo");
                     dgvProductDetails.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 1; // Reset to 1 if invalid
+
+                    await CalculateAndDisplayUnitPrice();
                 }
             }
         }
@@ -453,6 +453,7 @@ namespace PL
             await CalculateAndDisplayUnitPrice();
         }
 
+        //tính toán unit price
         private async Task CalculateAndDisplayUnitPrice()
         {
             var materialQuantities = new Dictionary<string, int>();
@@ -461,7 +462,7 @@ namespace PL
             {
                 if (row.Cells[0].Value != null && row.Cells[3].Value != null)
                 {
-                    string materialId = row.Cells[0].Value.ToString();
+                    string materialId = row.Cells[0].Value.ToString()!;
                     int quantity = Convert.ToInt32(row.Cells[3].Value);
 
                     if (!materialQuantities.ContainsKey(materialId))
@@ -471,8 +472,79 @@ namespace PL
                 }
             }
 
-            decimal unitPrice = await _productService.CalculateUnitPriceAsync(InventoryForm.Instance.storeInventory, materialQuantities);
+            decimal unitPrice = await _productService.CalculateUnitPriceAsync(InventoryForm.Instance.MaterialInventory, materialQuantities);
             txtBxUnitPrice.Text = unitPrice.ToString("C", new CultureInfo("vi-VN"));
+        }
+
+        //Xử lý khi user nhập số lượng sản phẩm
+        private void txtBxCreationQuantity_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtBxCreationQuantity.ReadOnly == true)
+            {
+                return;
+            }
+
+            if (int.TryParse(txtBxCreationQuantity.Text, out int value) && value > 0)
+            {
+                foreach (DataGridViewRow row in dgvProductDetails.Rows)
+                {
+                    string materialId = row.Cells[0].Value.ToString()!;
+                    int materialQuantity = Convert.ToInt32(row.Cells[3].Value);
+                    int requiredAmount = materialQuantity * value;
+
+                    if (!IsStockAvailableForIncrease(materialId, requiredAmount))
+                    {
+                        MessageBox.Show($"Số lượng sản phẩm vượt quá tồn kho của vật liệu {materialId}", "Cảnh báo");
+                        e.Cancel = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Giá trị không hợp lệ.", "Cảnh báo");
+                e.Cancel = true;
+            }
+        }
+
+        //xử lý khi user click vô hai ô image của dgv product
+        private void dgvProductDetails_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvProductDetails.Columns[e.ColumnIndex] is DataGridViewImageColumn)
+            {
+                var cellValue = dgvProductDetails.Rows[e.RowIndex].Cells[3].Value;
+                if (cellValue != null && int.TryParse(cellValue.ToString(), out int currentValue))
+                {
+                    string materialId = dgvProductDetails.Rows[e.RowIndex].Cells[0].Value.ToString()!;
+                    int productQuantity = int.TryParse(txtBxCreationQuantity.Text, out int pq) ? pq : 1;
+
+                    if (e.ColumnIndex == 2)
+                    {
+                        int newValue = currentValue - 1;
+                        if (newValue > 0)
+                        {
+                            dgvProductDetails.Rows[e.RowIndex].Cells[3].Value = newValue.ToString();
+                        }
+                    }
+                    else if (e.ColumnIndex == 4)
+                    {
+                        int requiredAmount = (currentValue + 1) * productQuantity;
+                        if (IsStockAvailableForIncrease(materialId, requiredAmount))
+                        {
+                            int newValue = currentValue + 1;
+                            dgvProductDetails.Rows[e.RowIndex].Cells[3].Value = newValue.ToString();
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Số lượng sản phẩm vượt quá tồn kho của vật liệu {materialId}", "Cảnh báo");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The cell value is not a valid integer.");
+                }
+            }
         }
 
         //================Xử lý cho tab Flower=========================
@@ -482,31 +554,36 @@ namespace PL
         {
             try
             {
-                List<FlowerDTO>? flowerList = null;
+                List<FlowerDTO>? flowerDtoInventory = null;
 
-                if (storeId != null)
+                if (_storeId != null)
                 {
-                    flowerList = await materialService.GetAllFlowerByStoreAsync(storeId);
-                    var materialInventoryList = await materialService.GetAllMaterialByStoreAsync(storeId, "hoa");
+                    flowerDtoInventory = await _materialService.GetAllFlowerByStoreAsync(_storeId);
+                    
+                    var materialInventory = InventoryForm.Instance.MaterialInventory;
 
-                    originalFlowerList = flowerList?
-                        .Join(materialInventoryList,
-                            fl => fl.FlowerID,
-                            mi => mi.MaterialID,
-                            (fl, mi) => new FlowerWithStockDTO
-                            {
-                                FlowerID = fl.FlowerID,
-                                FlowerName = fl.FlowerName,
-                                FTypeName = fl.FTypeName,
-                                FColorName = fl.FColorName,
-                                FCharacteristicName = fl.FCharacteristicName,
-                                StockMaterialQuantity = (int)mi.StockMaterialQuantity!
-                            })
-                        .ToList();
+                    if (flowerDtoInventory == null)
+                    {
+                        MessageBox.Show("Hoa hiện tại đang hết hàng ở cửa hàng này");
+                        return;
+                    }
+                    _flowers = flowerDtoInventory
+                                    .Join(materialInventory,
+                                         fl => fl.FlowerID,
+                                         t => t.MaterialId,
+                                         (fl, t) => new FlowerDTO
+                                         {
+                                             FlowerID = fl.FlowerID,
+                                             FlowerName = fl.FlowerName,
+                                             FTypeName = fl.FTypeName,
+                                             FColorName = fl.FColorName,
+                                             FCharacteristicName = fl.FCharacteristicName
+                                         }
+                                    ).ToList();
 
-                    dgvFlowerList.DataSource = originalFlowerList;
+                    dgvFlowerList.DataSource = _flowers;
 
-                    LoadComboBoxData(originalFlowerList!);
+                    LoadComboBoxData(_flowers);
                 }
             }
             catch (Exception e)
@@ -515,9 +592,13 @@ namespace PL
             }
         }
 
+        private async Task RefreshFlowerList()
+        {
+            await LoadFlowerListAsync();
+        }
 
         //Lọc dữ liệu theo loại hoa
-        private void LoadComboBoxData(List<FlowerWithStockDTO> flowerList)
+        private void LoadComboBoxData(List<FlowerDTO> flowerList)
         {
             var floralTypes = flowerList.Select(f => f.FTypeName).Distinct().ToList();
             var floralColors = flowerList.Select(f => f.FColorName).Distinct().ToList();
@@ -538,7 +619,7 @@ namespace PL
 
         private void FilterFlowerList()
         {
-            var filteredList = originalFlowerList!.AsQueryable();
+            var filteredList = _flowers.AsQueryable();
 
             if (cmbBxFloralType.SelectedItem != null && cmbBxFloralType.SelectedItem.ToString() != "All")
             {
@@ -594,21 +675,28 @@ namespace PL
 
 
         //Load dữ liệu accessory lên
-        private async Task LoadAccessoryListAsync()
+        private void LoadAccessoryList()
         {
             try
             {
-                if (storeId != null)
+                if (_storeId != null)
                 {
-                    List<MaterialInventoryDTO> acessoryList = await materialService.GetAllMaterialByStoreAsync(storeId, "phụ liệu");
-                    accessoryBs.DataSource = acessoryList;
-                    dgvAccessoryList.DataSource = accessoryBs;
+                    List<MaterialInventoryDTO> accessoryList = InventoryForm.Instance.MaterialInventory;
+
+                    _accessories = accessoryList.Where(al => al.MaterialId.StartsWith("A")).ToList();
+
+                    dgvAccessoryList.DataSource = _accessories;
                 }
             }
             catch (Exception e)
             {
                 MessageBox.Show($"Message: {e.Message}");
             }
+        }
+
+        public void RefreshAccessoryList()
+        {
+            LoadAccessoryList();
         }
 
         //Update dữ liệu bên Product khi user tick vô checkbox
@@ -627,87 +715,12 @@ namespace PL
             }
         }
 
-        //
+        //Xử lý khi click vô checkbox của accessory
         private void dgvAccessoryList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvAccessoryList.Columns[e.ColumnIndex] is DataGridViewTextBoxColumn)
             {
                 dgvAccessoryList.CurrentCell = null;
-            }
-        }
-
-        private void btnTestBindingSource_Click(object sender, EventArgs e)
-        {
-            accessoryBs.RemoveAt(0);
-            accessoryBs.ResetBindings(false);
-        }
-
-        private void txtBxCreationQuantity_Validating(object sender, CancelEventArgs e)
-        {
-            if (txtBxCreationQuantity.ReadOnly == true)
-            {
-                return;
-            }
-
-            if (int.TryParse(txtBxCreationQuantity.Text, out int value) && value > 0)
-            {
-                foreach (DataGridViewRow row in dgvProductDetails.Rows)
-                {
-                    string materialId = row.Cells[0].Value.ToString();
-                    int materialQuantity = Convert.ToInt32(row.Cells[3].Value);
-                    int requiredAmount = materialQuantity * value;
-
-                    if (!IsStockAvailableForIncrease(materialId, requiredAmount))
-                    {
-                        MessageBox.Show($"Số lượng sản phẩm vượt quá tồn kho của vật liệu {materialId}", "Cảnh báo");
-                        e.Cancel = true;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Giá trị không hợp lệ.", "Cảnh báo");
-                e.Cancel = true;
-            }
-        }
-
-        private void dgvProductDetails_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvProductDetails.Columns[e.ColumnIndex] is DataGridViewImageColumn)
-            {
-                var cellValue = dgvProductDetails.Rows[e.RowIndex].Cells[3].Value;
-                if (cellValue != null && int.TryParse(cellValue.ToString(), out int currentValue))
-                {
-                    string materialId = dgvProductDetails.Rows[e.RowIndex].Cells[0].Value.ToString();
-                    int productQuantity = int.TryParse(txtBxCreationQuantity.Text, out int pq) ? pq : 1;
-
-                    if (e.ColumnIndex == 2)
-                    {
-                        int newValue = currentValue - 1;
-                        if (newValue > 0)
-                        {
-                            dgvProductDetails.Rows[e.RowIndex].Cells[3].Value = newValue.ToString();
-                        }
-                    }
-                    else if (e.ColumnIndex == 4)
-                    {
-                        int requiredAmount = (currentValue + 1) * productQuantity;
-                        if (IsStockAvailableForIncrease(materialId, requiredAmount))
-                        {
-                            int newValue = currentValue + 1;
-                            dgvProductDetails.Rows[e.RowIndex].Cells[3].Value = newValue.ToString();
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Số lượng sản phẩm vượt quá tồn kho của vật liệu {materialId}", "Cảnh báo");
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("The cell value is not a valid integer.");
-                }
             }
         }
     }

@@ -7,7 +7,7 @@ using DTO.Store;
 
 namespace PL
 {
-    public partial class StoreMainForm : Form, INotifiable
+    public partial class StoreMainForm : System.Windows.Forms.Form, INotifiable
     {
         private static StoreMainForm? _instance;
         public Dictionary<string, Form> formInstances;
@@ -48,14 +48,17 @@ namespace PL
         }
 
         private async Task InitializeForms()
-        {   
+        {
             InventoryForm.Initialize();
             formInstances["InventoryForm"] = InventoryForm.Instance;
-            await InventoryForm.Instance.LoadStoreInventory(StoreId);
+            await InventoryForm.Instance.LoadMaterialInventory(StoreId);
+            await InventoryForm.Instance.LoadProductInventory(StoreId);
 
             //Chuyển hai form này thành singleton
             formInstances["SalesOrderForm"] = new SalesOrderForm();
             formInstances["AccountInformationForm"] = new AccountInformationForm();
+            formInstances["OrderCreationForm"] = new OrderCreationForm();
+
 
             //Khởi tạo ProductCreationForm
             ProductCreationForm.Initialize();
@@ -137,6 +140,14 @@ namespace PL
         {
             // Handle the notification and update the UI
             MessageBox.Show($"StoreMainForm received message: {message}");
+        }
+
+        private void btnProductList_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey("OrderCreationForm"))
+            {
+                AddFormIntoPanel(formInstances["OrderCreationForm"]);
+            }
         }
     }
 

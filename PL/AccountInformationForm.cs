@@ -12,7 +12,7 @@ using DTO.Employee;
 
 namespace PL
 {
-    public partial class AccountInformationForm : Form
+    public partial class AccountInformationForm : System.Windows.Forms.Form
     {
         public AccountInformationForm()
         {

@@ -72,8 +72,6 @@
             ColFloralCharacteristic = new DataGridViewTextBoxColumn();
             ColFlowerSelection = new DataGridViewCheckBoxColumn();
             tabAccessory = new TabPage();
-            btnTestBindingSource = new Button();
-            txtBxTest = new TextBox();
             dgvAccessoryList = new DataGridView();
             ColAccessoryId = new DataGridViewTextBoxColumn();
             ColAccessoryName = new DataGridViewTextBoxColumn();
@@ -518,33 +516,13 @@
             // 
             // tabAccessory
             // 
-            tabAccessory.Controls.Add(btnTestBindingSource);
-            tabAccessory.Controls.Add(txtBxTest);
             tabAccessory.Controls.Add(dgvAccessoryList);
-            tabAccessory.Location = new Point(4, 34);
+            tabAccessory.Location = new Point(4, 41);
             tabAccessory.Name = "tabAccessory";
-            tabAccessory.Size = new Size(1645, 906);
+            tabAccessory.Size = new Size(1645, 899);
             tabAccessory.TabIndex = 2;
             tabAccessory.Text = "Accessory";
             tabAccessory.UseVisualStyleBackColor = true;
-            // 
-            // btnTestBindingSource
-            // 
-            btnTestBindingSource.Location = new Point(746, 141);
-            btnTestBindingSource.Name = "btnTestBindingSource";
-            btnTestBindingSource.Size = new Size(212, 59);
-            btnTestBindingSource.TabIndex = 2;
-            btnTestBindingSource.Text = "click here";
-            btnTestBindingSource.UseVisualStyleBackColor = true;
-            btnTestBindingSource.Click += btnTestBindingSource_Click;
-            // 
-            // txtBxTest
-            // 
-            txtBxTest.Location = new Point(791, 290);
-            txtBxTest.Multiline = true;
-            txtBxTest.Name = "txtBxTest";
-            txtBxTest.Size = new Size(411, 280);
-            txtBxTest.TabIndex = 1;
             // 
             // dgvAccessoryList
             // 
@@ -624,7 +602,6 @@
             tabFlower.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvFlowerList).EndInit();
             tabAccessory.ResumeLayout(false);
-            tabAccessory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvAccessoryList).EndInit();
             ResumeLayout(false);
         }
@@ -661,11 +638,9 @@
         private Button btnClear;
         private Button btnAdd;
         private ComboBox cmbBxFloralRepresentations;
-        private TextBox txtBxTest;
         private DataGridViewTextBoxColumn ColAccessoryId;
         private DataGridViewTextBoxColumn ColAccessoryName;
         private DataGridViewCheckBoxColumn ColAccessorySelection;
-        private Button btnTestBindingSource;
         private DataGridViewTextBoxColumn ColFlowerId;
         private DataGridViewTextBoxColumn ColFlowerName;
         private DataGridViewTextBoxColumn ColFloralType;

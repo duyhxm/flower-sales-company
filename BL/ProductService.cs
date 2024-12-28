@@ -18,11 +18,11 @@ namespace BL
             _productRepository = new ProductRepository();
         }
 
-        public async Task AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string? storeId)
+        public async Task<ReturnedProductDTO> AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string storeId)
         {
             try
             {
-                await _productRepository.AddProductAsync(product, productCreationHistory, storeId);
+                return await _productRepository.AddProductAsync(product, productCreationHistory, storeId);
             }
             catch (Exception)
             {
@@ -30,7 +30,7 @@ namespace BL
             }
         }
 
-        public async Task<decimal> CalculateUnitPriceAsync(List<StoreInventoryDTO> storeInventory, Dictionary<string, int> materialQuantities)
+        public async Task<decimal> CalculateUnitPriceAsync(List<MaterialInventoryDTO> storeInventory, Dictionary<string, int> materialQuantities)
         {
             return await Task.Run(() =>
             {

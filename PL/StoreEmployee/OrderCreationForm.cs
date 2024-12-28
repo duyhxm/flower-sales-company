@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace PL
 {
-    public partial class OrderCreationForm : Form
+    public partial class OrderCreationForm : System.Windows.Forms.Form
     {
         public OrderCreationForm()
         {

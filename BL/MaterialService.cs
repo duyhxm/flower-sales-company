@@ -42,22 +42,22 @@ namespace BL
             }
         }
 
-        public async Task<List<MaterialInventoryDTO>> GetAllMaterialByStoreAsync(string storeId, string materialType = "both")
-        {
-            try
-            {
-                if (materialType != "phụ liệu" && materialType != "hoa")
-                {
-                    throw new InvalidOperationException("Loại vật liệu không tồn tại");
-                }
+        //public async Task<List<MaterialInventoryDTO>> GetAllMaterialByStoreAsync(string storeId, string materialType = "both")
+        //{
+        //    try
+        //    {
+        //        if (materialType != "phụ liệu" && materialType != "hoa")
+        //        {
+        //            throw new InvalidOperationException("Loại vật liệu không tồn tại");
+        //        }
 
-                return await _materialRepository.GetAllMaterialByStoreAsync(storeId, materialType);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //        return await _materialRepository.GetAllMaterialByStoreAsync(storeId, materialType);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         public async Task<List<FloralRepresentationDTO>?> GetFloralRepresentationAsync()
         {

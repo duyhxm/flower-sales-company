@@ -57,3 +57,4 @@ E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\refint\PL.dll
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.pdb
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.genruntimeconfig.cache
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\ref\PL.dll
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.ProductStockDetails.resources

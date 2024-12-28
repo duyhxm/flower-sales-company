@@ -19,7 +19,7 @@ namespace DL.Repositories.Implementations.Tests
             var repo = new StoreRepository();
             string storeId = "S001";
 
-            List<StoreInventoryDTO> result = await repo.GetStoreInventoryAsync(storeId);
+            List<MaterialInventoryDTO> result = await repo.GetMaterialInventoryAsync(storeId);
 
             Debug.WriteLine("MaterialId | MaterialName | StockMaterialQuantity | UnitPrice");
 

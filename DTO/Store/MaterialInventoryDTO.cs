@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO.Store
 {
-    public class StoreInventoryDTO
+    public class MaterialInventoryDTO
     {
         public string MaterialId { get; set; }
         public string MaterialName { get; set; }

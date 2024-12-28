@@ -41,12 +41,24 @@ namespace DL.Repositories.Implementations
             
         }
 
-        public async Task<List<StoreInventoryDTO>> GetStoreInventoryAsync(string storeId)
+        public async Task<List<MaterialInventoryDTO>> GetMaterialInventoryAsync(string storeId)
         {
             try
             {
                 //Hàm này sẽ lấy toàn bộ các material của cửa hàng có trong bảng MaterialInventory
-                return await _context.Database.SqlQuery<StoreInventoryDTO>($"SELECT * FROM dbo.fnGetStoreInventory({storeId})").ToListAsync();
+                return await _context.Database.SqlQuery<MaterialInventoryDTO>($"SELECT * FROM dbo.fnGetMaterialInventory({storeId})").ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<ProductInventoryDTO>?> GetProductInventoryAsync(string storeId)
+        {
+            try
+            {
+                return await _context.Database.SqlQuery<ProductInventoryDTO>($"SELECT * FROM dbo.fnGetProductStockDetails({storeId})").ToListAsync();
             }
             catch (Exception)
             {

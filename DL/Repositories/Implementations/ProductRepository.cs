@@ -125,8 +125,9 @@ namespace DL.Repositories.Implementations
             return letters.ToString();
         }
 
-        public async Task AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string? storeId)
+        public async Task<ReturnedProductDTO> AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string storeId)
         {
+            bool hasExisted = false;
             using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -134,8 +135,10 @@ namespace DL.Repositories.Implementations
                 //Tìm kiếm sản phẩm xem đã tồn tại chưa, để tránh trùng lắp
                 var existingProductInfo = await CheckProductExistence(product);
 
+                //sản phẩm đã tồn tại trong database
                 if (existingProductInfo != null)
                 {
+                    hasExisted = true;
                     await HandleExistingProduct(existingProductInfo, productCreationHistory, storeId);
                 }
                 else
@@ -145,7 +148,15 @@ namespace DL.Repositories.Implementations
 
                 await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
 
+                await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+
                 await transaction.CommitAsync();
+
+                return new ReturnedProductDTO()
+                {
+                    Product = product,
+                    HasExisted = hasExisted
+                };
             }
             catch (Exception ex)
             {
@@ -173,6 +184,20 @@ namespace DL.Repositories.Implementations
             }
 
             await _context.SaveChangesAsync();
+        }
+
+        private async Task UpdateProductInventoryAsync(DateTimeOffset createdDateTime, string storeId, string productId, int createdQuantity)
+        {
+            try
+            {
+                _context.Database.ExecuteSqlInterpolated($"EXECUTE dbo.uspUpdateProductInventory @creationDateTime = {createdDateTime}, @storeId = {storeId}, @productId = {productId}, @createdQuantity = {createdQuantity}");
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private async Task HandleExistingProduct(Dictionary<string, string> existingProductInfo, ProductCreationHistoryDTO productCreationHistory, string? storeId)
