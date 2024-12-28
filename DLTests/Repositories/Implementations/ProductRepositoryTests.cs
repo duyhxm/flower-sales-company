@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DL.Models;
 using System.Diagnostics;
+using DTO.Product;
+using DTO;
 
 namespace DL.Repositories.Implementations.Tests
 {
@@ -23,14 +25,73 @@ namespace DL.Repositories.Implementations.Tests
         //    test.RemoveProduct(product);
         //}
 
+        //[TestMethod()]
+        //public void GetLastestProductIdTest()
+        //{
+        //    ProductRepository test = new ProductRepository();
+
+        //    string? s = test.GetLastestProductId();
+
+        //    Debug.WriteLine(s);
+        //}
+
+        //[TestMethod()]
+        //public async Task AddCompleteProductAsyncTest()
+        //{
+        //    SystemRepository.Initialize();
+        //    ProductRepository repo = new ProductRepository();
+
+        //    DetailedProductDTO details = new DetailedProductDTO()
+        //    {
+        //        MaterialId = "F0001",
+        //        UsedQuantity = 2
+        //    };
+
+        //    List<DetailedProductDTO> list = new List<DetailedProductDTO>();
+        //    list.Add(details);
+
+        //    ProductDTO productDto = new ProductDTO()
+        //    {
+        //        FrepresentationId = "FR01",
+        //        ProductName = "bó hoa cúc",
+        //        DetailedProducts = list
+        //    };
+
+        //    ProductCreationHistoryDTO log = new ProductCreationHistoryDTO()
+        //    {
+        //        CreatedDateTime = DateTimeOffset.UtcNow.ToLocalTime(),
+        //        EmployeeId = "PTE0000001",
+        //        CreatedQuantity = 1,
+        //        UnitPrice = 100
+        //    };
+
+        //    await repo.AddProductAsync(productDto, log, "S001");
+
+        //    Debug.WriteLine("Add successfully a new product");
+        //}
+
         [TestMethod()]
-        public void GetLastestProductIdTest()
+        public async Task UpdateMaterialInventoryAsyncTest()
         {
-            ProductRepository test = new ProductRepository();
+            SystemRepository.Initialize();
+            ProductRepository repo = new ProductRepository();
 
-            string? s = test.GetLastestProductId();
+            DetailedProductDTO details = new DetailedProductDTO()
+            {
+                MaterialId = "F0002",
+                UsedQuantity = 2
+            };
 
-            Debug.WriteLine(s);
+            List<DetailedProductDTO> list = new List<DetailedProductDTO>();
+            list.Add(details);
+
+            ProductDTO productDto = new ProductDTO()
+            {
+                FrepresentationId = "FR01",
+                ProductName = "bó hoa cúc",
+                DetailedProducts = list
+            };
+            await repo.UpdateMaterialInventoryAsync(productDto, "S001");
         }
     }
 }

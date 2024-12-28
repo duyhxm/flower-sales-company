@@ -86,6 +86,7 @@ namespace DL.Repositories.Implementations
         {
             try
             {
+                //Hàm này sẽ chỉ trả về các flower có số lượng >0 trong bảng MaterialInventory tương ứng với cửa hàng
                 var flowerList = await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM dbo.fnGetAllFlowerByStore({storeId})").ToListAsync();
 
                 return flowerList;
@@ -167,6 +168,8 @@ namespace DL.Repositories.Implementations
                 throw;
             }
         }
+
+
 
     }
 }

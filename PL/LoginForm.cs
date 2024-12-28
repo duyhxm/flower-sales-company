@@ -32,6 +32,8 @@ namespace PL
 
         public LoginInformation LoginInformation { get; set; }
 
+        private bool _isLoggingIn = false;
+
         private LoginForm()
         {
             InitializeComponent();
@@ -70,6 +72,11 @@ namespace PL
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
+            if (_isLoggingIn) return;
+
+            _isLoggingIn = true;
+            btnLogin.Enabled = false;
+
             Username = txtBxUsername.Text;
             Password = txtBxPassword.Text;
 
@@ -117,6 +124,11 @@ namespace PL
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                _isLoggingIn = false;
+                btnLogin.Enabled = true;
             }
         }
 

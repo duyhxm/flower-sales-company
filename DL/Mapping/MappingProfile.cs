@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DL.Models;
 using DTO;
+using DTO.Product;
 
 namespace DL.Mapping
 {
     public class MappingProfile : Profile
     {
+        public MappingProfile()
+        {
+            CreateMap<ProductDTO, Product>()
+                .ForMember(dest => dest.DetailedProducts, opt => opt.MapFrom(src => src.DetailedProducts));
+        }
         public new void CreateMap(Type sourceType, Type destinationType)
         {
-            base.CreateMap(sourceType, destinationType);
+            base.CreateMap(sourceType, destinationType).ReverseMap();
         }
     }
 }

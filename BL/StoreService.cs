@@ -17,17 +17,18 @@ namespace BL
             _storeRepository = new StoreRepository();
         }
 
-        //public async Task<StoreDTO> GetStoreInfoAsync(string storeId)
-        //{
-        //    try
-        //    {
+        public async Task<List<StoreInventoryDTO>> GetStoreInventoryAsync(string storeId)
+        {
+            try
+            {
+                return await _storeRepository.GetStoreInventoryAsync(storeId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+        }
 
     }
 }

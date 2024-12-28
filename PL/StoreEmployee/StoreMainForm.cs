@@ -10,7 +10,7 @@ namespace PL
     public partial class StoreMainForm : Form, INotifiable
     {
         private static StoreMainForm? _instance;
-        private Dictionary<string, Form> formInstances;
+        public Dictionary<string, Form> formInstances;
         public NotificationService NotificationService { get; private set; }
         public string? StoreId { get; private set; }
         public string? StoreName { get; private set; }
@@ -35,8 +35,9 @@ namespace PL
             }
         }
 
-        private void StoreMainForm_Load(object sender, EventArgs e)
+        private async void StoreMainForm_Load(object sender, EventArgs e)
         {
+            await InitializeForms();
             NotificationManager.Instance.RegisterForm(this);
             MessageBox.Show($"StoreID: {StoreId} \n StoreName: {StoreName}");
         }
@@ -46,42 +47,69 @@ namespace PL
             NotificationManager.Instance.UnregisterForm(this);
         }
 
-        public void HandleNotification(Dictionary<string, object> message)
-        {
-            // Handle the notification and update the UI
-            MessageBox.Show($"StoreMainForm received message: {message}");
-        }
+        private async Task InitializeForms()
+        {   
+            InventoryForm.Initialize();
+            formInstances["InventoryForm"] = InventoryForm.Instance;
+            await InventoryForm.Instance.LoadStoreInventory(StoreId);
 
-        private void AddFormIntoPanel(string formName, Form form)
-        {
-            splConStoreMainForm.Panel2.Controls
-                .Clear();
+            //Chuyển hai form này thành singleton
+            formInstances["SalesOrderForm"] = new SalesOrderForm();
+            formInstances["AccountInformationForm"] = new AccountInformationForm();
 
-            if (!formInstances.ContainsKey(formName))
+            //Khởi tạo ProductCreationForm
+            ProductCreationForm.Initialize();
+            formInstances["ProductCreationForm"] = ProductCreationForm.Instance;
+
+            foreach (var form in formInstances.Values)
             {
                 form.TopLevel = false;
                 form.Dock = DockStyle.Fill;
-                formInstances[formName] = form;
             }
+        }
 
-            splConStoreMainForm.Panel2.Controls.Add(formInstances[formName]);
-            formInstances[formName].Show();
+        private void AddFormIntoPanel(Form form)
+        {
+            splConStoreMainForm.Panel2.Controls.Clear();
+            splConStoreMainForm.Panel2.Controls.Add(form);
+            form.Show();
         }
 
         private void btnCreateOrder_Click(object sender, EventArgs e)
         {
-            SalesOrderForm orderForm = new SalesOrderForm();
-
-            AddFormIntoPanel("SalesOrderForm", orderForm);
+            if (formInstances.ContainsKey("SalesOrderForm"))
+            {
+                AddFormIntoPanel(formInstances["SalesOrderForm"]);
+            }
         }
 
         private void btnInventory_Click(object sender, EventArgs e)
         {
-            InventoryForm inventoryForm = new InventoryForm();
-
-            AddFormIntoPanel("InventoryForm", inventoryForm);
+            if (formInstances.ContainsKey("InventoryForm"))
+            {
+                AddFormIntoPanel(formInstances["InventoryForm"]);
+            }
         }
 
+        private void btnAccountInformation_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey("AccountInformationForm"))
+            {
+                AddFormIntoPanel(formInstances["AccountInformationForm"]);
+
+                ((AccountInformationForm)formInstances["AccountInformationForm"]).DisplayInformation(LoginForm.Instance.LoginInformation);
+            }
+        }
+
+        private void btnCreateProduct_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey("ProductCreationForm"))
+            {
+                AddFormIntoPanel(formInstances["ProductCreationForm"]);
+            }
+        }
+
+        //Đang thử nghiệm phần này
         private async void btnTestServiceBus_Click(object sender, EventArgs e)
         {
             await SendMessageToServiceBusTest();
@@ -105,18 +133,10 @@ namespace PL
 
         }
 
-        private void btnAccountInformation_Click(object sender, EventArgs e)
+        public void HandleNotification(Dictionary<string, object> message)
         {
-            AccountInformationForm accountInformationForm = new AccountInformationForm();
-            AddFormIntoPanel("AccountInformationForm", accountInformationForm);
-
-            accountInformationForm.DisplayInformation(LoginForm.Instance.LoginInformation);
-        }
-
-        private void btnCreateProduct_Click(object sender, EventArgs e)
-        {
-            ProductCreationForm productCreationForm = new ProductCreationForm();
-            AddFormIntoPanel("ProductCreationForm", productCreationForm);
+            // Handle the notification and update the UI
+            MessageBox.Show($"StoreMainForm received message: {message}");
         }
     }
 

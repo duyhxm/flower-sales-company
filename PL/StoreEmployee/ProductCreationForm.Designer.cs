@@ -177,7 +177,7 @@
             dgvProductDetails.RowHeadersWidth = 62;
             dgvProductDetails.Size = new Size(674, 526);
             dgvProductDetails.TabIndex = 14;
-            dgvProductDetails.CellContentClick += dgvProductDetails_CellContentClick;
+            dgvProductDetails.CellClick += dgvProductDetails_CellClick;
             dgvProductDetails.CellValueChanged += dgvProductDetails_CellValueChanged;
             dgvProductDetails.RowsAdded += dgvProductDetails_RowsAdded;
             dgvProductDetails.RowsRemoved += dgvProductDetails_RowsRemoved;
@@ -257,7 +257,7 @@
             txtBxCreationQuantity.Size = new Size(126, 39);
             txtBxCreationQuantity.TabIndex = 11;
             txtBxCreationQuantity.TextAlign = HorizontalAlignment.Center;
-            txtBxCreationQuantity.TextChanged += txtBxCreationQuantity_TextChanged;
+            txtBxCreationQuantity.Validating += txtBxCreationQuantity_Validating;
             // 
             // txtBxUnitPrice
             // 

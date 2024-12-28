@@ -11,7 +11,6 @@ namespace DL.Repositories.Interfaces
     {
         Task<Product?> FindByIdAsync(string id);
         Task<List<Product>> GetAllProductsAsync();
-        int AddProduct(Product product);
         void RemoveProduct(Product product);
     }
 }

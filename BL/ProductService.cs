@@ -5,49 +5,53 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO.Product;
 using DL.Repositories.Implementations;
+using DTO.Store;
 
 namespace BL
 {
     public class ProductService
     {
-        private ProductRepository? _productRepository;
+        private ProductRepository _productRepository;
 
         public ProductService()
         {
             _productRepository = new ProductRepository();
         }
-        private ProductDTO? AddProduct(ProductDTO product)
-        {
-            return null;
-        }
 
-        private async Task AddDetailedProduct(List<DetailedProductDTO> detailedProductList)
-        {
-
-        }
-
-        private async Task CreateProductCreationHistory(ProductCreationHistoryDTO productCreationHistory)
-        {
-
-        }
-
-        public async Task AddCompleteProduct(ProductDTO product, List<DetailedProductDTO> detailedProductList, ProductCreationHistoryDTO productCreationHistory)
-        {
-            ProductDTO? productDTO = AddProduct(product);
-            await AddDetailedProduct(detailedProductList);
-            await CreateProductCreationHistory(productCreationHistory);
-        }
-
-        public string? GetLastestProductId()
+        public async Task AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string? storeId)
         {
             try
             {
-                return _productRepository!.GetLastestProductId();
+                await _productRepository.AddProductAsync(product, productCreationHistory, storeId);
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        public async Task<decimal> CalculateUnitPriceAsync(List<StoreInventoryDTO> storeInventory, Dictionary<string, int> materialQuantities)
+        {
+            return await Task.Run(() =>
+            {
+                decimal totalPrice = 0;
+
+                var joinedData = from inventory in storeInventory
+                                 join material in materialQuantities
+                                 on inventory.MaterialId equals material.Key
+                                 select new
+                                 {
+                                     inventory.UnitPrice,
+                                     Quantity = material.Value
+                                 };
+
+                foreach (var item in joinedData)
+                {
+                    totalPrice += item.UnitPrice * item.Quantity;
+                }
+
+                return totalPrice;
+            });
         }
     }
 }

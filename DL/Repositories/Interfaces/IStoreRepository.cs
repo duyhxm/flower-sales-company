@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DL.Models;
-using DTO;
+using DTO.Store;
 
 namespace DL.Repositories.Interfaces
 {
     public interface IStoreRepository
     {
         //Create
-        int AddStore(Store store);
+        int AddStore(StoreDTO store);
         //Read
-        Task<List<Store>> GetAllStoresAsync(string criteria);
+        Task<List<StoreDTO>> GetAllStoresAsync(string criteria);
         //Update
-        int UpdateStore(Store store);
+        int UpdateStore(StoreDTO store);
         //Delete
-        int DeleteStore(Store store);
+        int DeleteStore(StoreDTO store);
 
     }
 }

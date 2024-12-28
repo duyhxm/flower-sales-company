@@ -28,142 +28,97 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InventoryForm));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            tolStrNavigationBar = new ToolStrip();
-            tolStrBtnMaterial = new ToolStripButton();
-            tolStrSep = new ToolStripSeparator();
-            tolStrBtnProduct = new ToolStripButton();
-            dgvItemInventory = new DataGridView();
-            colOrder = new DataGridViewTextBoxColumn();
-            colID = new DataGridViewTextBoxColumn();
-            colName = new DataGridViewTextBoxColumn();
-            colStockQuantity = new DataGridViewTextBoxColumn();
+            dgvStoreInventory = new DataGridView();
+            ColMaterialId = new DataGridViewTextBoxColumn();
+            ColMaterialName = new DataGridViewTextBoxColumn();
+            ColStockMaterialQuantity = new DataGridViewTextBoxColumn();
+            ColUnitPrice = new DataGridViewTextBoxColumn();
             lblFilter = new Label();
-            lblStore = new Label();
             lblMaterialType = new Label();
             cmbBxMaterials = new ComboBox();
-            cmbBxStores = new ComboBox();
             plHorizontalLine = new Panel();
-            tolStrNavigationBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvItemInventory).BeginInit();
+            tbCtrlStoreInventory = new TabControl();
+            tpMaterial = new TabPage();
+            tpProduct = new TabPage();
+            ((System.ComponentModel.ISupportInitialize)dgvStoreInventory).BeginInit();
+            tbCtrlStoreInventory.SuspendLayout();
+            tpMaterial.SuspendLayout();
             SuspendLayout();
             // 
-            // tolStrNavigationBar
+            // dgvStoreInventory
             // 
-            tolStrNavigationBar.BackColor = SystemColors.GradientInactiveCaption;
-            tolStrNavigationBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tolStrNavigationBar.ImageScalingSize = new Size(24, 24);
-            tolStrNavigationBar.Items.AddRange(new ToolStripItem[] { tolStrBtnMaterial, tolStrSep, tolStrBtnProduct });
-            tolStrNavigationBar.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            tolStrNavigationBar.Location = new Point(0, 0);
-            tolStrNavigationBar.Name = "tolStrNavigationBar";
-            tolStrNavigationBar.Padding = new Padding(0, 0, 3, 0);
-            tolStrNavigationBar.RenderMode = ToolStripRenderMode.Professional;
-            tolStrNavigationBar.Size = new Size(1653, 41);
-            tolStrNavigationBar.TabIndex = 0;
-            tolStrNavigationBar.Text = "toolStrip1";
-            // 
-            // tolStrBtnMaterial
-            // 
-            tolStrBtnMaterial.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            tolStrBtnMaterial.Image = (Image)resources.GetObject("tolStrBtnMaterial.Image");
-            tolStrBtnMaterial.ImageTransparentColor = Color.Magenta;
-            tolStrBtnMaterial.Name = "tolStrBtnMaterial";
-            tolStrBtnMaterial.Size = new Size(105, 36);
-            tolStrBtnMaterial.Text = "Material";
-            tolStrBtnMaterial.Click += tolStrBtnMaterial_Click;
-            // 
-            // tolStrSep
-            // 
-            tolStrSep.Name = "tolStrSep";
-            tolStrSep.Size = new Size(6, 41);
-            // 
-            // tolStrBtnProduct
-            // 
-            tolStrBtnProduct.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            tolStrBtnProduct.Image = (Image)resources.GetObject("tolStrBtnProduct.Image");
-            tolStrBtnProduct.ImageTransparentColor = Color.Magenta;
-            tolStrBtnProduct.Name = "tolStrBtnProduct";
-            tolStrBtnProduct.Size = new Size(100, 36);
-            tolStrBtnProduct.Text = "Product";
-            tolStrBtnProduct.Click += tolStrBtnProduct_Click;
-            // 
-            // dgvItemInventory
-            // 
-            dgvItemInventory.BackgroundColor = SystemColors.Menu;
-            dgvItemInventory.BorderStyle = BorderStyle.None;
-            dgvItemInventory.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dgvStoreInventory.AllowUserToAddRows = false;
+            dgvStoreInventory.AllowUserToDeleteRows = false;
+            dgvStoreInventory.AllowUserToResizeColumns = false;
+            dgvStoreInventory.AllowUserToResizeRows = false;
+            dgvStoreInventory.BackgroundColor = SystemColors.Menu;
+            dgvStoreInventory.BorderStyle = BorderStyle.None;
+            dgvStoreInventory.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvItemInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgvItemInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvItemInventory.Columns.AddRange(new DataGridViewColumn[] { colOrder, colID, colName, colStockQuantity });
-            dgvItemInventory.Location = new Point(78, 262);
-            dgvItemInventory.Name = "dgvItemInventory";
-            dgvItemInventory.RowHeadersWidth = 62;
-            dgvItemInventory.Size = new Size(782, 641);
-            dgvItemInventory.TabIndex = 1;
+            dgvStoreInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvStoreInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStoreInventory.Columns.AddRange(new DataGridViewColumn[] { ColMaterialId, ColMaterialName, ColStockMaterialQuantity, ColUnitPrice });
+            dgvStoreInventory.Location = new Point(95, 234);
+            dgvStoreInventory.Name = "dgvStoreInventory";
+            dgvStoreInventory.RowHeadersWidth = 62;
+            dgvStoreInventory.Size = new Size(899, 344);
+            dgvStoreInventory.TabIndex = 1;
             // 
-            // colOrder
+            // ColMaterialId
             // 
-            colOrder.HeaderText = "#";
-            colOrder.MinimumWidth = 8;
-            colOrder.Name = "colOrder";
-            colOrder.Resizable = DataGridViewTriState.False;
-            colOrder.Width = 80;
+            ColMaterialId.HeaderText = "ID";
+            ColMaterialId.MinimumWidth = 8;
+            ColMaterialId.Name = "ColMaterialId";
+            ColMaterialId.ReadOnly = true;
+            ColMaterialId.Resizable = DataGridViewTriState.False;
+            ColMaterialId.Width = 150;
             // 
-            // colID
+            // ColMaterialName
             // 
-            colID.HeaderText = "ID";
-            colID.MinimumWidth = 8;
-            colID.Name = "colID";
-            colID.Resizable = DataGridViewTriState.False;
-            colID.Width = 150;
+            ColMaterialName.HeaderText = "Name";
+            ColMaterialName.MinimumWidth = 8;
+            ColMaterialName.Name = "ColMaterialName";
+            ColMaterialName.ReadOnly = true;
+            ColMaterialName.Resizable = DataGridViewTriState.False;
+            ColMaterialName.Width = 250;
             // 
-            // colName
+            // ColStockMaterialQuantity
             // 
-            colName.HeaderText = "Name";
-            colName.MinimumWidth = 8;
-            colName.Name = "colName";
-            colName.Resizable = DataGridViewTriState.False;
-            colName.Width = 250;
+            ColStockMaterialQuantity.HeaderText = "StockQuantity";
+            ColStockMaterialQuantity.MinimumWidth = 8;
+            ColStockMaterialQuantity.Name = "ColStockMaterialQuantity";
+            ColStockMaterialQuantity.ReadOnly = true;
+            ColStockMaterialQuantity.Resizable = DataGridViewTriState.False;
+            ColStockMaterialQuantity.Width = 200;
             // 
-            // colStockQuantity
+            // ColUnitPrice
             // 
-            colStockQuantity.HeaderText = "StockQuantity";
-            colStockQuantity.MinimumWidth = 8;
-            colStockQuantity.Name = "colStockQuantity";
-            colStockQuantity.Resizable = DataGridViewTriState.False;
-            colStockQuantity.Width = 200;
+            ColUnitPrice.HeaderText = "Unit Price";
+            ColUnitPrice.MinimumWidth = 8;
+            ColUnitPrice.Name = "ColUnitPrice";
+            ColUnitPrice.ReadOnly = true;
+            ColUnitPrice.Width = 200;
             // 
             // lblFilter
             // 
             lblFilter.AutoSize = true;
-            lblFilter.Location = new Point(147, 115);
+            lblFilter.Location = new Point(149, 99);
             lblFilter.Name = "lblFilter";
             lblFilter.Size = new Size(67, 32);
             lblFilter.TabIndex = 2;
             lblFilter.Text = "Filter";
             // 
-            // lblStore
-            // 
-            lblStore.AutoSize = true;
-            lblStore.Location = new Point(144, 171);
-            lblStore.Name = "lblStore";
-            lblStore.Size = new Size(74, 32);
-            lblStore.TabIndex = 3;
-            lblStore.Text = "Store:";
-            // 
             // lblMaterialType
             // 
             lblMaterialType.AutoSize = true;
-            lblMaterialType.Location = new Point(452, 171);
+            lblMaterialType.Location = new Point(454, 155);
             lblMaterialType.Name = "lblMaterialType";
             lblMaterialType.Size = new Size(164, 32);
             lblMaterialType.TabIndex = 5;
@@ -173,70 +128,85 @@
             // 
             cmbBxMaterials.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbBxMaterials.FormattingEnabled = true;
-            cmbBxMaterials.Items.AddRange(new object[] { "all", "flower", "accessory" });
-            cmbBxMaterials.Location = new Point(622, 168);
+            cmbBxMaterials.Location = new Point(624, 152);
             cmbBxMaterials.Name = "cmbBxMaterials";
             cmbBxMaterials.Size = new Size(204, 40);
             cmbBxMaterials.TabIndex = 6;
-            // 
-            // cmbBxStores
-            // 
-            cmbBxStores.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbBxStores.FormattingEnabled = true;
-            cmbBxStores.Items.AddRange(new object[] { "current", "store 01", "store 02", "store 03", "store 04", "store 05" });
-            cmbBxStores.Location = new Point(224, 168);
-            cmbBxStores.Name = "cmbBxStores";
-            cmbBxStores.Size = new Size(204, 40);
-            cmbBxStores.TabIndex = 7;
+            cmbBxMaterials.SelectedIndexChanged += cmbBxMaterials_SelectedIndexChanged;
             // 
             // plHorizontalLine
             // 
             plHorizontalLine.BackColor = SystemColors.ActiveBorder;
-            plHorizontalLine.Location = new Point(145, 150);
+            plHorizontalLine.Location = new Point(147, 134);
             plHorizontalLine.Name = "plHorizontalLine";
             plHorizontalLine.Size = new Size(730, 1);
             plHorizontalLine.TabIndex = 8;
+            // 
+            // tbCtrlStoreInventory
+            // 
+            tbCtrlStoreInventory.Controls.Add(tpMaterial);
+            tbCtrlStoreInventory.Controls.Add(tpProduct);
+            tbCtrlStoreInventory.Dock = DockStyle.Fill;
+            tbCtrlStoreInventory.Location = new Point(0, 0);
+            tbCtrlStoreInventory.Name = "tbCtrlStoreInventory";
+            tbCtrlStoreInventory.SelectedIndex = 0;
+            tbCtrlStoreInventory.Size = new Size(1653, 944);
+            tbCtrlStoreInventory.TabIndex = 9;
+            // 
+            // tpMaterial
+            // 
+            tpMaterial.Controls.Add(dgvStoreInventory);
+            tpMaterial.Controls.Add(plHorizontalLine);
+            tpMaterial.Controls.Add(lblMaterialType);
+            tpMaterial.Controls.Add(lblFilter);
+            tpMaterial.Controls.Add(cmbBxMaterials);
+            tpMaterial.Location = new Point(4, 41);
+            tpMaterial.Name = "tpMaterial";
+            tpMaterial.Padding = new Padding(3);
+            tpMaterial.Size = new Size(1645, 899);
+            tpMaterial.TabIndex = 0;
+            tpMaterial.Text = "Material";
+            tpMaterial.UseVisualStyleBackColor = true;
+            // 
+            // tpProduct
+            // 
+            tpProduct.Location = new Point(4, 34);
+            tpProduct.Name = "tpProduct";
+            tpProduct.Padding = new Padding(3);
+            tpProduct.Size = new Size(1645, 906);
+            tpProduct.TabIndex = 1;
+            tpProduct.Text = "Product";
+            tpProduct.UseVisualStyleBackColor = true;
             // 
             // InventoryForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1653, 944);
-            Controls.Add(plHorizontalLine);
-            Controls.Add(cmbBxStores);
-            Controls.Add(cmbBxMaterials);
-            Controls.Add(lblMaterialType);
-            Controls.Add(lblStore);
-            Controls.Add(lblFilter);
-            Controls.Add(dgvItemInventory);
-            Controls.Add(tolStrNavigationBar);
+            Controls.Add(tbCtrlStoreInventory);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
             Name = "InventoryForm";
-            tolStrNavigationBar.ResumeLayout(false);
-            tolStrNavigationBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvItemInventory).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStoreInventory).EndInit();
+            tbCtrlStoreInventory.ResumeLayout(false);
+            tpMaterial.ResumeLayout(false);
+            tpMaterial.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private ToolStrip tolStrNavigationBar;
-        private ToolStripButton tolStrBtnMaterial;
-        private ToolStripButton tolStrBtnProduct;
-        private DataGridView dgvItemInventory;
+        private DataGridView dgvStoreInventory;
         private Label lblFilter;
-        private Label lblStore;
         private Label lblMaterialType;
         private ComboBox cmbBxMaterials;
-        private ComboBox cmbBxStores;
         private Panel plHorizontalLine;
-        private ToolStripSeparator tolStrSep;
-        private DataGridViewTextBoxColumn colOrder;
-        private DataGridViewTextBoxColumn colID;
-        private DataGridViewTextBoxColumn colName;
-        private DataGridViewTextBoxColumn colStockQuantity;
+        private TabControl tbCtrlStoreInventory;
+        private TabPage tpMaterial;
+        private TabPage tpProduct;
+        private DataGridViewTextBoxColumn ColMaterialId;
+        private DataGridViewTextBoxColumn ColMaterialName;
+        private DataGridViewTextBoxColumn ColStockMaterialQuantity;
+        private DataGridViewTextBoxColumn ColUnitPrice;
     }
 }
