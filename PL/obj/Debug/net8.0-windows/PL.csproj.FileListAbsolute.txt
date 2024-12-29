@@ -62,3 +62,5 @@ E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.InvoiceForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.OrderHistoryForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.PreorderListForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.DailyTaskForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.ProductListForm.resources

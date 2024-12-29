@@ -102,7 +102,7 @@ namespace PL
                         LoginInformation = extraLoginInfo;
                         LoginInformation.UserAccount = result;
 
-                        RunServiceBusHost(TOPIC_NAME, "UserA_Subscription");
+                        RunServiceBusHost(TOPIC_NAME, "UserB_Subscription");
                         RunNotificationService(TOPIC_NAME);
 
                         WorkForm = CreateFormByName(LoginInformation.AccessibleForm);

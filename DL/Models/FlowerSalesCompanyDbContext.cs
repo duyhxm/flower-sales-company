@@ -1139,7 +1139,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
         modelBuilder.Entity<ProductInventory>(entity =>
         {
-            entity.HasKey(e => new { e.StoreId, e.ProductId }).HasName("PK_Mutual_StoreID_ProductID_ProductInventory");
+            entity.HasKey(e => new { e.StoreId, e.ProductId, e.StockDate }).HasName("PK_Mutual_StoreID_ProductID_StockDate_ProductInventory");
 
             entity.ToTable("ProductInventory");
 

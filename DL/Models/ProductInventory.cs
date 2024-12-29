@@ -9,6 +9,8 @@ public partial class ProductInventory
 
     public string ProductId { get; set; } = null!;
 
+    public DateTime StockDate { get; set; }
+
     public int? StockProductQuantity { get; set; }
 
     public virtual Product Product { get; set; } = null!;

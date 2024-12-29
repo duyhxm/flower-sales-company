@@ -44,22 +44,7 @@ namespace DL.Repositories.Implementations
                 throw;
             }
         }
-        public int AddProduct(Product product)
-        {
-            int affectedRows = 0;
-            try
-            {
-                 affectedRows = _context.Database.ExecuteSqlInterpolated($"EXECUTE dbo.uspAddProduct {product.ProductName}, {product.FrepresentationId}");
-                _context.SaveChanges();
-            }
-            catch(Exception)
-            {
-                throw;
-            }
-
-            return affectedRows;
-        }
-
+        
         public void RemoveProduct(Product product)
         {
             try

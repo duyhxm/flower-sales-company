@@ -42,5 +42,18 @@ namespace BL
             }
         }
 
+        public async Task UpdateProductInventoryAsync
+        (string storeId, Dictionary<string, Tuple<DateTime, int>> usedProducts)
+        {
+            try
+            {
+                await _storeRepository.UpdateProductInventoryAsync(storeId, usedProducts);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

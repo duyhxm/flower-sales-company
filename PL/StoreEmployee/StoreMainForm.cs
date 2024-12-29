@@ -49,6 +49,7 @@ namespace PL
 
         private async Task InitializeForms()
         {
+            //Khởi tạo InventoryForm. Form này sẽ chứa kho vật liệu và sản phẩm của cửa hàng
             InventoryForm.Initialize();
             formInstances["InventoryForm"] = InventoryForm.Instance;
             await InventoryForm.Instance.LoadMaterialInventory(StoreId);
@@ -60,15 +61,21 @@ namespace PL
             formInstances["OrderCreationForm"] = new OrderCreationForm();
 
 
-            //Khởi tạo ProductCreationForm
+            //Khởi tạo ProductCreationForm, dùng để tạo product
             ProductCreationForm.Initialize();
             formInstances["ProductCreationForm"] = ProductCreationForm.Instance;
 
+            //Khởi tạo OrderHistoryForm, dùng để xem lịch sử đơn hàng đã bán
             StoreEmployee.OrderHistoryForm.Initialize();
-            formInstances["OrderHistoryForm"] = ProductCreationForm.Instance;
+            formInstances["OrderHistoryForm"] = StoreEmployee.OrderHistoryForm.Instance;
 
+            //Khởi tạo ProductList Form. Dùng để xem danh sách các sản phẩm mà phòng kinh doanh chỉ định cho cửa hàng để bán, hay gọi là danh sách các sản phẩm chủ đạo của cửa hàng
+            StoreEmployee.ProductListForm.Initialize();
+            formInstances["ProductListForm"] = StoreEmployee.ProductListForm.Instance;
 
-
+            //Khởi tạo DailyTask Form. Dùng để xem các sản phẩm cần tạo mỗi ngày mà phòng kinh doanh đưa xuống cho cửa hàng
+            StoreEmployee.DailyTaskForm.Initialize();
+            formInstances["DailyTaskForm"] = StoreEmployee.DailyTaskForm.Instance;
 
             foreach (var form in formInstances.Values)
             {
@@ -144,6 +151,7 @@ namespace PL
 
         public void HandleNotification(Dictionary<string, object> message)
         {
+            
             // Handle the notification and update the UI
             MessageBox.Show($"StoreMainForm received message: {message}");
         }
@@ -169,6 +177,14 @@ namespace PL
             if (formInstances.ContainsKey("OrderHistoryForm"))
             {
                 AddFormIntoPanel(formInstances["OrderHistoryForm"]);
+            }
+        }
+
+        private void btnDailyTask_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey("DailyTaskForm"))
+            {
+                AddFormIntoPanel(formInstances["DailyTaskForm"]);
             }
         }
     }

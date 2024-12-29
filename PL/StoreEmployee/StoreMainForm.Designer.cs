@@ -89,6 +89,7 @@
             resources.ApplyResources(btnDailyTask, "btnDailyTask");
             btnDailyTask.Name = "btnDailyTask";
             btnDailyTask.UseVisualStyleBackColor = true;
+            btnDailyTask.Click += btnDailyTask_Click;
             // 
             // txtBx_currentUser
             // 

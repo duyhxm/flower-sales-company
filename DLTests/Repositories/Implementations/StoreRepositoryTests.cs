@@ -30,5 +30,11 @@ namespace DL.Repositories.Implementations.Tests
 
             Debug.WriteLine("-------Completed-------");
         }
+
+        [TestMethod()]
+        public void UpdateProductInventoryAsyncTest()
+        {
+            Assert.Fail();
+        }
     }
 }

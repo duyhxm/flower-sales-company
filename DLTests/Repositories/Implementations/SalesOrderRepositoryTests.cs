@@ -13,6 +13,11 @@ namespace DL.Repositories.Implementations.Tests
     [TestClass()]
     public class SalesOrderRepositoryTests
     {
+        [TestMethod()]
+        public void AddSalesOrderAsyncTest()
+        {
+            Assert.Fail();
+        }
         //[TestMethod()]
         //public async Task GetOrderDiscountInfoAsyncTest()
         //{

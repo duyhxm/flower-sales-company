@@ -18,7 +18,10 @@ namespace PL
 {
     public partial class SalesOrderForm : System.Windows.Forms.Form
     {
+
         private SalesOrderService _salesOrderService = new SalesOrderService();
+        private StoreService _storeService = new StoreService();
+
         private Dictionary<int, int> previousQuantities = new Dictionary<int, int>();
         private bool isAddingRow = false;
         private ShippingInformationForm _shippingInformationForm;
@@ -26,6 +29,7 @@ namespace PL
         public bool IsPreorder = false;
         public bool IsNonMember = false;
         public Dictionary<DiscountInfo?, decimal> DiscountInfos = new();
+        public Dictionary<string, Tuple<DateTime, int>> usedProducts = new(); 
         public SalesOrderForm()
         {
             InitializeComponent();
@@ -66,6 +70,10 @@ namespace PL
             {
                 isAddingRow = true;
                 AddOrUpdateProductRow(product);
+                if (!usedProducts.ContainsKey(product.ProductId))
+                {
+                    usedProducts.Add(product.ProductId, new Tuple<DateTime, int>(product.StockDate, 1));
+                }
                 isAddingRow = false;
             }
             else
@@ -143,6 +151,7 @@ namespace PL
                 if (result == DialogResult.OK)
                 {
                     dgvDetailedOrder.Rows.RemoveAt(e.RowIndex);
+                    usedProducts.Remove(productId);
                     UpdateOrderColumn();
                 }
             }
@@ -459,18 +468,21 @@ namespace PL
 
                         salesOrder.OrderStatus = "đã xác nhận";
                         salesOrder.OrderType = "đặt trước";
+
+                        await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, null, deliveryDateTime);
                     }
                     else
                     {
                         //Thực hiện add mới đơn hàng lấy ngay, không có sử dụng dịch vụ vận chuyển
                         salesOrder.OrderStatus = "thành công";
                         salesOrder.OrderType = "lấy ngay";
+
+                        await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, null, null);
+
+                        await _storeService.UpdateProductInventoryAsync(LoginForm.Instance.LoginInformation.StoreID!, usedProducts);
                     }
 
-                    await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, null, deliveryDateTime);
-
-
-
+                    
                     MessageBox.Show("Đơn hàng đã được thêm thành công", "Thông báo");
 
                     //Thực hiện làm mới form để tiếp tục thêm mới đơn hàng nếu có.
