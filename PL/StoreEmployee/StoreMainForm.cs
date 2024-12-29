@@ -64,6 +64,12 @@ namespace PL
             ProductCreationForm.Initialize();
             formInstances["ProductCreationForm"] = ProductCreationForm.Instance;
 
+            StoreEmployee.OrderHistoryForm.Initialize();
+            formInstances["OrderHistoryForm"] = ProductCreationForm.Instance;
+
+
+
+
             foreach (var form in formInstances.Values)
             {
                 form.TopLevel = false;
@@ -144,9 +150,25 @@ namespace PL
 
         private void btnProductList_Click(object sender, EventArgs e)
         {
-            if (formInstances.ContainsKey("OrderCreationForm"))
+            if (formInstances.ContainsKey("ProductListForm"))
             {
-                AddFormIntoPanel(formInstances["OrderCreationForm"]);
+                AddFormIntoPanel(formInstances["ProductListForm"]);
+            }
+        }
+
+        private void btnPreOrderList_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey("PreoderListForm"))
+            {
+                AddFormIntoPanel(formInstances["PreorderListForm"]);
+            }
+        }
+
+        private void btnOrderHistory_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey("OrderHistoryForm"))
+            {
+                AddFormIntoPanel(formInstances["OrderHistoryForm"]);
             }
         }
     }

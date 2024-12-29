@@ -38,6 +38,13 @@
             txtBxCustomerID = new TextBox();
             txtBxCustomerRank = new TextBox();
             dgvDetailedOrder = new DataGridView();
+            ColOrder = new DataGridViewTextBoxColumn();
+            ColSalesOrderId = new DataGridViewTextBoxColumn();
+            ColProductName = new DataGridViewTextBoxColumn();
+            ColProductQuantity = new DataGridViewTextBoxColumn();
+            ColUnitPrice = new DataGridViewTextBoxColumn();
+            ColLinePrice = new DataGridViewTextBoxColumn();
+            ColRemove = new DataGridViewImageColumn();
             lblCustomerDiscountValue = new Label();
             lblOrderDiscountValue = new Label();
             lblFinalPrice = new Label();
@@ -48,22 +55,17 @@
             txtBxFinalPrice = new TextBox();
             btnComplete = new Button();
             btnClear = new Button();
-            txtBxUnitPrice = new TextBox();
             txtBxStockDate = new TextBox();
             lblProductInfo = new Label();
             lblProductId = new Label();
             lblStockDate = new Label();
-            lblUnitPrice = new Label();
             lblCustomerInfo = new Label();
             ibtnAdd = new FontAwesome.Sharp.IconButton();
             btnCalculateFinalPrice = new Button();
-            ColOrder = new DataGridViewTextBoxColumn();
-            ColSalesOrderId = new DataGridViewTextBoxColumn();
-            ColProductName = new DataGridViewTextBoxColumn();
-            ColProductQuantity = new DataGridViewTextBoxColumn();
-            ColUnitPrice = new DataGridViewTextBoxColumn();
-            ColLinePrice = new DataGridViewTextBoxColumn();
-            ColRemove = new DataGridViewImageColumn();
+            ckBxShippingOrder = new CheckBox();
+            ckBxPreorder = new CheckBox();
+            ibtnAddPreorderProduct = new FontAwesome.Sharp.IconButton();
+            dtpDeliveryDatetime = new DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)dgvDetailedOrder).BeginInit();
             SuspendLayout();
             // 
@@ -167,10 +169,69 @@
             dgvDetailedOrder.Margin = new Padding(3, 4, 3, 4);
             dgvDetailedOrder.Name = "dgvDetailedOrder";
             dgvDetailedOrder.RowHeadersWidth = 62;
-            dgvDetailedOrder.Size = new Size(1074, 306);
+            dgvDetailedOrder.Size = new Size(1249, 306);
             dgvDetailedOrder.TabIndex = 8;
+            dgvDetailedOrder.CellBeginEdit += dgvDetailedOrder_CellBeginEdit;
             dgvDetailedOrder.CellClick += dgvDetailedOrder_CellClick;
+            dgvDetailedOrder.CellValueChanged += dgvDetailedOrder_CellValueChanged;
             dgvDetailedOrder.RowsAdded += dgvDetailedOrder_RowsAdded;
+            // 
+            // ColOrder
+            // 
+            ColOrder.HeaderText = "#";
+            ColOrder.MinimumWidth = 8;
+            ColOrder.Name = "ColOrder";
+            ColOrder.ReadOnly = true;
+            ColOrder.Width = 80;
+            // 
+            // ColSalesOrderId
+            // 
+            ColSalesOrderId.HeaderText = "ID";
+            ColSalesOrderId.MinimumWidth = 8;
+            ColSalesOrderId.Name = "ColSalesOrderId";
+            ColSalesOrderId.ReadOnly = true;
+            ColSalesOrderId.Width = 150;
+            // 
+            // ColProductName
+            // 
+            ColProductName.HeaderText = "Product Name";
+            ColProductName.MinimumWidth = 8;
+            ColProductName.Name = "ColProductName";
+            ColProductName.ReadOnly = true;
+            ColProductName.Width = 300;
+            // 
+            // ColProductQuantity
+            // 
+            ColProductQuantity.HeaderText = "Q";
+            ColProductQuantity.MinimumWidth = 8;
+            ColProductQuantity.Name = "ColProductQuantity";
+            ColProductQuantity.Width = 80;
+            // 
+            // ColUnitPrice
+            // 
+            ColUnitPrice.HeaderText = "Unit Price";
+            ColUnitPrice.MinimumWidth = 8;
+            ColUnitPrice.Name = "ColUnitPrice";
+            ColUnitPrice.ReadOnly = true;
+            ColUnitPrice.Width = 200;
+            // 
+            // ColLinePrice
+            // 
+            ColLinePrice.HeaderText = "Line Price";
+            ColLinePrice.MinimumWidth = 8;
+            ColLinePrice.Name = "ColLinePrice";
+            ColLinePrice.ReadOnly = true;
+            ColLinePrice.Width = 200;
+            // 
+            // ColRemove
+            // 
+            ColRemove.FillWeight = 50F;
+            ColRemove.HeaderText = "";
+            ColRemove.Image = Properties.Resources.details;
+            ColRemove.MinimumWidth = 50;
+            ColRemove.Name = "ColRemove";
+            ColRemove.Resizable = DataGridViewTriState.False;
+            ColRemove.Width = 150;
             // 
             // lblCustomerDiscountValue
             // 
@@ -278,14 +339,6 @@
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
             // 
-            // txtBxUnitPrice
-            // 
-            txtBxUnitPrice.Location = new Point(1282, 189);
-            txtBxUnitPrice.Margin = new Padding(3, 4, 3, 4);
-            txtBxUnitPrice.Name = "txtBxUnitPrice";
-            txtBxUnitPrice.Size = new Size(177, 39);
-            txtBxUnitPrice.TabIndex = 20;
-            // 
             // txtBxStockDate
             // 
             txtBxStockDate.Location = new Point(1282, 142);
@@ -328,17 +381,6 @@
             lblStockDate.TabIndex = 25;
             lblStockDate.Text = "Stock Date";
             // 
-            // lblUnitPrice
-            // 
-            lblUnitPrice.AutoSize = true;
-            lblUnitPrice.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblUnitPrice.ForeColor = Color.FromArgb(47, 47, 48);
-            lblUnitPrice.Location = new Point(1136, 197);
-            lblUnitPrice.Name = "lblUnitPrice";
-            lblUnitPrice.Size = new Size(116, 27);
-            lblUnitPrice.TabIndex = 26;
-            lblUnitPrice.Text = "Unit Price";
-            // 
             // lblCustomerInfo
             // 
             lblCustomerInfo.AutoSize = true;
@@ -357,7 +399,7 @@
             ibtnAdd.IconColor = Color.Black;
             ibtnAdd.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ibtnAdd.IconSize = 24;
-            ibtnAdd.Location = new Point(1479, 189);
+            ibtnAdd.Location = new Point(1480, 142);
             ibtnAdd.Name = "ibtnAdd";
             ibtnAdd.Size = new Size(55, 39);
             ibtnAdd.TabIndex = 28;
@@ -375,61 +417,53 @@
             btnCalculateFinalPrice.UseVisualStyleBackColor = true;
             btnCalculateFinalPrice.Click += btnCalculateFinalPrice_Click;
             // 
-            // ColOrder
+            // ckBxShippingOrder
             // 
-            ColOrder.HeaderText = "#";
-            ColOrder.MinimumWidth = 8;
-            ColOrder.Name = "ColOrder";
-            ColOrder.ReadOnly = true;
-            ColOrder.Width = 80;
+            ckBxShippingOrder.AutoSize = true;
+            ckBxShippingOrder.Location = new Point(321, 245);
+            ckBxShippingOrder.Margin = new Padding(3, 4, 3, 4);
+            ckBxShippingOrder.Name = "ckBxShippingOrder";
+            ckBxShippingOrder.Size = new Size(132, 36);
+            ckBxShippingOrder.TabIndex = 30;
+            ckBxShippingOrder.Text = "shipping";
+            ckBxShippingOrder.UseVisualStyleBackColor = true;
+            ckBxShippingOrder.CheckedChanged += ckBxShippingOrder_CheckedChanged;
             // 
-            // ColSalesOrderId
+            // ckBxPreorder
             // 
-            ColSalesOrderId.HeaderText = "ID";
-            ColSalesOrderId.MinimumWidth = 8;
-            ColSalesOrderId.Name = "ColSalesOrderId";
-            ColSalesOrderId.ReadOnly = true;
-            ColSalesOrderId.Width = 150;
+            ckBxPreorder.AutoSize = true;
+            ckBxPreorder.Location = new Point(472, 245);
+            ckBxPreorder.Margin = new Padding(3, 4, 3, 4);
+            ckBxPreorder.Name = "ckBxPreorder";
+            ckBxPreorder.Size = new Size(132, 36);
+            ckBxPreorder.TabIndex = 31;
+            ckBxPreorder.Text = "preorder";
+            ckBxPreorder.UseVisualStyleBackColor = true;
+            ckBxPreorder.CheckedChanged += ckBxPreorder_CheckedChanged;
             // 
-            // ColProductName
+            // ibtnAddPreorderProduct
             // 
-            ColProductName.HeaderText = "Product Name";
-            ColProductName.MinimumWidth = 8;
-            ColProductName.Name = "ColProductName";
-            ColProductName.ReadOnly = true;
-            ColProductName.Width = 250;
+            ibtnAddPreorderProduct.IconChar = FontAwesome.Sharp.IconChar.Add;
+            ibtnAddPreorderProduct.IconColor = Color.Black;
+            ibtnAddPreorderProduct.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ibtnAddPreorderProduct.IconSize = 24;
+            ibtnAddPreorderProduct.Location = new Point(628, 243);
+            ibtnAddPreorderProduct.Name = "ibtnAddPreorderProduct";
+            ibtnAddPreorderProduct.Size = new Size(55, 39);
+            ibtnAddPreorderProduct.TabIndex = 32;
+            ibtnAddPreorderProduct.UseVisualStyleBackColor = true;
+            ibtnAddPreorderProduct.Visible = false;
+            ibtnAddPreorderProduct.Click += ibtnAddPreorderProduct_Click;
             // 
-            // ColProductQuantity
+            // dtpDeliveryDatetime
             // 
-            ColProductQuantity.HeaderText = "Q";
-            ColProductQuantity.MinimumWidth = 8;
-            ColProductQuantity.Name = "ColProductQuantity";
-            ColProductQuantity.ReadOnly = true;
-            ColProductQuantity.Width = 80;
-            // 
-            // ColUnitPrice
-            // 
-            ColUnitPrice.HeaderText = "Unit Price";
-            ColUnitPrice.MinimumWidth = 8;
-            ColUnitPrice.Name = "ColUnitPrice";
-            ColUnitPrice.ReadOnly = true;
-            ColUnitPrice.Width = 150;
-            // 
-            // ColLinePrice
-            // 
-            ColLinePrice.HeaderText = "Line Price";
-            ColLinePrice.MinimumWidth = 8;
-            ColLinePrice.Name = "ColLinePrice";
-            ColLinePrice.ReadOnly = true;
-            ColLinePrice.Width = 150;
-            // 
-            // ColRemove
-            // 
-            ColRemove.HeaderText = "";
-            ColRemove.Image = Properties.Resources.details;
-            ColRemove.MinimumWidth = 50;
-            ColRemove.Name = "ColRemove";
-            ColRemove.Resizable = DataGridViewTriState.False;
+            dtpDeliveryDatetime.CustomFormat = "dd/MM/yyyy HH:mm";
+            dtpDeliveryDatetime.Format = DateTimePickerFormat.Custom;
+            dtpDeliveryDatetime.Location = new Point(736, 242);
+            dtpDeliveryDatetime.Name = "dtpDeliveryDatetime";
+            dtpDeliveryDatetime.Size = new Size(241, 39);
+            dtpDeliveryDatetime.TabIndex = 33;
+            dtpDeliveryDatetime.Validating += dtpDeliveryDatetime_Validating;
             // 
             // SalesOrderForm
             // 
@@ -438,9 +472,12 @@
             AutoSize = true;
             BackColor = SystemColors.Window;
             ClientSize = new Size(1653, 944);
+            Controls.Add(dtpDeliveryDatetime);
+            Controls.Add(ibtnAddPreorderProduct);
+            Controls.Add(ckBxPreorder);
+            Controls.Add(ckBxShippingOrder);
             Controls.Add(btnCalculateFinalPrice);
             Controls.Add(ibtnAdd);
-            Controls.Add(lblUnitPrice);
             Controls.Add(lblStockDate);
             Controls.Add(txtBxCustomerName);
             Controls.Add(lblCustomerInfo);
@@ -451,7 +488,6 @@
             Controls.Add(lblCustomerId);
             Controls.Add(txtBxStockDate);
             Controls.Add(lblCustomerRank);
-            Controls.Add(txtBxUnitPrice);
             Controls.Add(ckBxIsNonMember);
             Controls.Add(btnClear);
             Controls.Add(lblCustomerName);
@@ -499,12 +535,10 @@
         private TextBox txtBxFinalPrice;
         private Button btnComplete;
         private Button btnClear;
-        private TextBox txtBxUnitPrice;
         private TextBox txtBxStockDate;
         private Label lblProductInfo;
         private Label lblProductId;
         private Label lblStockDate;
-        private Label lblUnitPrice;
         private Label lblCustomerInfo;
         private FontAwesome.Sharp.IconButton ibtnAdd;
         private Button btnCalculateFinalPrice;
@@ -515,5 +549,9 @@
         private DataGridViewTextBoxColumn ColUnitPrice;
         private DataGridViewTextBoxColumn ColLinePrice;
         private DataGridViewImageColumn ColRemove;
+        private CheckBox ckBxShippingOrder;
+        private CheckBox ckBxPreorder;
+        private FontAwesome.Sharp.IconButton ibtnAddPreorderProduct;
+        private DateTimePicker dtpDeliveryDatetime;
     }
 }

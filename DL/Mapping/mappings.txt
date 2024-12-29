@@ -4,3 +4,7 @@ DL.Models.Employee,DTO.Employee.EmployeeDTO
 DL.Models.FloralRepresentation,DTO.Material.FloralRepresentationDTO
 DL.Models.ProductCreationHistory,DTO.Product.ProductCreationHistoryDTO
 DL.Models.DetailedProduct,DTO.Product.DetailedProductDTO
+DL.Models.UsedPromotionHistory,DTO.SalesOrder.UsedPromotionHistoryDTO
+DL.Models.SalesOrder,DTO.SalesOrder.SalesOrderDTO
+DL.Models.DetailedSalesOrder,DTO.SalesOrder.DetailedSalesOrderDTO
+DL.Models.ShippingInformation,DTO.SalesOrder.ShippingInformationDTO

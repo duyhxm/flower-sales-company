@@ -91,7 +91,7 @@ namespace DL.Repositories.Implementations.Tests
                 ProductName = "bó hoa cúc",
                 DetailedProducts = list
             };
-            await repo.UpdateMaterialInventoryAsync(productDto, "S001");
+            await repo.UpdateMaterialInventoryAsync(productDto, "S001", 100);
         }
     }
 }

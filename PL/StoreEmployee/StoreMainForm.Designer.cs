@@ -100,12 +100,14 @@
             resources.ApplyResources(btnOrderHistory, "btnOrderHistory");
             btnOrderHistory.Name = "btnOrderHistory";
             btnOrderHistory.UseVisualStyleBackColor = true;
+            btnOrderHistory.Click += btnOrderHistory_Click;
             // 
             // btnPreOrderList
             // 
             resources.ApplyResources(btnPreOrderList, "btnPreOrderList");
             btnPreOrderList.Name = "btnPreOrderList";
             btnPreOrderList.UseVisualStyleBackColor = true;
+            btnPreOrderList.Click += btnPreOrderList_Click;
             // 
             // btnProductList
             // 

@@ -10,19 +10,35 @@ using System.Windows.Forms;
 using DTO;
 using DTO.SalesOrder;
 using DTO.Store;
+using static BL.GeneralService;
+using BL;
+using PL.StoreEmployee;
 
 namespace PL
 {
     public partial class SalesOrderForm : System.Windows.Forms.Form
     {
+        private SalesOrderService _salesOrderService = new SalesOrderService();
+        private Dictionary<int, int> previousQuantities = new Dictionary<int, int>();
+        private bool isAddingRow = false;
+        private ShippingInformationForm _shippingInformationForm;
+        private bool isShippingInfoEntered = false;
+        public bool IsPreorder = false;
+        public bool IsNonMember = false;
+        public Dictionary<DiscountInfo?, decimal> DiscountInfos = new();
         public SalesOrderForm()
         {
             InitializeComponent();
+            dgvDetailedOrder.Columns[6].Width = 50;
+            _shippingInformationForm = new ShippingInformationForm(this);
         }
 
         private void dgvDetailedOrder_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            dgvDetailedOrder.Rows[e.RowIndex].Cells[6].Value = Properties.Resources.icon_remove;
+            if (isAddingRow)
+            {
+                dgvDetailedOrder.Rows[e.RowIndex].Cells[6].Value = Properties.Resources.icon_remove;
+            }
         }
 
         private void ibtnAdd_Click(object sender, EventArgs e)
@@ -48,7 +64,9 @@ namespace PL
 
             if (product != null)
             {
+                isAddingRow = true;
                 AddOrUpdateProductRow(product);
+                isAddingRow = false;
             }
             else
             {
@@ -69,16 +87,6 @@ namespace PL
             }
 
             return null;
-        }
-
-        private string ConvertToCurrency(decimal value)
-        {
-            return value.ToString("C", new System.Globalization.CultureInfo("vi-VN"));
-        }
-
-        private decimal ConvertFromCurrency(string currencyValue)
-        {
-            return decimal.Parse(currencyValue, System.Globalization.NumberStyles.Currency, new System.Globalization.CultureInfo("vi-VN"));
         }
 
         private void AddOrUpdateProductRow(ProductInventoryDTO product)
@@ -140,22 +148,26 @@ namespace PL
             }
         }
 
-        private void btnComplete_Click(object sender, EventArgs e)
+        private async void btnCalculateFinalPrice_Click(object sender, EventArgs e)
         {
+            if (dgvDetailedOrder.Rows.Count == 0)
+            {
+                MessageBox.Show("Bạn cần thêm tối thiểu một sản phẩm để tính giá", "Thông báo");
+                return;
+            }
 
-        }
-
-        private void btnCalculateFinalPrice_Click(object sender, EventArgs e)
-        {
             decimal basePrice = CalculateBasePrice();
             txtBxBasePrice.Text = ConvertToCurrency(basePrice);
 
-            DiscountInfo? customerDiscount = GetCustomerDiscountInfo(txtBxCustomerRank.Text, basePrice);
+            DiscountInfo? customerDiscount = await GetCustomerDiscountInfoAsync(txtBxCustomerRank.Text, basePrice);
             decimal customerDiscountValue = CalculateDiscountValue(customerDiscount, basePrice);
+
+            DiscountInfos.Add(customerDiscount, customerDiscountValue);
             txtBxCustomerDiscountValue.Text = ConvertToCurrency(customerDiscountValue);
 
-            DiscountInfo? orderDiscount = GetOrderDiscountInfo(basePrice);
+            DiscountInfo? orderDiscount = await GetOrderDiscountInfoAsync(basePrice);
             decimal orderDiscountValue = CalculateDiscountValue(orderDiscount, basePrice);
+            DiscountInfos.Add(orderDiscount, orderDiscountValue);
             txtBxOrderDiscountValue.Text = ConvertToCurrency(orderDiscountValue);
 
             decimal finalPrice = basePrice - customerDiscountValue - orderDiscountValue;
@@ -190,21 +202,37 @@ namespace PL
             return discountValue;
         }
 
-        private DiscountInfo? GetCustomerDiscountInfo(string customerRank, decimal basePrice)
+        private async Task<DiscountInfo?> GetCustomerDiscountInfoAsync(string customerRank, decimal basePrice)
         {
-            if (customerRank == string.Empty)
+            if (!IsNonMember && customerRank == string.Empty)
             {
                 MessageBox.Show("Thông tin tên hạng còn thiếu, hãy cung cấp đầy đủ thông tin", "Thông báo");
                 return null;
             }
-            // Implement your logic to get customer discount info
-            return new DiscountInfo { Discount = 0.1m, MaximumDiscountValue = 50000m };
+
+            try
+            {
+                return await _salesOrderService.GetCustomerDiscountInfoAsync(customerRank, basePrice);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return null;
         }
 
-        private DiscountInfo? GetOrderDiscountInfo(decimal basePrice)
+        private async Task<DiscountInfo?> GetOrderDiscountInfoAsync(decimal basePrice)
         {
-            // Implement your logic to get order discount info
-            return new DiscountInfo { Discount = 0.05m, MaximumDiscountValue = 30000m };
+            try
+            {
+                return await _salesOrderService.GetOrderDiscountInfoAsync(basePrice);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return null;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -237,12 +265,315 @@ namespace PL
                 txtBxCustomerID.Enabled = false;
                 txtBxCustomerName.Enabled = false;
                 txtBxCustomerRank.Enabled = false;
+                IsNonMember = true;
             }
             else
             {
                 txtBxCustomerID.Enabled = true;
                 txtBxCustomerName.Enabled = true;
                 txtBxCustomerRank.Enabled = true;
+                IsNonMember = false;
+            }
+        }
+
+        private void dgvDetailedOrder_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (isAddingRow) return;
+
+            if (e.ColumnIndex == 3 && e.RowIndex >= 0)
+            {
+                var cell = dgvDetailedOrder.Rows[e.RowIndex].Cells[3];
+                if (!int.TryParse(cell.Value?.ToString(), out int newQuantity) || newQuantity <= 0)
+                {
+                    MessageBox.Show("Số lượng phải là một số nguyên dương.", "Lỗi nhập liệu");
+                    cell.Value = previousQuantities[e.RowIndex];
+                    return;
+                }
+
+                string productId = dgvDetailedOrder.Rows[e.RowIndex].Cells[1].Value.ToString()!;
+                DateTime stockDate = DateTime.ParseExact(txtBxStockDate.Text, "dd/MM/yyyy", null);
+                ProductInventoryDTO? product = GetProductInformation(productId, stockDate);
+
+                if (product != null && newQuantity > product.StockProductQuantity)
+                {
+                    MessageBox.Show($"Số lượng vượt quá số lượng có trong kho ({product.StockProductQuantity}).", "Lỗi nhập liệu");
+                    cell.Value = previousQuantities[e.RowIndex];
+                    return;
+                }
+
+                decimal unitPrice = ConvertFromCurrency(dgvDetailedOrder.Rows[e.RowIndex].Cells[4].Value.ToString()!);
+                dgvDetailedOrder.Rows[e.RowIndex].Cells[5].Value = ConvertToCurrency(unitPrice * newQuantity);
+            }
+        }
+
+        private void dgvDetailedOrder_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == 3 && e.RowIndex >= 0)
+            {
+                int previousQuantity = Convert.ToInt32(dgvDetailedOrder.Rows[e.RowIndex].Cells[3].Value);
+                previousQuantities[e.RowIndex] = previousQuantity;
+            }
+        }
+
+        private void ckBxShippingOrder_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckBxShippingOrder.Checked)
+            {
+                btnComplete.Text = "Next";
+            }
+            else
+            {
+                btnComplete.Text = "Complete";
+            }
+        }
+
+        private void ckBxPreorder_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckBxPreorder.Checked)
+            {
+                IsPreorder = true;
+            }
+            else
+            {
+                IsPreorder = false;
+            }
+        }
+
+        private void ibtnAddPreorderProduct_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btnComplete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvDetailedOrder.Rows.Count == 0)
+                {
+                    MessageBox.Show("Bạn cần phải thêm tối thiểu 1 sản phẩm", "Thông báo");
+                    return;
+                }
+
+                if ((!IsNonMember && IsAnyCustomerInfoEmpty()))
+                {
+                    MessageBox.Show("Thông tin khách hàng không được để trống", "Thông báo");
+                    return;
+                }
+
+                if (txtBxBasePrice.Text == string.Empty)
+                {
+                    MessageBox.Show("Bạn cần phải tính toán giá đơn hàng trước", "Thông báo");
+                    return;
+                }
+
+                if (ckBxShippingOrder.Checked)
+                {
+                    _shippingInformationForm.ShowDialog();
+                    return;
+                }
+
+                if (!ckBxShippingOrder.Checked && isShippingInfoEntered)
+                {
+                    DialogResult result = MessageBox.Show("Bạn đã nhập thông tin vận chuyển. Bạn muốn huỷ việc vận chuyển và thêm mới đơn hàng", "Xác nhận", MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        _shippingInformationForm.ClearShippingInformation();
+                        MessageBox.Show("Đơn hàng đã được thêm thành công", "Thông báo");
+                        return;
+                    }
+                }
+
+                if (!ckBxShippingOrder.Checked)
+                {
+                    List<UsedPromotionHistoryDTO> usedPromotions = new List<UsedPromotionHistoryDTO>();
+                    DateTimeOffset deliveryDateTime = ConvertStringToDateTimeOffset(dtpDeliveryDatetime.Text);
+                    List<DetailedSalesOrderDTO> detailedSalesOrders = new List<DetailedSalesOrderDTO>();
+                    SalesOrderDTO salesOrder = new SalesOrderDTO();
+
+
+                    foreach (var kvp in DiscountInfos)
+                    {
+                        if (kvp.Value == 0)
+                        {
+                            continue;
+                        }
+
+                        if (kvp.Key != null)
+                        {
+                            if (kvp.Key.PromotionType == "khách hàng")
+                            {
+                                DiscountInfo discountInfo = kvp.Key;
+                                UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
+                                {
+                                    PromotionId = discountInfo.PromotionID,
+                                    CustomerDiscountValue = kvp.Value
+                                };
+                                usedPromotions.Add(usedPromotion);
+                            }
+
+                            if (kvp.Key.PromotionType == "đơn hàng")
+                            {
+                                DiscountInfo discountInfo = kvp.Key;
+                                UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
+                                {
+                                    PromotionId = discountInfo.PromotionID,
+                                    OrderDiscountValue = kvp.Value
+                                };
+                                usedPromotions.Add(usedPromotion);
+                            }
+                        }
+
+                    }
+
+                    foreach (DataGridViewRow row in dgvDetailedOrder.Rows)
+                    {
+                        string productId = row.Cells[1].Value.ToString()!;
+                        string quantity = row.Cells[3].Value.ToString()!;
+                        DetailedSalesOrderDTO detail = new DetailedSalesOrderDTO()
+                        {
+                            ProductId = productId,
+                            Quantity = Convert.ToInt32(quantity)
+                        };
+
+                        detailedSalesOrders.Add(detail);
+                    }
+
+                    salesOrder.DetailedSalesOrders = detailedSalesOrders;
+                    salesOrder.CustomerId = GetCustomerId();
+                    salesOrder.StoreId = LoginForm.Instance.LoginInformation.StoreID;
+                    salesOrder.PurchaseMethod = "tại cửa hàng";
+                    salesOrder.BasePrice = ConvertFromCurrency(txtBxBasePrice.Text);
+                    salesOrder.FinalPrice = ConvertFromCurrency(txtBxFinalPrice.Text);
+                    salesOrder.CreatedDateTime = LocalDateTimeOffset();
+
+                    if (IsPreorder)
+                    {
+                        //Thực hiện add mới sản phẩm đặt trước, không có sử dụng dịch vụ vận chuyển
+                        if (!ValidatePreorderDeliveryDatetime())
+                        {
+                            MessageBox.Show("Đơn hàng đặt trước phải lớn hơn ngày hiện tại và không được vượt quá 7 ngày. Giờ nhận hàng phải từ 05:00 - 20:00", "Thông báo");
+                            dtpDeliveryDatetime.Focus();
+                            return;
+                        }
+
+                        salesOrder.OrderStatus = "đã xác nhận";
+                        salesOrder.OrderType = "đặt trước";
+                    }
+                    else
+                    {
+                        //Thực hiện add mới đơn hàng lấy ngay, không có sử dụng dịch vụ vận chuyển
+                        salesOrder.OrderStatus = "thành công";
+                        salesOrder.OrderType = "lấy ngay";
+                    }
+
+                    await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, null, deliveryDateTime);
+
+
+
+                    MessageBox.Show("Đơn hàng đã được thêm thành công", "Thông báo");
+
+                    //Thực hiện làm mới form để tiếp tục thêm mới đơn hàng nếu có.
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private bool ValidatePreorderDeliveryDatetime()
+        {
+            DateTime deliveryDatetime = dtpDeliveryDatetime.Value;
+            if (deliveryDatetime.Date > DateTime.Now.Date && deliveryDatetime.Date <= DateTime.Now.Date.AddDays(7))
+            {
+                if (deliveryDatetime.TimeOfDay >= TimeSpan.FromHours(5) && deliveryDatetime.TimeOfDay <= TimeSpan.FromHours(20))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsAnyCustomerInfoEmpty()
+        {
+            if (txtBxCustomerID.Text == string.Empty || txtBxCustomerName.Text == string.Empty || txtBxCustomerRank.Text == string.Empty)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void SetShippingInfoEntered(bool value)
+        {
+            isShippingInfoEntered = value;
+        }
+
+        public string GetCustomerName()
+        {
+            return txtBxCustomerName.Text;
+        }
+
+        public string GetCustomerId()
+        {
+            return txtBxCustomerID.Text;
+        }
+
+        public DataTable GetOrderInformation()
+        {
+            DataTable orderInfo = new DataTable();
+            orderInfo.Columns.Add("Order");
+            orderInfo.Columns.Add("ProductId");
+            orderInfo.Columns.Add("ProductName");
+            orderInfo.Columns.Add("Quantity");
+            orderInfo.Columns.Add("LinePrice");
+
+            foreach (DataGridViewRow row in dgvDetailedOrder.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                DataRow dataRow = orderInfo.NewRow();
+                dataRow["Order"] = row.Cells[0].Value;
+                dataRow["ProductId"] = row.Cells[1].Value;
+                dataRow["ProductName"] = row.Cells[2].Value;
+                dataRow["Quantity"] = row.Cells[3].Value;
+                dataRow["LinePrice"] = row.Cells[5].Value;
+                orderInfo.Rows.Add(dataRow);
+            }
+
+            return orderInfo;
+        }
+
+        public decimal GetBasePrice()
+        {
+            return ConvertFromCurrency(txtBxBasePrice.Text);
+        }
+
+        public decimal GetCustomerDiscount()
+        {
+            return ConvertFromCurrency(txtBxCustomerDiscountValue.Text);
+        }
+
+        public decimal GetOrderDiscount()
+        {
+            return ConvertFromCurrency(txtBxOrderDiscountValue.Text);
+        }
+
+        public void ResetSalesOrderForm()
+        {
+            IsPreorder = false;
+            previousQuantities = new Dictionary<int, int>();
+            isAddingRow = false;
+            isShippingInfoEntered = false;
+        }
+
+        private void dtpDeliveryDatetime_Validating(object sender, CancelEventArgs e)
+        {
+            if (!ValidatePreorderDeliveryDatetime())
+            {
+                MessageBox.Show("Đơn hàng đặt trước phải lớn hơn ngày hiện tại và không được vượt quá 7 ngày. Giờ giao hàng phải từ 05:00 - 20:00", "Thông báo");
+                dtpDeliveryDatetime.Focus();
+                return;
             }
         }
     }

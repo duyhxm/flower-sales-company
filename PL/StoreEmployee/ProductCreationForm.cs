@@ -16,6 +16,7 @@ using DTO.Product;
 using DTO.Store;
 using System.Globalization;
 using DL.Models;
+using static BL.GeneralService;
 
 namespace PL
 {
@@ -233,11 +234,11 @@ namespace PL
             };
 
             short createdQuantity = Convert.ToInt16(creationQuantity);
-            decimal price = GeneralService.ConvertFormattedStringToDecimal(unitPrice);
+            decimal price = ConvertFromCurrency(unitPrice);
 
             ProductCreationHistoryDTO creationHistory = new ProductCreationHistoryDTO()
             {
-                CreatedDateTime = GeneralService.LocalDateTimeOffset(),
+                CreatedDateTime = LocalDateTimeOffset(),
                 EmployeeId = LoginForm.Instance.LoginInformation.UserAccount.EmployeeId!,
                 CreatedQuantity = createdQuantity,
                 UnitPrice = price

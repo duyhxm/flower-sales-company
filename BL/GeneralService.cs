@@ -24,23 +24,22 @@ namespace BL
             return DateTimeOffset.UtcNow.ToLocalTime();
         }
 
-        public static decimal ConvertFormattedStringToDecimal(string formattedString)
+        public static DateTimeOffset ConvertStringToDateTimeOffset(string dateTimeString)
         {
-            // Remove the currency symbol and any other non-numeric characters
-            string cleanedString = formattedString.Replace("₫", "").Trim();
-            cleanedString = cleanedString.Replace(".", "");
-
-            // Parse the cleaned string to decimal
-            if (decimal.TryParse(cleanedString, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal value))
-            {
-                return value;
-            }
-            else
-            {
-                throw new FormatException("The input string is not in a correct format.");
-            }
+            DateTime dateTime = DateTime.ParseExact(dateTimeString, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            DateTimeOffset dateTimeOffset = new DateTimeOffset(dateTime, TimeSpan.FromHours(7));
+            return dateTimeOffset;
         }
 
+        public static decimal ConvertFromCurrency(string currencyValue)
+        {
+            return decimal.Parse(currencyValue, NumberStyles.Currency, new CultureInfo("vi-VN"));
+        }
+
+        public static string ConvertToCurrency(decimal value)
+        {
+            return value.ToString("C", new CultureInfo("vi-VN"));
+        }
 
     }
 }
