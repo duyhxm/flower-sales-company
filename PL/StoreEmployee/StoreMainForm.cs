@@ -1,13 +1,11 @@
 ﻿using Azure.Messaging.ServiceBus;
 using BL;
-using DL;
 using System.Collections.Generic;
-using Infrastructure;
 using DTO.Store;
 
 namespace PL
 {
-    public partial class StoreMainForm : System.Windows.Forms.Form, INotifiable
+    public partial class StoreMainForm : Form, INotifiable
     {
         private static StoreMainForm? _instance;
         public Dictionary<string, Form> formInstances;
@@ -57,12 +55,17 @@ namespace PL
 
             //Chuyển hai form này thành singleton
             formInstances["SalesOrderForm"] = new SalesOrderForm();
-            formInstances["AccountInformationForm"] = new AccountInformationForm();
+
+            //khởi tạo AccountInformationForm
+            AccountInformationForm.Initialize();
+            formInstances[AccountInformationForm.Instance.Name] = AccountInformationForm.Instance;
+
+
             formInstances["OrderCreationForm"] = new OrderCreationForm();
 
 
             //Khởi tạo ProductCreationForm, dùng để tạo product
-            ProductCreationForm.Initialize();
+            ProductCreationForm.Initialize(NotificationService);
             formInstances["ProductCreationForm"] = ProductCreationForm.Instance;
 
             //Khởi tạo OrderHistoryForm, dùng để xem lịch sử đơn hàng đã bán

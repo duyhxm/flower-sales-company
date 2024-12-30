@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DL.Repositories.Implementations;
 using DTO.Material;
 using DTO;
+using DTO.Store;
 
 namespace BL
 {
@@ -18,6 +19,7 @@ namespace BL
             _materialRepository = new MaterialRepository();
         }
 
+        //hàm này đặt sai vị trí, cần phải chuyển vô store service
         public async Task<List<FlowerDTO>?> GetAllFlowerByStoreAsync(string storeId)
         {
             try
@@ -42,28 +44,35 @@ namespace BL
             }
         }
 
-        //public async Task<List<MaterialInventoryDTO>> GetAllMaterialByStoreAsync(string storeId, string materialType = "both")
-        //{
-        //    try
-        //    {
-        //        if (materialType != "phụ liệu" && materialType != "hoa")
-        //        {
-        //            throw new InvalidOperationException("Loại vật liệu không tồn tại");
-        //        }
-
-        //        return await _materialRepository.GetAllMaterialByStoreAsync(storeId, materialType);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-
         public async Task<List<FloralRepresentationDTO>?> GetFloralRepresentationAsync()
         {
             try
             {
                 return await _materialRepository.GetFloralRepresentationAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<FlowerDTO>> GetFlowerInventoryAsync()
+        {
+            try
+            {
+                return await _materialRepository.GetFlowerInventoryAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<MaterialInventoryDTO>?> GetMaterialInventoryAsync()
+        {
+            try
+            {
+               return await _materialRepository.GetMaterialInventoryAsync();
             }
             catch (Exception)
             {

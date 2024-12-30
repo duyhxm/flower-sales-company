@@ -17,11 +17,12 @@ namespace BL
             _storeRepository = new StoreRepository();
         }
 
-        public async Task<List<MaterialInventoryDTO>> GetMaterialInventoryAsync(string storeId)
+        //Lấy vật liệu có trong cửa hàng
+        public async Task<List<MaterialInventoryDTO>> GetMaterialInventoryByStoreAsync(string storeId)
         {
             try
             {
-                return await _storeRepository.GetMaterialInventoryAsync(storeId);
+                return await _storeRepository.GetMaterialInventoryByStoreAsync(storeId);
             }
             catch (Exception)
             {
@@ -30,11 +31,12 @@ namespace BL
 
         }
 
-        public async Task<List<ProductInventoryDTO>?> GetProductInventoryAsync(string storeId)
+        //Lấy các product có trong kho của cửa hàng
+        public async Task<List<ProductInventoryDTO>?> GetProductInventoryByStoreAsync(string storeId)
         {
             try
             {
-                return await _storeRepository.GetProductInventoryAsync(storeId);
+                return await _storeRepository.GetProductInventoryByStoreAsync(storeId);
             }
             catch (Exception)
             {
@@ -42,12 +44,13 @@ namespace BL
             }
         }
 
-        public async Task UpdateProductInventoryAsync
+        //Update các product có trong kho của cửa hàng
+        public async Task UpdateProductInventoryByStoreAsync
         (string storeId, Dictionary<string, Tuple<DateTime, int>> usedProducts)
         {
             try
             {
-                await _storeRepository.UpdateProductInventoryAsync(storeId, usedProducts);
+                await _storeRepository.UpdateProductInventoryByStoreAsync(storeId, usedProducts);
             }
             catch (Exception)
             {

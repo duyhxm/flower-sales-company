@@ -100,64 +100,6 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        //public async Task<LoginInformation?> GetExtraLoginInfo(UserAccountDTO userAccount)
-        //{
-        //    LoginInformation loginInformation = new LoginInformation();
-
-        //    Debug.WriteLine(loginInformation == null);
-        //    try
-        //    {
-        //        var extraInfo = await _context.UserAccounts
-        //                .Where(u => u.Username == userAccount.Username && u.Password == userAccount.Password)
-        //                .Include(u => u.Employee)
-        //                .Join(_context.EmployeeJobTitles,
-        //                      uc => uc.EmployeeId,
-        //                      ejt => ejt.EmployeeId,
-        //                      (uc, ejt) => new { ejt.JobTitleId })
-        //                .Join(_context.JobTitles,
-        //                       ejt => ejt.JobTitleId,
-        //                       jt => jt.JobTitleId,
-        //                       (ejt, jt) => new { jt.JobTitleName, jt.JobTitleId, jt.FormId })
-        //                .Join(_context.Forms,
-        //                       jt => jt.FormId,
-        //                       f => f.FormId,
-        //                       (jt, f) => new { f.FormName, jt.JobTitleName })
-        //                .Select(x => new
-        //                {
-        //                    x.FormName,
-        //                    x.JobTitleName
-        //                }).FirstOrDefaultAsync();
-
-        //        if (extraInfo != null)
-        //        {
-        //            loginInformation.AccessibleForm = extraInfo.FormName ?? string.Empty;
-        //            loginInformation.JobTitle = extraInfo.JobTitleName ?? string.Empty;
-        //        }
-
-        //        if (userAccount.Employee?.WorkType == "part-time")
-        //        {
-        //            var storeInfo = await _context.UserAccounts
-        //                    .Where(u => u.Username == userAccount.Username && u.Password == userAccount.Password)
-        //                    .Include(u => u.Employee)
-        //                    .ThenInclude(u => u!.Ptemployee)
-        //                    .Join(_context.Stores,
-        //                            uc => uc.Employee!.Ptemployee!.StoreId,
-        //                            s => s.StoreId,
-        //                            (uc, s) => new { s.StoreId, s.StoreName })
-        //                    .FirstOrDefaultAsync();
-        //            loginInformation.StoreID = storeInfo!.StoreId;
-        //            loginInformation.StoreName = storeInfo.StoreName;
-        //        }
-
-        //        return loginInformation;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-            
-        //}
-
         public async Task<LoginInformation?> GetExtraLoginInfo(UserAccountDTO userAccount)
         {
             try

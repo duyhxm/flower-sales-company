@@ -14,9 +14,42 @@ namespace PL
 {
     public partial class AccountInformationForm : System.Windows.Forms.Form
     {
-        public AccountInformationForm()
+        //Cấu hình khởi tạo đối tượng
+        private static AccountInformationForm? _instance;
+        private static readonly object _lock = new object();
+        private AccountInformationForm()
         {
             InitializeComponent();
+        }
+
+        public static void Initialize()
+        {
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    try
+                    {
+                        _instance = new AccountInformationForm();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public static AccountInformationForm Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new InvalidOperationException("AccountInformationForm is not initialized. Call Initialize() first.");
+                }
+                return _instance;
+            }
         }
 
         public void DisplayInformation(LoginInformation loginInformation)

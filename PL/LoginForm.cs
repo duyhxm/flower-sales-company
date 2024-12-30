@@ -17,11 +17,15 @@ namespace PL
 {
     public partial class LoginForm : Form
     {
+        //Cấu hình khởi tạo
         private static LoginForm? _instance;
         private static readonly object _lock = new object();
+
+        //khai báo các service
         private SystemService _systemService;
         private const string TOPIC_NAME = "DataChanges";
 
+        //Khai báo các biến sử dụng
         private Form WorkForm { get; set; }
 
         private Dictionary<string, Type> Forms;
@@ -46,7 +50,7 @@ namespace PL
             {
                 { "CEOMainForm", typeof(CEOMainForm) },
                 { "StoreMainForm", typeof(StoreMainForm) },
-                { "SalesDepartmentMainForm", typeof(SalesDepartmentMainForm)}
+                { "SalesDeptMainForm", typeof(SalesDeptMainForm)}
             };
             WorkForm = new Form();
         }
@@ -102,7 +106,7 @@ namespace PL
                         LoginInformation = extraLoginInfo;
                         LoginInformation.UserAccount = result;
 
-                        RunServiceBusHost(TOPIC_NAME, "UserB_Subscription");
+                        RunServiceBusHost(TOPIC_NAME, "UserA_Subscription");
                         RunNotificationService(TOPIC_NAME);
 
                         WorkForm = CreateFormByName(LoginInformation.AccessibleForm);
@@ -134,20 +138,62 @@ namespace PL
 
         private Form CreateFormByName(string formName)
         {
+            //if (Forms.ContainsKey(formName))
+            //{
+            //    try
+            //    {
+            //        var form = Activator.CreateInstance(Forms[formName]);
+            //        if (form != null)
+            //        {
+            //            return (Form)form;
+            //        }
+            //    }
+            //    catch (NullReferenceException)
+            //    {
+            //        throw;
+            //    }  
+            //}
+
+            //throw new ArgumentException($"Form with name '{formName}' not registered.");
+
             if (Forms.ContainsKey(formName))
             {
-                try
+                Type formType = Forms[formName];
+
+                // Check if the form type has a static Initialize method
+                MethodInfo? initializeMethod = formType.GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
+                if (initializeMethod != null)
                 {
-                    var form = Activator.CreateInstance(Forms[formName]);
-                    if (form != null)
+                    // Call the Initialize method
+                    initializeMethod.Invoke(null, null);
+
+                    // Get the singleton instance
+                    PropertyInfo? instanceProperty = formType.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public);
+                    if (instanceProperty != null)
                     {
-                        return (Form)form;
+                        var instance = instanceProperty.GetValue(null);
+                        if (instance != null)
+                        {
+                            return (Form)instance;
+                        }
                     }
                 }
-                catch (NullReferenceException)
+                else
                 {
-                    throw;
-                }  
+                    // If not a singleton, create a new instance
+                    try
+                    {
+                        var form = Activator.CreateInstance(formType);
+                        if (form != null)
+                        {
+                            return (Form)form;
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                        throw;
+                    }
+                }
             }
 
             throw new ArgumentException($"Form with name '{formName}' not registered.");

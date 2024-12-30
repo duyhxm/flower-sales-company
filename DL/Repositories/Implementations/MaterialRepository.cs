@@ -4,6 +4,7 @@ using DL.Repositories.Interfaces;
 using DTO;
 using DTO.Material;
 using Microsoft.EntityFrameworkCore;
+using DTO.Store;
 
 namespace DL.Repositories.Implementations
 {
@@ -82,6 +83,7 @@ namespace DL.Repositories.Implementations
             }
         }
 
+        //Hàm này đang bị đặt sai chỗ
         public async Task<List<FlowerDTO>?> GetAllFlowerByStoreAsync(string storeId)
         {
             try
@@ -109,46 +111,29 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        //public async Task<List<MaterialInventoryDTO>> GetAllMaterialByStoreAsync(string storeId, string materialType = "both")
-        //{
-        //    try
-        //    {
+        public async Task<List<MaterialInventoryDTO>?> GetMaterialInventoryAsync()
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-        //        var materialList = _context.MaterialInventories
-        //                    .Where(mi => mi.StoreId == storeId)
-        //                    .Join(_context.Materials,
-        //                           mi => mi.MaterialId,
-        //                           m => m.MaterialId,
-        //                           (mi, m) => new MaterialInventoryDTO
-        //                           {
-        //                               MaterialID = m.MaterialId,
-        //                               MaterialName = m.MaterialName!,
-        //                               StockMaterialQuantity = mi.StockMaterialQuantity
-        //                           }
-        //                           );
-
-        //        if (materialType == "both")
-        //        {
-        //            return await materialList.ToListAsync();
-        //        }
-        //        else if (materialType == "phụ liệu")
-        //        {
-        //            return await materialList
-        //                        .Where(ml => ml.MaterialID.StartsWith("A"))
-        //                        .ToListAsync();
-        //        }
-        //        else
-        //        {
-        //            return await materialList
-        //                        .Where(ml => ml.MaterialID.StartsWith("F"))
-        //                        .ToListAsync();
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+        public async Task<List<FlowerDTO>?> GetFlowerInventoryAsync()
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public async Task<List<FloralRepresentationDTO>?> GetFloralRepresentationAsync()
         {

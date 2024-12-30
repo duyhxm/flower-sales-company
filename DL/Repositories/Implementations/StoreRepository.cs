@@ -42,7 +42,9 @@ namespace DL.Repositories.Implementations
             
         }
 
-        public async Task<List<MaterialInventoryDTO>> GetMaterialInventoryAsync(string storeId)
+        //Các method trên hiện tại chưa dùng đến
+
+        public async Task<List<MaterialInventoryDTO>> GetMaterialInventoryByStoreAsync(string storeId)
         {
             try
             {
@@ -55,7 +57,7 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task<List<ProductInventoryDTO>?> GetProductInventoryAsync(string storeId)
+        public async Task<List<ProductInventoryDTO>?> GetProductInventoryByStoreAsync(string storeId)
         {
             try
             {
@@ -67,7 +69,7 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task UpdateProductInventoryAsync(string storeId, Dictionary<string, Tuple<DateTime, int>> usedProducts)
+        public async Task UpdateProductInventoryByStoreAsync(string storeId, Dictionary<string, Tuple<DateTime, int>> usedProducts)
         {
             try
             {

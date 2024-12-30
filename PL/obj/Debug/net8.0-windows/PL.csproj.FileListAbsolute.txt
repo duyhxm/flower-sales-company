@@ -31,7 +31,6 @@ E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.LoginForm.res
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.OrderCreationForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.ProductCreationForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.Properties.Resources.resources
-E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesDepartmentMainForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesOrderForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreMainForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.LoginForm.vi.resources
@@ -64,3 +63,9 @@ E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.PreorderListForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.DailyTaskForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.ProductListForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.CustomerForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.MaterialAdjustmentForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.MaterialDistributionForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ProductPlanForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesDeptMainForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.SalesHistoryForm.resources

@@ -15,7 +15,10 @@ namespace PL.Tests
         [TestMethod()]
         public void DisplayInformationTest()
         {
-            AccountInformationForm form = new AccountInformationForm();
+            AccountInformationForm.Initialize();
+            AccountInformationForm form = AccountInformationForm.Instance;
+
+
             LoginInformation info = new LoginInformation();
             {
                

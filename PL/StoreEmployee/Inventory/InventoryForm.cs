@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using DTO.Store;
 using DTO;
 using BL;
-using DL.Models;
 
 namespace PL
 {
@@ -137,7 +136,7 @@ namespace PL
 
             try
             {
-                var result = await _storeService.GetMaterialInventoryAsync(storeId);
+                var result = await _storeService.GetMaterialInventoryByStoreAsync(storeId);
 
                 MaterialInventory = result.Where(x => x.StockMaterialQuantity > 0).ToList();
 
@@ -156,7 +155,7 @@ namespace PL
 
             try
             {
-                ProductStockDetails = await _storeService.GetProductInventoryAsync(storeId);
+                ProductStockDetails = await _storeService.GetProductInventoryByStoreAsync(storeId);
 
                 if (ProductStockDetails != null)
                 {

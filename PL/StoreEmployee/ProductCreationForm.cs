@@ -15,36 +15,34 @@ using System.Diagnostics;
 using DTO.Product;
 using DTO.Store;
 using System.Globalization;
-using DL.Models;
 using static BL.GeneralService;
 
 namespace PL
 {
-    public partial class ProductCreationForm : System.Windows.Forms.Form
+    public partial class ProductCreationForm : Form
     {
         //khai báo biến liên quan đến việc khởi tạo
         private static ProductCreationForm? _instance;
         private static readonly object _lock = new object();
 
         //khai báo các service sẽ dùng
-        private NotificationService _notificationService; //lấy từ bên StoreMainForm
+        private NotificationService _notificationService; //lấy từ bên StoreMainForm hoặc bên SalesDeptMainForm
         private MaterialService _materialService;
         private ProductService _productService;
 
         //khai báo các biến sẽ sử dụng trong form
         private readonly string? _storeId = LoginForm.Instance.LoginInformation.StoreID;
-        //private BindingSource _accessoryBs;
-        //private List<FlowerWithStockDTO>? _originalFlowerList;
         private List<FloralRepresentationDTO>? _fRepresentations;
         private List<FlowerDTO> _flowers;
         private List<MaterialInventoryDTO> _accessories;
-        private ProductCreationForm()
+        private ProductCreationForm(NotificationService notificationService)
         {
             //khởi tạo các thành phần designer
             InitializeComponent();
 
             //khởi tạo các service
-            _notificationService = StoreMainForm.Instance.NotificationService;
+            _notificationService = notificationService;
+            
             _materialService = new MaterialService();
             _productService = new ProductService();
 
@@ -66,7 +64,7 @@ namespace PL
             txtBxCreationQuantity.Enabled = false;
         }
 
-        public static void Initialize()
+        public static void Initialize(NotificationService notificationService)
         {
             if (_instance == null)
             {
@@ -74,7 +72,7 @@ namespace PL
                 {
                     try
                     {
-                        _instance = new ProductCreationForm();
+                        _instance = new ProductCreationForm(notificationService);
                     }
                     catch (Exception)
                     {

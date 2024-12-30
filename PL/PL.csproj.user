@@ -7,6 +7,27 @@
     <Compile Update="CEO\CEOMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="SalesEmployee\CustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\MaterialAdjustmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\MaterialDistributionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\ProductPlan\DetailedProductForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\ProductPlan\ProductPlanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\SalesDeptMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\SalesHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="StoreEmployee\DailyTaskForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -32,9 +53,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="StoreEmployee\OrderCreationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="SalesEmployee\SalesDepartmentMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="StoreEmployee\ProductCreationForm.cs">

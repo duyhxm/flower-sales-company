@@ -48,8 +48,6 @@
             txtBxCreationQuantity = new TextBox();
             txtBxUnitPrice = new TextBox();
             txtBxProductName = new TextBox();
-            txtBxProductId = new TextBox();
-            lblProductId = new Label();
             lblUnitPrice = new Label();
             lblCreationQuantity = new Label();
             lblFloralRepresentation = new Label();
@@ -108,8 +106,6 @@
             tabProductInformation.Controls.Add(txtBxCreationQuantity);
             tabProductInformation.Controls.Add(txtBxUnitPrice);
             tabProductInformation.Controls.Add(txtBxProductName);
-            tabProductInformation.Controls.Add(txtBxProductId);
-            tabProductInformation.Controls.Add(lblProductId);
             tabProductInformation.Controls.Add(lblUnitPrice);
             tabProductInformation.Controls.Add(lblCreationQuantity);
             tabProductInformation.Controls.Add(lblFloralRepresentation);
@@ -271,28 +267,10 @@
             // txtBxProductName
             // 
             txtBxProductName.BorderStyle = BorderStyle.FixedSingle;
-            txtBxProductName.Location = new Point(295, 135);
+            txtBxProductName.Location = new Point(273, 104);
             txtBxProductName.Name = "txtBxProductName";
-            txtBxProductName.Size = new Size(423, 39);
+            txtBxProductName.Size = new Size(355, 39);
             txtBxProductName.TabIndex = 8;
-            // 
-            // txtBxProductId
-            // 
-            txtBxProductId.BorderStyle = BorderStyle.FixedSingle;
-            txtBxProductId.Enabled = false;
-            txtBxProductId.Location = new Point(295, 91);
-            txtBxProductId.Name = "txtBxProductId";
-            txtBxProductId.Size = new Size(189, 39);
-            txtBxProductId.TabIndex = 7;
-            // 
-            // lblProductId
-            // 
-            lblProductId.AutoSize = true;
-            lblProductId.Location = new Point(104, 91);
-            lblProductId.Name = "lblProductId";
-            lblProductId.Size = new Size(126, 32);
-            lblProductId.TabIndex = 6;
-            lblProductId.Text = "Product ID";
             // 
             // lblUnitPrice
             // 
@@ -324,7 +302,7 @@
             // lblProductName
             // 
             lblProductName.AutoSize = true;
-            lblProductName.Location = new Point(104, 135);
+            lblProductName.Location = new Point(82, 106);
             lblProductName.Name = "lblProductName";
             lblProductName.Size = new Size(167, 32);
             lblProductName.TabIndex = 2;
@@ -517,9 +495,9 @@
             // tabAccessory
             // 
             tabAccessory.Controls.Add(dgvAccessoryList);
-            tabAccessory.Location = new Point(4, 41);
+            tabAccessory.Location = new Point(4, 34);
             tabAccessory.Name = "tabAccessory";
-            tabAccessory.Size = new Size(1645, 899);
+            tabAccessory.Size = new Size(1645, 906);
             tabAccessory.TabIndex = 2;
             tabAccessory.Text = "Accessory";
             tabAccessory.UseVisualStyleBackColor = true;
@@ -623,7 +601,6 @@
         private DataGridView dgvAccessoryList;
         private Label lblProductDetails;
         private Label lblProductInformation;
-        private Label lblProductId;
         private Label lblUnitPrice;
         private Label lblCreationQuantity;
         private Label lblFloralRepresentation;
@@ -632,7 +609,6 @@
         private TextBox txtBxCreationQuantity;
         private TextBox txtBxUnitPrice;
         private TextBox txtBxProductName;
-        private TextBox txtBxProductId;
         private FontAwesome.Sharp.IconButton ibtnDecrease;
         private DataGridView dgvProductDetails;
         private Button btnClear;

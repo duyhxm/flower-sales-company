@@ -479,7 +479,7 @@ namespace PL
 
                         await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, null, null);
 
-                        await _storeService.UpdateProductInventoryAsync(LoginForm.Instance.LoginInformation.StoreID!, usedProducts);
+                        await _storeService.UpdateProductInventoryByStoreAsync(LoginForm.Instance.LoginInformation.StoreID!, usedProducts);
                     }
 
                     
