@@ -134,5 +134,38 @@ namespace DL.Repositories.Implementations
                 throw;
             }
         }
+
+        public async Task<List<FlowerDTO>?> GetFlowerInventoryAsync()
+        {
+            try
+            {
+                //Hàm này sẽ chỉ trả về các flower có số lượng >0 trong bảng MaterialInventory tương ứng với cửa hàng
+                var flowerList = await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM GetAllFlower()").ToListAsync();
+
+                return flowerList;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<MaterialDTO>?> GetMaterialInventoryAsync()
+        {
+            try
+            {
+                // Create a new DbContext instance for this async operation
+                using (var context = new FlowerSalesCompanyDbContext())
+                {
+                    var flowerList = await context.Database.SqlQuery<MaterialDTO>($"SELECT * FROM GetAllAccessory()").ToListAsync();
+                    return flowerList;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

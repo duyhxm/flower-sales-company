@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Windows.Media.Media3D;
 using Azure.Messaging.ServiceBus;
 using BL;
+using DTO;
 
 namespace PL.SalesEmployee
 {
@@ -89,7 +90,7 @@ namespace PL.SalesEmployee
             using (var db = new FlowerSalesCompanyDbContext())
             {
                 // Lấy giá trị được chọn từ combobox
-                string selectedOrderType = cbbOrderType.SelectedItem?.ToString();
+                string selectedOrderType = cbbOrderType.Text;
 
                 // Kiểm tra nếu giá trị được chọn không null hoặc rỗng
                 if (!string.IsNullOrEmpty(selectedOrderType))
@@ -97,8 +98,8 @@ namespace PL.SalesEmployee
                     // Truy vấn dữ liệu theo OrderType và DistributionStatus
                     var filteredData = db.PurchaseOrders
                                          .Where(p => p.OrderType == selectedOrderType &&
-                                                     (p.DistributionStatus == "chua phan phoi" ||
-                                                      p.DistributionStatus == "da phan phoi"))
+                                                     (p.DistributionStatus == "Chưa phân phối" ||
+                                                      p.DistributionStatus == "Đã phân phối"))
                                          .Select(p => new
                                          {
                                              p.PurchaseOrderId,
@@ -195,15 +196,19 @@ namespace PL.SalesEmployee
                         MessageBox.Show("Material distribution has been successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         IDictionary<string, object> applicationProperties = new Dictionary<string, object>()
                         {
-                            {"Action", "Insert"},
-                            {"StoreName", cbbStore.Text},
-                            {"Quantity", txtDistributedQuantity.Value.ToString()}
+                            {"Message", "Thêm sản phẩm cho cửa hàng"},
+                            {"OperationName", "U"},
+                            {"TableName", "MaterialInventory"}
                         };
                         ServiceBusMessage message = NotificationService.CreateMessage("test", "1234", "Database Change Notification", applicationProperties);
 
                         try
                         {
-                            //NotificationService.NotifyDatabaseOperationAsync(message);
+                            string? storeId = storeID;
+                            string numericPart = storeId!.Substring(1);
+
+                            string convertedStoreId = "Store" + numericPart;
+                            NotificationService.NotifyDatabaseOperationAsync(message, convertedStoreId);
                         }
                         catch (Exception ex)
                         {

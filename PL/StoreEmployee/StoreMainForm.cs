@@ -40,7 +40,6 @@ namespace PL
         {
             await InitializeForms();
             NotificationManager.Instance.RegisterForm(this);
-            MessageBox.Show($"StoreID: {StoreId} \n StoreName: {StoreName}");
         }
 
         private void StoreMainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -193,19 +192,12 @@ namespace PL
 
         public async Task HandleNotification(Dictionary<string, object> message)
         {
-            string? operationName = message["OperationName"].ToString();
-            string? tableName = message["TableName"].ToString();
+            var formattedMessage = string.Join(Environment.NewLine,
+            message.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
 
-            if (operationName != null && tableName != null)
-            {
-                if (operationName == "U" && tableName == "MaterialInventory")
-                {
-                    await InventoryForm.Instance.LoadMaterialInventory(LoginForm.Instance.LoginInformation.StoreID);
-                }
-            }
-
-            // Handle the notification and update the UI
-            MessageBox.Show($"StoreMainForm received message: {message}");
+            await InventoryForm.Instance.LoadMaterialInventory(LoginForm.Instance.LoginInformation.StoreID!);
+            // Hiển thị thông báo
+            MessageBox.Show($"StoreMainForm received message:\n{formattedMessage}");
         }
     }
 

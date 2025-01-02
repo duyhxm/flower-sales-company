@@ -74,3 +74,8 @@ E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.PreOrderCreat
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.OrderHistory.ExtraOrderInfoForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.OrderHistory.OrderStatusAdjustmentForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.DailyTask.DetailedProductForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.AccesoryHistoryProfitRate.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ChartAccessoryRate.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ChartFlowerRate.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.CreateProduct.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.FlowerHistoryProfitRate.resources

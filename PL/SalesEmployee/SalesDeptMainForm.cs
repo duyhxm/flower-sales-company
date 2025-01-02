@@ -180,7 +180,7 @@ namespace PL
 
 
         //Hàm xử lý khi nhận được message
-        public void HandleNotification(Dictionary<string, object> message)
+        public async Task HandleNotification(Dictionary<string, object> message)
         {
             // Handle the notification and update the UI
             MessageBox.Show($"SalesDepartmentMainForm received message: {message}");

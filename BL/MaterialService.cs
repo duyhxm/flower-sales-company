@@ -68,5 +68,29 @@ namespace BL
             }
         }
 
+        public async Task<List<FlowerDTO>> GetFlowerInventoryAsync()
+        {
+            try
+            {
+                return await _materialRepository.GetFlowerInventoryAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<MaterialDTO>?> GetMaterialInventoryAsync()
+        {
+            try
+            {
+                return await _materialRepository.GetMaterialInventoryAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }
