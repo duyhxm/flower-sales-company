@@ -52,6 +52,8 @@
             txtBxCity = new TextBox();
             lblDistrict = new Label();
             lblCity = new Label();
+            btnOk = new Button();
+            cmbBxShippingCompany = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dgvDetailedOrder).BeginInit();
             SuspendLayout();
             // 
@@ -98,6 +100,7 @@
             // 
             // txtBxCreatedDateTime
             // 
+            txtBxCreatedDateTime.Enabled = false;
             txtBxCreatedDateTime.Location = new Point(186, 24);
             txtBxCreatedDateTime.Name = "txtBxCreatedDateTime";
             txtBxCreatedDateTime.ReadOnly = true;
@@ -176,6 +179,7 @@
             // 
             // txtBxCustomerName
             // 
+            txtBxCustomerName.Enabled = false;
             txtBxCustomerName.Location = new Point(720, 239);
             txtBxCustomerName.Name = "txtBxCustomerName";
             txtBxCustomerName.ReadOnly = true;
@@ -184,6 +188,7 @@
             // 
             // txtBxCustomerPhoneNumber
             // 
+            txtBxCustomerPhoneNumber.Enabled = false;
             txtBxCustomerPhoneNumber.Location = new Point(721, 297);
             txtBxCustomerPhoneNumber.Name = "txtBxCustomerPhoneNumber";
             txtBxCustomerPhoneNumber.ReadOnly = true;
@@ -192,6 +197,7 @@
             // 
             // txtBxDeliveryTime
             // 
+            txtBxDeliveryTime.Enabled = false;
             txtBxDeliveryTime.Location = new Point(720, 183);
             txtBxDeliveryTime.Name = "txtBxDeliveryTime";
             txtBxDeliveryTime.ReadOnly = true;
@@ -267,11 +273,31 @@
             lblCity.TabIndex = 20;
             lblCity.Text = "City";
             // 
+            // btnOk
+            // 
+            btnOk.Location = new Point(830, 593);
+            btnOk.Name = "btnOk";
+            btnOk.Size = new Size(121, 44);
+            btnOk.TabIndex = 21;
+            btnOk.Text = "OK";
+            btnOk.UseVisualStyleBackColor = true;
+            btnOk.Click += btnOk_Click;
+            // 
+            // cmbBxShippingCompany
+            // 
+            cmbBxShippingCompany.FormattingEnabled = true;
+            cmbBxShippingCompany.Location = new Point(719, 27);
+            cmbBxShippingCompany.Name = "cmbBxShippingCompany";
+            cmbBxShippingCompany.Size = new Size(252, 40);
+            cmbBxShippingCompany.TabIndex = 22;
+            // 
             // ExtraOrderInfoForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1040, 800);
+            ClientSize = new Size(1040, 683);
+            Controls.Add(cmbBxShippingCompany);
+            Controls.Add(btnOk);
             Controls.Add(lblCity);
             Controls.Add(lblDistrict);
             Controls.Add(txtBxCity);
@@ -299,6 +325,7 @@
             Name = "ExtraOrderInfoForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ExtraOrderInfoForm";
+            Load += ExtraOrderInfoForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvDetailedOrder).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -330,5 +357,7 @@
         private TextBox txtBxCity;
         private Label lblDistrict;
         private Label lblCity;
+        private Button btnOk;
+        private ComboBox cmbBxShippingCompany;
     }
 }

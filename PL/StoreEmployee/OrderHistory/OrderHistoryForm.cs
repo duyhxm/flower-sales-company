@@ -146,7 +146,7 @@ namespace PL.StoreEmployee
 
                     if (form.DialogResult == DialogResult.OK)
                     {
-                        
+                        form.Close();
                     }
                 }
 

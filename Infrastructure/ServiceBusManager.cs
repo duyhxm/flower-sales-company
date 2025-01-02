@@ -118,6 +118,33 @@ namespace Infrastructure
             }
             
         }
+
+        public async Task ProcessDeadLetterMessagesAsync(string topicName, string subscriptionName)
+        {
+            string deadLetterQueuePath = $"{topicName}/Subscriptions/{subscriptionName}/$DeadLetterQueue";
+            ServiceBusReceiver receiver = _client.CreateReceiver(deadLetterQueuePath);
+
+            try
+            {
+                await foreach (ServiceBusReceivedMessage deadLetterMessage in receiver.ReceiveMessagesAsync())
+                {
+                    // Process the dead-letter message
+                    Debug.WriteLine($"Dead-letter message received: {deadLetterMessage.Body}");
+
+                    // Complete the message to remove it from the dead-letter queue
+                    await receiver.CompleteMessageAsync(deadLetterMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error processing dead-letter messages: {ex.Message}");
+            }
+            finally
+            {
+                await receiver.DisposeAsync();
+            }
+        }
+
     }
 }
 

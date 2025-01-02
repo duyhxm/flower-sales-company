@@ -88,5 +88,17 @@ namespace BL
                 throw;
             }
         }
+
+        public async Task<List<ShippingCompanyDTO>> LoadShippingCompaniesAsync()
+        {
+            try
+            {
+                return await _salesOrderRepository.LoadShippingCompaniesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

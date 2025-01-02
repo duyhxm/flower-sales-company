@@ -37,7 +37,7 @@ namespace PL
 
         private bool _isLoggingIn = false;
 
-        private const string TOPIC_NAME = "DataChanges";
+        //private const string TOPIC_NAME = "DataChanges";
 
         private List<string> _topicNames = new List<string>();
 
@@ -134,9 +134,8 @@ namespace PL
                         RunNotificationService(_topicNames);
 
                         WorkForm = CreateFormByName(LoginInformation.AccessibleForm);
-                        WorkForm.FormClosed += (s, args) => this.Show();
+                        WorkForm.FormClosed += (s, args) => this.Close();
                         ShowWorkForm();
-
                         this.Hide();
                     }
                     else

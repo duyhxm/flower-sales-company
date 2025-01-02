@@ -175,14 +175,14 @@ namespace PL.StoreEmployee
 
                         // Xử lý hàng đợi
                         await ProcessQueue();
+
+                        MessageBox.Show("Đã tạo mới sản phẩm thành công.", "Thông báo");
                     }
                     else
                     {
                         MessageBox.Show("Không tìm thấy sản phẩm tương ứng.");
                     }
                 }
-
-                MessageBox.Show("Đã tạo mới sản phẩm thành công.", "Thông báo");
             }
         }
 

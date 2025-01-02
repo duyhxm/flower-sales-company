@@ -257,5 +257,19 @@ namespace DL.Repositories.Implementations
                 throw;
             }
         }
+
+        public async Task<List<ShippingCompanyDTO>> LoadShippingCompaniesAsync()
+        {
+            try
+            {
+                var shippingCompanies = await _context.ShippingCompanies.ToListAsync();
+
+                return _mapper.Map<List<ShippingCompanyDTO>>(shippingCompanies);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Đã xảy ra lỗi trong quá trình lấy thông tin các công ty vận chuyển", ex);
+            }
+        }
     }
 }

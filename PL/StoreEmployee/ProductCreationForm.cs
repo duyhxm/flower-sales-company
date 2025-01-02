@@ -329,7 +329,7 @@ namespace PL
         {
             foreach (DataGridViewRow row in dgv.Rows)
             {
-                DataGridViewCell cell = dgv.Name == "dgvFlowerList" ? row.Cells[0] : row.Cells[dgv.Columns.Count - 1];
+                DataGridViewCell cell = row.Cells[dgv.Columns.Count -1];
 
                 // Kiểm tra giá trị của ô có phải là true không
                 if (cell.Value != null && cell.Value is bool isChecked && isChecked)

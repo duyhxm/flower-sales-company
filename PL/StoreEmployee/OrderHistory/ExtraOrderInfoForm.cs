@@ -21,6 +21,7 @@ namespace PL.StoreEmployee.OrderHistory
         private readonly StoreService _storeService;
         private readonly SalesOrderService _salesOrderService = new SalesOrderService();
         private ShippingInformationDTO? _shippingInformation;
+        private List<ShippingCompanyDTO> _shippingCompanyList = new List<ShippingCompanyDTO>();
 
         public ExtraOrderInfoForm(SalesOrderDTO salesOrder, StoreService storeService)
         {
@@ -29,9 +30,38 @@ namespace PL.StoreEmployee.OrderHistory
             _storeService = storeService;
             LoadOrderDetails();
             DisplayShippingInfo(false);
+            btnCancel.Visible = false;
+            btnSave.Visible = false;
+            btnOk.Visible = true;
         }
 
-        private async void LoadOrderDetails()
+        private async void ExtraOrderInfoForm_Load(object sender, EventArgs e)
+        {
+            
+            
+        }
+
+        private async Task LoadShippingCompaniesAsync()
+        {
+            try
+            {
+                _shippingCompanyList = await _salesOrderService.LoadShippingCompaniesAsync();
+
+                foreach (var sc in _shippingCompanyList)
+                {
+                    string name = sc.ShippingCompanyName!;
+
+                    cmbBxShippingCompany.Items.Add(name);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private async Task LoadOrderDetails()
         {
             txtBxCreatedDateTime.Text = _salesOrder.CreatedDateTime?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
             // Load detailed sales order data into dgvDetailedOrder
@@ -45,13 +75,17 @@ namespace PL.StoreEmployee.OrderHistory
             if (_shippingInformation != null)
             {
                 DisplayShippingInfo(true);
+                await LoadShippingCompaniesAsync();
+                cmbBxShippingCompany.SelectedIndex = 0;
+                btnCancel.Visible = true;
+                btnSave.Visible = true;
+                btnOk.Visible = false;
                 txtBxCustomerName.Text = _shippingInformation.ConsigneeName;
                 txtBxCustomerPhoneNumber.Text = _shippingInformation.ConsigneePhoneNumber;
                 txtBxDeliveryTime.Text = ConvertDateTimeOffsetToString(_shippingInformation.DeliveryDateTime, "dd/MM/yyyy HH:mm");
                 txtBxAddress.Text = _shippingInformation.ShippingAddress;
                 txtBxDistrict.Text = _shippingInformation.District;
                 txtBxCity.Text = _shippingInformation.CityProvince;
-
             }
         }
 
@@ -93,14 +127,27 @@ namespace PL.StoreEmployee.OrderHistory
             {
                 if (_shippingInformation != null)
                 {
-                    _shippingInformation.ShippingCompanyId = txtBxShippingCompany.Text;
+                    //Lấy ra ShippingCompanyId từ ComboBox
+                    _shippingInformation.ShippingCompanyId = _shippingCompanyList.Where(sc => sc.ShippingCompanyName == cmbBxShippingCompany.Text)
+                        .Select(sc => sc.ShippingCompanyId).FirstOrDefault();
+
+                    //Lấy OrderDateTime từ DateTimePicker
                     _shippingInformation.OrderDateTime = ConvertStringToDateTimeOffset(dtpOrderDateTime.Text, "dd/MM/yyyy HH:mm");
+
+                    //Lấy thông tin địa chỉ
                     _shippingInformation.ShippingAddress = txtBxAddress.Text;
+
+                    //Lấy thông tin quận
                     _shippingInformation.District = txtBxDistrict.Text;
+
+                    //Lấy thông tin tỉnh, thành phố
                     _shippingInformation.CityProvince = txtBxCity.Text;
 
+                    //Update thông tin vận chuyển
                     await _salesOrderService.UpdateShippingInfoAsync(_shippingInformation);
-                    await _salesOrderService.UpdateOrderStatusAsync(_shippingInformation.SalesOrderId, OrderStatus.Success);
+
+                    //Update trạng thái đơn hàng
+                    //await _salesOrderService.UpdateOrderStatusAsync(_shippingInformation.SalesOrderId, OrderStatus.Success);
 
                     this.DialogResult = DialogResult.OK;
                 }
@@ -117,5 +164,12 @@ namespace PL.StoreEmployee.OrderHistory
                 dtpOrderDateTime.Focus();
             }
         }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        
     }
 }

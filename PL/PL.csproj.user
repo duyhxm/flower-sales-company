@@ -7,6 +7,9 @@
     <Compile Update="CEO\CEOMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="SalesEmployee\CustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -35,9 +38,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="StoreEmployee\Inventory\InventoryForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="StoreEmployee\OrderHistory\ExtraOrderInfoForm.cs">

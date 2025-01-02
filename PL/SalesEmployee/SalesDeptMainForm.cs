@@ -169,6 +169,8 @@ namespace PL
             if (formInstances.ContainsKey(AccountInformationForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[AccountInformationForm.Instance.Name]);
+
+                ((AccountInformationForm)formInstances[AccountInformationForm.Instance.Name]).DisplayInformation(LoginForm.Instance.LoginInformation);
             }
         }
 

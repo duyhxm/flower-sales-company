@@ -27,6 +27,7 @@ namespace PL
             NotificationService = NotificationService.Instance;
         }
 
+
         public static StoreMainForm Instance
         {
             get
@@ -55,9 +56,9 @@ namespace PL
             await InventoryForm.Instance.LoadMaterialInventory(StoreId);
             await InventoryForm.Instance.LoadProductInventory(StoreId);
 
-           //SalesOrder
+            //SalesOrder
             SalesOrderForm.Initialize();
-            formInstances[SalesOrderForm.Instance.Name] = SalesOrderForm.Instance; 
+            formInstances[SalesOrderForm.Instance.Name] = SalesOrderForm.Instance;
 
             //khởi tạo AccountInformationForm
             AccountInformationForm.Initialize();
@@ -70,7 +71,7 @@ namespace PL
             //Khởi tạo OrderHistoryForm, dùng để xem lịch sử đơn hàng đã bán
             OrderHistoryForm.Initialize();
             formInstances[OrderHistoryForm.Instance.Name] = OrderHistoryForm.Instance;
-            await OrderHistoryForm.Instance.LoadSalesOrders(StoreId!, GeneralService.LocalDateTimeOffset());
+            await OrderHistoryForm.Instance.LoadSalesOrders(StoreId!, LocalDateTimeOffset());
 
             //Khởi tạo ProductList Form. Dùng để xem danh sách các sản phẩm mà phòng kinh doanh chỉ định cho cửa hàng để bán, hay gọi là danh sách các sản phẩm chủ đạo của cửa hàng
             ProductListForm.Initialize();
