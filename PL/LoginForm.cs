@@ -117,7 +117,6 @@ namespace PL
                             string numericPart = storeId!.Substring(1);
                        
                             _myTopic = "Store" + numericPart;
-                            _myTopic = "Store";
                             _mySubscription = Username;
                             _topicNames.Add("SalesDepartment"); 
                         }
@@ -128,6 +127,7 @@ namespace PL
                             _mySubscription = Username;
                             _topicNames.Add("Store001");
                             _topicNames.Add("Store002");
+                            _topicNames.Add("Store003");
                         }
 
                         RunServiceBusHost(_myTopic, _mySubscription);
