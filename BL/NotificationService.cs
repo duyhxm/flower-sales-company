@@ -17,15 +17,15 @@ namespace BL
         private static NotificationService? _instance;
         private static readonly object _lock = new object();
         private readonly ServiceBusManager _serviceBusManager;
-        private readonly string _topicName;
+        private readonly List<string> _topicNames = new();
         public event EventHandler<DataChangedEventArgs> MessageReceived;
 
-        private NotificationService(string topicName)
+        private NotificationService(List<string> topicName)
         {
             try
             {
                 _serviceBusManager = SystemRepository.Instance.ServiceBusManager;
-                _topicName = topicName;
+                _topicNames = topicName;
                 _serviceBusManager.DataChanged += OnMessageReceived;
             }
             catch (Exception)
@@ -46,7 +46,7 @@ namespace BL
             }
         }
 
-        public static void Initialize(string topicName)
+        public static void Initialize(List<string> topicNames)
         {
             if (_instance == null)
             {
@@ -54,7 +54,7 @@ namespace BL
                 {
                     try
                     {
-                        _instance = new NotificationService(topicName);
+                        _instance = new NotificationService(topicNames);
                     }
                     catch (Exception)
                     {
@@ -64,11 +64,14 @@ namespace BL
             }
         }
 
-        public async Task NotifyDatabaseOperationAsync(ServiceBusMessage message)
+        public async Task NotifyDatabaseOperationAsync(ServiceBusMessage message, string topicName)
         {
             try
             {
-                await _serviceBusManager.SendMessageAsync(_topicName, message);
+                if (_topicNames.Contains(topicName))
+                {
+                    await _serviceBusManager.SendMessageAsync(topicName, message);
+                }
             }
             catch(Exception)
             {
@@ -82,12 +85,18 @@ namespace BL
             MessageReceived?.Invoke(this, e);
         }
 
-        public ServiceBusMessage CreateMessage(string message, string sessionId, string subject, IDictionary<string, object> applicationProperties)
+        public ServiceBusMessage CreateMessage(string message, string sessionId, string subject, IDictionary<string, object> applicationProperties, TimeSpan timeToLive = default)
         {
+            if (timeToLive == default)
+            {
+                timeToLive = TimeSpan.FromMinutes(1);
+            }
+
             ServiceBusMessage serviceBusMessage = new ServiceBusMessage(message)
             {
                 SessionId = sessionId,
                 Subject = subject,
+                TimeToLive = timeToLive,
             };
 
             foreach (var property in applicationProperties)

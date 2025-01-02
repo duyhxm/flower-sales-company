@@ -8,12 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DTO.Store;
-using DTO;
 using BL;
 
 namespace PL
 {
-    public partial class InventoryForm : System.Windows.Forms.Form
+    public partial class InventoryForm : Form
     {
         //khai báo cấu hình khởi tạo form
         private static InventoryForm? _instance;
@@ -141,6 +140,8 @@ namespace PL
                 MaterialInventory = result.Where(x => x.StockMaterialQuantity > 0).ToList();
 
                 FilterMaterialInventory();
+
+                MessageBox.Show("Đã load dữ liệu thành công", "Thông báo");
             }
             catch (Exception ex)
             {
@@ -199,6 +200,21 @@ namespace PL
                 var productStockDetailsForm = new ProductStockDetails(selectedProductDetails);
                 productStockDetailsForm.ShowDialog();
             }
+        }
+
+        public bool CheckProductInventory(List<(string ProductId, int Quantity)> products)
+        {
+            foreach (var product in products)
+            {
+                var inventoryItem = ProductInventory.List.OfType<ProductInventoryDTO>()
+                    .FirstOrDefault(p => p.ProductId == product.ProductId);
+
+                if (inventoryItem == null || inventoryItem.StockProductQuantity < product.Quantity)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

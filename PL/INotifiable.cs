@@ -8,6 +8,6 @@ namespace PL
 {
     public interface INotifiable
     {
-        void HandleNotification(Dictionary<string, object> message);
+        Task HandleNotification(Dictionary<string, object> message);
     }
 }

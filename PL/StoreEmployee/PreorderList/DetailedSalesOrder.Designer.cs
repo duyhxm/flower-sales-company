@@ -1,6 +1,6 @@
-﻿namespace PL.StoreEmployee
+﻿namespace PL.StoreEmployee.PreorderList
 {
-    partial class DailyTaskForm
+    partial class DetailedSalesOrder
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "DailyTaskForm";
+            this.Text = "DetailedSalesOrder";
         }
 
         #endregion

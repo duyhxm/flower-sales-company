@@ -23,7 +23,6 @@ namespace PL
 
         //khai báo các service
         private SystemService _systemService;
-        private const string TOPIC_NAME = "DataChanges";
 
         //Khai báo các biến sử dụng
         private Form WorkForm { get; set; }
@@ -37,6 +36,14 @@ namespace PL
         public LoginInformation LoginInformation { get; set; }
 
         private bool _isLoggingIn = false;
+
+        private const string TOPIC_NAME = "DataChanges";
+
+        private List<string> _topicNames = new List<string>();
+
+        private string _myTopic;
+
+        private string _mySubscription;
 
         private LoginForm()
         {
@@ -94,8 +101,6 @@ namespace PL
             {
                 UserAccountDTO? result = await _systemService.LoginAsync(userAccount);
 
-                Debug.WriteLine("LoginForm");
-
                 if (result != null)
                 {
 
@@ -106,8 +111,27 @@ namespace PL
                         LoginInformation = extraLoginInfo;
                         LoginInformation.UserAccount = result;
 
-                        RunServiceBusHost(TOPIC_NAME, "UserA_Subscription");
-                        RunNotificationService(TOPIC_NAME);
+                        if (LoginInformation.AccessibleForm == "StoreMainForm")
+                        {
+                            string? storeId = LoginInformation.StoreID;
+                            string numericPart = storeId!.Substring(1);
+                       
+                            _myTopic = "Store" + numericPart;
+                            _myTopic = "Store";
+                            _mySubscription = Username;
+                            _topicNames.Add("SalesDepartment"); 
+                        }
+
+                        if (LoginInformation.AccessibleForm == "SalesDeptMainForm")
+                        {
+                            _myTopic = "SalesDepartment";
+                            _mySubscription = Username;
+                            _topicNames.Add("Store001");
+                            _topicNames.Add("Store002");
+                        }
+
+                        RunServiceBusHost(_myTopic, _mySubscription);
+                        RunNotificationService(_topicNames);
 
                         WorkForm = CreateFormByName(LoginInformation.AccessibleForm);
                         WorkForm.FormClosed += (s, args) => this.Show();
@@ -236,6 +260,7 @@ namespace PL
             }
         }
 
+        //Khởi tạo ServiceBus để nhận message trong topicName ứng với subscription nào đó
         public void RunServiceBusHost(string topicName, string subscription)
         {
             try
@@ -250,9 +275,10 @@ namespace PL
             }
         }
 
-        private void RunNotificationService(string topicName)
+
+        private void RunNotificationService(List<string> topicNames)
         {
-            NotificationService.Initialize(topicName);
+            NotificationService.Initialize(topicNames);
             NotificationManager.Initialize();
         }
     }

@@ -5,9 +5,9 @@ namespace DL.Models;
 
 public partial class CustomerRankHistory
 {
-    public int CustomerRankHistoryId { get; set; }
+    public string CustomerRankHistoryId { get; set; } = null!;
 
-    public int? RankingCycleId { get; set; }
+    public string? RankingCycleId { get; set; }
 
     public string? CustomerId { get; set; }
 

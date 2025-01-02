@@ -11,9 +11,9 @@ public partial class GoodsDistribution
 
     public string MaterialId { get; set; } = null!;
 
-    public int? DistributedQuantity { get; set; }
+    public DateTimeOffset DistributedDateTime { get; set; }
 
-    public DateTimeOffset? DistributedDateTime { get; set; }
+    public int? DistributedQuantity { get; set; }
 
     public virtual Material Material { get; set; } = null!;
 

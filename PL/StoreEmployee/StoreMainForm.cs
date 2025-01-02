@@ -2,6 +2,8 @@
 using BL;
 using System.Collections.Generic;
 using DTO.Store;
+using PL.StoreEmployee;
+using static BL.GeneralService;
 
 namespace PL
 {
@@ -49,36 +51,40 @@ namespace PL
         {
             //Khởi tạo InventoryForm. Form này sẽ chứa kho vật liệu và sản phẩm của cửa hàng
             InventoryForm.Initialize();
-            formInstances["InventoryForm"] = InventoryForm.Instance;
+            formInstances[InventoryForm.Instance.Name] = InventoryForm.Instance;
             await InventoryForm.Instance.LoadMaterialInventory(StoreId);
             await InventoryForm.Instance.LoadProductInventory(StoreId);
 
-            //Chuyển hai form này thành singleton
-            formInstances["SalesOrderForm"] = new SalesOrderForm();
+           //SalesOrder
+            SalesOrderForm.Initialize();
+            formInstances[SalesOrderForm.Instance.Name] = SalesOrderForm.Instance; 
 
             //khởi tạo AccountInformationForm
             AccountInformationForm.Initialize();
             formInstances[AccountInformationForm.Instance.Name] = AccountInformationForm.Instance;
 
-
-            formInstances["OrderCreationForm"] = new OrderCreationForm();
-
-
             //Khởi tạo ProductCreationForm, dùng để tạo product
             ProductCreationForm.Initialize(NotificationService);
-            formInstances["ProductCreationForm"] = ProductCreationForm.Instance;
+            formInstances[ProductCreationForm.Instance.Name] = ProductCreationForm.Instance;
 
             //Khởi tạo OrderHistoryForm, dùng để xem lịch sử đơn hàng đã bán
-            StoreEmployee.OrderHistoryForm.Initialize();
-            formInstances["OrderHistoryForm"] = StoreEmployee.OrderHistoryForm.Instance;
+            OrderHistoryForm.Initialize();
+            formInstances[OrderHistoryForm.Instance.Name] = OrderHistoryForm.Instance;
+            await OrderHistoryForm.Instance.LoadSalesOrders(StoreId!, GeneralService.LocalDateTimeOffset());
 
             //Khởi tạo ProductList Form. Dùng để xem danh sách các sản phẩm mà phòng kinh doanh chỉ định cho cửa hàng để bán, hay gọi là danh sách các sản phẩm chủ đạo của cửa hàng
-            StoreEmployee.ProductListForm.Initialize();
-            formInstances["ProductListForm"] = StoreEmployee.ProductListForm.Instance;
+            ProductListForm.Initialize();
+            formInstances[ProductListForm.Instance.Name] = ProductListForm.Instance;
 
             //Khởi tạo DailyTask Form. Dùng để xem các sản phẩm cần tạo mỗi ngày mà phòng kinh doanh đưa xuống cho cửa hàng
-            StoreEmployee.DailyTaskForm.Initialize();
-            formInstances["DailyTaskForm"] = StoreEmployee.DailyTaskForm.Instance;
+            DailyTaskForm.Initialize();
+            formInstances[DailyTaskForm.Instance.Name] = DailyTaskForm.Instance;
+            DailyTaskForm.Instance.LoadPlannedProducts(LocalDateTimeOffset(), StoreId!);
+
+            //Khởi tạo PreorderListForm
+            PreorderListForm.Initialize();
+            formInstances[PreorderListForm.Instance.Name] = PreorderListForm.Instance;
+            await PreorderListForm.Instance.LoadPreorder(StoreId!);
 
             foreach (var form in formInstances.Values)
             {
@@ -96,42 +102,74 @@ namespace PL
 
         private void btnCreateOrder_Click(object sender, EventArgs e)
         {
-            if (formInstances.ContainsKey("SalesOrderForm"))
+            if (formInstances.ContainsKey(SalesOrderForm.Instance.Name))
             {
-                AddFormIntoPanel(formInstances["SalesOrderForm"]);
+                AddFormIntoPanel(formInstances[SalesOrderForm.Instance.Name]);
             }
         }
 
         private void btnInventory_Click(object sender, EventArgs e)
         {
-            if (formInstances.ContainsKey("InventoryForm"))
+            if (formInstances.ContainsKey(InventoryForm.Instance.Name))
             {
-                AddFormIntoPanel(formInstances["InventoryForm"]);
+                AddFormIntoPanel(formInstances[InventoryForm.Instance.Name]);
             }
         }
 
         private void btnAccountInformation_Click(object sender, EventArgs e)
         {
-            if (formInstances.ContainsKey("AccountInformationForm"))
+            if (formInstances.ContainsKey(AccountInformationForm.Instance.Name))
             {
-                AddFormIntoPanel(formInstances["AccountInformationForm"]);
+                AddFormIntoPanel(formInstances[AccountInformationForm.Instance.Name]);
 
-                ((AccountInformationForm)formInstances["AccountInformationForm"]).DisplayInformation(LoginForm.Instance.LoginInformation);
+                ((AccountInformationForm)formInstances[AccountInformationForm.Instance.Name]).DisplayInformation(LoginForm.Instance.LoginInformation);
             }
         }
 
         private void btnCreateProduct_Click(object sender, EventArgs e)
         {
-            if (formInstances.ContainsKey("ProductCreationForm"))
+            if (formInstances.ContainsKey(ProductCreationForm.Instance.Name))
             {
-                AddFormIntoPanel(formInstances["ProductCreationForm"]);
+                AddFormIntoPanel(formInstances[ProductCreationForm.Instance.Name]);
+            }
+        }
+
+        private void btnPreOrderList_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey(PreorderListForm.Instance.Name))
+            {
+                AddFormIntoPanel(formInstances[PreorderListForm.Instance.Name]);
+            }
+        }
+
+        private void btnOrderHistory_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey(OrderHistoryForm.Instance.Name))
+            {
+                AddFormIntoPanel(formInstances[OrderHistoryForm.Instance.Name]);
+            }
+        }
+
+        private void btnProductList_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey(ProductListForm.Instance.Name))
+            {
+                AddFormIntoPanel(formInstances[ProductListForm.Instance.Name]);
+            }
+        }
+
+        private void btnDailyTask_Click(object sender, EventArgs e)
+        {
+            if (formInstances.ContainsKey(DailyTaskForm.Instance.Name))
+            {
+                AddFormIntoPanel(formInstances[DailyTaskForm.Instance.Name]);
             }
         }
 
         //Đang thử nghiệm phần này
         private async void btnTestServiceBus_Click(object sender, EventArgs e)
         {
-            await SendMessageToServiceBusTest();
+            //await SendMessageToServiceBusTest();
         }
         private async Task SendMessageToServiceBusTest()
         {
@@ -143,7 +181,7 @@ namespace PL
 
             try
             {
-                await NotificationService.NotifyDatabaseOperationAsync(message);
+                //await NotificationService.NotifyDatabaseOperationAsync(message);
             }
             catch (Exception ex)
             {
@@ -152,43 +190,21 @@ namespace PL
 
         }
 
-        public void HandleNotification(Dictionary<string, object> message)
+        public async Task HandleNotification(Dictionary<string, object> message)
         {
-            
+            string? operationName = message["OperationName"].ToString();
+            string? tableName = message["TableName"].ToString();
+
+            if (operationName != null && tableName != null)
+            {
+                if (operationName == "U" && tableName == "MaterialInventory")
+                {
+                    await InventoryForm.Instance.LoadMaterialInventory(LoginForm.Instance.LoginInformation.StoreID);
+                }
+            }
+
             // Handle the notification and update the UI
             MessageBox.Show($"StoreMainForm received message: {message}");
-        }
-
-        private void btnProductList_Click(object sender, EventArgs e)
-        {
-            if (formInstances.ContainsKey("ProductListForm"))
-            {
-                AddFormIntoPanel(formInstances["ProductListForm"]);
-            }
-        }
-
-        private void btnPreOrderList_Click(object sender, EventArgs e)
-        {
-            if (formInstances.ContainsKey("PreoderListForm"))
-            {
-                AddFormIntoPanel(formInstances["PreorderListForm"]);
-            }
-        }
-
-        private void btnOrderHistory_Click(object sender, EventArgs e)
-        {
-            if (formInstances.ContainsKey("OrderHistoryForm"))
-            {
-                AddFormIntoPanel(formInstances["OrderHistoryForm"]);
-            }
-        }
-
-        private void btnDailyTask_Click(object sender, EventArgs e)
-        {
-            if (formInstances.ContainsKey("DailyTaskForm"))
-            {
-                AddFormIntoPanel(formInstances["DailyTaskForm"]);
-            }
         }
     }
 

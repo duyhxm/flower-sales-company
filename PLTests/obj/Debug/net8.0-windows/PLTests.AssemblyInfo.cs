@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PLTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e638f10fa449367ff31c15dbc80cc83c736f120e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1050e6b7b4a3ea5a552130468dbdd7530a3c04dc")]
 [assembly: System.Reflection.AssemblyProductAttribute("PLTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PLTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

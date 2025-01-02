@@ -10,20 +10,8 @@ namespace DL.Repositories.Implementations
 {
     public class MaterialRepository : IMaterialRepository
     {
-        private const string GET_FLOWER_QUERY = @$"SELECT FlowerID, MaterialName, TypeName,                                                 ColorName, CharacteristicName
-                                                   FROM Flower AS f
-                                                   JOIN Material AS m
-                                                        ON f.FlowerID = m.MaterialID
-                                                   JOIN FloralCharacteristic AS fchar
-                                                        ON f.FCharacteristicID = fchar.FCharacteristicID
-                                                   JOIN FloralColor AS fcolor
-                                                        ON f.FColorID = fcolor.FColorID
-                                                   JOIN FloralType AS ftype
-                                                        ON f.FTypeID = ftype.FTypeID
-                                                   WHERE 1 = 1 AND";
-        private const string GET_ACCESSORY_QUERY = "";
-        FlowerSalesCompanyDbContext _context;
-        IMapper mapper;
+        private FlowerSalesCompanyDbContext _context;
+        private IMapper mapper;
 
         public MaterialRepository()
         {
@@ -83,6 +71,8 @@ namespace DL.Repositories.Implementations
             }
         }
 
+        //Các hàm trên chưa sử dụng tới
+
         //Hàm này đang bị đặt sai chỗ
         public async Task<List<FlowerDTO>?> GetAllFlowerByStoreAsync(string storeId)
         {
@@ -99,11 +89,12 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task<List<AccessoryDTO>> GetAllAccessoryAsync(string criteria)
+        //Lấy ra danh sách toàn bộ phụ liệu
+        public async Task<List<MaterialDTO>?> GetAccessoryListAsync()
         {
             try
             {
-                return await _context.Set<AccessoryDTO>().FromSqlInterpolated($"{GET_ACCESSORY_QUERY} {criteria}").ToListAsync();
+                return await _context.Database.SqlQuery<MaterialDTO>($"SELECT * FROM dbo.GetAllAccessory()").ToListAsync();
             }
             catch (Exception)
             {
@@ -111,11 +102,12 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task<List<MaterialInventoryDTO>?> GetMaterialInventoryAsync()
+        //Lấy ra danh sách toàn bộ hoa
+        public async Task<List<FlowerDTO>?> GetFlowerListAsync()
         {
             try
             {
-                return null;
+                return await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM dbo.GetAllFlower()").ToListAsync();
             }
             catch (Exception)
             {
@@ -123,18 +115,7 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task<List<FlowerDTO>?> GetFlowerInventoryAsync()
-        {
-            try
-            {
-                return null;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
+        //Lấy danh sách hình thức sản phẩm
         public async Task<List<FloralRepresentationDTO>?> GetFloralRepresentationAsync()
         {
             try

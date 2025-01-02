@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class RankingCycle
 {
-    public int RankingCycleId { get; set; }
+    public string RankingCycleId { get; set; } = null!;
 
     public DateTimeOffset? StartDateTime { get; set; }
 

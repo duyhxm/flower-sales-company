@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure;
 
 namespace DL.Models;
 
@@ -28,7 +27,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     public virtual DbSet<BankAccount> BankAccounts { get; set; }
 
-    public virtual DbSet<Bonus> Bonus { get; set; }
+    public virtual DbSet<Bonu> Bonus { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
 
@@ -46,13 +45,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     public virtual DbSet<DetailedSalesOrder> DetailedSalesOrders { get; set; }
 
-    public virtual DbSet<Emp> Emps { get; set; }
-
     public virtual DbSet<Employee> Employees { get; set; }
 
     public virtual DbSet<EmployeeAllowance> EmployeeAllowances { get; set; }
 
-    public virtual DbSet<EmployeeBonus> EmployeeBonus { get; set; }
+    public virtual DbSet<EmployeeBonu> EmployeeBonus { get; set; }
 
     public virtual DbSet<EmployeeJobTitle> EmployeeJobTitles { get; set; }
 
@@ -74,7 +71,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     public virtual DbSet<Form> Forms { get; set; }
 
-    public virtual DbSet<FTEmployee> Ftemployees { get; set; }
+    public virtual DbSet<Ftemployee> Ftemployees { get; set; }
 
     public virtual DbSet<GoodsDistribution> GoodsDistributions { get; set; }
 
@@ -150,15 +147,8 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        try
-        {
-            optionsBuilder.UseSqlServer(DbContextHelper.GetConnectionString("SQLServer"));
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-    } 
+        optionsBuilder.UseSqlServer(DbContextHelper.GetConnectionString("SQLServer"));
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -186,7 +176,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.ToTable("AccessoryProfitRate");
 
-            entity.Property(e => e.AccessoryProfitRateId).HasColumnName("AccessoryProfitRateID");
+            entity.Property(e => e.AccessoryProfitRateId)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("AccessoryProfitRateID");
             entity.Property(e => e.UsageStatus).HasMaxLength(20);
         });
 
@@ -196,7 +190,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.ToTable("AccessoryProfitRateHistory");
 
-            entity.Property(e => e.AccessoryProfitRateId).HasColumnName("AccessoryProfitRateID");
+            entity.Property(e => e.AccessoryProfitRateId)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("AccessoryProfitRateID");
             entity.Property(e => e.AccessoryId)
                 .HasMaxLength(5)
                 .IsUnicode(false)
@@ -268,7 +266,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .HasConstraintName("FK_BankID_BankAccount");
         });
 
-        modelBuilder.Entity<Bonus>(entity =>
+        modelBuilder.Entity<Bonu>(entity =>
         {
             entity.HasKey(e => e.BonusId).HasName("PK__Bonus__8E554708BB47F7BC");
 
@@ -353,7 +351,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.ToTable("CustomerRankHistory");
 
-            entity.Property(e => e.CustomerRankHistoryId).HasColumnName("CustomerRankHistoryID");
+            entity.Property(e => e.CustomerRankHistoryId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("CustomerRankHistoryID");
             entity.Property(e => e.CustomerId)
                 .HasMaxLength(10)
                 .IsUnicode(false)
@@ -364,7 +366,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("CustomerRankID");
-            entity.Property(e => e.RankingCycleId).HasColumnName("RankingCycleID");
+            entity.Property(e => e.RankingCycleId)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("RankingCycleID");
             entity.Property(e => e.TotalSpending).HasColumnType("decimal(38, 3)");
 
             entity.HasOne(d => d.Customer).WithMany(p => p.CustomerRankHistories)
@@ -479,23 +485,6 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .HasConstraintName("FK_SalesOrderID_DetailedSalesOrder");
         });
 
-        modelBuilder.Entity<Emp>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("emp");
-
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("ID");
-            entity.Property(e => e.LastName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-        });
-
         modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04FF1F53C04BC");
@@ -568,7 +557,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .HasConstraintName("FK_EmployeeID_EmployeeAllowance");
         });
 
-        modelBuilder.Entity<EmployeeBonus>(entity =>
+        modelBuilder.Entity<EmployeeBonu>(entity =>
         {
             entity.HasKey(e => new { e.EmployeeId, e.BonusId }).HasName("PK_EmployeeID_BonusID_EmployeeBonus");
 
@@ -611,6 +600,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("JobTitleID");
+            entity.Property(e => e.JobTitleStatus).HasMaxLength(50);
 
             entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeJobTitles)
                 .HasForeignKey(d => d.EmployeeId)
@@ -773,7 +763,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.HasIndex(e => new { e.ApplyMonth, e.ApplyYear }, "UQ_ApplyMonth_ApplyYear_FlowerSalesTarget").IsUnique();
 
-            entity.Property(e => e.TargetId).HasColumnName("TargetID");
+            entity.Property(e => e.TargetId)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("TargetID");
             entity.Property(e => e.ApplyMonth).HasColumnType("decimal(2, 0)");
             entity.Property(e => e.ApplyYear).HasColumnType("decimal(4, 0)");
             entity.Property(e => e.UsageStatus).HasMaxLength(20);
@@ -785,7 +779,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.ToTable("FlowerSalesTargetHistory");
 
-            entity.Property(e => e.TargetId).HasColumnName("TargetID");
+            entity.Property(e => e.TargetId)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("TargetID");
             entity.Property(e => e.FlowerId)
                 .HasMaxLength(5)
                 .IsUnicode(false)
@@ -810,19 +808,23 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.ToTable("Form");
 
-            entity.Property(e => e.FormId).HasColumnName("FormID");
+            entity.Property(e => e.FormId)
+                .HasMaxLength(6)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("FormID");
             entity.Property(e => e.FormName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<FTEmployee>(entity =>
+        modelBuilder.Entity<Ftemployee>(entity =>
         {
-            entity.HasKey(e => e.FTEmployeeID).HasName("PK__FTEmploy__8783797B080A58F3");
+            entity.HasKey(e => e.FtemployeeId).HasName("PK__FTEmploy__8783797B080A58F3");
 
             entity.ToTable("FTEmployee");
 
-            entity.Property(e => e.FTEmployeeID)
+            entity.Property(e => e.FtemployeeId)
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength()
@@ -834,7 +836,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .HasColumnName("SalaryID");
 
             entity.HasOne(d => d.FtemployeeNavigation).WithOne(p => p.Ftemployee)
-                .HasForeignKey<FTEmployee>(d => d.FTEmployeeID)
+                .HasForeignKey<Ftemployee>(d => d.FtemployeeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_FTEmployeeID_FTEmployee");
 
@@ -845,7 +847,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
         modelBuilder.Entity<GoodsDistribution>(entity =>
         {
-            entity.HasKey(e => new { e.PurchaseOrderId, e.StoreId, e.MaterialId }).HasName("PK_Mutual_PurchaseOrderID_StoreID_MaterialID_Inventory");
+            entity.HasKey(e => new { e.PurchaseOrderId, e.StoreId, e.MaterialId, e.DistributedDateTime }).HasName("PK_Mutual_PurchaseOrderID_StoreID_MaterialID_DistributedDateTime_Inventory");
 
             entity.ToTable("GoodsDistribution");
 
@@ -915,7 +917,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("DepartmentID");
-            entity.Property(e => e.FormId).HasColumnName("FormID");
+            entity.Property(e => e.FormId)
+                .HasMaxLength(6)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("FormID");
             entity.Property(e => e.Jd).HasColumnName("JD");
             entity.Property(e => e.JobTitleName).HasMaxLength(50);
 
@@ -1003,7 +1009,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.HasIndex(e => new { e.ReportingMonth, e.ReportingYear }, "UQ_ReportingMonth_ReportingYear_OperatingExpenseHistory").IsUnique();
 
-            entity.Property(e => e.OperatingExpenseId).HasColumnName("OperatingExpenseID");
+            entity.Property(e => e.OperatingExpenseId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("OperatingExpenseID");
             entity.Property(e => e.ReportingMonth).HasColumnType("decimal(2, 0)");
             entity.Property(e => e.ReportingYear).HasColumnType("decimal(4, 0)");
             entity.Property(e => e.TotalExpense).HasColumnType("decimal(38, 3)");
@@ -1246,6 +1256,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("PurchaseOrderID");
+            entity.Property(e => e.DistributionStatus).HasMaxLength(50);
             entity.Property(e => e.OrderType).HasMaxLength(8);
             entity.Property(e => e.TotalCost).HasColumnType("decimal(38, 3)");
             entity.Property(e => e.VendorId)
@@ -1265,7 +1276,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.ToTable("RankingCycle");
 
-            entity.Property(e => e.RankingCycleId).HasColumnName("RankingCycleID");
+            entity.Property(e => e.RankingCycleId)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("RankingCycleID");
             entity.Property(e => e.UsageStatus).HasMaxLength(20);
         });
 
@@ -1275,7 +1290,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.ToTable("RankingCycleHistory");
 
-            entity.Property(e => e.RankingCycleId).HasColumnName("RankingCycleID");
+            entity.Property(e => e.RankingCycleId)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("RankingCycleID");
             entity.Property(e => e.CustomerRankId)
                 .HasMaxLength(4)
                 .IsUnicode(false)
@@ -1316,7 +1335,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.HasIndex(e => new { e.ReportingMonth, e.ReportingYear }, "UQ_ReportingMonth_ReportingYear_RevenueHistory").IsUnique();
 
-            entity.Property(e => e.RevenueId).HasColumnName("RevenueID");
+            entity.Property(e => e.RevenueId)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("RevenueID");
             entity.Property(e => e.ExpectedFlowerRevenue).HasColumnType("decimal(38, 3)");
             entity.Property(e => e.NetFlowerRevenue).HasColumnType("decimal(38, 3)");
             entity.Property(e => e.NetSuppMaterialRevenue).HasColumnType("decimal(38, 3)");
@@ -1343,7 +1366,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
         {
             entity.HasKey(e => e.SalesOrderId).HasName("PK__SalesOrd__B14003C23DAC6F5E");
 
-            entity.ToTable("SalesOrder");
+            entity.ToTable("SalesOrder", tb => tb.HasTrigger("trg_UpdateStockOnOrderCompletion"));
 
             entity.Property(e => e.SalesOrderId)
                 .HasMaxLength(10)
@@ -1357,7 +1380,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("CustomerID");
             entity.Property(e => e.FinalPrice).HasColumnType("decimal(38, 3)");
-            entity.Property(e => e.OrderStatus).HasMaxLength(10);
+            entity.Property(e => e.OrderStatus).HasMaxLength(20);
             entity.Property(e => e.OrderType).HasMaxLength(20);
             entity.Property(e => e.PurchaseMethod).HasMaxLength(20);
             entity.Property(e => e.StoreId)
@@ -1396,7 +1419,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
             entity.ToTable("ShippingInformation");
 
             entity.Property(e => e.ShippingId)
-                .HasMaxLength(20)
+                .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("ShippingID");
@@ -1423,6 +1446,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.HasOne(d => d.SalesOrder).WithMany(p => p.ShippingInformations)
                 .HasForeignKey(d => d.SalesOrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SalesOrderID_ShippingInformation");
 
             entity.HasOne(d => d.ShippingCompany).WithMany(p => p.ShippingInformations)
@@ -1480,10 +1504,15 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
         modelBuilder.Entity<StoreExpenseHistory>(entity =>
         {
-            entity.HasKey(e => new { e.StoreExpenseId, e.StoreId }).HasName("PK_Mutual_StoreExpenseID_StoreID_StoreExpenseHistory");
+            entity.HasKey(e => new { e.StoreExpenseHistoryId, e.StoreExpenseId, e.StoreId });
 
             entity.ToTable("StoreExpenseHistory");
 
+            entity.Property(e => e.StoreExpenseHistoryId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("StoreExpenseHistoryID");
             entity.Property(e => e.StoreExpenseId)
                 .HasMaxLength(5)
                 .IsUnicode(false)
@@ -1494,7 +1523,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("StoreID");
-            entity.Property(e => e.Price).HasColumnType("decimal(10, 3)");
+            entity.Property(e => e.Price).HasColumnType("decimal(38, 3)");
 
             entity.HasOne(d => d.StoreExpense).WithMany(p => p.StoreExpenseHistories)
                 .HasForeignKey(d => d.StoreExpenseId)
@@ -1656,7 +1685,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
         modelBuilder.Entity<WorkShiftDistribution>(entity =>
         {
-            entity.HasKey(e => new { e.PtemployeeId, e.WorkShiftId }).HasName("PK_Mutual_PTEmployeeID_WorkShiftID_WorkShiftDistribution");
+            entity.HasKey(e => new { e.PtemployeeId, e.WorkShiftId, e.WorkDate }).HasName("PK_Mutual_PTEmployeeID_WorkShiftID_WorkDate_WorkShiftDistribution");
 
             entity.ToTable("WorkShiftDistribution");
 

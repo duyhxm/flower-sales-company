@@ -32,18 +32,6 @@ namespace BL
             }
         }
 
-        public async Task<List<AccessoryDTO>> GetAccessoryListAsync(string criteria)
-        {
-            try
-            {
-                return await new MaterialRepository().GetAllAccessoryAsync(criteria);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         public async Task<List<FloralRepresentationDTO>?> GetFloralRepresentationAsync()
         {
             try
@@ -56,11 +44,11 @@ namespace BL
             }
         }
 
-        public async Task<List<FlowerDTO>> GetFlowerInventoryAsync()
+        public async Task<List<FlowerDTO>?> GetFlowerListAsync()
         {
             try
             {
-                return await _materialRepository.GetFlowerInventoryAsync();
+                return await _materialRepository.GetFlowerListAsync();
             }
             catch (Exception)
             {
@@ -68,11 +56,11 @@ namespace BL
             }
         }
 
-        public async Task<List<MaterialInventoryDTO>?> GetMaterialInventoryAsync()
+        public async Task<List<MaterialDTO>?> GetAccessoryListAsync()
         {
             try
             {
-               return await _materialRepository.GetMaterialInventoryAsync();
+               return await _materialRepository.GetAccessoryListAsync();
             }
             catch (Exception)
             {

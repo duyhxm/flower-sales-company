@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class Form
 {
-    public int FormId { get; set; }
+    public string FormId { get; set; } = null!;
 
     public string? FormName { get; set; }
 

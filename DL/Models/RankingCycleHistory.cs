@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class RankingCycleHistory
 {
-    public int RankingCycleId { get; set; }
+    public string RankingCycleId { get; set; } = null!;
 
     public string CustomerRankId { get; set; } = null!;
 

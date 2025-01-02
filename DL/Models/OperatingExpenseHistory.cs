@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class OperatingExpenseHistory
 {
-    public int OperatingExpenseId { get; set; }
+    public string OperatingExpenseId { get; set; } = null!;
 
     public decimal? ReportingMonth { get; set; }
 

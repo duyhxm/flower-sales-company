@@ -11,5 +11,5 @@ public partial class Salary
 
     public decimal? SalaryCoefficient { get; set; }
 
-    public virtual ICollection<FTEmployee> Ftemployees { get; set; } = new List<FTEmployee>();
+    public virtual ICollection<Ftemployee> Ftemployees { get; set; } = new List<Ftemployee>();
 }

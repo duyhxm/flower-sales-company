@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class RevenueHistory
 {
-    public int RevenueId { get; set; }
+    public string RevenueId { get; set; } = null!;
 
     public decimal? ReportingMonth { get; set; }
 

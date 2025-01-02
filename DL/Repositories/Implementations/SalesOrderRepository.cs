@@ -8,6 +8,8 @@ using DTO.SalesOrder;
 using DL.Models;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using DTO.Enum;
+using DTO.Enum.SalesOrder;
 
 namespace DL.Repositories.Implementations
 {
@@ -53,8 +55,8 @@ namespace DL.Repositories.Implementations
             try
             {
                 // Lấy SalesOrderId hiện tại
-                string? currentId = GetLastestSalesOrderId();
-                string newSalesOrderId = string.IsNullOrEmpty(currentId) ? "SO00000001" : GenerateId(currentId);
+                string? currentSalesOrderId = GetLastestSalesOrderId();
+                string newSalesOrderId = string.IsNullOrEmpty(currentSalesOrderId) ? "SO00000001" : GenerateId(currentSalesOrderId);
 
                 // Mapping SalesOrderDTO to SalesOrder entity
                 var newSalesOrder = _mapper.Map<SalesOrder>(salesOrder);
@@ -77,13 +79,22 @@ namespace DL.Repositories.Implementations
                 // Kiểm tra và thêm ShippingInformation
                 if (shippingInformation != null)
                 {
+                    //Tạo id
+                    string? currentShippingId = GetLastestShippingId();
+                    string newShippingId = string.IsNullOrEmpty(currentShippingId) ? "SI00000001" : GenerateId(currentShippingId);
+
+
+                    //Gán id mới vô biến input và map sang ShippingInformation
+                    shippingInformation.ShippingId = newShippingId;
                     var newShippingInformation = _mapper.Map<ShippingInformation>(shippingInformation);
                     newShippingInformation.SalesOrderId = newSalesOrderId;
+
+                    //Thêm mới một row
                     _context.ShippingInformations.Add(newShippingInformation);
                 }
 
                 // Kiểm tra OrderType và thêm vào bảng tương ứng
-                if (salesOrder.OrderType == "đặt trước")
+                if (salesOrder.OrderType == OrderType.PreSalesOrder)
                 {
                     var newPreSalesOrder = new PreSalesOrder
                     {
@@ -92,7 +103,7 @@ namespace DL.Repositories.Implementations
                     };
                     _context.PreSalesOrders.Add(newPreSalesOrder);
                 }
-                else if (salesOrder.OrderType == "lấy ngay")
+                else if (salesOrder.OrderType == OrderType.ImmediateSalesOrder)
                 {
                     var newImmediateSalesOrder = new ImmediateSalesOrder
                     {
@@ -118,7 +129,22 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public string? GetLastestSalesOrderId()
+        private string? GetLastestShippingId()
+        {
+            try
+            {
+                return _context.ShippingInformations
+                    .OrderByDescending(p => p.ShippingId)
+                    .Select(p => p.ShippingId)
+                    .FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private string? GetLastestSalesOrderId()
         {
             try
             {
@@ -133,7 +159,7 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public string GenerateId(string currentId)
+        private string GenerateId(string currentId)
         {
             int index = 0;
             while (index < currentId.Length && !char.IsDigit(currentId[index]))
@@ -168,6 +194,68 @@ namespace DL.Repositories.Implementations
 
             letters.Append(newNumbers);
             return letters.ToString();
+        }
+
+
+        //dùng để lấy danh sách sản phẩm của đơn hàng đặt trước để hiển thị trong PreorderListForm
+        public async Task<List<dynamic>> GetProductsBySalesOrderIdAsync(string salesOrderId)
+        {
+            try
+            {
+                var products = await (from detailedOrder in _context.DetailedSalesOrders
+                                      join product in _context.Products
+                                      on detailedOrder.ProductId equals product.ProductId
+                                      join floralRepresentation in _context.FloralRepresentations
+                                      on product.FrepresentationId equals floralRepresentation.FrepresentationId
+                                      where detailedOrder.SalesOrderId == salesOrderId
+                                      select new
+                                      {
+                                          ProductId = product.ProductId,
+                                          ProductName = product.ProductName,
+                                          RepresentationName = floralRepresentation.Frname,
+                                          Quantity = detailedOrder.Quantity ?? 0
+                                      }).ToListAsync();
+
+                return products.Cast<dynamic>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving products by sales order ID", ex);
+            }
+        }
+
+        //dùng khi mà user thay đổi trạng thái của đơn hàng đặt trước
+        public async Task UpdateOrderStatusAsync(string salesOrderId, string orderStatus)
+        {
+            try
+            {
+                var salesOrder = await _context.SalesOrders.FindAsync(salesOrderId);
+                if (salesOrder != null)
+                {
+                    salesOrder.OrderStatus = orderStatus;
+                    _context.Entry(salesOrder).Property(s => s.OrderStatus).IsModified = true;
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while updating the order status", ex);
+            }
+        }
+
+
+        public async Task UpdateShippingInfoAsync(ShippingInformationDTO shippingInfo)
+        {
+            try
+            {
+                ShippingInformation si = _mapper.Map<ShippingInformation>(shippingInfo);
+                _context.ShippingInformations.Update(si);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

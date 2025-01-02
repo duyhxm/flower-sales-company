@@ -390,10 +390,6 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
-            "C1.Win.FlexChart": {
-              "target": "Package",
-              "version": "[8.0.20242.688, )"
-            },
             "FontAwesome.Sharp": {
               "target": "Package",
               "version": "[6.6.0, )"

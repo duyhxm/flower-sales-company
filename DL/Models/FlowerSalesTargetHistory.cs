@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class FlowerSalesTargetHistory
 {
-    public int TargetId { get; set; }
+    public string TargetId { get; set; } = null!;
 
     public string FlowerId { get; set; } = null!;
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static BL.GeneralService;
+using DTO.SalesOrder;
 
 namespace PL.StoreEmployee
 {
@@ -121,8 +122,6 @@ namespace PL.StoreEmployee
 
         public void ClearShippingInformation()
         {
-            txtBxShippingId.Clear();
-            txtBxShippingCompanyId.Clear();
             txtBxConsigneeName.Clear();
             txtBxConsigneePhoneNumber.Clear();
             dtpDeliveryDatetime.Value = DateTime.Now;
@@ -161,6 +160,20 @@ namespace PL.StoreEmployee
                 }
             }
             return false;
+        }
+
+        public ShippingInformationDTO GetShippingInfo()
+        {
+            return new ShippingInformationDTO()
+            {
+                ConsigneeName = txtBxConsigneeName.Text,
+                ConsigneePhoneNumber = txtBxConsigneePhoneNumber.Text,
+                DeliveryDateTime = ConvertStringToDateTimeOffset(dtpDeliveryDatetime.Text, "dd/MM/yyyy HH:mm"),
+                ShippingAddress = txtBxShippingAddress.Text,
+                District = cmbBxDistrict.Text,
+                CityProvince = cmbBxCity.Text,
+                ShippingCost = Convert.ToDecimal(txtBxShippingCost.Text),
+            };
         }
     }
 }

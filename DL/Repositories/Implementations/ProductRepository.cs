@@ -8,7 +8,7 @@ using DL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using DTO.Product;
 using AutoMapper;
-using DL.Repositories.Implementations;
+using DTO.Enum;
 
 namespace DL.Repositories.Implementations
 {
@@ -110,6 +110,62 @@ namespace DL.Repositories.Implementations
             return letters.ToString();
         }
 
+        //public async Task<ReturnedProductDTO> AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string storeId)
+        //{
+        //    bool hasExisted = false;
+        //    using var transaction = await _context.Database.BeginTransactionAsync();
+
+        //    try
+        //    {
+        //        if (product.ProductId != null && product.ProductName != null)
+        //        {
+        //            Dictionary<string, string> productInfo = new()
+        //            {
+        //                { product.ProductId, product.ProductName}
+        //            };
+        //            //await HandleExistingProduct(productInfo, productCreationHistory, storeId);
+
+        //        }
+        //        else
+        //        {
+        //            //Tìm kiếm sản phẩm xem đã tồn tại chưa, để tránh trùng lắp
+        //            var existingProductInfo = await CheckProductExistence(product);
+
+        //            //sản phẩm đã tồn tại trong database
+        //            if (existingProductInfo != null)
+        //            {
+        //                hasExisted = true;
+        //                product.ProductId = existingProductInfo.First().Key;
+        //                //await HandleExistingProduct(existingProductInfo, productCreationHistory, storeId);
+        //            }
+        //            else
+        //            {
+        //                ProductDTO newProduct = await HandleNewProduct(product, productCreationHistory, storeId);
+        //                product.ProductId = newProduct.ProductId;
+        //            }
+        //        }
+
+        //        //Sau khi thêm mới sản phẩm, thực hiện update kho vật liệu của cửa hàng
+        //        await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+
+        //        //Sau khi update kho vật liệu, tiếp tục update kho sản phẩm
+        //        await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+
+        //        await transaction.CommitAsync();
+
+        //        return new ReturnedProductDTO()
+        //        {
+        //            Product = product,
+        //            HasExisted = hasExisted
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await transaction.RollbackAsync();
+        //        throw new Exception("Đã xảy ra lỗi trong quá trình thêm sản phẩm. Vui lòng thử lại hoặc liên hệ bộ phận kỹ thuật", ex);
+        //    }
+        //}
+
         public async Task<ReturnedProductDTO> AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string storeId)
         {
             bool hasExisted = false;
@@ -117,23 +173,34 @@ namespace DL.Repositories.Implementations
 
             try
             {
-                //Tìm kiếm sản phẩm xem đã tồn tại chưa, để tránh trùng lắp
-                var existingProductInfo = await CheckProductExistence(product);
-
-                //sản phẩm đã tồn tại trong database
-                if (existingProductInfo != null)
+                if (!string.IsNullOrEmpty(product.ProductId) && !string.IsNullOrEmpty(product.ProductName))
                 {
-                    hasExisted = true;
-                    await HandleExistingProduct(existingProductInfo, productCreationHistory, storeId);
+                    // Product already has an ID and Name, proceed with inventory updates
+                    await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+                    await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
                 }
                 else
                 {
-                    await HandleNewProduct(product, productCreationHistory, storeId);
+                    // Check if the product already exists in the database
+                    var existingProductInfo = await CheckProductExistence(product);
+
+                    if (existingProductInfo != null)
+                    {
+                        // Product exists, update its ID and proceed with inventory updates
+                        hasExisted = true;
+                        product.ProductId = existingProductInfo.First().Key;
+                        await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+                        await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+                    }
+                    else
+                    {
+                        // Product does not exist, handle as a new product
+                        ProductDTO newProduct = await HandleNewProduct(product, productCreationHistory, storeId);
+                        product.ProductId = newProduct.ProductId;
+                        await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+                        await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+                    }
                 }
-
-                await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
-
-                await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
 
                 await transaction.CommitAsync();
 
@@ -146,10 +213,12 @@ namespace DL.Repositories.Implementations
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                throw new Exception("An error occurred while adding the product.", ex);
+                throw new Exception("Đã xảy ra lỗi trong quá trình thêm sản phẩm. Vui lòng thử lại hoặc liên hệ bộ phận kỹ thuật", ex);
             }
         }
 
+
+        //Update kho vật liệu của cửa hàng, có kiểm tra xem liệu kho có đủ số lượng vật liệu để tạo sản phẩm hay không
         public async Task UpdateMaterialInventoryAsync(ProductDTO product, string? storeId, int createdQuantity)
         {
             foreach (var detailedProduct in product.DetailedProducts)
@@ -159,18 +228,25 @@ namespace DL.Repositories.Implementations
 
                 if (materialInventory != null)
                 {
-                    materialInventory.StockMaterialQuantity -= detailedProduct.UsedQuantity * createdQuantity ?? 0;
+                    materialInventory.StockMaterialQuantity -= detailedProduct.UsedQuantity * createdQuantity;
+
+                    if (materialInventory.StockMaterialQuantity < 0)
+                    {
+                        throw new Exception($"Số lượng vật liệu {detailedProduct.MaterialId} không đủ để tạo mới sản phẩm.");
+                    }
+
                     _context.Entry(materialInventory).Property(mi => mi.StockMaterialQuantity).IsModified = true;
                 }
                 else
                 {
-                    throw new Exception($"Material with ID {detailedProduct.MaterialId} not found in store {storeId}.");
+                    throw new Exception($"Vật liệu với ID {detailedProduct.MaterialId} không được tìm thấy ở cửa hàng {storeId}.");
                 }
             }
 
             await _context.SaveChangesAsync();
         }
 
+        //Sử dụng hàm này để update kho sản phẩm của cửa hàng
         private async Task UpdateProductInventoryAsync(DateTimeOffset createdDateTime, string storeId, string productId, int createdQuantity)
         {
             try
@@ -185,18 +261,24 @@ namespace DL.Repositories.Implementations
             }
         }
 
+
+        //Xử lý thêm mới sản phẩm khi mà sản phẩm này đã tồn tại trong database
         private async Task HandleExistingProduct(Dictionary<string, string> existingProductInfo, ProductCreationHistoryDTO productCreationHistory, string? storeId)
         {
+            //Lấy ra số tượng sản phẩm đã được tạo
             short? createdQuantity = productCreationHistory.CreatedQuantity;
+
+            //Kiểm tra xem sản phẩm này có tồn tại ở kho của cửa hàng chưa
             var existingProductAtStore = await _context.ProductInventories
                                           .FirstOrDefaultAsync(pi => pi.ProductId == existingProductInfo.First().Key && pi.StoreId == storeId);
 
+            //Nếu sản phẩm đã tồn tại ở cửa hàng, chỉ cần cập nhật cột StockProductQuantity (số lượng sản phẩm tồn kho)
             if (existingProductAtStore != null)
             {
                 existingProductAtStore.StockProductQuantity += Convert.ToInt32(createdQuantity);
                 _context.Entry(existingProductAtStore).Property(p => p.StockProductQuantity).IsModified = true;
             }
-            else
+            else //Trường hợp sản phẩm chưa tồn tại ở cửa hàng, thì sẽ thêm mới một row
             {
                 ProductInventory pi = new ProductInventory()
                 {
@@ -215,7 +297,8 @@ namespace DL.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
-        private async Task HandleNewProduct(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string? storeId)
+        //Xử lý thêm mới một sản phẩm khi mà chưa tồn tại trong database. Hàm này chỉ có thêm mới vô trong Product, DetailedProduct, và ProductCreationHistory
+        private async Task<ProductDTO> HandleNewProduct(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string? storeId)
         {
             string? currentProductId = GetLastestProductId();
             string newProductId = currentProductId == null ? "P000000001" : GenerateId(currentProductId);
@@ -243,48 +326,56 @@ namespace DL.Repositories.Implementations
             _context.ProductInventories.Add(pi);
 
             await _context.SaveChangesAsync();
+            return product;
         }
 
+
+        //Hàm này sẽ kiểm tra xem sản phẩm có tồn tại ở trong bảng Product hay chưa
         private async Task<Dictionary<string, string>?> CheckProductExistence(ProductDTO product)
         {
+            //Khai báo kết quả trả về của hàm này. Kết quả trả về sẽ chỉ có đúng 1 item nếu product này có tồn tại trong database hoặc trả về null nếu sản phẩm này chưa tồn tại trong database hoặc bảng Product trong database chưa có dữ liệu
             Dictionary<string, string>? result = new Dictionary<string, string>();
 
             try
             {
-                // Map ProductDTO to Product
+                // Map ProductDTO sang Product
                 Product testedProduct = _mapper.Map<Product>(product);
 
-                // Get the FrepresentationId and DetailedProducts from the tested product
+                //Lấy ra hình thức sản phẩm và chi tiết sản phẩm để đi kiểm tra
                 string? fRepresentationId = testedProduct.FrepresentationId;
                 ICollection<DetailedProduct> detailedProducts = testedProduct.DetailedProducts;
 
-                // Check if there are any products in the database
+                // Nếu mà bảng Product trong database rỗng, nghĩa là số lượng dòng bằng 0, thì trả về null. Biểu thị rằng không có sản phẩm nào cả.
                 if (await _context.Products.CountAsync() == 0)
                 {
                     return null;
                 }
 
-                // Find products with the same FrepresentationId
+                //Lọc ra những product mà có cùng hình thức sản phẩm
                 var matchingProducts = await _context.Products
                     .Where(p => p.FrepresentationId == fRepresentationId)
                     .Include(p => p.DetailedProducts)
                     .ToListAsync();
 
+                //Sau khi lọc, ta sẽ có được một danh sách những sản phẩm có cùng hình thức sản phẩm. Bắt đầu duyệt từng sản phẩm, mình sẽ so sánh các vật liệu mà sản phẩm đó sử dụng
                 foreach (var dbProduct in matchingProducts)
                 {
-                    // Step 1: Check if the number of DetailedProducts is the same
+                    //Bước 1: Kiểm tra xem nếu mà số lượng vật liệu của sản phẩm có trong database và sản phẩm được kiểm tra mà khác nhau, thì chuyển qua sản phẩm kế tiếp.
                     if (dbProduct.DetailedProducts.Count != detailedProducts.Count)
                     {
                         continue;
                     }
 
-                    // Step 2: Compare each DetailedProduct
+                    //Bước 2: Khi mà đã tìm thấy sản phẩm có cùng số lượng vật liệu với sản phẩm đang được kiểm tra, thì bắt đầu kiểm tra tiếp từng chi tiết vật liệu.
                     bool isMatch = true;
+
+                    //Duyệt qua từng vật liệu mà sản phẩm đang được kiểm tra đã sử dụng và so sánh với vật liệu của sản phẩm mà có cùng số lượng vừa match
                     foreach (var detailedProduct in detailedProducts)
                     {
                         var matchingDetailedProduct = dbProduct.DetailedProducts
                             .FirstOrDefault(dp => dp.MaterialId == detailedProduct.MaterialId && dp.UsedQuantity == detailedProduct.UsedQuantity);
 
+                        //Nếu chỉ cần tồn tại ít nhất một item trong chi tiết sản phẩm mà không match, thì lập tức kết thúc vòng lặp và tìm tiếp sản phẩm mà có cùng số lượng vật liệu để kiểm tra tiếp tục.
                         if (matchingDetailedProduct == null)
                         {
                             isMatch = false;
@@ -292,7 +383,7 @@ namespace DL.Repositories.Implementations
                         }
                     }
 
-                    // Step 3: If all DetailedProducts match, return the ProductId and ProductName
+                    //Bước 3: Nếu mà biến isMatch có giá trị true, nghĩa là đã tìm thấy một sản phẩm có cùng số lượng vật liệu, mỗi vật liệu đều có số lượng được dùng như sau, thì có nghĩa là sản phẩm đang được kiểm tra đã tồn tại trong database, thì trả về kết quả là ProductId và ProductName và kết thúc vòng lặp.
                     if (isMatch)
                     {
                         result.Add(dbProduct.ProductId, dbProduct.ProductName!);
@@ -306,6 +397,199 @@ namespace DL.Repositories.Implementations
             }
 
             return result.Count > 0 ? result : null;
+        }
+
+
+        //Thêm mới một sản phẩm trừu tượng. Method này được sử dụng 
+        public async Task<ReturnedProductDTO> AddAbstractProductAsync(ProductDTO product)
+        {
+            try
+            {
+                var existedProduct = await CheckProductExistence(product);
+
+                if (existedProduct != null)
+                {
+                    product.ProductId = existedProduct.First().Key;
+                    product.ProductName = existedProduct.First().Value;
+                    return new ReturnedProductDTO()
+                    {
+                        Product = product,
+                        HasExisted = true
+                    };
+                }
+                else
+                {
+                    string? currentProductId = GetLastestProductId();
+                    string newProductId = currentProductId == null ? "P000000001" : GenerateId(currentProductId);
+
+                    product.ProductId = newProductId;
+
+                    foreach (var detailedProduct in product.DetailedProducts)
+                    {
+                        detailedProduct.ProductId = newProductId;
+                    }
+
+                    var convertedProduct = _mapper.Map<Product>(product);
+                    
+                    _context.Products.Add(convertedProduct);
+
+                    await _context.SaveChangesAsync();
+
+                    return new ReturnedProductDTO()
+                    {
+                        Product = product,
+                        HasExisted = false
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+        //Tính toán UnitPrice (giá bán) của một sản phẩm. Hàm này sẽ chỉ cần danh sách chứa các MaterialId và số lượng mà vật liệu này sử dụng 
+        public async Task<decimal> CalculateUnitPriceAsync(Dictionary<string, int> materialQuantities)
+        {
+            decimal totalCost = 0;
+
+            //Duyệt qua từng material
+            foreach (var material in materialQuantities)
+            {
+                string materialId = material.Key;
+                int quantity = material.Value;
+
+                decimal costPrice = 0;
+                decimal profitRate = 0;
+
+                //Về vật liệu, thì sẽ chia làm 'hoa' và 'phụ liệu'. Cả hai đều có bảng riêng để set tỉ lệ lợi nhuận riêng. MaterialID của phụ liệu bắt đầu bằng ký tự 'A', còn MaterialID của hoa bắt đầu bằng ký tự 'F'
+                if (materialId.StartsWith("A"))
+                {
+                    //Lấy tỉ lệ lợi nhuận cho phụ liệu.
+                    var accessoryProfitRate = await _context.AccessoryProfitRates
+                        .Where(apr => apr.StartDate <= DateOnly.FromDateTime(DateTime.Now) && apr.EndDate >= DateOnly.FromDateTime(DateTime.Now))
+                        .FirstOrDefaultAsync();
+
+                    //Nếu tỉ lệ lợi nhuận khác null, nghĩa là đã có dữ liệu cho tỉ lệ lợi nhuận tại thời điểm hiện tại. Lúc này, truy cập vô bảng lịch sử tỉ lệ lợi nhuận của phụ liệu tương ứng với material
+                    if (accessoryProfitRate != null)
+                    {
+                        var accessoryProfitRateHistory = await _context.AccessoryProfitRateHistories
+                            .Where(aprh => aprh.AccessoryProfitRateId == accessoryProfitRate.AccessoryProfitRateId && aprh.AccessoryId == materialId)
+                            .FirstOrDefaultAsync();
+
+                        //Nếu mà có tồn tại một record, thì kiểm tra xem cột ProfitRate (tỉ lệ lợi nhuận) có null không. Nếu null thì trả về 0.
+                        if (accessoryProfitRateHistory != null)
+                        {
+                            profitRate = accessoryProfitRateHistory.ProfitRate ?? 0;
+                        }
+                    }
+
+                    //Lấy giá gốc mua vào của vật liệu này từ bảng PurchaseOrder bằng cách tìm PurchaseOrder có thời gian nhập trong thời gian hiện tại.
+                    var purchaseOrder = await _context.PurchaseOrders
+                        .Where(po => po.OrderType == MaterialType.Accessory && po.PurchasedDateTime.HasValue)
+                        .OrderByDescending(po => po.PurchasedDateTime)
+                        .FirstOrDefaultAsync(po => po.PurchasedDateTime!.Value.Month == DateTime.Now.Month && po.PurchasedDateTime.Value.Year == DateTime.Now.Year);
+
+                    //Tuy nhiên, đôi khi có thể đơn hàng nhập không trong thời điểm hiện tại. Nhất là đối với phụ liệu, thì mình có thể nhập mà bán tận trong vài tháng hơn, nên lúc này thời gian mua hàng sẽ khác với thời gian hiện tại. Để xử lý trường hợp này, mình sẽ lấy PurchaseOrder có thời gian nhập gần nhất.
+                    if (purchaseOrder == null)
+                    {
+                        purchaseOrder = await _context.PurchaseOrders
+                            .Where(po => po.OrderType == MaterialType.Accessory && po.PurchasedDateTime.HasValue)
+                            .OrderByDescending(po => po.PurchasedDateTime)
+                            .FirstOrDefaultAsync();
+                    }
+
+                    //Nếu PurchaseOrder khác null, nghĩa là có đơn hàng nhập trong thời điểm hiện tại. Khi này, chỉ việc lấy ra record tương ứng với MaterialID, rồi lấy ra CostPrice (giá gốc). Nếu trường hợp CostPrice bằng null, thì gán mặc định bằng 0.
+                    if (purchaseOrder != null)
+                    {
+                        var detailedPurchaseOrder = await _context.DetailedPurchaseOrders
+                            .Where(dpo => dpo.PurchaseOrderId == purchaseOrder.PurchaseOrderId && dpo.MaterialId == materialId)
+                            .FirstOrDefaultAsync();
+
+                        if (detailedPurchaseOrder != null)
+                        {
+                            costPrice = detailedPurchaseOrder.CostPrice ?? 0;
+                        }
+                    }
+                }
+                else //Trường hợp vật liệu là hoa
+                {
+                    var currentMonth = DateTime.Now.Month;
+                    var currentYear = DateTime.Now.Year;
+
+                    var flowerSalesTarget = await _context.FlowerSalesTargets
+                        .Where(fst => fst.ApplyMonth == currentMonth && fst.ApplyYear == currentYear)
+                        .FirstOrDefaultAsync();
+
+                    if (flowerSalesTarget != null)
+                    {
+                        var flowerSalesTargetHistory = await _context.FlowerSalesTargetHistories
+                            .Where(fsth => fsth.TargetId == flowerSalesTarget.TargetId && fsth.FlowerId == materialId)
+                            .FirstOrDefaultAsync();
+
+                        if (flowerSalesTargetHistory != null)
+                        {
+                            profitRate = flowerSalesTargetHistory.ProfitRate ?? 0;
+                        }
+                    }
+
+                    // Get cost price from purchase order for flower
+                    var purchaseOrder = await _context.PurchaseOrders
+                        .Where(po => po.OrderType == MaterialType.Flower && po.PurchasedDateTime.HasValue)
+                        .OrderByDescending(po => po.PurchasedDateTime)
+                        .FirstOrDefaultAsync(po => po.PurchasedDateTime!.Value.Month == DateTime.Now.Month && po.PurchasedDateTime.Value.Year == DateTime.Now.Year);
+
+                    if (purchaseOrder == null)
+                    {
+                        purchaseOrder = await _context.PurchaseOrders
+                            .Where(po => po.OrderType == MaterialType.Flower && po.PurchasedDateTime.HasValue)
+                            .OrderByDescending(po => po.PurchasedDateTime)
+                            .FirstOrDefaultAsync();
+                    }
+
+                    if (purchaseOrder != null)
+                    {
+                        var detailedPurchaseOrder = await _context.DetailedPurchaseOrders
+                            .Where(dpo => dpo.PurchaseOrderId == purchaseOrder.PurchaseOrderId && dpo.MaterialId == materialId)
+                            .FirstOrDefaultAsync();
+
+                        if (detailedPurchaseOrder != null)
+                        {
+                            costPrice = detailedPurchaseOrder.CostPrice ?? 0;
+                        }
+                    }
+                }
+
+                //Tính toán Unit Price bằng cách lấy giá gốc nhân với (1 + tỉ lệ lợi nhuận) của vật liệu đó.
+                decimal unitPrice = costPrice * (1 + profitRate);
+                totalCost += unitPrice * quantity;
+            }
+
+            return totalCost;
+        }
+
+       
+        public async Task<List<DetailedProductMaterialNameDTO>> GetDetailedProductsByProductIdAsync(string productId)
+        {
+            try
+            {
+                var detailedProducts = await (from dp in _context.DetailedProducts
+                                              join m in _context.Materials on dp.MaterialId equals m.MaterialId
+                                              where dp.ProductId == productId
+                                              select new DetailedProductMaterialNameDTO
+                                              {
+                                                  MaterialId = m.MaterialId,
+                                                  MaterialName = m.MaterialName!,
+                                                  UsedQuantity = dp.UsedQuantity
+                                              }).ToListAsync();
+
+                return detailedProducts;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
     }

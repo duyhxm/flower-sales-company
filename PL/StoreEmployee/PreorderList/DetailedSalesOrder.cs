@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PL
+namespace PL.StoreEmployee.PreorderList
 {
-    public partial class OrderCreationForm : System.Windows.Forms.Form
+    public partial class DetailedSalesOrder : Form
     {
-        public OrderCreationForm()
+        public DetailedSalesOrder()
         {
             InitializeComponent();
         }

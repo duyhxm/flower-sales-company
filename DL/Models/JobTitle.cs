@@ -13,7 +13,7 @@ public partial class JobTitle
 
     public string? Jd { get; set; }
 
-    public int? FormId { get; set; }
+    public string? FormId { get; set; }
 
     public virtual Department? Department { get; set; }
 

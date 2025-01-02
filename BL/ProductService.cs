@@ -30,28 +30,55 @@ namespace BL
             }
         }
 
-        public async Task<decimal> CalculateUnitPriceAsync(List<MaterialInventoryDTO> storeInventory, Dictionary<string, int> materialQuantities)
+        public async Task<decimal> CalculateUnitPriceAsync(Dictionary<string, int> materialQuantities, List<MaterialInventoryDTO>? storeInventory = null)
         {
-            return await Task.Run(() =>
+            decimal totalPrice = 0;
+           
+            if (storeInventory != null)
             {
-                decimal totalPrice = 0;
-
                 var joinedData = from inventory in storeInventory
-                                 join material in materialQuantities
-                                 on inventory.MaterialId equals material.Key
-                                 select new
-                                 {
-                                     inventory.UnitPrice,
-                                     Quantity = material.Value
-                                 };
+                                    join material in materialQuantities
+                                    on inventory.MaterialId equals material.Key
+                                    select new
+                                    {
+                                        inventory.UnitPrice,
+                                        Quantity = material.Value
+                                    };
 
                 foreach (var item in joinedData)
                 {
                     totalPrice += item.UnitPrice * item.Quantity;
                 }
+            }
+            else
+            {
+                totalPrice = await _productRepository.CalculateUnitPriceAsync(materialQuantities);
+            }
+            return totalPrice;
+        }
 
-                return totalPrice;
-            });
+        public async Task<ReturnedProductDTO> AddAbstractProductAsync(ProductDTO product)
+        {
+            try
+            {
+                return await _productRepository.AddAbstractProductAsync(product);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<DetailedProductMaterialNameDTO>> GetDetailedProductsByProductIdAsync(string productId)
+        {
+            try
+            {
+                return await _productRepository.GetDetailedProductsByProductIdAsync(productId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

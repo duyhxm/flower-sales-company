@@ -9,8 +9,8 @@ namespace DTO
     public class DataChangedEventArgs : EventArgs
     {
         public string Message { get; set; }
-        public string OperationName { get; set; }
-        public string TableName { get; set; }
-        public int AffectedRows { get; set; }
+        public string? OperationName { get; set; }
+        public string? TableName { get; set; }
+        public int? AffectedRows { get; set; }
     }
 }

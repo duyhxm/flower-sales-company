@@ -35,6 +35,7 @@ namespace PL
         private List<FloralRepresentationDTO>? _fRepresentations;
         private List<FlowerDTO> _flowers;
         private List<MaterialInventoryDTO> _accessories;
+
         private ProductCreationForm(NotificationService notificationService)
         {
             //khởi tạo các thành phần designer
@@ -206,12 +207,13 @@ namespace PL
             //Tạo list chứa các thông tin chi tiết của sản phẩm, bao gồm mã vật liệu và số lượng
             List<DetailedProductDTO> detailedProduct = new List<DetailedProductDTO>();
 
-            //duyệt datagridview
+            //Duyệt datagridview để tạo chi tiết sản phẩm
             foreach (DataGridViewRow row in dgvProductDetails.Rows)
             {
                 string? id = row.Cells[0].Value?.ToString();
                 if (id != null && Int16.TryParse(row.Cells[3].Value?.ToString(), out short quantity))
                 {
+                    //Thêm vô danh sách chứa chi tiết sản phẩm
                     detailedProduct.Add(new DetailedProductDTO()
                     {
                         MaterialId = id,
@@ -220,10 +222,11 @@ namespace PL
                 }
                 else
                 {
-                    MessageBox.Show("Invalid quantity value in product details.", "Error");
+                    MessageBox.Show("Giá trị không hợp lệ", "Lỗi");
                 }
             }
 
+            //Tạo sản phẩm
             ProductDTO product = new ProductDTO()
             {
                 DetailedProducts = detailedProduct,
@@ -231,6 +234,7 @@ namespace PL
                 ProductName = productName
             };
 
+            
             short createdQuantity = Convert.ToInt16(creationQuantity);
             decimal price = ConvertFromCurrency(unitPrice);
 
@@ -245,8 +249,10 @@ namespace PL
             //Xử lý sản phẩm trả về sau khi thêm mới sản phẩm
             ReturnedProductDTO returnedProduct = await _productService.AddProductAsync(product, creationHistory, _storeId!);
             
-            //Sau khi thêm thành công, bắt đầu update giao diện
+            //Sau khi thêm sản phẩm thành công, update giao diện bên Inventory
             await UpdateStoreInventory();
+
+            //Refresh danh sách hoa và phụ liệu trong form này
             await RefreshFlowerList();
             RefreshAccessoryList();
 
@@ -259,7 +265,7 @@ namespace PL
             try
             {
                 var inventoryForm = InventoryForm.Instance;
-                var storeInventory = inventoryForm.MaterialInventory;
+                var materialInventory = inventoryForm.MaterialInventory;
                 var productInventory = inventoryForm.ProductInventory;
 
                 // Update materialInventory based on dgvProductDetails
@@ -272,13 +278,13 @@ namespace PL
                     int productQuantity = int.TryParse(txtBxCreationQuantity.Text, out int pq) ? pq : 1;
                     int requiredAmount = materialQuantity * productQuantity;
 
-                    var inventoryItem = storeInventory.FirstOrDefault(si => si.MaterialId == materialId);
+                    var inventoryItem = materialInventory.FirstOrDefault(si => si.MaterialId == materialId);
                     if (inventoryItem != null)
                     {
                         inventoryItem.StockMaterialQuantity -= requiredAmount;
                         if (inventoryItem.StockMaterialQuantity <= 0)
                         {
-                            storeInventory.Remove(inventoryItem);
+                            materialInventory.Remove(inventoryItem);
                         }
                         else
                         {
@@ -309,7 +315,6 @@ namespace PL
 
             if (dialog == DialogResult.Yes)
             {
-                txtBxProductId.Clear();
                 txtBxProductName.Clear();
                 cmbBxFloralRepresentations.Text = string.Empty;
                 txtBxCreationQuantity.Clear();
@@ -471,7 +476,7 @@ namespace PL
                 }
             }
 
-            decimal unitPrice = await _productService.CalculateUnitPriceAsync(InventoryForm.Instance.MaterialInventory, materialQuantities);
+            decimal unitPrice = await _productService.CalculateUnitPriceAsync(materialQuantities, InventoryForm.Instance.MaterialInventory);
             txtBxUnitPrice.Text = unitPrice.ToString("C", new CultureInfo("vi-VN"));
         }
 

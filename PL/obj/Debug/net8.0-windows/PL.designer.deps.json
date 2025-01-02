@@ -80,84 +80,6 @@
           }
         }
       },
-      "C1.Win/8.0.20242.688": {
-        "runtime": {
-          "lib/net8.0-windows7.0/C1.Win.8.dll": {
-            "assemblyVersion": "8.0.20242.688",
-            "fileVersion": "8.0.20242.688"
-          }
-        },
-        "resources": {
-          "lib/net8.0-windows7.0/ja/C1.Win.8.resources.dll": {
-            "locale": "ja"
-          }
-        }
-      },
-      "C1.Win.DX/8.0.20242.688": {
-        "dependencies": {
-          "C1.Win": "8.0.20242.688"
-        },
-        "runtime": {
-          "lib/net8.0-windows7.0/C1.Win.DX.8.dll": {
-            "assemblyVersion": "8.0.20242.688",
-            "fileVersion": "8.0.20242.688"
-          }
-        }
-      },
-      "C1.Win.FlexChart/8.0.20242.688": {
-        "dependencies": {
-          "C1.Win.DX": "8.0.20242.688",
-          "C1.Win.Input": "8.0.20242.688",
-          "C1.Win.Ribbon": "8.0.20242.688"
-        },
-        "runtime": {
-          "lib/net8.0-windows7.0/C1.Win.FlexChart.8.dll": {
-            "assemblyVersion": "8.0.20242.688",
-            "fileVersion": "8.0.20242.688"
-          },
-          "lib/net8.0-windows7.0/C1.Win.FlexChart.Toolbar.8.dll": {
-            "assemblyVersion": "8.0.20242.688",
-            "fileVersion": "8.0.20242.688"
-          }
-        },
-        "resources": {
-          "lib/net8.0-windows7.0/ja/C1.Win.FlexChart.8.resources.dll": {
-            "locale": "ja"
-          }
-        }
-      },
-      "C1.Win.Input/8.0.20242.688": {
-        "dependencies": {
-          "C1.Win": "8.0.20242.688"
-        },
-        "runtime": {
-          "lib/net8.0-windows7.0/C1.Win.Input.8.dll": {
-            "assemblyVersion": "8.0.20242.688",
-            "fileVersion": "8.0.20242.688"
-          }
-        },
-        "resources": {
-          "lib/net8.0-windows7.0/ja/C1.Win.Input.8.resources.dll": {
-            "locale": "ja"
-          }
-        }
-      },
-      "C1.Win.Ribbon/8.0.20242.688": {
-        "dependencies": {
-          "C1.Win": "8.0.20242.688"
-        },
-        "runtime": {
-          "lib/net8.0-windows7.0/C1.Win.Ribbon.8.dll": {
-            "assemblyVersion": "8.0.20242.688",
-            "fileVersion": "8.0.20242.688"
-          }
-        },
-        "resources": {
-          "lib/net8.0-windows7.0/ja/C1.Win.Ribbon.8.resources.dll": {
-            "locale": "ja"
-          }
-        }
-      },
       "EntityFramework/6.5.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
@@ -1064,41 +986,6 @@
       "sha512": "sha512-/vmMVM5REjasEnhlQVX0O9PTZXAGS4vflNtox4gx5ofpgQgX6rzG0PnlO0Zy8Jp7454C06QeyGbV3EjVliCzOQ==",
       "path": "azure.messaging.servicebus/7.18.2",
       "hashPath": "azure.messaging.servicebus.7.18.2.nupkg.sha512"
-    },
-    "C1.Win/8.0.20242.688": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-DgpBE40parnrPbYFCfdsgRckV2/lEOEbSv4hvFz9NWx0Wb4rAHhPjLsRZv7jmhrXbUuAxT4VECb29DOdKX/DWA==",
-      "path": "c1.win/8.0.20242.688",
-      "hashPath": "c1.win.8.0.20242.688.nupkg.sha512"
-    },
-    "C1.Win.DX/8.0.20242.688": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-kCFifCImExCU9PrQekbzrR84q7KitN7KBflMf8gTPFSbjBkfMMUQAlbkJWHi/1Pv2LVoBIHiC1hTHwO2MIrrAQ==",
-      "path": "c1.win.dx/8.0.20242.688",
-      "hashPath": "c1.win.dx.8.0.20242.688.nupkg.sha512"
-    },
-    "C1.Win.FlexChart/8.0.20242.688": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-zIlM5zFbId2Qs6XUxMOioLPXPpyJimo7hlN8qmzb/GfSF0cqOuNArzOT2UiL5QWmbU451vT2nCOo8hRUmwLorA==",
-      "path": "c1.win.flexchart/8.0.20242.688",
-      "hashPath": "c1.win.flexchart.8.0.20242.688.nupkg.sha512"
-    },
-    "C1.Win.Input/8.0.20242.688": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-1o4DSVptGJCCgXQ+gFnXUUb6OPfH6WAk70T4j0tEJGqsacklE9ICWXo3pE+vpMKFz7wb5g0ucc5NtTfR5WYJuQ==",
-      "path": "c1.win.input/8.0.20242.688",
-      "hashPath": "c1.win.input.8.0.20242.688.nupkg.sha512"
-    },
-    "C1.Win.Ribbon/8.0.20242.688": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-RRz4ZZoZ/qzFjiVtrG4VHzmDFbOWEuGpilEpsewVaZTZhU9/3/F97EyRJhb9hLv0eBzF8wsufVppl/uN05yHYQ==",
-      "path": "c1.win.ribbon/8.0.20242.688",
-      "hashPath": "c1.win.ribbon.8.0.20242.688.nupkg.sha512"
     },
     "EntityFramework/6.5.1": {
       "type": "package",

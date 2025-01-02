@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class AccessoryProfitRateHistory
 {
-    public int AccessoryProfitRateId { get; set; }
+    public string AccessoryProfitRateId { get; set; } = null!;
 
     public string AccessoryId { get; set; } = null!;
 

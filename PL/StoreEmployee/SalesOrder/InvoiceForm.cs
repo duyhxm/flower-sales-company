@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DTO.SalesOrder;
 
 namespace PL.StoreEmployee
 {
@@ -18,17 +19,12 @@ namespace PL.StoreEmployee
         public InvoiceForm(SalesOrderForm salesOrderForm, ShippingInformationForm shippingInformationForm)
         {
             InitializeComponent();
+
             _salesOrderForm = salesOrderForm;
             _shippingInformationForm = shippingInformationForm;
+
+            SetupOrderInfoDgv();
             LoadInvoiceData();
-
-            dgvOrderInfo.Columns[0].DataPropertyName = "Order";
-            dgvOrderInfo.Columns[1].DataPropertyName = "ProductId";
-            dgvOrderInfo.Columns[2].DataPropertyName = "ProductName";
-            dgvOrderInfo.Columns[3].DataPropertyName = "Quantity";
-            dgvOrderInfo.Columns[4].DataPropertyName = "LinePrice";
-            dgvOrderInfo.AutoGenerateColumns = false;
-
         }
 
         private void LoadInvoiceData()
@@ -48,6 +44,16 @@ namespace PL.StoreEmployee
             txtBxFinalPrice.Text = finalPrice.ToString();
         }
 
+        private void SetupOrderInfoDgv()
+        {
+            dgvOrderInfo.Columns[0].DataPropertyName = "Order";
+            dgvOrderInfo.Columns[1].DataPropertyName = "ProductId";
+            dgvOrderInfo.Columns[2].DataPropertyName = "ProductName";
+            dgvOrderInfo.Columns[3].DataPropertyName = "Quantity";
+            dgvOrderInfo.Columns[4].DataPropertyName = "LinePrice";
+            dgvOrderInfo.AutoGenerateColumns = false;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Do you want to cancel the invoice and shipping information?", "Confirm", MessageBoxButtons.YesNo);
@@ -65,9 +71,19 @@ namespace PL.StoreEmployee
             _shippingInformationForm.Show();
         }
 
-        private void btnAddOrder_Click(object sender, EventArgs e)
+        private async void btnAddOrder_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Xác nhận thêm mới đơn hàng", "Thông báo", MessageBoxButtons.YesNo);
 
+            if (result == DialogResult.Yes)
+            {
+                ShippingInformationDTO shippingInfo = _shippingInformationForm.GetShippingInfo();
+                await _salesOrderForm.AddSalesOrderWithShippingInfo(shippingInfo);
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

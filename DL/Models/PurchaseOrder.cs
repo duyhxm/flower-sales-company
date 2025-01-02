@@ -15,6 +15,8 @@ public partial class PurchaseOrder
 
     public decimal? TotalCost { get; set; }
 
+    public string? DistributionStatus { get; set; }
+
     public virtual ICollection<DetailedPurchaseOrder> DetailedPurchaseOrders { get; set; } = new List<DetailedPurchaseOrder>();
 
     public virtual ICollection<GoodsDistribution> GoodsDistributions { get; set; } = new List<GoodsDistribution>();

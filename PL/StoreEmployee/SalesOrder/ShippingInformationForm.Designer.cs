@@ -28,10 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblShippingId = new Label();
             btnNext = new Button();
-            txtBxShippingId = new TextBox();
-            lblShippingCompanyId = new Label();
             lblConsigneeName = new Label();
             lblConsigneePhoneNumber = new Label();
             lblDeliveryDatetime = new Label();
@@ -40,7 +37,6 @@
             lblCity = new Label();
             lblShippingCost = new Label();
             btnCancel = new Button();
-            txtBxShippingCompanyId = new TextBox();
             txtBxConsigneeName = new TextBox();
             txtBxConsigneePhoneNumber = new TextBox();
             txtBxShippingAddress = new TextBox();
@@ -52,18 +48,9 @@
             btnReturn = new Button();
             SuspendLayout();
             // 
-            // lblShippingId
-            // 
-            lblShippingId.AutoSize = true;
-            lblShippingId.Location = new Point(168, 160);
-            lblShippingId.Name = "lblShippingId";
-            lblShippingId.Size = new Size(139, 32);
-            lblShippingId.TabIndex = 0;
-            lblShippingId.Text = "Shipping ID";
-            // 
             // btnNext
             // 
-            btnNext.Location = new Point(356, 718);
+            btnNext.Location = new Point(220, 568);
             btnNext.Name = "btnNext";
             btnNext.Size = new Size(146, 53);
             btnNext.TabIndex = 1;
@@ -71,26 +58,10 @@
             btnNext.UseVisualStyleBackColor = true;
             btnNext.Click += btnNext_Click;
             // 
-            // txtBxShippingId
-            // 
-            txtBxShippingId.Location = new Point(492, 157);
-            txtBxShippingId.Name = "txtBxShippingId";
-            txtBxShippingId.Size = new Size(340, 39);
-            txtBxShippingId.TabIndex = 2;
-            // 
-            // lblShippingCompanyId
-            // 
-            lblShippingCompanyId.AutoSize = true;
-            lblShippingCompanyId.Location = new Point(168, 218);
-            lblShippingCompanyId.Name = "lblShippingCompanyId";
-            lblShippingCompanyId.Size = new Size(248, 32);
-            lblShippingCompanyId.TabIndex = 3;
-            lblShippingCompanyId.Text = "Shipping Company ID";
-            // 
             // lblConsigneeName
             // 
             lblConsigneeName.AutoSize = true;
-            lblConsigneeName.Location = new Point(168, 276);
+            lblConsigneeName.Location = new Point(32, 126);
             lblConsigneeName.Name = "lblConsigneeName";
             lblConsigneeName.Size = new Size(198, 32);
             lblConsigneeName.TabIndex = 4;
@@ -99,7 +70,7 @@
             // lblConsigneePhoneNumber
             // 
             lblConsigneePhoneNumber.AutoSize = true;
-            lblConsigneePhoneNumber.Location = new Point(168, 334);
+            lblConsigneePhoneNumber.Location = new Point(32, 184);
             lblConsigneePhoneNumber.Name = "lblConsigneePhoneNumber";
             lblConsigneePhoneNumber.Size = new Size(297, 32);
             lblConsigneePhoneNumber.TabIndex = 5;
@@ -108,7 +79,7 @@
             // lblDeliveryDatetime
             // 
             lblDeliveryDatetime.AutoSize = true;
-            lblDeliveryDatetime.Location = new Point(168, 392);
+            lblDeliveryDatetime.Location = new Point(32, 242);
             lblDeliveryDatetime.Name = "lblDeliveryDatetime";
             lblDeliveryDatetime.Size = new Size(206, 32);
             lblDeliveryDatetime.TabIndex = 6;
@@ -117,7 +88,7 @@
             // lblShippingAddress
             // 
             lblShippingAddress.AutoSize = true;
-            lblShippingAddress.Location = new Point(168, 450);
+            lblShippingAddress.Location = new Point(32, 300);
             lblShippingAddress.Name = "lblShippingAddress";
             lblShippingAddress.Size = new Size(192, 32);
             lblShippingAddress.TabIndex = 7;
@@ -126,7 +97,7 @@
             // lblDistrict
             // 
             lblDistrict.AutoSize = true;
-            lblDistrict.Location = new Point(168, 508);
+            lblDistrict.Location = new Point(32, 358);
             lblDistrict.Name = "lblDistrict";
             lblDistrict.Size = new Size(88, 32);
             lblDistrict.TabIndex = 8;
@@ -135,7 +106,7 @@
             // lblCity
             // 
             lblCity.AutoSize = true;
-            lblCity.Location = new Point(168, 566);
+            lblCity.Location = new Point(32, 416);
             lblCity.Name = "lblCity";
             lblCity.Size = new Size(155, 32);
             lblCity.TabIndex = 9;
@@ -144,7 +115,7 @@
             // lblShippingCost
             // 
             lblShippingCost.AutoSize = true;
-            lblShippingCost.Location = new Point(168, 624);
+            lblShippingCost.Location = new Point(32, 474);
             lblShippingCost.Name = "lblShippingCost";
             lblShippingCost.Size = new Size(163, 32);
             lblShippingCost.TabIndex = 10;
@@ -152,7 +123,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(686, 718);
+            btnCancel.Location = new Point(550, 568);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(146, 53);
             btnCancel.TabIndex = 11;
@@ -160,16 +131,9 @@
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += btnCancel_Click;
             // 
-            // txtBxShippingCompanyId
-            // 
-            txtBxShippingCompanyId.Location = new Point(492, 215);
-            txtBxShippingCompanyId.Name = "txtBxShippingCompanyId";
-            txtBxShippingCompanyId.Size = new Size(340, 39);
-            txtBxShippingCompanyId.TabIndex = 12;
-            // 
             // txtBxConsigneeName
             // 
-            txtBxConsigneeName.Location = new Point(492, 273);
+            txtBxConsigneeName.Location = new Point(356, 123);
             txtBxConsigneeName.Name = "txtBxConsigneeName";
             txtBxConsigneeName.Size = new Size(340, 39);
             txtBxConsigneeName.TabIndex = 13;
@@ -177,7 +141,7 @@
             // 
             // txtBxConsigneePhoneNumber
             // 
-            txtBxConsigneePhoneNumber.Location = new Point(492, 331);
+            txtBxConsigneePhoneNumber.Location = new Point(356, 181);
             txtBxConsigneePhoneNumber.Name = "txtBxConsigneePhoneNumber";
             txtBxConsigneePhoneNumber.Size = new Size(340, 39);
             txtBxConsigneePhoneNumber.TabIndex = 14;
@@ -185,14 +149,14 @@
             // 
             // txtBxShippingAddress
             // 
-            txtBxShippingAddress.Location = new Point(492, 447);
+            txtBxShippingAddress.Location = new Point(356, 297);
             txtBxShippingAddress.Name = "txtBxShippingAddress";
             txtBxShippingAddress.Size = new Size(340, 39);
             txtBxShippingAddress.TabIndex = 15;
             // 
             // txtBxShippingCost
             // 
-            txtBxShippingCost.Location = new Point(492, 621);
+            txtBxShippingCost.Location = new Point(356, 471);
             txtBxShippingCost.Name = "txtBxShippingCost";
             txtBxShippingCost.Size = new Size(340, 39);
             txtBxShippingCost.TabIndex = 17;
@@ -202,7 +166,7 @@
             // 
             dtpDeliveryDatetime.CustomFormat = "dd/MM/yyyy HH:mm";
             dtpDeliveryDatetime.Format = DateTimePickerFormat.Custom;
-            dtpDeliveryDatetime.Location = new Point(492, 387);
+            dtpDeliveryDatetime.Location = new Point(356, 237);
             dtpDeliveryDatetime.Name = "dtpDeliveryDatetime";
             dtpDeliveryDatetime.Size = new Size(340, 39);
             dtpDeliveryDatetime.TabIndex = 18;
@@ -221,7 +185,7 @@
             // cmbBxCity
             // 
             cmbBxCity.FormattingEnabled = true;
-            cmbBxCity.Location = new Point(492, 563);
+            cmbBxCity.Location = new Point(356, 413);
             cmbBxCity.Name = "cmbBxCity";
             cmbBxCity.Size = new Size(340, 40);
             cmbBxCity.TabIndex = 20;
@@ -229,14 +193,14 @@
             // cmbBxDistrict
             // 
             cmbBxDistrict.FormattingEnabled = true;
-            cmbBxDistrict.Location = new Point(492, 505);
+            cmbBxDistrict.Location = new Point(356, 355);
             cmbBxDistrict.Name = "cmbBxDistrict";
             cmbBxDistrict.Size = new Size(340, 40);
             cmbBxDistrict.TabIndex = 21;
             // 
             // btnReturn
             // 
-            btnReturn.Location = new Point(523, 718);
+            btnReturn.Location = new Point(387, 568);
             btnReturn.Name = "btnReturn";
             btnReturn.Size = new Size(146, 53);
             btnReturn.TabIndex = 22;
@@ -258,7 +222,6 @@
             Controls.Add(txtBxShippingAddress);
             Controls.Add(txtBxConsigneePhoneNumber);
             Controls.Add(txtBxConsigneeName);
-            Controls.Add(txtBxShippingCompanyId);
             Controls.Add(btnCancel);
             Controls.Add(lblShippingCost);
             Controls.Add(lblCity);
@@ -267,10 +230,7 @@
             Controls.Add(lblDeliveryDatetime);
             Controls.Add(lblConsigneePhoneNumber);
             Controls.Add(lblConsigneeName);
-            Controls.Add(lblShippingCompanyId);
-            Controls.Add(txtBxShippingId);
             Controls.Add(btnNext);
-            Controls.Add(lblShippingId);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
@@ -282,11 +242,7 @@
         }
 
         #endregion
-
-        private Label lblShippingId;
         private Button btnNext;
-        private TextBox txtBxShippingId;
-        private Label lblShippingCompanyId;
         private Label lblConsigneeName;
         private Label lblConsigneePhoneNumber;
         private Label lblDeliveryDatetime;
@@ -295,7 +251,6 @@
         private Label lblCity;
         private Label lblShippingCost;
         private Button btnCancel;
-        private TextBox txtBxShippingCompanyId;
         private TextBox txtBxConsigneeName;
         private TextBox txtBxConsigneePhoneNumber;
         private TextBox txtBxShippingAddress;

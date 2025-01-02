@@ -35,13 +35,13 @@ public partial class Employee
 
     public virtual ICollection<EmployeeAllowance> EmployeeAllowances { get; set; } = new List<EmployeeAllowance>();
 
-    public virtual ICollection<EmployeeBonus> EmployeeBonus { get; set; } = new List<EmployeeBonus>();
+    public virtual ICollection<EmployeeBonu> EmployeeBonus { get; set; } = new List<EmployeeBonu>();
 
     public virtual ICollection<EmployeeJobTitle> EmployeeJobTitles { get; set; } = new List<EmployeeJobTitle>();
 
     public virtual ICollection<EmployeePayrollHistory> EmployeePayrollHistories { get; set; } = new List<EmployeePayrollHistory>();
 
-    public virtual FTEmployee? Ftemployee { get; set; }
+    public virtual Ftemployee? Ftemployee { get; set; }
 
     public virtual ICollection<ProductCreationHistory> ProductCreationHistories { get; set; } = new List<ProductCreationHistory>();
 

@@ -123,6 +123,7 @@
             dgvOrderInfo.Location = new Point(22, 169);
             dgvOrderInfo.Name = "dgvOrderInfo";
             dgvOrderInfo.ReadOnly = true;
+            dgvOrderInfo.RowHeadersVisible = false;
             dgvOrderInfo.RowHeadersWidth = 62;
             dgvOrderInfo.Size = new Size(897, 257);
             dgvOrderInfo.TabIndex = 5;
@@ -272,20 +273,22 @@
             // ColOrder
             // 
             ColOrder.DataPropertyName = "Order";
+            ColOrder.FillWeight = 30F;
             ColOrder.HeaderText = "#";
             ColOrder.MinimumWidth = 8;
             ColOrder.Name = "ColOrder";
             ColOrder.ReadOnly = true;
-            ColOrder.Width = 80;
+            ColOrder.Width = 50;
             // 
             // ColProductId
             // 
             ColProductId.DataPropertyName = "ProductId";
+            ColProductId.FillWeight = 50F;
             ColProductId.HeaderText = "ID";
             ColProductId.MinimumWidth = 8;
             ColProductId.Name = "ColProductId";
             ColProductId.ReadOnly = true;
-            ColProductId.Width = 150;
+            ColProductId.Width = 120;
             // 
             // ColProductName
             // 
@@ -299,11 +302,12 @@
             // ColQuantity
             // 
             ColQuantity.DataPropertyName = "Quantity";
+            ColQuantity.FillWeight = 50F;
             ColQuantity.HeaderText = "Q";
             ColQuantity.MinimumWidth = 8;
             ColQuantity.Name = "ColQuantity";
             ColQuantity.ReadOnly = true;
-            ColQuantity.Width = 150;
+            ColQuantity.Width = 80;
             // 
             // ColLinePrice
             // 

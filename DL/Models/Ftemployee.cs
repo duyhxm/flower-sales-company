@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace DL.Models;
 
-public partial class FTEmployee
+public partial class Ftemployee
 {
-    public string FTEmployeeID { get; set; } = null!;
+    public string FtemployeeId { get; set; } = null!;
 
     public string? SalaryId { get; set; }
 

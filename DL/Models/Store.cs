@@ -17,7 +17,7 @@ public partial class Store
 
     public virtual ICollection<GoodsDistribution> GoodsDistributions { get; set; } = new List<GoodsDistribution>();
 
-    public virtual FTEmployee? Manager { get; set; }
+    public virtual Ftemployee? Manager { get; set; }
 
     public virtual ICollection<MaterialInventory> MaterialInventories { get; set; } = new List<MaterialInventory>();
 

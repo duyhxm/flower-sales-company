@@ -18,10 +18,5 @@
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">C:\Users\USER\.nuget\packages\entityframework\6.5.1</PkgEntityFramework>
-    <PkgC1_Win Condition=" '$(PkgC1_Win)' == '' ">C:\Users\USER\.nuget\packages\c1.win\8.0.20242.688</PkgC1_Win>
-    <PkgC1_Win_Ribbon Condition=" '$(PkgC1_Win_Ribbon)' == '' ">C:\Users\USER\.nuget\packages\c1.win.ribbon\8.0.20242.688</PkgC1_Win_Ribbon>
-    <PkgC1_Win_Input Condition=" '$(PkgC1_Win_Input)' == '' ">C:\Users\USER\.nuget\packages\c1.win.input\8.0.20242.688</PkgC1_Win_Input>
-    <PkgC1_Win_DX Condition=" '$(PkgC1_Win_DX)' == '' ">C:\Users\USER\.nuget\packages\c1.win.dx\8.0.20242.688</PkgC1_Win_DX>
-    <PkgC1_Win_FlexChart Condition=" '$(PkgC1_Win_FlexChart)' == '' ">C:\Users\USER\.nuget\packages\c1.win.flexchart\8.0.20242.688</PkgC1_Win_FlexChart>
   </PropertyGroup>
 </Project>

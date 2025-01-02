@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class FlowerSalesTarget
 {
-    public int TargetId { get; set; }
+    public string TargetId { get; set; } = null!;
 
     public decimal? ApplyMonth { get; set; }
 

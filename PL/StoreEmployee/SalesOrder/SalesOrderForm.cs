@@ -7,34 +7,93 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DTO;
 using DTO.SalesOrder;
 using DTO.Store;
 using static BL.GeneralService;
 using BL;
 using PL.StoreEmployee;
+using DTO.Enum.SalesOrder;
+using DTO.Product;
+using DTO.Enum;
 
 namespace PL
 {
-    public partial class SalesOrderForm : System.Windows.Forms.Form
+    public partial class SalesOrderForm : Form
     {
+        //Cấu hình form
+        private static SalesOrderForm? _instance;
+        private static readonly object _lock = new object();
 
+        //Khai báo các service
         private SalesOrderService _salesOrderService = new SalesOrderService();
         private StoreService _storeService = new StoreService();
 
+        //Khai báo các biến sử dụng
         private Dictionary<int, int> previousQuantities = new Dictionary<int, int>();
-        private bool isAddingRow = false;
+        
         private ShippingInformationForm _shippingInformationForm;
+
+        private List<string> _purchaseMethod = new List<string>();
+
+        public Dictionary<DiscountInfo, decimal> DiscountInfos = new();
+
+        public Dictionary<string, Tuple<DateOnly, int>> usedProducts = new();
+
+        private PreOrderCreationForm _preOrderCreationForm = new PreOrderCreationForm();
+
         private bool isShippingInfoEntered = false;
+
+        private bool isAddingRow = false;
+
         public bool IsPreorder = false;
+
         public bool IsNonMember = false;
-        public Dictionary<DiscountInfo?, decimal> DiscountInfos = new();
-        public Dictionary<string, Tuple<DateTime, int>> usedProducts = new(); 
-        public SalesOrderForm()
+
+        private SalesOrderForm()
         {
             InitializeComponent();
             dgvDetailedOrder.Columns[6].Width = 50;
             _shippingInformationForm = new ShippingInformationForm(this);
+
+            //Mặc định đơn hàng là đơn lấy ngay
+            ibtnAddPreorderProduct.Visible = false;
+            dtpDeliveryDatetime.Visible = false;
+
+            //Khởi tạo danh sách purchase method
+            _purchaseMethod.Add(PurchaseMethod.Offline);
+            _purchaseMethod.Add(PurchaseMethod.Online);
+            cmbBxPurchaseMethod.DataSource = _purchaseMethod;
+            cmbBxPurchaseMethod.SelectedIndex = 0;
+        }
+
+        public static void Initialize()
+        {
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    try
+                    {
+                        _instance = new SalesOrderForm();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public static SalesOrderForm Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new InvalidOperationException("NotificationService is not initialized. Call Initialize() first.");
+                }
+                return _instance;
+            }
         }
 
         private void dgvDetailedOrder_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -50,11 +109,11 @@ namespace PL
             string productId = txtBxProductId.Text.ToString();
             string stockDate = txtBxStockDate.Text.ToString();
 
-            DateTime convertedStockDate;
+            DateOnly convertedStockDate;
 
             try
             {
-                convertedStockDate = DateTime.ParseExact(stockDate, "dd/MM/yyyy", null);
+                convertedStockDate = DateOnly.ParseExact(stockDate, "dd/MM/yyyy", null);
             }
             catch (FormatException)
             {
@@ -72,7 +131,7 @@ namespace PL
                 AddOrUpdateProductRow(product);
                 if (!usedProducts.ContainsKey(product.ProductId))
                 {
-                    usedProducts.Add(product.ProductId, new Tuple<DateTime, int>(product.StockDate, 1));
+                    usedProducts.Add(product.ProductId, new Tuple<DateOnly, int>(product.StockDate, 1));
                 }
                 isAddingRow = false;
             }
@@ -83,7 +142,7 @@ namespace PL
             }
         }
 
-        private ProductInventoryDTO? GetProductInformation(string productId, DateTime convertedStockDate)
+        private ProductInventoryDTO? GetProductInformation(string productId, DateOnly convertedStockDate)
         {
             var inventoryForm = InventoryForm.Instance.ProductStockDetails;
 
@@ -300,7 +359,7 @@ namespace PL
                 }
 
                 string productId = dgvDetailedOrder.Rows[e.RowIndex].Cells[1].Value.ToString()!;
-                DateTime stockDate = DateTime.ParseExact(txtBxStockDate.Text, "dd/MM/yyyy", null);
+                DateOnly stockDate = DateOnly.ParseExact(txtBxStockDate.Text, "dd/MM/yyyy", null);
                 ProductInventoryDTO? product = GetProductInformation(productId, stockDate);
 
                 if (product != null && newQuantity > product.StockProductQuantity)
@@ -341,46 +400,85 @@ namespace PL
             if (ckBxPreorder.Checked)
             {
                 IsPreorder = true;
+                ibtnAddPreorderProduct.Visible = true;
+                dtpDeliveryDatetime.Visible = true;
+
+                lblProductInfo.Visible = false;
+                lblProductId.Visible = false;
+                lblStockDate.Visible = false;
+                txtBxProductId.Visible = false;
+                txtBxStockDate.Visible = false;
+                ibtnAdd.Visible = false;
             }
             else
             {
                 IsPreorder = false;
+                ibtnAddPreorderProduct.Visible = false;
+                dtpDeliveryDatetime.Visible = false;
+
+                lblProductInfo.Visible = true;
+                lblProductId.Visible = true;
+                lblStockDate.Visible = true;
+                txtBxProductId.Visible = true;
+                txtBxStockDate.Visible = true;
+                ibtnAdd.Visible = true;
             }
         }
 
+        //Khi user muốn thêm đơn hàng đặt trước.
         private void ibtnAddPreorderProduct_Click(object sender, EventArgs e)
         {
+            _preOrderCreationForm.Show();
+        }
 
+        public void AddProductOfPreorderToDgv(ProductDTO product, decimal unitPrice)
+        {
+            int indexRow = dgvDetailedOrder.Rows.Add();
+
+            DataGridViewRow newRow = dgvDetailedOrder.Rows[indexRow];
+
+            newRow.Cells[0].Value = indexRow + 1;
+            newRow.Cells[1].Value = product.ProductId;
+            newRow.Cells[2].Value = product.ProductName;
+            newRow.Cells[3].Value = 1;
+            newRow.Cells[4].Value = unitPrice;
+            newRow.Cells[5].Value = ConvertToCurrency(unitPrice * 1);
+            newRow.Cells[6].Value = Properties.Resources.icon_remove;
         }
 
         private async void btnComplete_Click(object sender, EventArgs e)
         {
             try
             {
+                //Check xem có sản phẩm nào được thêm vô chưa
                 if (dgvDetailedOrder.Rows.Count == 0)
                 {
                     MessageBox.Show("Bạn cần phải thêm tối thiểu 1 sản phẩm", "Thông báo");
                     return;
                 }
 
+                //Check xem nếu khách hàng là member thì nhân viên có điền đầy đủ thông tin chưa. 
                 if ((!IsNonMember && IsAnyCustomerInfoEmpty()))
                 {
                     MessageBox.Show("Thông tin khách hàng không được để trống", "Thông báo");
                     return;
                 }
 
+                //Check xem nhân viên đã tính toán giá trị của đơn hàng chưa. Tại vì chỗ này mình đang thực hiện theo logic là lấy dữ liệu từ TextBox rồi truyền qua các form khác cũng như là để lấy dữ liệu. Nên là phải kiểm tra các thông tin về giá phải được tính toán trước khi muốn thêm mới đơn hàng hoặc thêm thông tin vận chuyển.
                 if (txtBxBasePrice.Text == string.Empty)
                 {
                     MessageBox.Show("Bạn cần phải tính toán giá đơn hàng trước", "Thông báo");
                     return;
                 }
 
+                //Kiểm tra xem đơn hàng này có sử dụng dịch vụ vận chuyển không.
                 if (ckBxShippingOrder.Checked)
                 {
                     _shippingInformationForm.ShowDialog();
                     return;
                 }
 
+                //Trường hợp nhân viên đi tiếp tới form nhập thông tin vận chuyển, rồi quay về form chính, tick chọn không vận chuyển và nhấn complete, thì thông báo xác nhận xem có phải user đang muốn huỷ thông tin vận chuyển hay không.
                 if (!ckBxShippingOrder.Checked && isShippingInfoEntered)
                 {
                     DialogResult result = MessageBox.Show("Bạn đã nhập thông tin vận chuyển. Bạn muốn huỷ việc vận chuyển và thêm mới đơn hàng", "Xác nhận", MessageBoxButtons.YesNo);
@@ -388,15 +486,16 @@ namespace PL
                     if (result == DialogResult.Yes)
                     {
                         _shippingInformationForm.ClearShippingInformation();
-                        MessageBox.Show("Đơn hàng đã được thêm thành công", "Thông báo");
+                        MessageBox.Show("Đã huỷ thông tin vận chuyển", "Thông báo");
                         return;
                     }
                 }
 
+                //Trường hợp CheckBox vận chuyển không được tick chọn, có nghĩa là đơn hàng này không sử dụng thêm dịch vụ vận chuyển, thì chỉ việc thêm mới đơn hàng.
                 if (!ckBxShippingOrder.Checked)
                 {
                     List<UsedPromotionHistoryDTO> usedPromotions = new List<UsedPromotionHistoryDTO>();
-                    DateTimeOffset deliveryDateTime = ConvertStringToDateTimeOffset(dtpDeliveryDatetime.Text);
+                    DateTimeOffset deliveryDateTime = ConvertStringToDateTimeOffset(dtpDeliveryDatetime.Text, "dd/MM/yyyy HH:mm");
                     List<DetailedSalesOrderDTO> detailedSalesOrders = new List<DetailedSalesOrderDTO>();
                     SalesOrderDTO salesOrder = new SalesOrderDTO();
 
@@ -410,7 +509,7 @@ namespace PL
 
                         if (kvp.Key != null)
                         {
-                            if (kvp.Key.PromotionType == "khách hàng")
+                            if (kvp.Key.PromotionType == PromotionType.ForCustomer)
                             {
                                 DiscountInfo discountInfo = kvp.Key;
                                 UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
@@ -421,7 +520,7 @@ namespace PL
                                 usedPromotions.Add(usedPromotion);
                             }
 
-                            if (kvp.Key.PromotionType == "đơn hàng")
+                            if (kvp.Key.PromotionType == PromotionType.ForOrder)
                             {
                                 DiscountInfo discountInfo = kvp.Key;
                                 UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
@@ -451,11 +550,12 @@ namespace PL
                     salesOrder.DetailedSalesOrders = detailedSalesOrders;
                     salesOrder.CustomerId = GetCustomerId();
                     salesOrder.StoreId = LoginForm.Instance.LoginInformation.StoreID;
-                    salesOrder.PurchaseMethod = "tại cửa hàng";
+                    salesOrder.PurchaseMethod = cmbBxPurchaseMethod.Text;
                     salesOrder.BasePrice = ConvertFromCurrency(txtBxBasePrice.Text);
                     salesOrder.FinalPrice = ConvertFromCurrency(txtBxFinalPrice.Text);
                     salesOrder.CreatedDateTime = LocalDateTimeOffset();
 
+                    //Đơn hàng đặt trước
                     if (IsPreorder)
                     {
                         //Thực hiện add mới sản phẩm đặt trước, không có sử dụng dịch vụ vận chuyển
@@ -466,26 +566,37 @@ namespace PL
                             return;
                         }
 
-                        salesOrder.OrderStatus = "đã xác nhận";
-                        salesOrder.OrderType = "đặt trước";
+                        salesOrder.OrderStatus = OrderStatus.Confirmed;
+                        salesOrder.OrderType = OrderType.PreSalesOrder;
 
-                        await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, null, deliveryDateTime);
+                        //Gọi service để thêm mới đơn hàng
+                        SalesOrderDTO? addedSalesOrder = await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, null, deliveryDateTime);
+
+                        //addedSalesOrder khác null nghĩa là thêm mới đơn hàng thành công. Cập nhật dữ liệu vô trong OrderHistoryForm
+                        if (addedSalesOrder != null)
+                        {
+                            await OrderHistoryForm.Instance.AddSalesOrderToDataGridView(addedSalesOrder);
+                        }
                     }
-                    else
+                    else //đơn hàng lấy ngay
                     {
                         //Thực hiện add mới đơn hàng lấy ngay, không có sử dụng dịch vụ vận chuyển
-                        salesOrder.OrderStatus = "thành công";
-                        salesOrder.OrderType = "lấy ngay";
+                        salesOrder.OrderStatus = OrderStatus.Success;
+                        salesOrder.OrderType = OrderType.ImmediateSalesOrder;
 
-                        await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, null, null);
+                        SalesOrderDTO? addedSalesOrder = await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, null, null);
 
                         await _storeService.UpdateProductInventoryByStoreAsync(LoginForm.Instance.LoginInformation.StoreID!, usedProducts);
+
+                        if (addedSalesOrder != null)
+                        {
+                            await OrderHistoryForm.Instance.AddSalesOrderToDataGridView(addedSalesOrder);
+                        }
                     }
 
-                    
                     MessageBox.Show("Đơn hàng đã được thêm thành công", "Thông báo");
 
-                    //Thực hiện làm mới form để tiếp tục thêm mới đơn hàng nếu có.
+                    Reset();
                 }
             }
             catch (Exception ex)
@@ -571,12 +682,16 @@ namespace PL
             return ConvertFromCurrency(txtBxOrderDiscountValue.Text);
         }
 
-        public void ResetSalesOrderForm()
+        public void Reset()
         {
             IsPreorder = false;
-            previousQuantities = new Dictionary<int, int>();
+            IsNonMember = false;
             isAddingRow = false;
             isShippingInfoEntered = false;
+
+            previousQuantities = new Dictionary<int, int>();
+
+            dgvDetailedOrder.Rows.Clear();
         }
 
         private void dtpDeliveryDatetime_Validating(object sender, CancelEventArgs e)
@@ -588,5 +703,100 @@ namespace PL
                 return;
             }
         }
+
+        public async Task AddSalesOrderWithShippingInfo(ShippingInformationDTO shippingInfo)
+        {
+            List<UsedPromotionHistoryDTO> usedPromotions = new List<UsedPromotionHistoryDTO>();
+            List<DetailedSalesOrderDTO> detailedSalesOrders = new List<DetailedSalesOrderDTO>();
+            SalesOrderDTO salesOrder = new SalesOrderDTO();
+
+
+            foreach (var kvp in DiscountInfos)
+            {
+                if (kvp.Value == 0)
+                {
+                    continue;
+                }
+
+                if (kvp.Key != null)
+                {
+                    if (kvp.Key.PromotionType == PromotionType.ForCustomer)
+                    {
+                        DiscountInfo discountInfo = kvp.Key;
+                        UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
+                        {
+                            PromotionId = discountInfo.PromotionID,
+                            CustomerDiscountValue = kvp.Value
+                        };
+                        usedPromotions.Add(usedPromotion);
+                    }
+
+                    if (kvp.Key.PromotionType == PromotionType.ForOrder)
+                    {
+                        DiscountInfo discountInfo = kvp.Key;
+                        UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
+                        {
+                            PromotionId = discountInfo.PromotionID,
+                            OrderDiscountValue = kvp.Value
+                        };
+                        usedPromotions.Add(usedPromotion);
+                    }
+                }
+
+            }
+
+            foreach (DataGridViewRow row in dgvDetailedOrder.Rows)
+            {
+                string productId = row.Cells[1].Value.ToString()!;
+                string quantity = row.Cells[3].Value.ToString()!;
+                DetailedSalesOrderDTO detail = new DetailedSalesOrderDTO()
+                {
+                    ProductId = productId,
+                    Quantity = Convert.ToInt32(quantity)
+                };
+
+                detailedSalesOrders.Add(detail);
+            }
+
+            salesOrder.DetailedSalesOrders = detailedSalesOrders;
+            salesOrder.CustomerId = GetCustomerId();
+            salesOrder.StoreId = LoginForm.Instance.LoginInformation.StoreID;
+            salesOrder.PurchaseMethod = cmbBxPurchaseMethod.Text;
+            salesOrder.BasePrice = ConvertFromCurrency(txtBxBasePrice.Text);
+            salesOrder.FinalPrice = ConvertFromCurrency(txtBxFinalPrice.Text) + shippingInfo.ShippingCost;
+            salesOrder.CreatedDateTime = LocalDateTimeOffset();
+
+            if (IsPreorder)
+            {
+                salesOrder.OrderStatus = OrderStatus.Confirmed;
+                salesOrder.OrderType = OrderType.PreSalesOrder;
+
+                //Gọi service để thêm mới đơn hàng
+                SalesOrderDTO? addedSalesOrder = await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, shippingInfo, null);
+
+                if (addedSalesOrder != null)
+                {
+                    await OrderHistoryForm.Instance.AddSalesOrderToDataGridView(addedSalesOrder);
+                }
+
+            }
+            else //đơn hàng lấy ngay
+            {
+                //Thực hiện add mới đơn hàng lấy ngay, có sử dụng dịch vụ vận chuyển
+                salesOrder.OrderStatus = OrderStatus.Success;
+                salesOrder.OrderType = OrderType.ImmediateSalesOrder;
+
+                SalesOrderDTO? addedSalesOrder = await _salesOrderService.AddSalesOrderAsync(salesOrder, usedPromotions, shippingInfo, null);
+
+                await _storeService.UpdateProductInventoryByStoreAsync(LoginForm.Instance.LoginInformation.StoreID!, usedProducts);
+
+                if (addedSalesOrder != null)
+                {
+                    await OrderHistoryForm.Instance.AddSalesOrderToDataGridView(addedSalesOrder);
+                }
+
+            }
+        }
+
     }
 }

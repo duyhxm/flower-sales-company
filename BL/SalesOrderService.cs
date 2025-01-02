@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using DTO.SalesOrder;
 using DL.Repositories.Implementations;
+using DL.Models;
+using DTO.Enum.SalesOrder;
 
 namespace BL
 {
@@ -44,6 +46,42 @@ namespace BL
             try
             {
                 return await _salesOrderRepository.AddSalesOrderAsync(salesOrder, usedPromotions, shippingInformation, deliveryDatetime);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<dynamic>> GetProductsBySalesOrderIdAsync(string salesOrderId)
+        {
+            try
+            {
+                return await _salesOrderRepository.GetProductsBySalesOrderIdAsync(salesOrderId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task UpdateOrderStatusAsync(string salesOrderId, string orderStatus)
+        {
+            try
+            {
+                await _salesOrderRepository.UpdateOrderStatusAsync(salesOrderId, orderStatus);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task UpdateShippingInfoAsync(ShippingInformationDTO shippingInfo)
+        {
+            try
+            {
+                await _salesOrderRepository.UpdateShippingInfoAsync(shippingInfo);
             }
             catch (Exception)
             {

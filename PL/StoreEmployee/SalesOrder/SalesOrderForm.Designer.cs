@@ -66,6 +66,9 @@
             ckBxPreorder = new CheckBox();
             ibtnAddPreorderProduct = new FontAwesome.Sharp.IconButton();
             dtpDeliveryDatetime = new DateTimePicker();
+            lblPurchaseMethod = new Label();
+            iconButton1 = new FontAwesome.Sharp.IconButton();
+            cmbBxPurchaseMethod = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dgvDetailedOrder).BeginInit();
             SuspendLayout();
             // 
@@ -115,7 +118,7 @@
             lblOrderInfo.AutoSize = true;
             lblOrderInfo.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblOrderInfo.ForeColor = Color.Black;
-            lblOrderInfo.Location = new Point(49, 241);
+            lblOrderInfo.Location = new Point(49, 414);
             lblOrderInfo.Name = "lblOrderInfo";
             lblOrderInfo.Size = new Size(249, 38);
             lblOrderInfo.TabIndex = 5;
@@ -165,11 +168,12 @@
             dgvDetailedOrder.BorderStyle = BorderStyle.None;
             dgvDetailedOrder.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvDetailedOrder.Columns.AddRange(new DataGridViewColumn[] { ColOrder, ColSalesOrderId, ColProductName, ColProductQuantity, ColUnitPrice, ColLinePrice, ColRemove });
-            dgvDetailedOrder.Location = new Point(28, 308);
+            dgvDetailedOrder.Location = new Point(37, 473);
             dgvDetailedOrder.Margin = new Padding(3, 4, 3, 4);
             dgvDetailedOrder.Name = "dgvDetailedOrder";
+            dgvDetailedOrder.RowHeadersVisible = false;
             dgvDetailedOrder.RowHeadersWidth = 62;
-            dgvDetailedOrder.Size = new Size(1249, 306);
+            dgvDetailedOrder.Size = new Size(1047, 421);
             dgvDetailedOrder.TabIndex = 8;
             dgvDetailedOrder.CellBeginEdit += dgvDetailedOrder_CellBeginEdit;
             dgvDetailedOrder.CellClick += dgvDetailedOrder_CellClick;
@@ -178,11 +182,12 @@
             // 
             // ColOrder
             // 
+            ColOrder.FillWeight = 40F;
             ColOrder.HeaderText = "#";
             ColOrder.MinimumWidth = 8;
             ColOrder.Name = "ColOrder";
             ColOrder.ReadOnly = true;
-            ColOrder.Width = 80;
+            ColOrder.Width = 60;
             // 
             // ColSalesOrderId
             // 
@@ -213,7 +218,7 @@
             ColUnitPrice.MinimumWidth = 8;
             ColUnitPrice.Name = "ColUnitPrice";
             ColUnitPrice.ReadOnly = true;
-            ColUnitPrice.Width = 200;
+            ColUnitPrice.Width = 180;
             // 
             // ColLinePrice
             // 
@@ -221,40 +226,41 @@
             ColLinePrice.MinimumWidth = 8;
             ColLinePrice.Name = "ColLinePrice";
             ColLinePrice.ReadOnly = true;
-            ColLinePrice.Width = 200;
+            ColLinePrice.Width = 180;
             // 
             // ColRemove
             // 
             ColRemove.FillWeight = 50F;
             ColRemove.HeaderText = "";
-            ColRemove.Image = Properties.Resources.details;
+            ColRemove.Image = Properties.Resources.icon_remove;
+            ColRemove.ImageLayout = DataGridViewImageCellLayout.Zoom;
             ColRemove.MinimumWidth = 50;
             ColRemove.Name = "ColRemove";
             ColRemove.Resizable = DataGridViewTriState.False;
-            ColRemove.Width = 150;
+            ColRemove.Width = 70;
             // 
             // lblCustomerDiscountValue
             // 
             lblCustomerDiscountValue.AutoSize = true;
-            lblCustomerDiscountValue.Location = new Point(1199, 663);
+            lblCustomerDiscountValue.Location = new Point(1282, 660);
             lblCustomerDiscountValue.Name = "lblCustomerDiscountValue";
-            lblCustomerDiscountValue.Size = new Size(215, 32);
+            lblCustomerDiscountValue.Size = new Size(130, 32);
             lblCustomerDiscountValue.TabIndex = 9;
-            lblCustomerDiscountValue.Text = "Customer discount";
+            lblCustomerDiscountValue.Text = "C Discount";
             // 
             // lblOrderDiscountValue
             // 
             lblOrderDiscountValue.AutoSize = true;
-            lblOrderDiscountValue.Location = new Point(1199, 709);
+            lblOrderDiscountValue.Location = new Point(1282, 706);
             lblOrderDiscountValue.Name = "lblOrderDiscountValue";
-            lblOrderDiscountValue.Size = new Size(173, 32);
+            lblOrderDiscountValue.Size = new Size(133, 32);
             lblOrderDiscountValue.TabIndex = 10;
-            lblOrderDiscountValue.Text = "Order discount";
+            lblOrderDiscountValue.Text = "O Discount";
             // 
             // lblFinalPrice
             // 
             lblFinalPrice.AutoSize = true;
-            lblFinalPrice.Location = new Point(1199, 755);
+            lblFinalPrice.Location = new Point(1282, 752);
             lblFinalPrice.Name = "lblFinalPrice";
             lblFinalPrice.Size = new Size(123, 32);
             lblFinalPrice.TabIndex = 11;
@@ -263,11 +269,11 @@
             // lblBasePrice
             // 
             lblBasePrice.AutoSize = true;
-            lblBasePrice.Location = new Point(1199, 617);
+            lblBasePrice.Location = new Point(1282, 614);
             lblBasePrice.Name = "lblBasePrice";
-            lblBasePrice.Size = new Size(122, 32);
+            lblBasePrice.Size = new Size(86, 32);
             lblBasePrice.TabIndex = 13;
-            lblBasePrice.Text = "Base price";
+            lblBasePrice.Text = "B Price";
             // 
             // txtBxBasePrice
             // 
@@ -322,7 +328,7 @@
             btnComplete.Location = new Point(1132, 825);
             btnComplete.Margin = new Padding(3, 4, 3, 4);
             btnComplete.Name = "btnComplete";
-            btnComplete.Size = new Size(168, 50);
+            btnComplete.Size = new Size(100, 50);
             btnComplete.TabIndex = 18;
             btnComplete.Text = "Complete";
             btnComplete.UseVisualStyleBackColor = true;
@@ -420,7 +426,7 @@
             // ckBxShippingOrder
             // 
             ckBxShippingOrder.AutoSize = true;
-            ckBxShippingOrder.Location = new Point(321, 245);
+            ckBxShippingOrder.Location = new Point(91, 246);
             ckBxShippingOrder.Margin = new Padding(3, 4, 3, 4);
             ckBxShippingOrder.Name = "ckBxShippingOrder";
             ckBxShippingOrder.Size = new Size(132, 36);
@@ -432,7 +438,7 @@
             // ckBxPreorder
             // 
             ckBxPreorder.AutoSize = true;
-            ckBxPreorder.Location = new Point(472, 245);
+            ckBxPreorder.Location = new Point(242, 246);
             ckBxPreorder.Margin = new Padding(3, 4, 3, 4);
             ckBxPreorder.Name = "ckBxPreorder";
             ckBxPreorder.Size = new Size(132, 36);
@@ -447,7 +453,7 @@
             ibtnAddPreorderProduct.IconColor = Color.Black;
             ibtnAddPreorderProduct.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ibtnAddPreorderProduct.IconSize = 24;
-            ibtnAddPreorderProduct.Location = new Point(628, 243);
+            ibtnAddPreorderProduct.Location = new Point(409, 247);
             ibtnAddPreorderProduct.Name = "ibtnAddPreorderProduct";
             ibtnAddPreorderProduct.Size = new Size(55, 39);
             ibtnAddPreorderProduct.TabIndex = 32;
@@ -459,11 +465,41 @@
             // 
             dtpDeliveryDatetime.CustomFormat = "dd/MM/yyyy HH:mm";
             dtpDeliveryDatetime.Format = DateTimePickerFormat.Custom;
-            dtpDeliveryDatetime.Location = new Point(736, 242);
+            dtpDeliveryDatetime.Location = new Point(517, 246);
             dtpDeliveryDatetime.Name = "dtpDeliveryDatetime";
             dtpDeliveryDatetime.Size = new Size(241, 39);
             dtpDeliveryDatetime.TabIndex = 33;
             dtpDeliveryDatetime.Validating += dtpDeliveryDatetime_Validating;
+            // 
+            // lblPurchaseMethod
+            // 
+            lblPurchaseMethod.AutoSize = true;
+            lblPurchaseMethod.ForeColor = Color.Black;
+            lblPurchaseMethod.Location = new Point(1187, 341);
+            lblPurchaseMethod.Name = "lblPurchaseMethod";
+            lblPurchaseMethod.Size = new Size(200, 32);
+            lblPurchaseMethod.TabIndex = 34;
+            lblPurchaseMethod.Text = "Purchase method";
+            // 
+            // iconButton1
+            // 
+            iconButton1.IconChar = FontAwesome.Sharp.IconChar.GreaterThan;
+            iconButton1.IconColor = Color.Black;
+            iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButton1.Location = new Point(1141, 731);
+            iconButton1.Name = "iconButton1";
+            iconButton1.Size = new Size(50, 50);
+            iconButton1.TabIndex = 35;
+            iconButton1.UseVisualStyleBackColor = true;
+            // 
+            // cmbBxPurchaseMethod
+            // 
+            cmbBxPurchaseMethod.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbBxPurchaseMethod.FormattingEnabled = true;
+            cmbBxPurchaseMethod.Location = new Point(1393, 338);
+            cmbBxPurchaseMethod.Name = "cmbBxPurchaseMethod";
+            cmbBxPurchaseMethod.Size = new Size(210, 40);
+            cmbBxPurchaseMethod.TabIndex = 36;
             // 
             // SalesOrderForm
             // 
@@ -472,6 +508,9 @@
             AutoSize = true;
             BackColor = SystemColors.Window;
             ClientSize = new Size(1653, 944);
+            Controls.Add(cmbBxPurchaseMethod);
+            Controls.Add(iconButton1);
+            Controls.Add(lblPurchaseMethod);
             Controls.Add(dtpDeliveryDatetime);
             Controls.Add(ibtnAddPreorderProduct);
             Controls.Add(ckBxPreorder);
@@ -542,6 +581,11 @@
         private Label lblCustomerInfo;
         private FontAwesome.Sharp.IconButton ibtnAdd;
         private Button btnCalculateFinalPrice;
+        private CheckBox ckBxShippingOrder;
+        private CheckBox ckBxPreorder;
+        private FontAwesome.Sharp.IconButton ibtnAddPreorderProduct;
+        private DateTimePicker dtpDeliveryDatetime;
+        private Label lblPurchaseMethod;
         private DataGridViewTextBoxColumn ColOrder;
         private DataGridViewTextBoxColumn ColSalesOrderId;
         private DataGridViewTextBoxColumn ColProductName;
@@ -549,9 +593,7 @@
         private DataGridViewTextBoxColumn ColUnitPrice;
         private DataGridViewTextBoxColumn ColLinePrice;
         private DataGridViewImageColumn ColRemove;
-        private CheckBox ckBxShippingOrder;
-        private CheckBox ckBxPreorder;
-        private FontAwesome.Sharp.IconButton ibtnAddPreorderProduct;
-        private DateTimePicker dtpDeliveryDatetime;
+        private FontAwesome.Sharp.IconButton iconButton1;
+        private ComboBox cmbBxPurchaseMethod;
     }
 }

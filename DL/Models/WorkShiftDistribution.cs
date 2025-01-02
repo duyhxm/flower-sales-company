@@ -9,7 +9,7 @@ public partial class WorkShiftDistribution
 
     public string WorkShiftId { get; set; } = null!;
 
-    public DateOnly? WorkDate { get; set; }
+    public DateOnly WorkDate { get; set; }
 
     public bool? Absence { get; set; }
 

@@ -6,10 +6,5 @@
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\9.0.0\buildTransitive\net8.0\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\9.0.0\buildTransitive\net8.0\Microsoft.Extensions.Logging.Abstractions.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.configuration.binder\9.0.0\buildTransitive\netstandard2.0\Microsoft.Extensions.Configuration.Binder.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.configuration.binder\9.0.0\buildTransitive\netstandard2.0\Microsoft.Extensions.Configuration.Binder.targets')" />
     <Import Project="$(NuGetPackageRoot)entityframework\6.5.1\buildTransitive\net6.0\EntityFramework.targets" Condition="Exists('$(NuGetPackageRoot)entityframework\6.5.1\buildTransitive\net6.0\EntityFramework.targets')" />
-    <Import Project="$(NuGetPackageRoot)c1.win\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.targets" Condition="Exists('$(NuGetPackageRoot)c1.win\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.targets')" />
-    <Import Project="$(NuGetPackageRoot)c1.win.ribbon\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Ribbon.targets" Condition="Exists('$(NuGetPackageRoot)c1.win.ribbon\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Ribbon.targets')" />
-    <Import Project="$(NuGetPackageRoot)c1.win.input\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Input.targets" Condition="Exists('$(NuGetPackageRoot)c1.win.input\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.Input.targets')" />
-    <Import Project="$(NuGetPackageRoot)c1.win.dx\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.DX.targets" Condition="Exists('$(NuGetPackageRoot)c1.win.dx\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.DX.targets')" />
-    <Import Project="$(NuGetPackageRoot)c1.win.flexchart\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.FlexChart.targets" Condition="Exists('$(NuGetPackageRoot)c1.win.flexchart\8.0.20242.688\buildTransitive\net8.0-windows7.0\C1.Win.FlexChart.targets')" />
   </ImportGroup>
 </Project>

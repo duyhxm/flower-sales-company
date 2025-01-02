@@ -10,7 +10,7 @@ namespace DTO.Store
     {
         public string ProductId { get; set; } = string.Empty;
         public string ProductName { get; set; } = string.Empty;
-        public DateTime StockDate { get; set; }
+        public DateOnly StockDate { get; set; }
         public int? StockProductQuantity { get; set; }
         public decimal UnitPrice { get; set; }
     }

@@ -5,6 +5,8 @@ namespace DL.Models;
 
 public partial class StoreExpenseHistory
 {
+    public string StoreExpenseHistoryId { get; set; } = null!;
+
     public string StoreExpenseId { get; set; } = null!;
 
     public string StoreId { get; set; } = null!;

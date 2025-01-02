@@ -70,28 +70,47 @@ namespace DL.Repositories.Implementations.Tests
         //    Debug.WriteLine("Add successfully a new product");
         //}
 
+        //[TestMethod()]
+        //public async Task UpdateMaterialInventoryAsyncTest()
+        //{
+        //    SystemRepository.Initialize();
+        //    ProductRepository repo = new ProductRepository();
+
+        //    DetailedProductDTO details = new DetailedProductDTO()
+        //    {
+        //        MaterialId = "F0002",
+        //        UsedQuantity = 2
+        //    };
+
+        //    List<DetailedProductDTO> list = new List<DetailedProductDTO>();
+        //    list.Add(details);
+
+        //    ProductDTO productDto = new ProductDTO()
+        //    {
+        //        FrepresentationId = "FR01",
+        //        ProductName = "bó hoa cúc",
+        //        DetailedProducts = list
+        //    };
+        //    await repo.UpdateMaterialInventoryAsync(productDto, "S001", 100);
+        //}
+
         [TestMethod()]
-        public async Task UpdateMaterialInventoryAsyncTest()
+        public async Task CalculateUnitPriceAsyncTest()
         {
             SystemRepository.Initialize();
-            ProductRepository repo = new ProductRepository();
+            ProductRepository repository = new ProductRepository();
 
-            DetailedProductDTO details = new DetailedProductDTO()
+            Dictionary<string, int> materials = new Dictionary<string, int>()
             {
-                MaterialId = "F0002",
-                UsedQuantity = 2
+                {"F0001", 2 },
+                { "F0002", 3},
+                { "A0002", 4}
+
             };
 
-            List<DetailedProductDTO> list = new List<DetailedProductDTO>();
-            list.Add(details);
+            decimal r = await repository.CalculateUnitPriceAsync(materials);
 
-            ProductDTO productDto = new ProductDTO()
-            {
-                FrepresentationId = "FR01",
-                ProductName = "bó hoa cúc",
-                DetailedProducts = list
-            };
-            await repo.UpdateMaterialInventoryAsync(productDto, "S001", 100);
+            Debug.WriteLine($"Unit price: {r}");
         }
     }
 }

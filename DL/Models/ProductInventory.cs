@@ -9,7 +9,7 @@ public partial class ProductInventory
 
     public string ProductId { get; set; } = null!;
 
-    public DateTime StockDate { get; set; }
+    public DateOnly StockDate { get; set; }
 
     public int? StockProductQuantity { get; set; }
 

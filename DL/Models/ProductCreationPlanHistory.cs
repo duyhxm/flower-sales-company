@@ -11,9 +11,9 @@ public partial class ProductCreationPlanHistory
 
     public string ProductId { get; set; } = null!;
 
-    public DateTimeOffset? ImplementationDateTime { get; set; }
+    public DateTimeOffset ImplementationDateTime { get; set; }
 
-    public short? NeededCreationQuantity { get; set; }
+    public short NeededCreationQuantity { get; set; }
 
     public DateTimeOffset? CreatedDateTime { get; set; }
 

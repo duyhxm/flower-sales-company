@@ -10,16 +10,21 @@ using DTO.Store;
 using DTO.Material;
 using Microsoft.EntityFrameworkCore;
 using DTO.SalesOrder;
+using DTO.Enum.SalesOrder;
+using AutoMapper;
+using DTO.Enum;
 
 namespace DL.Repositories.Implementations
 {
     public class StoreRepository : IStoreRepository
     {
         private FlowerSalesCompanyDbContext _context;
+        private IMapper _mapper;
 
         public StoreRepository()
         {
             _context = new FlowerSalesCompanyDbContext();
+            _mapper = SystemRepository.Instance.GetMapper();
         }
         public int AddStore(StoreDTO store)
         {
@@ -69,7 +74,7 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task UpdateProductInventoryByStoreAsync(string storeId, Dictionary<string, Tuple<DateTime, int>> usedProducts)
+        public async Task UpdateProductInventoryByStoreAsync(string storeId, Dictionary<string, Tuple<DateOnly, int>> usedProducts)
         {
             try
             {
@@ -103,6 +108,166 @@ namespace DL.Repositories.Implementations
             catch (Exception ex)
             {
                 throw new Exception("An error occurred while updating product inventory", ex);
+            }
+        }
+
+        public async Task<List<PreSalesOrderDTO>> GetPreSalesOrderByStoreAsync(string storeId)
+        {
+            try
+            {
+                var preSalesOrders = await (from salesOrder in _context.SalesOrders
+                                            join preSalesOrder in _context.PreSalesOrders
+                                            on salesOrder.SalesOrderId equals preSalesOrder.PreSalesOrderId
+                                            where salesOrder.StoreId == storeId
+                                            && salesOrder.OrderType == OrderType.PreSalesOrder
+                                            select new PreSalesOrderDTO
+                                            {
+                                                SalesOrderId = salesOrder.SalesOrderId,
+                                                DeliveryDateTime = preSalesOrder.DeliveryDateTime ?? DateTimeOffset.MinValue,
+                                                OrderStatus = salesOrder.OrderStatus,
+                                                FinalPrice = salesOrder.FinalPrice ?? 0
+                                            }).ToListAsync();
+
+                return preSalesOrders;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<SalesOrderDTO>> GetSalesOrdersByStoreAsync(string storeId, DateTimeOffset date)
+        {
+            try
+            {
+                var salesOrders = await (from salesOrder in _context.SalesOrders
+                                         where salesOrder.StoreId == storeId &&
+                                               (salesOrder.CreatedDateTime.HasValue && salesOrder.CreatedDateTime.Value.Date == date.Date ||
+                                               salesOrder.OrderStatus != OrderStatus.Success)
+                                         select new SalesOrderDTO
+                                         {
+                                             SalesOrderId = salesOrder.SalesOrderId,
+                                             CustomerId = salesOrder.CustomerId,
+                                             StoreId = salesOrder.StoreId,
+                                             CreatedDateTime = salesOrder.CreatedDateTime,
+                                             OrderStatus = salesOrder.OrderStatus,
+                                             OrderType = salesOrder.OrderType,
+                                             PurchaseMethod = salesOrder.PurchaseMethod,
+                                             BasePrice = salesOrder.BasePrice,
+                                             FinalPrice = salesOrder.FinalPrice,
+                                             DetailedSalesOrders = salesOrder.DetailedSalesOrders.Select(dso => new DetailedSalesOrderDTO
+                                             {
+                                                 SalesOrderId = dso.SalesOrderId,
+                                                 ProductId = dso.ProductId,
+                                                 Quantity = dso.Quantity,
+                                             }).ToList()
+                                         }).ToListAsync();
+
+                return salesOrders;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ShippingInformationDTO?> GetShippingInfoByOrderIdAsync(string salesOrderId)
+        {
+            try
+            {
+                var shippingInfo = await _context.ShippingInformations
+                                    .Where(si => si.SalesOrderId == salesOrderId).FirstOrDefaultAsync();
+
+                return _mapper.Map<ShippingInformationDTO>(shippingInfo);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+        public async Task<PlannedProductDTO?> GetPlannedProductForStoreAsync(DateTimeOffset plannedDateTime)
+        {
+            try
+            {
+                var result = await _context.ProductCreationPlanHistories
+                                          .Where(i => i.PlannedDateTime == plannedDateTime && i.CreatedDateTime == null && i.PlanStatus == PlanStatus.Initialized)
+                                          .Join(_context.Products,
+                                          i => i.ProductId,
+                                          p => p.ProductId,
+                                          (i, p) => new PlannedProductDTO
+                                          {
+                                              PlannedDateTime = i.PlannedDateTime,
+                                              ProductId = p.ProductId,
+                                              ProductName = p.ProductName!,
+                                              ImplementationDateTime = i.ImplementationDateTime,
+                                              Quantity = i.NeededCreationQuantity
+                                          }
+                                          )
+                                          .FirstOrDefaultAsync();
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task UpdateProductCreationPlanStatusAsync(DateTimeOffset plannedDateTime, DateTimeOffset createdDateTime, string planStatus)
+        {
+            try
+            {
+                var productCreationPlan = await _context.ProductCreationPlanHistories
+                    .FirstOrDefaultAsync(p => p.PlannedDateTime == plannedDateTime);
+
+                if (productCreationPlan == null)
+                {
+                    throw new Exception($"Không tìm thấy sản phẩm nào ứng với PlannedDateTime: {plannedDateTime}");
+                }
+
+                productCreationPlan.CreatedDateTime = createdDateTime;
+                productCreationPlan.PlanStatus = planStatus;
+
+                _context.ProductCreationPlanHistories.Attach(productCreationPlan);
+                _context.Entry(productCreationPlan).Property(p => p.CreatedDateTime).IsModified = true;
+                _context.Entry(productCreationPlan).Property(p => p.PlanStatus).IsModified = true;
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Đã xảy ra lỗi trong quá trình cập nhật trạng thái tạo sản phẩm. Vui lòng thử lại hoặc liên hệ đến bộ phận kỹ thuật", ex);
+            }
+        }
+
+        public async Task<List<PlannedProductDTO>?> GetPlannedProductsForStoreAsync(DateTimeOffset todayDateTime, string storeId)
+        {
+            try
+            {
+                var result = await _context.ProductCreationPlanHistories
+            .Where(p => p.PlannedDateTime.Date == todayDateTime.Date
+                        && p.StoreId == storeId
+                        && p.CreatedDateTime == null
+                        && p.PlanStatus == PlanStatus.Initialized)
+            .Join(_context.Products,
+                  p => p.ProductId,
+                  pr => pr.ProductId,
+                  (p, pr) => new PlannedProductDTO
+                  {
+                      PlannedDateTime = p.PlannedDateTime,
+                      ProductId = pr.ProductId,
+                      ProductName = pr.ProductName!,
+                      ImplementationDateTime = p.ImplementationDateTime,
+                      Quantity = p.NeededCreationQuantity
+                  })
+            .ToListAsync();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
