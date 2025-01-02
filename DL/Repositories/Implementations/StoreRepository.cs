@@ -54,7 +54,7 @@ namespace DL.Repositories.Implementations
             try
             {
                 //Hàm này sẽ lấy toàn bộ các material của cửa hàng có trong bảng MaterialInventory
-                return await _context.Database.SqlQuery<MaterialInventoryDTO>($"SELECT * FROM dbo.fnGetMaterialInventory({storeId})").ToListAsync();
+                return await _context.Database.SqlQuery<MaterialInventoryDTO>($"SELECT * FROM dbo.GetMaterialInventory({storeId})").ToListAsync();
             }
             catch (Exception)
             {
@@ -66,7 +66,7 @@ namespace DL.Repositories.Implementations
         {
             try
             {
-                return await _context.Database.SqlQuery<ProductInventoryDTO>($"SELECT * FROM dbo.fnGetProductStockDetails({storeId})").ToListAsync();
+                return await _context.Database.SqlQuery<ProductInventoryDTO>($"SELECT * FROM dbo.GetProductStockDetails({storeId})").ToListAsync();
             }
             catch (Exception)
             {
@@ -141,28 +141,6 @@ namespace DL.Repositories.Implementations
         {
             try
             {
-                //var salesOrders = await (from salesOrder in _context.SalesOrders
-                //                         where salesOrder.StoreId == storeId &&
-                //                               (salesOrder.CreatedDateTime.HasValue && salesOrder.CreatedDateTime.Value.Date == date.Date ||(salesOrder.OrderStatus == OrderStatus.Confirmed && salesOrder.CreatedDateTime!.Value.Date != date.Date)
-                //                               )
-                //                         select new SalesOrderDTO
-                //                         {
-                //                             SalesOrderId = salesOrder.SalesOrderId,
-                //                             CustomerId = salesOrder.CustomerId,
-                //                             StoreId = salesOrder.StoreId,
-                //                             CreatedDateTime = salesOrder.CreatedDateTime,
-                //                             OrderStatus = salesOrder.OrderStatus,
-                //                             OrderType = salesOrder.OrderType,
-                //                             PurchaseMethod = salesOrder.PurchaseMethod,
-                //                             BasePrice = salesOrder.BasePrice,
-                //                             FinalPrice = salesOrder.FinalPrice,
-                //                             DetailedSalesOrders = salesOrder.DetailedSalesOrders.Select(dso => new DetailedSalesOrderDTO
-                //                             {
-                //                                 SalesOrderId = dso.SalesOrderId,
-                //                                 ProductId = dso.ProductId,
-                //                                 Quantity = dso.Quantity,
-                //                             }).ToList()
-                //                         }).ToListAsync();
                 var salesOrders = await _context.SalesOrders
                                         .Where(so => so.StoreId == storeId && (so.CreatedDateTime!.Value.Date == date.Date || (so.CreatedDateTime!.Value.Date != date.Date && so.OrderStatus == OrderStatus.Confirmed)))
                                         .ToListAsync();

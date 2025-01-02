@@ -11,6 +11,5 @@ namespace DTO.Enum.SalesOrder
         public const string Confirmed = "Đã xác nhận";
         public const string Success = "Hoàn thành";
         public const string Cancelled = "Đã huỷ";
-        public const string OnDelivery = "Đang vận chuyển";
     }
 }

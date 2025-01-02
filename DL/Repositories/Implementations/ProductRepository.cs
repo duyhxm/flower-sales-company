@@ -110,62 +110,6 @@ namespace DL.Repositories.Implementations
             return letters.ToString();
         }
 
-        //public async Task<ReturnedProductDTO> AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string storeId)
-        //{
-        //    bool hasExisted = false;
-        //    using var transaction = await _context.Database.BeginTransactionAsync();
-
-        //    try
-        //    {
-        //        if (product.ProductId != null && product.ProductName != null)
-        //        {
-        //            Dictionary<string, string> productInfo = new()
-        //            {
-        //                { product.ProductId, product.ProductName}
-        //            };
-        //            //await HandleExistingProduct(productInfo, productCreationHistory, storeId);
-
-        //        }
-        //        else
-        //        {
-        //            //Tìm kiếm sản phẩm xem đã tồn tại chưa, để tránh trùng lắp
-        //            var existingProductInfo = await CheckProductExistence(product);
-
-        //            //sản phẩm đã tồn tại trong database
-        //            if (existingProductInfo != null)
-        //            {
-        //                hasExisted = true;
-        //                product.ProductId = existingProductInfo.First().Key;
-        //                //await HandleExistingProduct(existingProductInfo, productCreationHistory, storeId);
-        //            }
-        //            else
-        //            {
-        //                ProductDTO newProduct = await HandleNewProduct(product, productCreationHistory, storeId);
-        //                product.ProductId = newProduct.ProductId;
-        //            }
-        //        }
-
-        //        //Sau khi thêm mới sản phẩm, thực hiện update kho vật liệu của cửa hàng
-        //        await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
-
-        //        //Sau khi update kho vật liệu, tiếp tục update kho sản phẩm
-        //        await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
-
-        //        await transaction.CommitAsync();
-
-        //        return new ReturnedProductDTO()
-        //        {
-        //            Product = product,
-        //            HasExisted = hasExisted
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        await transaction.RollbackAsync();
-        //        throw new Exception("Đã xảy ra lỗi trong quá trình thêm sản phẩm. Vui lòng thử lại hoặc liên hệ bộ phận kỹ thuật", ex);
-        //    }
-        //}
-
         public async Task<ReturnedProductDTO> AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string storeId)
         {
             bool hasExisted = false;

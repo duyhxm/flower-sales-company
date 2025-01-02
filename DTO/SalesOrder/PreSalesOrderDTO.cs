@@ -15,6 +15,5 @@ namespace DTO.SalesOrder
         public string? OrderStatus { get; set; }
 
         public decimal FinalPrice { get; set; }
-        
     }
 }

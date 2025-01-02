@@ -28,62 +28,66 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
-            ColProductId = new DataGridViewTextBoxColumn();
-            ColProductName = new DataGridViewTextBoxColumn();
-            ColFRepresentationName = new DataGridViewTextBoxColumn();
+            dgvProduct = new DataGridView();
+            ProductId = new DataGridViewTextBoxColumn();
+            ProductName = new DataGridViewTextBoxColumn();
+            FRName = new DataGridViewTextBoxColumn();
             ColDetailedProduct = new DataGridViewImageColumn();
             ColCreationQuantity = new DataGridViewTextBoxColumn();
-            ColSelection = new DataGridViewCheckBoxColumn();
+            SelectColumn = new DataGridViewCheckBoxColumn();
             lblImplementationDate = new Label();
-            dtpImplementationDate = new DateTimePicker();
+            dtpImplementDate = new DateTimePicker();
             btnPlan = new Button();
-            cmbBxStores = new ComboBox();
+            cbbStore = new ComboBox();
             lblStoreName = new Label();
-            cmbBxRegions = new ComboBox();
+            cbbRegion = new ComboBox();
             lblRegionFilter = new Label();
             btnClear = new Button();
             lblFindById = new Label();
             txtBxFindById = new TextBox();
-            cmbBxFRName = new ComboBox();
+            cbbType = new ComboBox();
             lblFRName = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProduct).BeginInit();
             SuspendLayout();
             // 
-            // dataGridView1
+            // dgvProduct
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ColProductId, ColProductName, ColFRepresentationName, ColDetailedProduct, ColCreationQuantity, ColSelection });
-            dataGridView1.Location = new Point(30, 227);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(943, 626);
-            dataGridView1.TabIndex = 0;
+            dgvProduct.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProduct.Columns.AddRange(new DataGridViewColumn[] { ProductId, ProductName, FRName, ColDetailedProduct, ColCreationQuantity, SelectColumn });
+            dgvProduct.Location = new Point(30, 227);
+            dgvProduct.Name = "dgvProduct";
+            dgvProduct.RowHeadersWidth = 62;
+            dgvProduct.Size = new Size(943, 626);
+            dgvProduct.TabIndex = 0;
+            dgvProduct.CellContentClick += dgvProduct_CellContentClick;
             // 
-            // ColProductId
+            // ProductId
             // 
-            ColProductId.FillWeight = 50F;
-            ColProductId.HeaderText = "ID";
-            ColProductId.MinimumWidth = 8;
-            ColProductId.Name = "ColProductId";
-            ColProductId.ReadOnly = true;
-            ColProductId.Width = 150;
+            ProductId.DataPropertyName = "ProductId";
+            ProductId.FillWeight = 50F;
+            ProductId.HeaderText = "ID";
+            ProductId.MinimumWidth = 8;
+            ProductId.Name = "ProductId";
+            ProductId.ReadOnly = true;
+            ProductId.Width = 150;
             // 
-            // ColProductName
+            // ProductName
             // 
-            ColProductName.HeaderText = "Name";
-            ColProductName.MinimumWidth = 8;
-            ColProductName.Name = "ColProductName";
-            ColProductName.ReadOnly = true;
-            ColProductName.Width = 250;
+            ProductName.DataPropertyName = "ProductName";
+            ProductName.HeaderText = "Name";
+            ProductName.MinimumWidth = 8;
+            ProductName.Name = "ProductName";
+            ProductName.ReadOnly = true;
+            ProductName.Width = 250;
             // 
-            // ColFRepresentationName
+            // FRName
             // 
-            ColFRepresentationName.HeaderText = "FR Name";
-            ColFRepresentationName.MinimumWidth = 8;
-            ColFRepresentationName.Name = "ColFRepresentationName";
-            ColFRepresentationName.ReadOnly = true;
-            ColFRepresentationName.Width = 150;
+            FRName.DataPropertyName = "FRName";
+            FRName.HeaderText = "FR Name";
+            FRName.MinimumWidth = 8;
+            FRName.Name = "FRName";
+            FRName.ReadOnly = true;
+            FRName.Width = 150;
             // 
             // ColDetailedProduct
             // 
@@ -103,31 +107,31 @@
             ColCreationQuantity.Name = "ColCreationQuantity";
             ColCreationQuantity.Width = 150;
             // 
-            // ColSelection
+            // SelectColumn
             // 
-            ColSelection.FillWeight = 50F;
-            ColSelection.HeaderText = "";
-            ColSelection.MinimumWidth = 8;
-            ColSelection.Name = "ColSelection";
-            ColSelection.Width = 80;
+            SelectColumn.FillWeight = 50F;
+            SelectColumn.HeaderText = "";
+            SelectColumn.MinimumWidth = 8;
+            SelectColumn.Name = "SelectColumn";
+            SelectColumn.Width = 80;
             // 
             // lblImplementationDate
             // 
             lblImplementationDate.AutoSize = true;
-            lblImplementationDate.Location = new Point(1076, 360);
+            lblImplementationDate.Location = new Point(1128, 361);
             lblImplementationDate.Name = "lblImplementationDate";
-            lblImplementationDate.Size = new Size(187, 32);
+            lblImplementationDate.Size = new Size(121, 21);
             lblImplementationDate.TabIndex = 1;
             lblImplementationDate.Text = "Implement Date";
             // 
-            // dtpImplementationDate
+            // dtpImplementDate
             // 
-            dtpImplementationDate.CustomFormat = "dd/MM/yyyy HH:mm";
-            dtpImplementationDate.Format = DateTimePickerFormat.Custom;
-            dtpImplementationDate.Location = new Point(1293, 355);
-            dtpImplementationDate.Name = "dtpImplementationDate";
-            dtpImplementationDate.Size = new Size(249, 39);
-            dtpImplementationDate.TabIndex = 2;
+            dtpImplementDate.CustomFormat = "dd/MM/yyyy HH:mm";
+            dtpImplementDate.Format = DateTimePickerFormat.Custom;
+            dtpImplementDate.Location = new Point(1293, 355);
+            dtpImplementDate.Name = "dtpImplementDate";
+            dtpImplementDate.Size = new Size(249, 29);
+            dtpImplementDate.TabIndex = 2;
             // 
             // btnPlan
             // 
@@ -137,40 +141,42 @@
             btnPlan.TabIndex = 3;
             btnPlan.Text = "Plan";
             btnPlan.UseVisualStyleBackColor = true;
+            btnPlan.Click += btnPlan_Click;
             // 
-            // cmbBxStores
+            // cbbStore
             // 
-            cmbBxStores.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbBxStores.FormattingEnabled = true;
-            cmbBxStores.Location = new Point(1338, 487);
-            cmbBxStores.Name = "cmbBxStores";
-            cmbBxStores.Size = new Size(204, 40);
-            cmbBxStores.TabIndex = 4;
+            cbbStore.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbbStore.FormattingEnabled = true;
+            cbbStore.Location = new Point(1338, 487);
+            cbbStore.Name = "cbbStore";
+            cbbStore.Size = new Size(204, 29);
+            cbbStore.TabIndex = 4;
             // 
             // lblStoreName
             // 
             lblStoreName.AutoSize = true;
             lblStoreName.Location = new Point(1263, 490);
             lblStoreName.Name = "lblStoreName";
-            lblStoreName.Size = new Size(69, 32);
+            lblStoreName.Size = new Size(46, 21);
             lblStoreName.TabIndex = 5;
             lblStoreName.Text = "Store";
             // 
-            // cmbBxRegions
+            // cbbRegion
             // 
-            cmbBxRegions.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbBxRegions.FormattingEnabled = true;
-            cmbBxRegions.Location = new Point(1338, 431);
-            cmbBxRegions.Name = "cmbBxRegions";
-            cmbBxRegions.Size = new Size(204, 40);
-            cmbBxRegions.TabIndex = 6;
+            cbbRegion.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbbRegion.FormattingEnabled = true;
+            cbbRegion.Location = new Point(1338, 431);
+            cbbRegion.Name = "cbbRegion";
+            cbbRegion.Size = new Size(204, 29);
+            cbbRegion.TabIndex = 6;
+            cbbRegion.SelectedValueChanged += cbbRegion_SelectedValueChanged;
             // 
             // lblRegionFilter
             // 
             lblRegionFilter.AutoSize = true;
             lblRegionFilter.Location = new Point(1244, 434);
             lblRegionFilter.Name = "lblRegionFilter";
-            lblRegionFilter.Size = new Size(88, 32);
+            lblRegionFilter.Size = new Size(59, 21);
             lblRegionFilter.TabIndex = 7;
             lblRegionFilter.Text = "Region";
             // 
@@ -186,9 +192,9 @@
             // lblFindById
             // 
             lblFindById.AutoSize = true;
-            lblFindById.Location = new Point(67, 107);
+            lblFindById.Location = new Point(122, 112);
             lblFindById.Name = "lblFindById";
-            lblFindById.Size = new Size(123, 32);
+            lblFindById.Size = new Size(80, 21);
             lblFindById.TabIndex = 10;
             lblFindById.Text = "Find by ID";
             // 
@@ -196,74 +202,78 @@
             // 
             txtBxFindById.Location = new Point(208, 106);
             txtBxFindById.Name = "txtBxFindById";
-            txtBxFindById.Size = new Size(181, 39);
+            txtBxFindById.Size = new Size(181, 29);
             txtBxFindById.TabIndex = 11;
+            txtBxFindById.TextChanged += txtBxFindById_TextChanged;
             // 
-            // cmbBxFRName
+            // cbbType
             // 
-            cmbBxFRName.FormattingEnabled = true;
-            cmbBxFRName.Location = new Point(573, 106);
-            cmbBxFRName.Name = "cmbBxFRName";
-            cmbBxFRName.Size = new Size(221, 40);
-            cmbBxFRName.TabIndex = 12;
+            cbbType.FormattingEnabled = true;
+            cbbType.Items.AddRange(new object[] { "" });
+            cbbType.Location = new Point(573, 106);
+            cbbType.Name = "cbbType";
+            cbbType.Size = new Size(221, 29);
+            cbbType.TabIndex = 12;
+            cbbType.SelectedValueChanged += cbbType_SelectedValueChanged;
             // 
             // lblFRName
             // 
             lblFRName.AutoSize = true;
-            lblFRName.Location = new Point(423, 109);
+            lblFRName.Location = new Point(484, 110);
             lblFRName.Name = "lblFRName";
-            lblFRName.Size = new Size(111, 32);
+            lblFRName.Size = new Size(74, 21);
             lblFRName.TabIndex = 13;
             lblFRName.Text = "FR Name";
             // 
             // ProductPlanForm
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1653, 944);
             Controls.Add(lblFRName);
-            Controls.Add(cmbBxFRName);
+            Controls.Add(cbbType);
             Controls.Add(txtBxFindById);
             Controls.Add(lblFindById);
             Controls.Add(btnClear);
             Controls.Add(lblRegionFilter);
-            Controls.Add(cmbBxRegions);
+            Controls.Add(cbbRegion);
             Controls.Add(lblStoreName);
-            Controls.Add(cmbBxStores);
+            Controls.Add(cbbStore);
             Controls.Add(btnPlan);
-            Controls.Add(dtpImplementationDate);
+            Controls.Add(dtpImplementDate);
             Controls.Add(lblImplementationDate);
-            Controls.Add(dataGridView1);
+            Controls.Add(dgvProduct);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
             Name = "ProductPlanForm";
             Text = "ProductPlanForm";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Load += ProductPlanForm_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvProduct).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView dgvProduct;
         private Label lblImplementationDate;
-        private DateTimePicker dtpImplementationDate;
+        private DateTimePicker dtpImplementDate;
         private Button btnPlan;
-        private ComboBox cmbBxStores;
+        private ComboBox cbbStore;
         private Label lblStoreName;
-        private ComboBox cmbBxRegions;
+        private ComboBox cbbRegion;
         private Label lblRegionFilter;
         private Button btnClear;
-        private DataGridViewTextBoxColumn ColProductId;
-        private DataGridViewTextBoxColumn ColProductName;
-        private DataGridViewTextBoxColumn ColFRepresentationName;
-        private DataGridViewImageColumn ColDetailedProduct;
-        private DataGridViewTextBoxColumn ColCreationQuantity;
-        private DataGridViewCheckBoxColumn ColSelection;
-        private ComboBox cmbBxFRName;
+        private ComboBox cbbType;
         private Label lblFindById;
         private TextBox txtBxFindById;
         private Label lblFRName;
+        private DataGridViewTextBoxColumn ProductId;
+        private DataGridViewTextBoxColumn ProductName;
+        private DataGridViewTextBoxColumn FRName;
+        private DataGridViewImageColumn ColDetailedProduct;
+        private DataGridViewTextBoxColumn ColCreationQuantity;
+        private DataGridViewCheckBoxColumn SelectColumn;
     }
 }

@@ -102,6 +102,8 @@ namespace PL
             AccountInformationForm.Initialize();
             formInstances[AccountInformationForm.Instance.Name] = AccountInformationForm.Instance;
 
+            CreateProduct.Initialize();
+            formInstances[CreateProduct.Instance.Name] = CreateProduct.Instance;
             foreach (var form in formInstances.Values)
             {
                 form.TopLevel = false;
@@ -126,9 +128,9 @@ namespace PL
 
         private void btnCreateProduct_Click(object sender, EventArgs e)
         {
-            if (formInstances.ContainsKey(ProductCreationForm.Instance.Name))
+            if (formInstances.ContainsKey(CreateProduct.Instance.Name))
             {
-                AddFormIntoPanel(formInstances[ProductCreationForm.Instance.Name]);
+                AddFormIntoPanel(formInstances[CreateProduct.Instance.Name]);
             }
         }
 
@@ -178,7 +180,7 @@ namespace PL
 
 
         //Hàm xử lý khi nhận được message
-        public async Task HandleNotification(Dictionary<string, object> message)
+        public void HandleNotification(Dictionary<string, object> message)
         {
             // Handle the notification and update the UI
             MessageBox.Show($"SalesDepartmentMainForm received message: {message}");

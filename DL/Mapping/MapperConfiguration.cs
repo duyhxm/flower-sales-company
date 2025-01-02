@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTO;
-using DL.Models;
 using AutoMapper;
 using DTO.Product;
 using static System.Runtime.InteropServices.JavaScript.JSType;

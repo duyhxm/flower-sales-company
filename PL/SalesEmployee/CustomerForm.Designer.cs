@@ -28,113 +28,83 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            dataGridView1 = new DataGridView();
-            ColOrder = new DataGridViewTextBoxColumn();
-            ColCustomerId = new DataGridViewTextBoxColumn();
-            ColCustomerName = new DataGridViewTextBoxColumn();
-            ColMaximumSpending = new DataGridViewTextBoxColumn();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            dgvCustomerData = new DataGridView();
             lblStartDate = new Label();
-            cmbBxRankName = new ComboBox();
-            dtpStartDate = new DateTimePicker();
-            dtpEndDate = new DateTimePicker();
+            cbbRank = new ComboBox();
+            dateTimePickerStart = new DateTimePicker();
+            dateTimePickerEnd = new DateTimePicker();
             lblEndDate = new Label();
             lblRankName = new Label();
-            cmbBxTop = new ComboBox();
+            cbbTop = new ComboBox();
             lblTop = new Label();
             lblCustomerRanking = new Label();
             panel1 = new Panel();
             lblVisualization = new Label();
             chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            button1 = new Button();
+            STT = new DataGridViewTextBoxColumn();
+            Key = new DataGridViewTextBoxColumn();
+            NameCus = new DataGridViewTextBoxColumn();
+            TotalSpending = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dgvCustomerData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)chart1).BeginInit();
             SuspendLayout();
             // 
-            // dataGridView1
+            // dgvCustomerData
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ColOrder, ColCustomerId, ColCustomerName, ColMaximumSpending });
-            dataGridView1.Location = new Point(24, 280);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(681, 507);
-            dataGridView1.TabIndex = 0;
-            // 
-            // ColOrder
-            // 
-            ColOrder.HeaderText = "#";
-            ColOrder.MinimumWidth = 8;
-            ColOrder.Name = "ColOrder";
-            ColOrder.ReadOnly = true;
-            ColOrder.Width = 50;
-            // 
-            // ColCustomerId
-            // 
-            ColCustomerId.HeaderText = "ID";
-            ColCustomerId.MinimumWidth = 8;
-            ColCustomerId.Name = "ColCustomerId";
-            ColCustomerId.ReadOnly = true;
-            ColCustomerId.Width = 150;
-            // 
-            // ColCustomerName
-            // 
-            ColCustomerName.HeaderText = "Name";
-            ColCustomerName.MinimumWidth = 8;
-            ColCustomerName.Name = "ColCustomerName";
-            ColCustomerName.ReadOnly = true;
-            ColCustomerName.Width = 200;
-            // 
-            // ColMaximumSpending
-            // 
-            ColMaximumSpending.HeaderText = "Spending";
-            ColMaximumSpending.MinimumWidth = 8;
-            ColMaximumSpending.Name = "ColMaximumSpending";
-            ColMaximumSpending.ReadOnly = true;
-            ColMaximumSpending.Width = 200;
+            dgvCustomerData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvCustomerData.Columns.AddRange(new DataGridViewColumn[] { STT, Key, NameCus, TotalSpending });
+            dgvCustomerData.Location = new Point(24, 280);
+            dgvCustomerData.Name = "dgvCustomerData";
+            dgvCustomerData.RowHeadersWidth = 62;
+            dgvCustomerData.Size = new Size(681, 507);
+            dgvCustomerData.TabIndex = 0;
             // 
             // lblStartDate
             // 
             lblStartDate.AutoSize = true;
             lblStartDate.Location = new Point(504, 108);
             lblStartDate.Name = "lblStartDate";
-            lblStartDate.Size = new Size(62, 32);
+            lblStartDate.Size = new Size(42, 21);
             lblStartDate.TabIndex = 1;
             lblStartDate.Text = "Start";
             // 
-            // cmbBxRankName
+            // cbbRank
             // 
-            cmbBxRankName.FormattingEnabled = true;
-            cmbBxRankName.Location = new Point(228, 195);
-            cmbBxRankName.Name = "cmbBxRankName";
-            cmbBxRankName.Size = new Size(192, 40);
-            cmbBxRankName.TabIndex = 3;
+            cbbRank.FormattingEnabled = true;
+            cbbRank.Location = new Point(228, 195);
+            cbbRank.Name = "cbbRank";
+            cbbRank.Size = new Size(192, 29);
+            cbbRank.TabIndex = 3;
+            cbbRank.SelectedValueChanged += cbbRank_SelectedValueChanged;
             // 
-            // dtpStartDate
+            // dateTimePickerStart
             // 
-            dtpStartDate.CustomFormat = "MM/yyyy";
-            dtpStartDate.Format = DateTimePickerFormat.Custom;
-            dtpStartDate.Location = new Point(572, 105);
-            dtpStartDate.Name = "dtpStartDate";
-            dtpStartDate.Size = new Size(184, 39);
-            dtpStartDate.TabIndex = 4;
+            dateTimePickerStart.CustomFormat = "MM/yyyy";
+            dateTimePickerStart.Format = DateTimePickerFormat.Custom;
+            dateTimePickerStart.Location = new Point(572, 105);
+            dateTimePickerStart.Name = "dateTimePickerStart";
+            dateTimePickerStart.Size = new Size(184, 29);
+            dateTimePickerStart.TabIndex = 4;
             // 
-            // dtpEndDate
+            // dateTimePickerEnd
             // 
-            dtpEndDate.CustomFormat = "MM/yyyy";
-            dtpEndDate.Format = DateTimePickerFormat.Custom;
-            dtpEndDate.Location = new Point(826, 105);
-            dtpEndDate.Name = "dtpEndDate";
-            dtpEndDate.Size = new Size(184, 39);
-            dtpEndDate.TabIndex = 5;
+            dateTimePickerEnd.CustomFormat = "MM/yyyy";
+            dateTimePickerEnd.Format = DateTimePickerFormat.Custom;
+            dateTimePickerEnd.Location = new Point(826, 105);
+            dateTimePickerEnd.Name = "dateTimePickerEnd";
+            dateTimePickerEnd.Size = new Size(184, 29);
+            dateTimePickerEnd.TabIndex = 5;
             // 
             // lblEndDate
             // 
             lblEndDate.AutoSize = true;
             lblEndDate.Location = new Point(765, 108);
             lblEndDate.Name = "lblEndDate";
-            lblEndDate.Size = new Size(54, 32);
+            lblEndDate.Size = new Size(36, 21);
             lblEndDate.TabIndex = 6;
             lblEndDate.Text = "End";
             // 
@@ -143,24 +113,26 @@
             lblRankName.AutoSize = true;
             lblRankName.Location = new Point(85, 198);
             lblRankName.Name = "lblRankName";
-            lblRankName.Size = new Size(137, 32);
+            lblRankName.Size = new Size(91, 21);
             lblRankName.TabIndex = 7;
             lblRankName.Text = "Rank Name";
             // 
-            // cmbBxTop
+            // cbbTop
             // 
-            cmbBxTop.FormattingEnabled = true;
-            cmbBxTop.Location = new Point(504, 195);
-            cmbBxTop.Name = "cmbBxTop";
-            cmbBxTop.Size = new Size(74, 40);
-            cmbBxTop.TabIndex = 8;
+            cbbTop.FormattingEnabled = true;
+            cbbTop.Items.AddRange(new object[] { "3", "5", "10" });
+            cbbTop.Location = new Point(504, 195);
+            cbbTop.Name = "cbbTop";
+            cbbTop.Size = new Size(74, 29);
+            cbbTop.TabIndex = 8;
+            cbbTop.SelectedValueChanged += cbbTop_SelectedValueChanged;
             // 
             // lblTop
             // 
             lblTop.AutoSize = true;
             lblTop.Location = new Point(442, 198);
             lblTop.Name = "lblTop";
-            lblTop.Size = new Size(53, 32);
+            lblTop.Size = new Size(34, 21);
             lblTop.TabIndex = 9;
             lblTop.Text = "Top";
             // 
@@ -170,7 +142,7 @@
             lblCustomerRanking.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblCustomerRanking.Location = new Point(72, 47);
             lblCustomerRanking.Name = "lblCustomerRanking";
-            lblCustomerRanking.Size = new Size(289, 45);
+            lblCustomerRanking.Size = new Size(197, 30);
             lblCustomerRanking.TabIndex = 10;
             lblCustomerRanking.Text = "Customer Ranking";
             // 
@@ -188,50 +160,98 @@
             lblVisualization.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblVisualization.Location = new Point(1084, 47);
             lblVisualization.Name = "lblVisualization";
-            lblVisualization.Size = new Size(205, 45);
+            lblVisualization.Size = new Size(139, 30);
             lblVisualization.TabIndex = 12;
             lblVisualization.Text = "Visualization";
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chart1.Legends.Add(legend1);
             chart1.Location = new Point(826, 295);
             chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chart1.Series.Add(series1);
             chart1.Size = new Size(774, 528);
             chart1.TabIndex = 13;
             chart1.Text = "chart1";
             // 
+            // button1
+            // 
+            button1.Location = new Point(1054, 104);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 29);
+            button1.TabIndex = 14;
+            button1.Text = "Check";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // STT
+            // 
+            STT.DataPropertyName = "STT";
+            STT.HeaderText = "#";
+            STT.MinimumWidth = 8;
+            STT.Name = "STT";
+            STT.ReadOnly = true;
+            STT.Width = 50;
+            // 
+            // Key
+            // 
+            Key.DataPropertyName = "Key";
+            Key.HeaderText = "ID";
+            Key.MinimumWidth = 8;
+            Key.Name = "Key";
+            Key.ReadOnly = true;
+            Key.Width = 150;
+            // 
+            // NameCus
+            // 
+            NameCus.DataPropertyName = "NameCus";
+            NameCus.HeaderText = "Name";
+            NameCus.MinimumWidth = 8;
+            NameCus.Name = "NameCus";
+            NameCus.ReadOnly = true;
+            NameCus.Width = 200;
+            // 
+            // TotalSpending
+            // 
+            TotalSpending.DataPropertyName = "TotalSpending";
+            TotalSpending.HeaderText = "Spending";
+            TotalSpending.MinimumWidth = 8;
+            TotalSpending.Name = "TotalSpending";
+            TotalSpending.ReadOnly = true;
+            TotalSpending.Width = 200;
+            // 
             // CustomerForm
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1653, 944);
+            Controls.Add(button1);
             Controls.Add(chart1);
             Controls.Add(lblVisualization);
             Controls.Add(panel1);
             Controls.Add(lblCustomerRanking);
             Controls.Add(lblTop);
-            Controls.Add(cmbBxTop);
+            Controls.Add(cbbTop);
             Controls.Add(lblRankName);
             Controls.Add(lblEndDate);
-            Controls.Add(dtpEndDate);
-            Controls.Add(dtpStartDate);
-            Controls.Add(cmbBxRankName);
+            Controls.Add(dateTimePickerEnd);
+            Controls.Add(dateTimePickerStart);
+            Controls.Add(cbbRank);
             Controls.Add(lblStartDate);
-            Controls.Add(dataGridView1);
+            Controls.Add(dgvCustomerData);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
             Name = "CustomerForm";
             Text = "CustomerForm";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Load += CustomerForm_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvCustomerData).EndInit();
             ((System.ComponentModel.ISupportInitialize)chart1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -239,22 +259,23 @@
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView dgvCustomerData;
         private Label lblStartDate;
-        private ComboBox cmbBxRankName;
-        private DateTimePicker dtpStartDate;
-        private DateTimePicker dtpEndDate;
+        private ComboBox cbbRank;
+        private DateTimePicker dateTimePickerStart;
+        private DateTimePicker dateTimePickerEnd;
         private Label lblEndDate;
         private Label lblRankName;
-        private ComboBox cmbBxTop;
+        private ComboBox cbbTop;
         private Label lblTop;
         private Label lblCustomerRanking;
         private Panel panel1;
-        private DataGridViewTextBoxColumn ColOrder;
-        private DataGridViewTextBoxColumn ColCustomerId;
-        private DataGridViewTextBoxColumn ColCustomerName;
-        private DataGridViewTextBoxColumn ColMaximumSpending;
         private Label lblVisualization;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private Button button1;
+        private DataGridViewTextBoxColumn STT;
+        private DataGridViewTextBoxColumn Key;
+        private DataGridViewTextBoxColumn NameCus;
+        private DataGridViewTextBoxColumn TotalSpending;
     }
 }

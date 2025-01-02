@@ -28,7 +28,7 @@ namespace DL.Repositories.Implementations
         {
             try
             {
-                return await _context.Database.SqlQuery<DiscountInfo>($"SELECT * FROM dbo.fnGetOptimalCustomerPromotion({rankName}, {basePrice})").FirstOrDefaultAsync();
+                return await _context.Database.SqlQuery<DiscountInfo>($"SELECT * FROM dbo.GetOptimalCustomerPromotion({rankName}, {basePrice})").FirstOrDefaultAsync();
                 
             }
             catch(Exception)
@@ -41,7 +41,7 @@ namespace DL.Repositories.Implementations
         {
             try
             {
-                return await _context.Database.SqlQuery<DiscountInfo>($"SELECT * FROM dbo.fnGetOptimalOrderPromotion({basePrice})").FirstOrDefaultAsync();
+                return await _context.Database.SqlQuery<DiscountInfo>($"SELECT * FROM dbo.GetOptimalOrderPromotion({basePrice})").FirstOrDefaultAsync();
             }
             catch(Exception)
             {

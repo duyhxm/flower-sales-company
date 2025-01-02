@@ -10,7 +10,22 @@
     <Compile Update="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="SalesEmployee\AccesoryHistoryProfitRate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\ChartAccessoryRate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\ChartFlowerRate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\CreateProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="SalesEmployee\CustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesEmployee\FlowerHistoryProfitRate.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SalesEmployee\MaterialAdjustmentForm.cs">

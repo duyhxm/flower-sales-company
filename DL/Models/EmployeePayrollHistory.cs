@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class EmployeePayrollHistory
 {
-    public int PeriodId { get; set; }
+    public string PeriodId { get; set; } = null!;
 
     public string EmployeeId { get; set; } = null!;
 

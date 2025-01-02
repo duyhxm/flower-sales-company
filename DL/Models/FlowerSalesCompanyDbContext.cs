@@ -147,7 +147,7 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(DbContextHelper.GetConnectionString("SQLServer"));
+        optionsBuilder.UseSqlServer(DbContextHelper.GetConnectionString("AzureSQLServer"));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -619,7 +619,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.ToTable("EmployeePayrollHistory");
 
-            entity.Property(e => e.PeriodId).HasColumnName("PeriodID");
+            entity.Property(e => e.PeriodId)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("PeriodID");
             entity.Property(e => e.EmployeeId)
                 .HasMaxLength(10)
                 .IsUnicode(false)
@@ -1043,7 +1047,11 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
             entity.HasIndex(e => new { e.PayrollMonth, e.PayrollYear }, "UQ_PayrollMonth_PayrollYear_Payroll").IsUnique();
 
-            entity.Property(e => e.PeriodId).HasColumnName("PeriodID");
+            entity.Property(e => e.PeriodId)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("PeriodID");
             entity.Property(e => e.PayrollMonth).HasColumnType("decimal(2, 0)");
             entity.Property(e => e.PayrollYear).HasColumnType("decimal(4, 0)");
         });

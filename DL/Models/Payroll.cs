@@ -5,7 +5,7 @@ namespace DL.Models;
 
 public partial class Payroll
 {
-    public int PeriodId { get; set; }
+    public string PeriodId { get; set; } = null!;
 
     public decimal? PayrollMonth { get; set; }
 

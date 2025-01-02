@@ -28,65 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             tbConMaterialAdjustment = new TabControl();
             tpFlowerProfitRate = new TabPage();
-            btnSaveFPrice = new Button();
-            btnAddNewFPrice = new Button();
-            btnAdjustFPrice = new Button();
-            lblDateApply = new Label();
-            cmbBxFChar = new ComboBox();
-            cmbBxFColor = new ComboBox();
+            cbbChar = new ComboBox();
+            cbbColor = new ComboBox();
             lblFChar = new Label();
             lblFColor = new Label();
-            cmbBxFTypes = new ComboBox();
+            cbbType = new ComboBox();
             lblFType = new Label();
-            dtpApplyDate = new DateTimePicker();
             dgvFlowerPrice = new DataGridView();
-            ColFlowerId = new DataGridViewTextBoxColumn();
-            ColFlowerName = new DataGridViewTextBoxColumn();
-            ColFType = new DataGridViewTextBoxColumn();
-            ColFColor = new DataGridViewTextBoxColumn();
-            ColFChar = new DataGridViewTextBoxColumn();
-            ColCurrentFProfitRate = new DataGridViewTextBoxColumn();
+            FlowerID = new DataGridViewTextBoxColumn();
+            FlowerName = new DataGridViewTextBoxColumn();
+            FTypeName = new DataGridViewTextBoxColumn();
+            FColorName = new DataGridViewTextBoxColumn();
+            FCharacteristicName = new DataGridViewTextBoxColumn();
+            ProfitRate = new DataGridViewTextBoxColumn();
+            HistoryRateFlower = new DataGridViewImageColumn();
+            HistoryProfitRate = new DataGridViewImageColumn();
             tpAccessoryProfitRate = new TabPage();
-            lblApplyEndDateA = new Label();
-            dtpApplyEndDateA = new DateTimePicker();
-            btnSaveA = new Button();
-            btnAddNewA = new Button();
-            btnAdjustA = new Button();
-            lblApplyStartDateA = new Label();
-            dtpApplyStartDateA = new DateTimePicker();
             dgvAccessoryPrice = new DataGridView();
-            ColAccessoryId = new DataGridViewTextBoxColumn();
-            ColAccessoryName = new DataGridViewTextBoxColumn();
-            ColCurrentAProfitRate = new DataGridViewTextBoxColumn();
-            tpFlowerPriceHistory = new TabPage();
-            tpAccessoryPriceHistory = new TabPage();
-            chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            MaterialId = new DataGridViewTextBoxColumn();
+            MaterialName = new DataGridViewTextBoxColumn();
+            ProfitRateA = new DataGridViewTextBoxColumn();
+            HistoryRateChart = new DataGridViewImageColumn();
+            AccesoryHistoryPrice = new DataGridViewImageColumn();
             tbConMaterialAdjustment.SuspendLayout();
             tpFlowerProfitRate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvFlowerPrice).BeginInit();
             tpAccessoryProfitRate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvAccessoryPrice).BeginInit();
-            tpFlowerPriceHistory.SuspendLayout();
-            tpAccessoryPriceHistory.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)chart1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)chart2).BeginInit();
             SuspendLayout();
             // 
             // tbConMaterialAdjustment
             // 
             tbConMaterialAdjustment.Controls.Add(tpFlowerProfitRate);
             tbConMaterialAdjustment.Controls.Add(tpAccessoryProfitRate);
-            tbConMaterialAdjustment.Controls.Add(tpFlowerPriceHistory);
-            tbConMaterialAdjustment.Controls.Add(tpAccessoryPriceHistory);
             tbConMaterialAdjustment.Dock = DockStyle.Fill;
             tbConMaterialAdjustment.Location = new Point(0, 0);
             tbConMaterialAdjustment.Name = "tbConMaterialAdjustment";
@@ -96,17 +72,12 @@
             // 
             // tpFlowerProfitRate
             // 
-            tpFlowerProfitRate.Controls.Add(btnSaveFPrice);
-            tpFlowerProfitRate.Controls.Add(btnAddNewFPrice);
-            tpFlowerProfitRate.Controls.Add(btnAdjustFPrice);
-            tpFlowerProfitRate.Controls.Add(lblDateApply);
-            tpFlowerProfitRate.Controls.Add(cmbBxFChar);
-            tpFlowerProfitRate.Controls.Add(cmbBxFColor);
+            tpFlowerProfitRate.Controls.Add(cbbChar);
+            tpFlowerProfitRate.Controls.Add(cbbColor);
             tpFlowerProfitRate.Controls.Add(lblFChar);
             tpFlowerProfitRate.Controls.Add(lblFColor);
-            tpFlowerProfitRate.Controls.Add(cmbBxFTypes);
+            tpFlowerProfitRate.Controls.Add(cbbType);
             tpFlowerProfitRate.Controls.Add(lblFType);
-            tpFlowerProfitRate.Controls.Add(dtpApplyDate);
             tpFlowerProfitRate.Controls.Add(dgvFlowerPrice);
             tpFlowerProfitRate.Location = new Point(4, 41);
             tpFlowerProfitRate.Name = "tpFlowerProfitRate";
@@ -116,57 +87,23 @@
             tpFlowerProfitRate.Text = "Flower";
             tpFlowerProfitRate.UseVisualStyleBackColor = true;
             // 
-            // btnSaveFPrice
+            // cbbChar
             // 
-            btnSaveFPrice.Location = new Point(1382, 533);
-            btnSaveFPrice.Name = "btnSaveFPrice";
-            btnSaveFPrice.Size = new Size(188, 56);
-            btnSaveFPrice.TabIndex = 11;
-            btnSaveFPrice.Text = "Save";
-            btnSaveFPrice.UseVisualStyleBackColor = true;
+            cbbChar.FormattingEnabled = true;
+            cbbChar.Location = new Point(586, 105);
+            cbbChar.Name = "cbbChar";
+            cbbChar.Size = new Size(242, 40);
+            cbbChar.TabIndex = 7;
+            cbbChar.SelectedValueChanged += cbbChar_SelectedValueChanged;
             // 
-            // btnAddNewFPrice
+            // cbbColor
             // 
-            btnAddNewFPrice.Location = new Point(1382, 471);
-            btnAddNewFPrice.Name = "btnAddNewFPrice";
-            btnAddNewFPrice.Size = new Size(188, 56);
-            btnAddNewFPrice.TabIndex = 10;
-            btnAddNewFPrice.Text = "Add New";
-            btnAddNewFPrice.UseVisualStyleBackColor = true;
-            // 
-            // btnAdjustFPrice
-            // 
-            btnAdjustFPrice.Location = new Point(1382, 409);
-            btnAdjustFPrice.Name = "btnAdjustFPrice";
-            btnAdjustFPrice.Size = new Size(188, 56);
-            btnAdjustFPrice.TabIndex = 9;
-            btnAdjustFPrice.Text = "Adjust";
-            btnAdjustFPrice.UseVisualStyleBackColor = true;
-            // 
-            // lblDateApply
-            // 
-            lblDateApply.AutoSize = true;
-            lblDateApply.Location = new Point(1321, 303);
-            lblDateApply.Name = "lblDateApply";
-            lblDateApply.Size = new Size(132, 32);
-            lblDateApply.TabIndex = 8;
-            lblDateApply.Text = "Apply Date";
-            // 
-            // cmbBxFChar
-            // 
-            cmbBxFChar.FormattingEnabled = true;
-            cmbBxFChar.Location = new Point(586, 105);
-            cmbBxFChar.Name = "cmbBxFChar";
-            cmbBxFChar.Size = new Size(242, 40);
-            cmbBxFChar.TabIndex = 7;
-            // 
-            // cmbBxFColor
-            // 
-            cmbBxFColor.FormattingEnabled = true;
-            cmbBxFColor.Location = new Point(325, 105);
-            cmbBxFColor.Name = "cmbBxFColor";
-            cmbBxFColor.Size = new Size(242, 40);
-            cmbBxFColor.TabIndex = 6;
+            cbbColor.FormattingEnabled = true;
+            cbbColor.Location = new Point(325, 105);
+            cbbColor.Name = "cbbColor";
+            cbbColor.Size = new Size(242, 40);
+            cbbColor.TabIndex = 6;
+            cbbColor.SelectedValueChanged += cbbColor_SelectedValueChanged;
             // 
             // lblFChar
             // 
@@ -186,13 +123,14 @@
             lblFColor.TabIndex = 4;
             lblFColor.Text = "Floral Color";
             // 
-            // cmbBxFTypes
+            // cbbType
             // 
-            cmbBxFTypes.FormattingEnabled = true;
-            cmbBxFTypes.Location = new Point(63, 105);
-            cmbBxFTypes.Name = "cmbBxFTypes";
-            cmbBxFTypes.Size = new Size(242, 40);
-            cmbBxFTypes.TabIndex = 3;
+            cbbType.FormattingEnabled = true;
+            cbbType.Location = new Point(63, 105);
+            cbbType.Name = "cbbType";
+            cbbType.Size = new Size(242, 40);
+            cbbType.TabIndex = 3;
+            cbbType.SelectedValueChanged += cbbType_SelectedValueChanged;
             // 
             // lblFType
             // 
@@ -203,239 +141,140 @@
             lblFType.TabIndex = 2;
             lblFType.Text = "Floral Type";
             // 
-            // dtpApplyDate
-            // 
-            dtpApplyDate.CustomFormat = "MM/yyyy";
-            dtpApplyDate.Format = DateTimePickerFormat.Custom;
-            dtpApplyDate.Location = new Point(1463, 300);
-            dtpApplyDate.Name = "dtpApplyDate";
-            dtpApplyDate.Size = new Size(149, 39);
-            dtpApplyDate.TabIndex = 1;
-            // 
             // dgvFlowerPrice
             // 
+            dgvFlowerPrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvFlowerPrice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFlowerPrice.Columns.AddRange(new DataGridViewColumn[] { ColFlowerId, ColFlowerName, ColFType, ColFColor, ColFChar, ColCurrentFProfitRate });
-            dgvFlowerPrice.Location = new Point(15, 236);
+            dgvFlowerPrice.Columns.AddRange(new DataGridViewColumn[] { FlowerID, FlowerName, FTypeName, FColorName, FCharacteristicName, ProfitRate, HistoryRateFlower, HistoryProfitRate });
+            dgvFlowerPrice.Location = new Point(15, 212);
             dgvFlowerPrice.Name = "dgvFlowerPrice";
             dgvFlowerPrice.RowHeadersWidth = 62;
-            dgvFlowerPrice.Size = new Size(1300, 500);
+            dgvFlowerPrice.Size = new Size(1391, 500);
             dgvFlowerPrice.TabIndex = 0;
+            dgvFlowerPrice.CellContentClick += dgvFlowerPrice_CellContentClick;
             // 
-            // ColFlowerId
+            // FlowerID
             // 
-            ColFlowerId.HeaderText = "ID";
-            ColFlowerId.MinimumWidth = 8;
-            ColFlowerId.Name = "ColFlowerId";
-            ColFlowerId.ReadOnly = true;
-            ColFlowerId.Width = 150;
+            FlowerID.DataPropertyName = "FlowerID";
+            FlowerID.HeaderText = "ID";
+            FlowerID.MinimumWidth = 8;
+            FlowerID.Name = "FlowerID";
+            FlowerID.ReadOnly = true;
             // 
-            // ColFlowerName
+            // FlowerName
             // 
-            ColFlowerName.HeaderText = "Name";
-            ColFlowerName.MinimumWidth = 8;
-            ColFlowerName.Name = "ColFlowerName";
-            ColFlowerName.ReadOnly = true;
-            ColFlowerName.Width = 250;
+            FlowerName.DataPropertyName = "FlowerName";
+            FlowerName.HeaderText = "Name";
+            FlowerName.MinimumWidth = 8;
+            FlowerName.Name = "FlowerName";
+            FlowerName.ReadOnly = true;
             // 
-            // ColFType
+            // FTypeName
             // 
-            ColFType.HeaderText = "FType";
-            ColFType.MinimumWidth = 8;
-            ColFType.Name = "ColFType";
-            ColFType.ReadOnly = true;
-            ColFType.Width = 200;
+            FTypeName.DataPropertyName = "FTypeName";
+            FTypeName.HeaderText = "FType";
+            FTypeName.MinimumWidth = 8;
+            FTypeName.Name = "FTypeName";
+            FTypeName.ReadOnly = true;
             // 
-            // ColFColor
+            // FColorName
             // 
-            ColFColor.HeaderText = "FColor";
-            ColFColor.MinimumWidth = 8;
-            ColFColor.Name = "ColFColor";
-            ColFColor.ReadOnly = true;
-            ColFColor.Width = 150;
+            FColorName.DataPropertyName = "FColorName";
+            FColorName.HeaderText = "FColor";
+            FColorName.MinimumWidth = 8;
+            FColorName.Name = "FColorName";
+            FColorName.ReadOnly = true;
             // 
-            // ColFChar
+            // FCharacteristicName
             // 
-            ColFChar.HeaderText = "FChar";
-            ColFChar.MinimumWidth = 8;
-            ColFChar.Name = "ColFChar";
-            ColFChar.ReadOnly = true;
-            ColFChar.Width = 150;
+            FCharacteristicName.DataPropertyName = "FCharacteristicName";
+            FCharacteristicName.HeaderText = "FChar";
+            FCharacteristicName.MinimumWidth = 8;
+            FCharacteristicName.Name = "FCharacteristicName";
+            FCharacteristicName.ReadOnly = true;
             // 
-            // ColCurrentFProfitRate
+            // ProfitRate
             // 
-            ColCurrentFProfitRate.HeaderText = "AsIs PrfitRate";
-            ColCurrentFProfitRate.MinimumWidth = 8;
-            ColCurrentFProfitRate.Name = "ColCurrentFProfitRate";
-            ColCurrentFProfitRate.ReadOnly = true;
-            ColCurrentFProfitRate.Width = 200;
+            ProfitRate.DataPropertyName = "ProfitRate";
+            ProfitRate.HeaderText = "AsIs PrfitRate";
+            ProfitRate.MinimumWidth = 8;
+            ProfitRate.Name = "ProfitRate";
+            ProfitRate.ReadOnly = true;
+            // 
+            // HistoryRateFlower
+            // 
+            HistoryRateFlower.HeaderText = "HistoryPrice";
+            HistoryRateFlower.Image = Properties.Resources.details;
+            HistoryRateFlower.MinimumWidth = 8;
+            HistoryRateFlower.Name = "HistoryRateFlower";
+            // 
+            // HistoryProfitRate
+            // 
+            HistoryProfitRate.HeaderText = "HistoryProfitRate";
+            HistoryProfitRate.Image = Properties.Resources.addition;
+            HistoryProfitRate.MinimumWidth = 8;
+            HistoryProfitRate.Name = "HistoryProfitRate";
             // 
             // tpAccessoryProfitRate
             // 
-            tpAccessoryProfitRate.Controls.Add(lblApplyEndDateA);
-            tpAccessoryProfitRate.Controls.Add(dtpApplyEndDateA);
-            tpAccessoryProfitRate.Controls.Add(btnSaveA);
-            tpAccessoryProfitRate.Controls.Add(btnAddNewA);
-            tpAccessoryProfitRate.Controls.Add(btnAdjustA);
-            tpAccessoryProfitRate.Controls.Add(lblApplyStartDateA);
-            tpAccessoryProfitRate.Controls.Add(dtpApplyStartDateA);
             tpAccessoryProfitRate.Controls.Add(dgvAccessoryPrice);
-            tpAccessoryProfitRate.Location = new Point(4, 41);
+            tpAccessoryProfitRate.Location = new Point(4, 34);
             tpAccessoryProfitRate.Name = "tpAccessoryProfitRate";
             tpAccessoryProfitRate.Padding = new Padding(3);
-            tpAccessoryProfitRate.Size = new Size(1645, 899);
+            tpAccessoryProfitRate.Size = new Size(1645, 906);
             tpAccessoryProfitRate.TabIndex = 1;
             tpAccessoryProfitRate.Text = "Acessory";
             tpAccessoryProfitRate.UseVisualStyleBackColor = true;
             // 
-            // lblApplyEndDateA
-            // 
-            lblApplyEndDateA.AutoSize = true;
-            lblApplyEndDateA.Location = new Point(1008, 183);
-            lblApplyEndDateA.Name = "lblApplyEndDateA";
-            lblApplyEndDateA.Size = new Size(111, 32);
-            lblApplyEndDateA.TabIndex = 8;
-            lblApplyEndDateA.Text = "End Date";
-            // 
-            // dtpApplyEndDateA
-            // 
-            dtpApplyEndDateA.CustomFormat = "dd/MM/yyyy";
-            dtpApplyEndDateA.Format = DateTimePickerFormat.Custom;
-            dtpApplyEndDateA.Location = new Point(1136, 179);
-            dtpApplyEndDateA.Name = "dtpApplyEndDateA";
-            dtpApplyEndDateA.Size = new Size(202, 39);
-            dtpApplyEndDateA.TabIndex = 7;
-            // 
-            // btnSaveA
-            // 
-            btnSaveA.Location = new Point(1028, 399);
-            btnSaveA.Name = "btnSaveA";
-            btnSaveA.Size = new Size(188, 56);
-            btnSaveA.TabIndex = 6;
-            btnSaveA.Text = "Save";
-            btnSaveA.UseVisualStyleBackColor = true;
-            // 
-            // btnAddNewA
-            // 
-            btnAddNewA.Location = new Point(1028, 337);
-            btnAddNewA.Name = "btnAddNewA";
-            btnAddNewA.Size = new Size(188, 56);
-            btnAddNewA.TabIndex = 5;
-            btnAddNewA.Text = "Add New";
-            btnAddNewA.UseVisualStyleBackColor = true;
-            // 
-            // btnAdjustA
-            // 
-            btnAdjustA.Location = new Point(1028, 275);
-            btnAdjustA.Name = "btnAdjustA";
-            btnAdjustA.Size = new Size(188, 56);
-            btnAdjustA.TabIndex = 4;
-            btnAdjustA.Text = "Adjust";
-            btnAdjustA.UseVisualStyleBackColor = true;
-            // 
-            // lblApplyStartDateA
-            // 
-            lblApplyStartDateA.AutoSize = true;
-            lblApplyStartDateA.Location = new Point(1008, 126);
-            lblApplyStartDateA.Name = "lblApplyStartDateA";
-            lblApplyStartDateA.Size = new Size(119, 32);
-            lblApplyStartDateA.TabIndex = 3;
-            lblApplyStartDateA.Text = "Start Date";
-            // 
-            // dtpApplyStartDateA
-            // 
-            dtpApplyStartDateA.CustomFormat = "dd/MM/yyyy";
-            dtpApplyStartDateA.Format = DateTimePickerFormat.Custom;
-            dtpApplyStartDateA.Location = new Point(1136, 121);
-            dtpApplyStartDateA.Name = "dtpApplyStartDateA";
-            dtpApplyStartDateA.Size = new Size(202, 39);
-            dtpApplyStartDateA.TabIndex = 2;
-            // 
             // dgvAccessoryPrice
             // 
+            dgvAccessoryPrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAccessoryPrice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvAccessoryPrice.Columns.AddRange(new DataGridViewColumn[] { ColAccessoryId, ColAccessoryName, ColCurrentAProfitRate });
-            dgvAccessoryPrice.Location = new Point(88, 92);
+            dgvAccessoryPrice.Columns.AddRange(new DataGridViewColumn[] { MaterialId, MaterialName, ProfitRateA, HistoryRateChart, AccesoryHistoryPrice });
+            dgvAccessoryPrice.Location = new Point(61, 92);
             dgvAccessoryPrice.Name = "dgvAccessoryPrice";
             dgvAccessoryPrice.RowHeadersWidth = 62;
-            dgvAccessoryPrice.Size = new Size(914, 573);
+            dgvAccessoryPrice.Size = new Size(941, 573);
             dgvAccessoryPrice.TabIndex = 0;
+            dgvAccessoryPrice.CellContentClick += dgvAccessoryPrice_CellContentClick;
             // 
-            // ColAccessoryId
+            // MaterialId
             // 
-            ColAccessoryId.HeaderText = "ID";
-            ColAccessoryId.MinimumWidth = 8;
-            ColAccessoryId.Name = "ColAccessoryId";
-            ColAccessoryId.ReadOnly = true;
-            ColAccessoryId.Width = 150;
+            MaterialId.DataPropertyName = "MaterialId";
+            MaterialId.HeaderText = "ID";
+            MaterialId.MinimumWidth = 8;
+            MaterialId.Name = "MaterialId";
+            MaterialId.ReadOnly = true;
             // 
-            // ColAccessoryName
+            // MaterialName
             // 
-            ColAccessoryName.HeaderText = "Name";
-            ColAccessoryName.MinimumWidth = 8;
-            ColAccessoryName.Name = "ColAccessoryName";
-            ColAccessoryName.ReadOnly = true;
-            ColAccessoryName.Width = 200;
+            MaterialName.DataPropertyName = "MaterialName";
+            MaterialName.HeaderText = "Name";
+            MaterialName.MinimumWidth = 8;
+            MaterialName.Name = "MaterialName";
+            MaterialName.ReadOnly = true;
             // 
-            // ColCurrentAProfitRate
+            // ProfitRateA
             // 
-            ColCurrentAProfitRate.HeaderText = "AsIs PrfitRate";
-            ColCurrentAProfitRate.MinimumWidth = 8;
-            ColCurrentAProfitRate.Name = "ColCurrentAProfitRate";
-            ColCurrentAProfitRate.ReadOnly = true;
-            ColCurrentAProfitRate.Width = 250;
+            ProfitRateA.DataPropertyName = "ProfitRateA";
+            ProfitRateA.HeaderText = "AsIs PrfitRate";
+            ProfitRateA.MinimumWidth = 8;
+            ProfitRateA.Name = "ProfitRateA";
+            ProfitRateA.ReadOnly = true;
             // 
-            // tpFlowerPriceHistory
+            // HistoryRateChart
             // 
-            tpFlowerPriceHistory.Controls.Add(chart1);
-            tpFlowerPriceHistory.Location = new Point(4, 41);
-            tpFlowerPriceHistory.Name = "tpFlowerPriceHistory";
-            tpFlowerPriceHistory.Size = new Size(1645, 899);
-            tpFlowerPriceHistory.TabIndex = 2;
-            tpFlowerPriceHistory.Text = "Flower Price History";
-            tpFlowerPriceHistory.UseVisualStyleBackColor = true;
+            HistoryRateChart.HeaderText = "HistoryRateChart";
+            HistoryRateChart.Image = Properties.Resources.details;
+            HistoryRateChart.MinimumWidth = 8;
+            HistoryRateChart.Name = "HistoryRateChart";
             // 
-            // tpAccessoryPriceHistory
+            // AccesoryHistoryPrice
             // 
-            tpAccessoryPriceHistory.Controls.Add(chart2);
-            tpAccessoryPriceHistory.Location = new Point(4, 41);
-            tpAccessoryPriceHistory.Name = "tpAccessoryPriceHistory";
-            tpAccessoryPriceHistory.Size = new Size(1645, 899);
-            tpAccessoryPriceHistory.TabIndex = 3;
-            tpAccessoryPriceHistory.Text = "Accessory Price History";
-            tpAccessoryPriceHistory.UseVisualStyleBackColor = true;
-            // 
-            // chart1
-            // 
-            chartArea3.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            chart1.Legends.Add(legend3);
-            chart1.Location = new Point(135, 310);
-            chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            chart1.Series.Add(series3);
-            chart1.Size = new Size(850, 450);
-            chart1.TabIndex = 0;
-            chart1.Text = "chart1";
-            // 
-            // chart2
-            // 
-            chartArea2.Name = "ChartArea1";
-            chart2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            chart2.Legends.Add(legend2);
-            chart2.Location = new Point(240, 223);
-            chart2.Name = "chart2";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            chart2.Series.Add(series2);
-            chart2.Size = new Size(889, 522);
-            chart2.TabIndex = 0;
-            chart2.Text = "chart2";
+            AccesoryHistoryPrice.HeaderText = "AccesoryHistoryPrice";
+            AccesoryHistoryPrice.Image = Properties.Resources.addition;
+            AccesoryHistoryPrice.MinimumWidth = 8;
+            AccesoryHistoryPrice.Name = "AccesoryHistoryPrice";
             // 
             // MaterialAdjustmentForm
             // 
@@ -448,17 +287,13 @@
             Margin = new Padding(4);
             Name = "MaterialAdjustmentForm";
             Text = "MaterialAdjustmentForm";
+            Load += MaterialAdjustmentForm_Load;
             tbConMaterialAdjustment.ResumeLayout(false);
             tpFlowerProfitRate.ResumeLayout(false);
             tpFlowerProfitRate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvFlowerPrice).EndInit();
             tpAccessoryProfitRate.ResumeLayout(false);
-            tpAccessoryProfitRate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvAccessoryPrice).EndInit();
-            tpFlowerPriceHistory.ResumeLayout(false);
-            tpAccessoryPriceHistory.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)chart1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)chart2).EndInit();
             ResumeLayout(false);
         }
 
@@ -467,38 +302,26 @@
         private TabControl tbConMaterialAdjustment;
         private TabPage tpFlowerProfitRate;
         private TabPage tpAccessoryProfitRate;
-        private TabPage tpFlowerPriceHistory;
         private DataGridView dgvFlowerPrice;
         private Label lblFChar;
         private Label lblFColor;
-        private ComboBox cmbBxFTypes;
+        private ComboBox cbbType;
         private Label lblFType;
-        private DateTimePicker dtpApplyDate;
-        private TabPage tpAccessoryPriceHistory;
-        private ComboBox cmbBxFChar;
-        private ComboBox cmbBxFColor;
-        private Label lblDateApply;
-        private Button btnAdjustFPrice;
-        private Button btnAddNewFPrice;
-        private Button btnSaveFPrice;
+        private ComboBox cbbChar;
+        private ComboBox cbbColor;
         private DataGridView dgvAccessoryPrice;
-        private Button btnSaveA;
-        private Button btnAddNewA;
-        private Button btnAdjustA;
-        private Label lblApplyStartDateA;
-        private DateTimePicker dtpApplyStartDateA;
-        private DateTimePicker dtpApplyEndDateA;
-        private Label lblApplyEndDateA;
-        private DataGridViewTextBoxColumn ColAccessoryId;
-        private DataGridViewTextBoxColumn ColAccessoryName;
-        private DataGridViewTextBoxColumn ColCurrentAProfitRate;
-        private DataGridViewTextBoxColumn ColFlowerId;
-        private DataGridViewTextBoxColumn ColFlowerName;
-        private DataGridViewTextBoxColumn ColFType;
-        private DataGridViewTextBoxColumn ColFColor;
-        private DataGridViewTextBoxColumn ColFChar;
-        private DataGridViewTextBoxColumn ColCurrentFProfitRate;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private DataGridViewTextBoxColumn FlowerID;
+        private DataGridViewTextBoxColumn FlowerName;
+        private DataGridViewTextBoxColumn FTypeName;
+        private DataGridViewTextBoxColumn FColorName;
+        private DataGridViewTextBoxColumn FCharacteristicName;
+        private DataGridViewTextBoxColumn ProfitRate;
+        private DataGridViewImageColumn HistoryRateFlower;
+        private DataGridViewImageColumn HistoryProfitRate;
+        private DataGridViewTextBoxColumn MaterialId;
+        private DataGridViewTextBoxColumn MaterialName;
+        private DataGridViewTextBoxColumn ProfitRateA;
+        private DataGridViewImageColumn HistoryRateChart;
+        private DataGridViewImageColumn AccesoryHistoryPrice;
     }
 }
