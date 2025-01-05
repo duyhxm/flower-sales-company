@@ -31,21 +31,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StoreMainForm));
             splConStoreMainForm = new SplitContainer();
             btnAccountInformation = new Button();
-            pictureBox_notificationBell = new PictureBox();
+            picBoxNotificationBell = new PictureBox();
             btnDailyTask = new Button();
             txtBx_currentUser = new TextBox();
             btnOrderHistory = new Button();
-            btnPreOrderList = new Button();
             btnProductList = new Button();
             btnInventory = new Button();
             btnCreateOrder = new Button();
             btnCreateProduct = new Button();
-            btnTestServiceBus = new Button();
             ((System.ComponentModel.ISupportInitialize)splConStoreMainForm).BeginInit();
             splConStoreMainForm.Panel1.SuspendLayout();
-            splConStoreMainForm.Panel2.SuspendLayout();
             splConStoreMainForm.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox_notificationBell).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picBoxNotificationBell).BeginInit();
             SuspendLayout();
             // 
             // splConStoreMainForm
@@ -57,19 +54,14 @@
             // 
             splConStoreMainForm.Panel1.BackColor = SystemColors.ActiveCaption;
             splConStoreMainForm.Panel1.Controls.Add(btnAccountInformation);
-            splConStoreMainForm.Panel1.Controls.Add(pictureBox_notificationBell);
+            splConStoreMainForm.Panel1.Controls.Add(picBoxNotificationBell);
             splConStoreMainForm.Panel1.Controls.Add(btnDailyTask);
             splConStoreMainForm.Panel1.Controls.Add(txtBx_currentUser);
             splConStoreMainForm.Panel1.Controls.Add(btnOrderHistory);
-            splConStoreMainForm.Panel1.Controls.Add(btnPreOrderList);
             splConStoreMainForm.Panel1.Controls.Add(btnProductList);
             splConStoreMainForm.Panel1.Controls.Add(btnInventory);
             splConStoreMainForm.Panel1.Controls.Add(btnCreateOrder);
             splConStoreMainForm.Panel1.Controls.Add(btnCreateProduct);
-            // 
-            // splConStoreMainForm.Panel2
-            // 
-            splConStoreMainForm.Panel2.Controls.Add(btnTestServiceBus);
             // 
             // btnAccountInformation
             // 
@@ -78,11 +70,11 @@
             btnAccountInformation.UseVisualStyleBackColor = true;
             btnAccountInformation.Click += btnAccountInformation_Click;
             // 
-            // pictureBox_notificationBell
+            // picBoxNotificationBell
             // 
-            resources.ApplyResources(pictureBox_notificationBell, "pictureBox_notificationBell");
-            pictureBox_notificationBell.Name = "pictureBox_notificationBell";
-            pictureBox_notificationBell.TabStop = false;
+            resources.ApplyResources(picBoxNotificationBell, "picBoxNotificationBell");
+            picBoxNotificationBell.Name = "picBoxNotificationBell";
+            picBoxNotificationBell.TabStop = false;
             // 
             // btnDailyTask
             // 
@@ -102,13 +94,6 @@
             btnOrderHistory.Name = "btnOrderHistory";
             btnOrderHistory.UseVisualStyleBackColor = true;
             btnOrderHistory.Click += btnOrderHistory_Click;
-            // 
-            // btnPreOrderList
-            // 
-            resources.ApplyResources(btnPreOrderList, "btnPreOrderList");
-            btnPreOrderList.Name = "btnPreOrderList";
-            btnPreOrderList.UseVisualStyleBackColor = true;
-            btnPreOrderList.Click += btnPreOrderList_Click;
             // 
             // btnProductList
             // 
@@ -138,13 +123,6 @@
             btnCreateProduct.UseVisualStyleBackColor = true;
             btnCreateProduct.Click += btnCreateProduct_Click;
             // 
-            // btnTestServiceBus
-            // 
-            resources.ApplyResources(btnTestServiceBus, "btnTestServiceBus");
-            btnTestServiceBus.Name = "btnTestServiceBus";
-            btnTestServiceBus.UseVisualStyleBackColor = true;
-            btnTestServiceBus.Click += btnTestServiceBus_Click;
-            // 
             // StoreMainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -156,10 +134,9 @@
             Load += StoreMainForm_Load;
             splConStoreMainForm.Panel1.ResumeLayout(false);
             splConStoreMainForm.Panel1.PerformLayout();
-            splConStoreMainForm.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splConStoreMainForm).EndInit();
             splConStoreMainForm.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox_notificationBell).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picBoxNotificationBell).EndInit();
             ResumeLayout(false);
         }
 
@@ -171,11 +148,9 @@
         private Button btnInventory;
         private Button btnCreateOrder;
         private Button btnOrderHistory;
-        private Button btnPreOrderList;
         private TextBox txtBx_currentUser;
         private Button btnDailyTask;
-        private PictureBox pictureBox_notificationBell;
-        private Button btnTestServiceBus;
+        private PictureBox picBoxNotificationBell;
         private Button btnAccountInformation;
     }
 }

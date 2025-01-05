@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DL.Models;
-using DTO;
+using DTO.Material;
 
 namespace DL.Repositories.Interfaces
 {
     public interface IMaterialRepository
     {
-        void Add(Material material);
+        void Add(MaterialDTO material);
 
-        Task<List<Material>> GetAll();
-        void Update(Material material);
-        void Delete(Material material);
+        Task<List<MaterialDTO>> GetAllMaterials();
+
+        void Update(MaterialDTO material);
+
+        void Delete(MaterialDTO material);
+
     }
 }

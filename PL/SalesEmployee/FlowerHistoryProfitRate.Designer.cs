@@ -47,17 +47,21 @@
             // 
             dataGridViewHistory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewHistory.Location = new Point(3, 3);
+            dataGridViewHistory.Dock = DockStyle.Top;
+            dataGridViewHistory.Location = new Point(0, 0);
+            dataGridViewHistory.Margin = new Padding(4, 5, 4, 5);
             dataGridViewHistory.Name = "dataGridViewHistory";
-            dataGridViewHistory.Size = new Size(1128, 423);
+            dataGridViewHistory.RowHeadersWidth = 62;
+            dataGridViewHistory.Size = new Size(1623, 500);
             dataGridViewHistory.TabIndex = 0;
             dataGridViewHistory.CellClick += dataGridViewHistory_CellClick;
             // 
             // btnOk
             // 
-            btnOk.Location = new Point(950, 534);
+            btnOk.Location = new Point(676, 670);
+            btnOk.Margin = new Padding(4, 5, 4, 5);
             btnOk.Name = "btnOk";
-            btnOk.Size = new Size(143, 50);
+            btnOk.Size = new Size(100, 40);
             btnOk.TabIndex = 2;
             btnOk.Text = "OK";
             btnOk.UseVisualStyleBackColor = true;
@@ -66,74 +70,83 @@
             // txtTargetId
             // 
             txtTargetId.Enabled = false;
-            txtTargetId.Location = new Point(90, 465);
+            txtTargetId.Location = new Point(129, 600);
+            txtTargetId.Margin = new Padding(4, 5, 4, 5);
             txtTargetId.Name = "txtTargetId";
-            txtTargetId.Size = new Size(133, 23);
+            txtTargetId.Size = new Size(188, 31);
             txtTargetId.TabIndex = 3;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(31, 470);
+            label1.Location = new Point(35, 600);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(53, 15);
+            label1.Size = new Size(83, 25);
             label1.TabIndex = 4;
-            label1.Text = "TargetID:";
+            label1.Text = "Target ID";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(267, 470);
+            label2.Location = new Point(344, 603);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(56, 15);
+            label2.Size = new Size(102, 25);
             label2.TabIndex = 6;
-            label2.Text = "Quantity:";
+            label2.Text = "Expected Q";
             // 
             // txtExpectedQuantity
             // 
-            txtExpectedQuantity.Location = new Point(328, 465);
+            txtExpectedQuantity.Location = new Point(451, 600);
+            txtExpectedQuantity.Margin = new Padding(4, 5, 4, 5);
             txtExpectedQuantity.Name = "txtExpectedQuantity";
-            txtExpectedQuantity.Size = new Size(133, 23);
+            txtExpectedQuantity.Size = new Size(188, 31);
             txtExpectedQuantity.TabIndex = 5;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(261, 509);
+            label5.Location = new Point(344, 644);
+            label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(62, 15);
+            label5.Size = new Size(57, 25);
             label5.TabIndex = 12;
-            label5.Text = "ProfitRate:";
+            label5.Text = "PRate";
             // 
             // txtProfitRate
             // 
-            txtProfitRate.Location = new Point(328, 504);
+            txtProfitRate.Location = new Point(451, 641);
+            txtProfitRate.Margin = new Padding(4, 5, 4, 5);
             txtProfitRate.Name = "txtProfitRate";
-            txtProfitRate.Size = new Size(133, 23);
+            txtProfitRate.Size = new Size(188, 31);
             txtProfitRate.TabIndex = 11;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(28, 509);
+            label6.Location = new Point(35, 644);
+            label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(56, 15);
+            label6.Size = new Size(87, 25);
             label6.TabIndex = 10;
-            label6.Text = "FlowerID:";
+            label6.Text = "Flower ID";
             // 
             // txtFlowerId
             // 
             txtFlowerId.Enabled = false;
-            txtFlowerId.Location = new Point(90, 504);
+            txtFlowerId.Location = new Point(129, 641);
+            txtFlowerId.Margin = new Padding(4, 5, 4, 5);
             txtFlowerId.Name = "txtFlowerId";
-            txtFlowerId.Size = new Size(133, 23);
+            txtFlowerId.Size = new Size(188, 31);
             txtFlowerId.TabIndex = 9;
             // 
             // btnAddNewFPrice
             // 
-            btnAddNewFPrice.Location = new Point(528, 496);
+            btnAddNewFPrice.Location = new Point(676, 617);
+            btnAddNewFPrice.Margin = new Padding(4, 5, 4, 5);
             btnAddNewFPrice.Name = "btnAddNewFPrice";
-            btnAddNewFPrice.Size = new Size(188, 37);
+            btnAddNewFPrice.Size = new Size(100, 40);
             btnAddNewFPrice.TabIndex = 14;
             btnAddNewFPrice.Text = "Add New";
             btnAddNewFPrice.UseVisualStyleBackColor = true;
@@ -141,9 +154,10 @@
             // 
             // btnAdjustFPrice
             // 
-            btnAdjustFPrice.Location = new Point(528, 453);
+            btnAdjustFPrice.Location = new Point(676, 564);
+            btnAdjustFPrice.Margin = new Padding(4, 5, 4, 5);
             btnAdjustFPrice.Name = "btnAdjustFPrice";
-            btnAdjustFPrice.Size = new Size(188, 37);
+            btnAdjustFPrice.Size = new Size(100, 40);
             btnAdjustFPrice.TabIndex = 13;
             btnAdjustFPrice.Text = "Adjust";
             btnAdjustFPrice.UseVisualStyleBackColor = true;
@@ -151,9 +165,9 @@
             // 
             // FlowerHistoryProfitRate
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1136, 596);
+            ClientSize = new Size(1623, 800);
             Controls.Add(btnAddNewFPrice);
             Controls.Add(btnAdjustFPrice);
             Controls.Add(label5);
@@ -166,7 +180,10 @@
             Controls.Add(txtTargetId);
             Controls.Add(btnOk);
             Controls.Add(dataGridViewHistory);
+            FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4, 5, 4, 5);
             Name = "FlowerHistoryProfitRate";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FlowerHistoryProfitRate";
             ((System.ComponentModel.ISupportInitialize)dataGridViewHistory).EndInit();
             ResumeLayout(false);

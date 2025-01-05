@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DTO.Enum
 {
-    public class PromotionType
+    public static class PromotionType
     {
         public const string ForCustomer = "Khách hàng";
+
         public const string ForOrder = "Đơn hàng";
     }
 }

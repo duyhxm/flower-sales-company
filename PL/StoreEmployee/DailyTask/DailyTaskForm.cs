@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using BL;
 using DTO;
 using DTO.Enum;
-using PL.StoreEmployee.DailyTask;
 using static BL.GeneralService;
 using System.Collections.Concurrent;
 using DTO.Product;
@@ -26,6 +25,7 @@ namespace PL.StoreEmployee
         //khai báo các service sử dụng
         private StoreService _storeService = new StoreService();
         private ProductService _productService = new ProductService();
+        private MaterialService _materialService = new MaterialService();
 
         //Khai báo các biến sử dụng
         private BindingList<PlannedProductDTO> _plannedProducts;
@@ -37,9 +37,13 @@ namespace PL.StoreEmployee
         public DailyTaskForm()
         {
             InitializeComponent();
+
             _plannedProducts = new BindingList<PlannedProductDTO>();
             _bindingSource = new BindingSource(_plannedProducts, null);
-            SetupDataGridView();
+
+            SetupDailyTasksDgv();
+            SetupFlowersDgv();
+            SetupAccessoriesDgv();
         }
 
         public static void Initialize()
@@ -73,32 +77,72 @@ namespace PL.StoreEmployee
             }
         }
 
-        private void SetupDataGridView()
+        private void SetupDailyTasksDgv()
         {
-            // Initialize the DataGridView and set its properties
             dgvDailyTasks.AutoGenerateColumns = false;
 
             dgvDailyTasks.Columns["ColProductId"].DataPropertyName = "ProductId";
-            dgvDailyTasks.Columns["ColProductName"].DataPropertyName = "ProductId";
+
+            dgvDailyTasks.Columns["ColFRName"].Width = 120;
+            dgvDailyTasks.Columns["ColFRName"].DataPropertyName = "FRName";
+
+            dgvDailyTasks.Columns["ColProductName"].DataPropertyName = "ProductName";
+
             dgvDailyTasks.Columns["ColNeededCreationQuantity"].DataPropertyName = "Quantity";
-            dgvDailyTasks.Columns["ColImplementationTime"].DataPropertyName = "ImplementationDateTime";
+            dgvDailyTasks.Columns["ColNeededCreationQuantity"].Width = 80;
+
+            dgvDailyTasks.Columns["ColImplementationTime"].DataPropertyName = "ImplementationDateTimeFormatted";
 
             // Set the data source
             dgvDailyTasks.DataSource = _bindingSource;
         }
 
+        private void SetupFlowersDgv()
+        {
+            dgvFlowers.AutoGenerateColumns = false;
+
+            dgvFlowers.Columns["ColFlowerId"].Width = 100;
+            dgvFlowers.Columns["ColFlowerId"].DataPropertyName = "FlowerId";
+
+            dgvFlowers.Columns["ColFlowerName"].Width = 200;
+            dgvFlowers.Columns["ColFlowerName"].DataPropertyName = "FlowerName";
+
+            dgvFlowers.Columns["ColFColor"].Width = 150;
+            dgvFlowers.Columns["ColFColor"].DataPropertyName = "ColorName";
+
+            dgvFlowers.Columns["ColFChar"].Width = 100;
+            dgvFlowers.Columns["ColFChar"].DataPropertyName = "CharName";
+
+            dgvFlowers.Columns["ColUsedFQuantity"].Width = 80;
+            dgvFlowers.Columns["ColUsedFQuantity"].DataPropertyName = "Quantity";
+        }
+
+        private void SetupAccessoriesDgv()
+        {
+            dgvAccessories.AutoGenerateColumns = false;
+
+            dgvAccessories.Columns["ColAccessoryId"].Width = 100;
+            dgvAccessories.Columns["ColAccessoryId"].DataPropertyName = "MaterialId";
+
+            dgvAccessories.Columns["ColAccessoryName"].Width = 200;
+            dgvAccessories.Columns["ColAccessoryName"].DataPropertyName = "MaterialName";
+
+            dgvAccessories.Columns["ColUsedAQuantity"].Width = 80;
+            dgvAccessories.Columns["ColUsedAQuantity"].DataPropertyName = "UsedQuantity";
+        }
+
         private async void dgvDailyTasks_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //User click nút xem chi tiết sản phẩm
-            if (e.ColumnIndex == 4)
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvDailyTasks.Columns["ColDetails"].Index)
             {
                 string productId = dgvDailyTasks.Rows[e.RowIndex].Cells[0].Value.ToString()!;
-                var detailProductForm = new DetailedProductForm(productId);
-                detailProductForm.ShowDialog();
+
+                await LoadDetailedProduct(productId);
             }
 
             //User click nút hoàn thành tạo sản phẩm
-            if (e.ColumnIndex == 5)
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvDailyTasks.Columns["ColCreate"].Index)
             {
                 var result = MessageBox.Show("Xác nhận rằng bạn đã tạo sản phẩm đúng với số lượng yêu cầu", "Thông báo", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
@@ -162,8 +206,8 @@ namespace PL.StoreEmployee
 
                             //Sau khi thêm sản phẩm thành công, tiếp tục cập nhật trạng thái vô trong bảng ProductCreationPlanHistory
                             string planStatus = PlanStatus.Completed;
-                            DateTimeOffset plannedDateTime = plannedProduct.PlannedDateTime;
-                            await _storeService.UpdateProductCreationPlanStatusAsync(plannedDateTime, createdDateTime, planStatus);
+                            //DateTimeOffset plannedDateTime = plannedProduct.PlannedDateTime;
+                            await _storeService.UpdateProductCreationPlanStatusAsync(plannedProduct, createdDateTime, planStatus);
 
                             //Sau khi cập nhật, gọi đến InventoryForm để load lại dữ liệu dữ database lên.
                             await InventoryForm.Instance.LoadMaterialInventory(LoginForm.Instance.LoginInformation.StoreID!);
@@ -171,12 +215,20 @@ namespace PL.StoreEmployee
 
                             //Sau khi cập nhật giao diện bên InventoryForm, thực hiện xoá sản phẩm khỏi danh sách DailyTasks
                             _plannedProducts.Remove(plannedProduct);
+
+                            if (_plannedProducts.Count == 0)
+                            {
+                                StoreMainForm.Instance.NotificationBellVisibility(false);
+                            }
+
+                            //Thêm sản phẩm vô trong ProductList Form
+                            ProductListForm.Instance.AddProductToDgv(plannedProduct);
+
+                            MessageBox.Show("Đã tạo mới sản phẩm thành công.", "Thông báo");
                         });
 
                         // Xử lý hàng đợi
                         await ProcessQueue();
-
-                        MessageBox.Show("Đã tạo mới sản phẩm thành công.", "Thông báo");
                     }
                     else
                     {
@@ -186,81 +238,24 @@ namespace PL.StoreEmployee
             }
         }
 
-        public async void LoadPlannedProducts(DateTimeOffset todayDateTime, string storeId)
+        public async Task LoadPlannedProducts(DateTime currentDate, string storeId, string planStatus)
         {
-            var plannedProducts = await GetPlannedProductsForStoreAsync(todayDateTime, storeId);
+            var plannedProducts = await _storeService.GetPlannedProductsForStoreAsync(currentDate, storeId, planStatus);
 
-            if (plannedProducts != null)
+            if (plannedProducts.Count != 0)
             {
                 _plannedProducts.Clear();
                 foreach (var pp in plannedProducts)
                 {
                     _plannedProducts.Add(pp);
                 }
+
+                StoreMainForm.Instance.NotificationBellVisibility(true);
             }
             else
             {
-                MessageBox.Show("Danh sách sản phẩm được lên kế hoạch cho cửa hàng hiện tại đang trống");
+                StoreMainForm.Instance.NotificationBellVisibility(false);
             }
-        }
-
-        private async Task<List<PlannedProductDTO>?> GetPlannedProductsForStoreAsync(DateTimeOffset plannedDateTime, string storeId)
-        {
-            try
-            {
-                var result = await _storeService.GetPlannedProductsForStoreAsync(plannedDateTime, storeId);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-        }
-
-        public async void LoadPlannedProduct(DateTimeOffset plannedDateTime)
-        {
-            var plannedProduct = await GetPlannedProductForStoreAsync(plannedDateTime);
-
-            if (plannedProduct != null)
-            {
-                _plannedProducts.Clear();
-                _plannedProducts.Add(plannedProduct);
-                _plannedDateTimes[_plannedProducts.Count - 1] = plannedProduct.PlannedDateTime;
-            }
-            else
-            {
-                MessageBox.Show("No planned product found for the given date.");
-            }
-        }
-
-        private async Task<PlannedProductDTO?> GetPlannedProductForStoreAsync(DateTimeOffset plannedDateTime)
-        {
-            try
-            {
-                var result = await _storeService.GetPlannedProductForStoreAsync(plannedDateTime);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-        }
-
-
-        private void AddNewPlannedProduct(DateTimeOffset plannedDateTime, string productId, string productName, DateTimeOffset implementationDateTime, short quantity)
-        {
-            var newProduct = new PlannedProductDTO
-            {
-                PlannedDateTime = plannedDateTime,
-                ProductId = productId,
-                ProductName = productName,
-                ImplementationDateTime = implementationDateTime,
-                Quantity = quantity
-            };
-
-            _plannedProducts.Add(newProduct);
         }
 
         private async Task ProcessQueue()
@@ -278,13 +273,46 @@ namespace PL.StoreEmployee
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"An error occurred: {ex.Message}");
+                    MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
             _isProcessingQueue = false;
         }
 
+        private async Task LoadDetailedProduct(string productId)
+        {
+            //Load phụ liệu
+            var detailedProducts = await _productService.GetDetailedProductsByProductIdAsync(productId);
+            var accessories = detailedProducts.Where(dp => dp.MaterialId.StartsWith("A")).ToList();
 
+            dgvAccessories.DataSource = accessories;
+
+            //Load hoa
+            //Load toàn bộ hoa với các thông tin chi tiết như tên màu sắc, tên loại hoa, tên đặc điểm
+            var detailedFlowers = await _materialService.GetAllFlowersAsync();
+            var transformedFlowers = detailedFlowers
+                                    .Join(detailedProducts,
+                                    df => df.FlowerID,
+                                    dp => dp.MaterialId,
+                                    (df, dp) => new
+                                    {
+                                        FlowerId = df.FlowerID,
+                                        FlowerName = dp.MaterialName,
+                                        ColorName = df.FColorName,
+                                        CharName = df.FCharacteristicName,
+                                        Quantity = dp.UsedQuantity
+                                    }).ToList();
+
+            dgvFlowers.DataSource = transformedFlowers;
+        }
+
+        private void DailyTaskForm_Load(object sender, EventArgs e)
+        {
+            if (dgvDailyTasks.Rows.Count == 0)
+            {
+                MessageBox.Show("Danh sách sản phẩm được lên kế hoạch cho cửa hàng hiện tại đang trống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }

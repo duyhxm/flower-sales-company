@@ -68,7 +68,7 @@
             dtpDeliveryDatetime = new DateTimePicker();
             lblPurchaseMethod = new Label();
             cmbBxPurchaseMethod = new ComboBox();
-            label1 = new Label();
+            lblDeliveryDateTime = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvDetailedOrder).BeginInit();
             SuspendLayout();
             // 
@@ -493,15 +493,15 @@
             cmbBxPurchaseMethod.Size = new Size(210, 40);
             cmbBxPurchaseMethod.TabIndex = 36;
             // 
-            // label1
+            // lblDeliveryDateTime
             // 
-            label1.AutoSize = true;
-            label1.ForeColor = Color.Black;
-            label1.Location = new Point(218, 300);
-            label1.Name = "label1";
-            label1.Size = new Size(161, 32);
-            label1.TabIndex = 37;
-            label1.Text = "Delivery Time";
+            lblDeliveryDateTime.AutoSize = true;
+            lblDeliveryDateTime.ForeColor = Color.Black;
+            lblDeliveryDateTime.Location = new Point(218, 300);
+            lblDeliveryDateTime.Name = "lblDeliveryDateTime";
+            lblDeliveryDateTime.Size = new Size(161, 32);
+            lblDeliveryDateTime.TabIndex = 37;
+            lblDeliveryDateTime.Text = "Delivery Time";
             // 
             // SalesOrderForm
             // 
@@ -510,7 +510,7 @@
             AutoSize = true;
             BackColor = SystemColors.Window;
             ClientSize = new Size(1653, 944);
-            Controls.Add(label1);
+            Controls.Add(lblDeliveryDateTime);
             Controls.Add(cmbBxPurchaseMethod);
             Controls.Add(lblPurchaseMethod);
             Controls.Add(dtpDeliveryDatetime);
@@ -596,6 +596,6 @@
         private DataGridViewTextBoxColumn ColLinePrice;
         private DataGridViewImageColumn ColRemove;
         private ComboBox cmbBxPurchaseMethod;
-        private Label label1;
+        private Label lblDeliveryDateTime;
     }
 }

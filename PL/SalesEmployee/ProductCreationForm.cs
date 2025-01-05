@@ -1,6 +1,4 @@
-﻿using DL.Models;
-using DL.Repositories.Implementations;
-using DTO.Product;
+﻿using DTO.Product;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,18 +8,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DTO.Enum;
+using BL;
+using DTO.Material;
 
 namespace PL.SalesEmployee
 {
-    public partial class CreateProduct : System.Windows.Forms.Form
+    public partial class ProductCreationForm : Form
     {
-        private static CreateProduct? _instance;
+        //Khai báo khởi tạo form
+        private static ProductCreationForm? _instance;
         private static readonly object _lock = new object();
-        private ProductRepository repository = new ProductRepository();
-        public CreateProduct()
+
+        //Khai báo các service
+        private MaterialService _materialService = new MaterialService();
+        private ProductService _productService = new ProductService();
+
+        //Khai báo các biến sử dụng
+        private List<MaterialDTO> _materials = new List<MaterialDTO>();
+
+        public ProductCreationForm()
         {
             InitializeComponent();
         }
+
         public static void Initialize()
         {
             if (_instance == null)
@@ -30,7 +40,7 @@ namespace PL.SalesEmployee
                 {
                     try
                     {
-                        _instance = new CreateProduct();
+                        _instance = new ProductCreationForm();
                     }
                     catch (Exception)
                     {
@@ -39,56 +49,94 @@ namespace PL.SalesEmployee
                 }
             }
         }
-        public static CreateProduct Instance
+
+        public static ProductCreationForm Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    throw new InvalidOperationException("MaterialDistributionForm is not initialized. Call Initialize() first.");
+                    throw new InvalidOperationException("ProductCreationForm chưa được khởi tạo. Gọi Initialize() trước tiên.");
                 }
                 return _instance;
             }
         }
-        private void LoadMaterialData()
+
+        //Load loại vật liệu
+        private void LoadMaterialType()
         {
-            using (var context = new FlowerSalesCompanyDbContext())
+            cmbBxMaterialType.Items.Add("All");
+            cmbBxMaterialType.Items.Add(DTO.Enum.MaterialType.Flower);
+            cmbBxMaterialType.Items.Add(DTO.Enum.MaterialType.Accessory);
+            cmbBxMaterialType.SelectedIndex = 0;
+        }
+
+        //Load danh sách các vật liệu
+        private async Task LoadMaterialData()
+        {
+            try
             {
-                var materials = context.Materials
-                    .Select(m => new
-                    {
-                        m.MaterialId,
-                        m.MaterialName,
-                        m.MaterialType,
-                        m.Unit
-                    })
-                    .ToList();
-                materialDataGridView.DataSource = materials;
+                _materials = await _materialService.GetAllMaterials();
+                FilterMaterials();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
-        private void LoadFloralRepresentationData()
+
+        //Load danh sách các hình thức sản phẩm
+        private async Task LoadFloralRepresentationData()
         {
-            using (var context = new FlowerSalesCompanyDbContext())
+            try
             {
-                var floralRepresentations = context.FloralRepresentations
-                    .Select(fr => new
-                    {
-                        fr.FrepresentationId,
-                        fr.Frname
-                    })
-                    .ToList();
-                cbbFr.DataSource = floralRepresentations;
+                var fRepresentations = await _materialService.GetAllFRepresentationsAsync();
+
+                cbbFr.DataSource = fRepresentations;
                 cbbFr.DisplayMember = "Frname";
                 cbbFr.ValueMember = "FrepresentationId";
             }
-        }
-        private void CreateProduct_Load(object sender, EventArgs e)
-        {
-            LoadMaterialData();
-            LoadFloralRepresentationData();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void FilterMaterials()
+        {
+            if (cmbBxMaterialType.Text == "All")
+            {
+                dgvMaterials.DataSource = _materials;
+                return;
+            }
+
+            if (cmbBxMaterialType.Text == DTO.Enum.MaterialType.Flower)
+            {
+                List<MaterialDTO> filteredMaterials = _materials.Where(m => m.MaterialType == DTO.Enum.MaterialType.Flower).ToList();
+
+                dgvMaterials.DataSource = filteredMaterials;
+                return;
+            }
+
+            if (cmbBxMaterialType.Text == DTO.Enum.MaterialType.Accessory)
+            {
+                List<MaterialDTO> filteredMaterials = _materials.Where(m => m.MaterialType == DTO.Enum.MaterialType.Accessory).ToList();
+
+                dgvMaterials.DataSource = filteredMaterials;
+                return;
+            }
+        }
+
+        //Khi form load xong
+        private async void CreateProduct_Load(object sender, EventArgs e)
+        {
+            LoadMaterialType();
+            await LoadMaterialData();
+            await LoadFloralRepresentationData();
+        }
+
+        //Khi nhấn tạo sản phẩm
+        private async void btnCreate_Click(object sender, EventArgs e)
         {
             try
             {
@@ -102,13 +150,14 @@ namespace PL.SalesEmployee
                 List<DetailedProductDTO> detailedProducts = new List<DetailedProductDTO>();
 
                 // Duyệt qua DataGridView để lấy dữ liệu của các hàng được chọn (checkbox)
-                foreach (DataGridViewRow row in materialDataGridView.Rows)
+                foreach (DataGridViewRow row in dgvMaterials.Rows)
                 {
                     // Kiểm tra checkbox
-                    DataGridViewCheckBoxCell checkBoxCell = row.Cells["Check"] as DataGridViewCheckBoxCell;
+                    DataGridViewCheckBoxCell? checkBoxCell = row.Cells["Check"] as DataGridViewCheckBoxCell;
+
                     if (checkBoxCell != null && checkBoxCell.Value is bool isChecked && isChecked)
                     {
-                        string materialId = row.Cells["MaterialId"].Value.ToString();
+                        string materialId = row.Cells["MaterialId"].Value.ToString()!;
 
                         // Lấy giá trị từ cột Quantity
                         var quantityCell = row.Cells["Quantity"];
@@ -145,12 +194,12 @@ namespace PL.SalesEmployee
                 };
 
                 // Gọi hàm thêm sản phẩm
-                ReturnedProductDTO result = await repository.AddAbstractProductAsync(product);
+                ReturnedProductDTO result = await _productService.AddAbstractProductAsync(product);
 
                 // Thông báo kết quả
                 if (result.HasExisted)
                 {
-                    MessageBox.Show($"Sản phẩm đã tồn tại: {result.Product.ProductName}");
+                    MessageBox.Show($"Sản phẩm đã tồn tại với tên gọi: {result.Product.ProductName}");
                 }
                 else
                 {
@@ -164,5 +213,9 @@ namespace PL.SalesEmployee
             }
         }
 
+        private void cmbBxMaterialType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            FilterMaterials();
+        }
     }
 }

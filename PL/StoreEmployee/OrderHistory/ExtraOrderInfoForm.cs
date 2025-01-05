@@ -17,28 +17,49 @@ namespace PL.StoreEmployee.OrderHistory
 {
     public partial class ExtraOrderInfoForm : Form
     {
-        private readonly SalesOrderDTO _salesOrder;
-        private readonly StoreService _storeService;
-        private readonly SalesOrderService _salesOrderService = new SalesOrderService();
+        //Khai báo các service
+        private StoreService _storeService = new StoreService();
+
+        private SalesOrderService _salesOrderService = new SalesOrderService();
+
+        private ProductService _productService = new ProductService();
+
+        //Khai báo các biến sử dụng
+        private SalesOrderDTO _salesOrder;
+
         private ShippingInformationDTO? _shippingInformation;
+
         private List<ShippingCompanyDTO> _shippingCompanyList = new List<ShippingCompanyDTO>();
 
-        public ExtraOrderInfoForm(SalesOrderDTO salesOrder, StoreService storeService)
+        public ExtraOrderInfoForm(SalesOrderDTO salesOrder)
         {
             InitializeComponent();
+
             _salesOrder = salesOrder;
-            _storeService = storeService;
-            LoadOrderDetails();
+
             DisplayShippingInfo(false);
-            btnCancel.Visible = false;
-            btnSave.Visible = false;
-            btnOk.Visible = true;
+
+            SetupDetailedOrderDgv();
+
+            btnOk.Location = new Point(515, 680);
+
+            this.Size = new Size(700, 800);
+        }
+
+        private void SetupDetailedOrderDgv()
+        {
+            dgvDetailedOrder.AutoGenerateColumns = false;
+
+            dgvDetailedOrder.Columns["ColProductId"].DataPropertyName = "ProductId";
+
+            dgvDetailedOrder.Columns["ColProductName"].DataPropertyName = "ProductName";
+
+            dgvDetailedOrder.Columns["ColUsedQuantity"].DataPropertyName = "Quantity";
         }
 
         private async void ExtraOrderInfoForm_Load(object sender, EventArgs e)
         {
-            
-            
+            await LoadDetailedOrder(_salesOrder.SalesOrderId);
         }
 
         private async Task LoadShippingCompaniesAsync()
@@ -47,13 +68,10 @@ namespace PL.StoreEmployee.OrderHistory
             {
                 _shippingCompanyList = await _salesOrderService.LoadShippingCompaniesAsync();
 
-                foreach (var sc in _shippingCompanyList)
-                {
-                    string name = sc.ShippingCompanyName!;
-
-                    cmbBxShippingCompany.Items.Add(name);
-                }
-
+                cmbBxShippingCompany.DataSource = _shippingCompanyList;
+                cmbBxShippingCompany.SelectedIndex = 0;
+                cmbBxShippingCompany.DisplayMember = "ShippingCompanyName";
+                cmbBxShippingCompany.ValueMember = "ShippingCompanyId";
             }
             catch (Exception ex)
             {
@@ -61,37 +79,57 @@ namespace PL.StoreEmployee.OrderHistory
             }
         }
 
-        private async Task LoadOrderDetails()
+        private async Task LoadDetailedOrder(string salesOrderId)
         {
+            //Hiển thị ngày tạo đơn hàng
             txtBxCreatedDateTime.Text = _salesOrder.CreatedDateTime?.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
-            // Load detailed sales order data into dgvDetailedOrder
-            dgvDetailedOrder.Rows.Clear();
-            foreach (var detail in _salesOrder.DetailedSalesOrders)
-            {
-                dgvDetailedOrder.Rows.Add(detail.ProductId, detail.Quantity);
-            }
+
+            //Load chi tiết đơn hàng
+            var detailedOrders = await _salesOrderService.GetDetailedSalesOrderByIdAsync(salesOrderId);
+            var products = await _productService.GetAllProductsAsync();
+
+            var transformedDetailedOrder = detailedOrders
+                                            .Join(products,
+                                                  i => i.ProductId,
+                                                  pr => pr.ProductId,
+                                                  (i, pr) => new
+                                                  {
+                                                      i.ProductId,
+                                                      pr.ProductName,
+                                                      i.Quantity
+                                                  })
+                                            .ToList();
+
+            dgvDetailedOrder.DataSource = transformedDetailedOrder;
 
             _shippingInformation = await _storeService.GetShippingInfoByOrderIdAsync(_salesOrder.SalesOrderId);
+
             if (_shippingInformation != null)
             {
-                DisplayShippingInfo(true);
-                await LoadShippingCompaniesAsync();
-                cmbBxShippingCompany.SelectedIndex = 0;
-                btnCancel.Visible = true;
-                btnSave.Visible = true;
+                this.Size = new Size(1600, 800);
                 btnOk.Visible = false;
+                DisplayShippingInfo(true);
+
+                //Hiển thị thông tin shipping
+                await LoadShippingCompaniesAsync();
+
                 txtBxCustomerName.Text = _shippingInformation.ConsigneeName;
+
                 txtBxCustomerPhoneNumber.Text = _shippingInformation.ConsigneePhoneNumber;
+
                 txtBxDeliveryTime.Text = ConvertDateTimeOffsetToString(_shippingInformation.DeliveryDateTime, "dd/MM/yyyy HH:mm");
+
                 txtBxAddress.Text = _shippingInformation.ShippingAddress;
+
                 txtBxDistrict.Text = _shippingInformation.District;
+
                 txtBxCity.Text = _shippingInformation.CityProvince;
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Are you sure you want to cancel?", "Confirmation", MessageBoxButtons.YesNo);
+            var result = MessageBox.Show("Bạn có chắc muốn đóng cửa sổ?", "Xác nhận", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 this.Close();
@@ -108,8 +146,8 @@ namespace PL.StoreEmployee.OrderHistory
             lblAddress.Visible = value;
             lblDistrict.Visible = value;
             lblCity.Visible = value;
+            lblShippingInfo.Visible = value;
 
-            txtBxShippingCompany.Visible = value;
             dtpOrderDateTime.Visible = value;
             txtBxDeliveryTime.Visible = value;
             lblCustomerName.Visible = value;
@@ -117,10 +155,22 @@ namespace PL.StoreEmployee.OrderHistory
             txtBxAddress.Visible = value;
             txtBxDistrict.Visible = value;
             txtBxCity.Visible = value;
+            cmbBxShippingCompany.Visible = value;
+            
+
+            btnCancel.Visible = value;
+            btnSave.Visible = value;
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
+            DateTime orderDatetime = dtpOrderDateTime.Value;
+            if (orderDatetime.Date != DateTime.Now.Date)
+            {
+                MessageBox.Show("Ngày đặt hàng phải là ngày hiện tại", "Thông báo");
+                return;
+            }
+
             DialogResult result = MessageBox.Show("Xác nhận lưu thông tin vận chuyển và trạng thái đơn hàng thành công", "Thông báo", MessageBoxButtons.YesNo);
 
             if (result == DialogResult.Yes)
@@ -128,8 +178,7 @@ namespace PL.StoreEmployee.OrderHistory
                 if (_shippingInformation != null)
                 {
                     //Lấy ra ShippingCompanyId từ ComboBox
-                    _shippingInformation.ShippingCompanyId = _shippingCompanyList.Where(sc => sc.ShippingCompanyName == cmbBxShippingCompany.Text)
-                        .Select(sc => sc.ShippingCompanyId).FirstOrDefault();
+                    _shippingInformation.ShippingCompanyId = cmbBxShippingCompany.SelectedValue!.ToString();
 
                     //Lấy OrderDateTime từ DateTimePicker
                     _shippingInformation.OrderDateTime = ConvertStringToDateTimeOffset(dtpOrderDateTime.Text, "dd/MM/yyyy HH:mm");
@@ -146,8 +195,7 @@ namespace PL.StoreEmployee.OrderHistory
                     //Update thông tin vận chuyển
                     await _salesOrderService.UpdateShippingInfoAsync(_shippingInformation);
 
-                    //Update trạng thái đơn hàng
-                    //await _salesOrderService.UpdateOrderStatusAsync(_shippingInformation.SalesOrderId, OrderStatus.Success);
+                    MessageBox.Show("Đã cập nhật thông tin vận chuyển thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     this.DialogResult = DialogResult.OK;
                 }
@@ -170,6 +218,18 @@ namespace PL.StoreEmployee.OrderHistory
             this.Close();
         }
 
-        
+        private void dgvDetailedOrder_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvDetailedOrder.Columns["ColDetailedProduct"].Index)
+            {
+                string? productId = dgvDetailedOrder.Rows[e.RowIndex].Cells["ColProductId"].Value.ToString();
+
+                if (productId != null)
+                {
+                    DetailedProductForm detailedProduct = new DetailedProductForm(productId);
+                    detailedProduct.ShowDialog();
+                }
+            }
+        }
     }
 }

@@ -80,5 +80,41 @@ namespace BL
                 throw;
             }
         }
+
+        public async Task<ProductCreationPlanHistoryDTO> AddProductCreationPlanAsync(ProductCreationPlanHistoryDTO productCreationPlan)
+        {
+            try
+            {
+                return await _productRepository.AddProductCreationPlanAsync(productCreationPlan);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ProductDTO?> FindProductById(string productId)
+        {
+            try
+            {
+                return await _productRepository.FindProductByIdAsync(productId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<ProductDTO>> GetAllProductsAsync()
+        {
+            try
+            {
+                return await _productRepository.GetAllProductsAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

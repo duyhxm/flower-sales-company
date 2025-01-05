@@ -11,9 +11,9 @@ public partial class ProductCreationHistory
 
     public string EmployeeId { get; set; } = null!;
 
-    public short? CreatedQuantity { get; set; }
+    public short CreatedQuantity { get; set; }
 
-    public decimal? UnitPrice { get; set; }
+    public decimal UnitPrice { get; set; }
 
     public virtual Employee Employee { get; set; } = null!;
 

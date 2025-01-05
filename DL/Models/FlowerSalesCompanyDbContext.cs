@@ -147,7 +147,13 @@ public partial class FlowerSalesCompanyDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(DbContextHelper.GetConnectionString("AzureSQLServer"));
+        optionsBuilder.UseSqlServer(DbContextHelper.GetConnectionString("AzureSQLServer"), options => {
+            options.EnableRetryOnFailure(
+                maxRetryCount: 5, // Số lần thử lại
+                maxRetryDelay: TimeSpan.FromSeconds(10), // Thời gian tối đa giữa các lần thử
+                errorNumbersToAdd: null // Các mã lỗi SQL Server có thể thêm
+                );
+        });
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

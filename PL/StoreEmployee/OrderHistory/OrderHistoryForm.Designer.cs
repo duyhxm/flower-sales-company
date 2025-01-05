@@ -45,6 +45,10 @@
             // 
             dgvOrderHistory.AllowUserToAddRows = false;
             dgvOrderHistory.AllowUserToDeleteRows = false;
+            dgvOrderHistory.AllowUserToResizeColumns = false;
+            dgvOrderHistory.AllowUserToResizeRows = false;
+            dgvOrderHistory.BackgroundColor = SystemColors.Control;
+            dgvOrderHistory.BorderStyle = BorderStyle.None;
             dgvOrderHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvOrderHistory.Columns.AddRange(new DataGridViewColumn[] { ColSalesOrderId, ColOrderType, ColOrderStatus, ColPurchaseMethod, ColFinalPrice, ColOrderDetails, ColSave, ColEditStatus, ColShip });
             dgvOrderHistory.Location = new Point(33, 156);

@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTO.Product;
 
 namespace DL.Repositories.Interfaces
 {
     public interface IProductRepository
     {
-        Task<Product?> FindByIdAsync(string id);
-        Task<List<Product>> GetAllProductsAsync();
-        void RemoveProduct(Product product);
+        Task<ProductDTO?> FindProductByIdAsync(string productId);
+        Task<List<ProductDTO>> GetAllProductsAsync();
+        void RemoveProduct(ProductDTO product);
     }
 }

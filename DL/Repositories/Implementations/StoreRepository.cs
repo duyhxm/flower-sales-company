@@ -31,10 +31,13 @@ namespace DL.Repositories.Implementations
             return 1;
         }
         //Read
-        public Task<List<StoreDTO>> GetAllStoresAsync(string criteria)
+        public async Task<List<StoreDTO>?> GetAllStoresAsync()
         {
-            return null;
+            List<Store>? stores = await _context.Stores.ToListAsync();
+
+            return _mapper.Map<List<StoreDTO>>(stores);
         }
+
         //Update
         public int UpdateStore(StoreDTO store)
         {
@@ -169,53 +172,29 @@ namespace DL.Repositories.Implementations
         }
 
 
-        public async Task<PlannedProductDTO?> GetPlannedProductForStoreAsync(DateTimeOffset plannedDateTime)
+        public async Task UpdateProductCreationPlanStatusAsync(PlannedProductDTO plannedProduct, DateTimeOffset createdDateTime, string planStatus)
         {
             try
             {
-                var result = await _context.ProductCreationPlanHistories
-                                          .Where(i => i.PlannedDateTime == plannedDateTime && i.CreatedDateTime == null && i.PlanStatus == PlanStatus.Initialized)
-                                          .Join(_context.Products,
-                                          i => i.ProductId,
-                                          p => p.ProductId,
-                                          (i, p) => new PlannedProductDTO
-                                          {
-                                              PlannedDateTime = i.PlannedDateTime,
-                                              ProductId = p.ProductId,
-                                              ProductName = p.ProductName!,
-                                              ImplementationDateTime = i.ImplementationDateTime,
-                                              Quantity = i.NeededCreationQuantity
-                                          }
-                                          )
-                                          .FirstOrDefaultAsync();
-                return result;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public async Task UpdateProductCreationPlanStatusAsync(DateTimeOffset plannedDateTime, DateTimeOffset createdDateTime, string planStatus)
-        {
-            try
-            {
-                var productCreationPlan = await _context.ProductCreationPlanHistories
-                    .FirstOrDefaultAsync(p => p.PlannedDateTime == plannedDateTime);
-
-                if (productCreationPlan == null)
+                using (var context = new FlowerSalesCompanyDbContext())
                 {
-                    throw new Exception($"Không tìm thấy sản phẩm nào ứng với PlannedDateTime: {plannedDateTime}");
-                }
+                    var productCreationPlan = await context.ProductCreationPlanHistories
+                        .FirstOrDefaultAsync(p => p.PlannedDateTime == plannedProduct.PlannedDateTime && p.StoreId == plannedProduct.StoreId && p.ProductId == plannedProduct.ProductId);
 
-                productCreationPlan.CreatedDateTime = createdDateTime;
-                productCreationPlan.PlanStatus = planStatus;
+                    if (productCreationPlan == null)
+                    {
+                        throw new Exception($"Không tìm thấy kế hoạch nào ứng với \n PlannedDateTime: {plannedProduct.PlannedDateTime} \n StoreId: {plannedProduct.StoreId} \n ProductId: {plannedProduct.ProductId}");
+                    }
 
-                _context.ProductCreationPlanHistories.Attach(productCreationPlan);
-                _context.Entry(productCreationPlan).Property(p => p.CreatedDateTime).IsModified = true;
-                _context.Entry(productCreationPlan).Property(p => p.PlanStatus).IsModified = true;
+                    productCreationPlan.CreatedDateTime = createdDateTime;
+                    productCreationPlan.PlanStatus = planStatus;
 
-                await _context.SaveChangesAsync();
+                    context.ProductCreationPlanHistories.Attach(productCreationPlan);
+                    context.Entry(productCreationPlan).Property(p => p.CreatedDateTime).IsModified = true;
+                    context.Entry(productCreationPlan).Property(p => p.PlanStatus).IsModified = true;
+
+                    await context.SaveChangesAsync();
+                } 
             }
             catch (Exception ex)
             {
@@ -223,26 +202,41 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task<List<PlannedProductDTO>?> GetPlannedProductsForStoreAsync(DateTimeOffset todayDateTime, string storeId)
+        public async Task<List<PlannedProductDTO>> GetPlannedProductsForStoreAsync(DateTime currentDate, string storeId, string planStatus)
         {
             try
             {
                 var result = await _context.ProductCreationPlanHistories
-            .Where(p => p.PlannedDateTime.Date == todayDateTime.Date
+            .Where(p => p.ImplementationDateTime.Date == currentDate.Date
                         && p.StoreId == storeId
-                        && p.CreatedDateTime == null
-                        && p.PlanStatus == PlanStatus.Initialized)
+                        && p.PlanStatus == planStatus)
             .Join(_context.Products,
                   p => p.ProductId,
                   pr => pr.ProductId,
-                  (p, pr) => new PlannedProductDTO
+                  (p, pr) => new 
                   {
-                      PlannedDateTime = p.PlannedDateTime,
-                      ProductId = pr.ProductId,
-                      ProductName = pr.ProductName!,
-                      ImplementationDateTime = p.ImplementationDateTime,
-                      Quantity = p.NeededCreationQuantity
+                      p.PlannedDateTime,
+                      pr.ProductId,
+                      p.StoreId,
+                      pr.FrepresentationId,
+                      pr.ProductName,
+                      p.ImplementationDateTime,
+                      p.NeededCreationQuantity,
                   })
+            .Join(_context.FloralRepresentations,
+            combined => combined.FrepresentationId,
+            fr => fr.FrepresentationId,
+            (combined, fr) =>  new PlannedProductDTO{
+                PlannedDateTime = combined.PlannedDateTime,
+                ProductId = combined.ProductId,
+                StoreId = combined.StoreId,
+                FRName = fr.Frname!,
+                ProductName = combined.ProductName!,
+                ImplementationDateTime = combined.ImplementationDateTime,
+                Quantity = combined.NeededCreationQuantity,
+                ImplementationDateTimeFormatted = combined.ImplementationDateTime.ToString("dd/MM/yyyy HH:mm")
+            }
+            )
             .ToListAsync();
 
                 return result;
@@ -252,5 +246,51 @@ namespace DL.Repositories.Implementations
                 throw;
             }
         }
+
+        public async Task<List<FlowerDTO>> GetAllFlowerByStoreAsync(string storeId)
+        {
+            try
+            {
+                //Hàm này sẽ chỉ trả về các flower có số lượng >0 trong bảng MaterialInventory tương ứng với cửa hàng
+                var flowerList = await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM dbo.GetAllFlowerByStore({storeId})").ToListAsync();
+
+                return flowerList;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<RegionDTO>> GetAllRegionsAsync()
+        {
+            try
+            {
+                List<Region> regions = await _context.Regions.ToListAsync();
+
+                return _mapper.Map<List<RegionDTO>>(regions); 
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<StoreDTO>> GetAllStoresByRegionId(string regionId)
+        {
+            try
+            {
+                List<Store> stores = await _context.Stores
+                                            .Where(s => s.RegionId == regionId)
+                                            .ToListAsync();
+
+                return _mapper.Map<List<StoreDTO>>(stores);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

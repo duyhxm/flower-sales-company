@@ -28,7 +28,7 @@ namespace BL
             {
                 if (_instance == null)
                 {
-                    throw new InvalidOperationException("SystemService is not initialized. Call Initialize() first.");
+                    throw new InvalidOperationException("SystemService chưa được khởi tạo. Gọi Initialize() trước tiên.");
                 }
 
                 return _instance;
@@ -50,7 +50,6 @@ namespace BL
         {
             try
             {
-                Debug.WriteLine("SystemService");
                 return await _systemRepository.LoginAsync(userAccount);
             }
             catch(Exception)

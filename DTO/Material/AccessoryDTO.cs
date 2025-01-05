@@ -10,11 +10,5 @@ namespace DTO.Material
     {
         public string AccessoryId { get; set; }
         public string AccessoryName { get; set; }
-
-        public AccessoryDTO(string accessoryId, string accessoryName)
-        {
-            AccessoryId = accessoryId;
-            AccessoryName = accessoryName;
-        }
     }
 }

@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using DTO.Customer;
+using BL;
+using System.Diagnostics;
 
 namespace PL.SalesEmployee
 {
@@ -17,9 +20,12 @@ namespace PL.SalesEmployee
         //Cấu hình khởi tạo đối tượng
         private static CustomerForm? _instance;
         private static readonly object _lock = new object();
+
+        private CustomerService _customerService;
         private CustomerForm()
         {
             InitializeComponent();
+            _customerService = new CustomerService();
         }
 
         public static void Initialize()
@@ -45,35 +51,52 @@ namespace PL.SalesEmployee
             {
                 if (_instance == null)
                 {
-                    throw new InvalidOperationException("CustomerForm is not initialized. Call Initialize() first.");
+                    throw new InvalidOperationException("CustomerForm chưa được khởi tạo. Gọi Initialize() trước tiên.");
                 }
                 return _instance;
             }
         }
-        private void LoadRank()
-        {
-            using (var db = new FlowerSalesCompanyDbContext())
-            {
-                // Truy vấn danh sách các Region
-                var values = db.CustomerRanks
-                                .Select(r => new
-                                {
-                                    r.CustomerRankId,
-                                    r.RankName
-                                })
-                                .ToList();
 
-                // Gán dữ liệu vào ComboBox
-                cbbRank.DataSource = values;
+        //Load rank
+        private void LoadCustomerRank()
+        {
+            //using (var db = new FlowerSalesCompanyDbContext())
+            //{
+            //    // Truy vấn danh sách các Rank
+            //    var values = db.CustomerRanks
+            //                    .Select(r => new
+            //                    {
+            //                        r.CustomerRankId,
+            //                        r.RankName
+            //                    })
+            //                    .ToList();
+
+            //    // Gán dữ liệu vào ComboBox
+            //    cbbRank.DataSource = values;
+            //    cbbRank.DisplayMember = "RankName";
+            //    cbbRank.ValueMember = "CustomerRankId";
+            //    cbbRank.SelectedIndex = -1;
+
+            //}
+
+            try
+            {
+                List<CustomerRankDTO> customerRanks = _customerService.GetAllCustomerRanks();
+
+                cbbRank.DataSource = customerRanks;
                 cbbRank.DisplayMember = "RankName";
                 cbbRank.ValueMember = "CustomerRankId";
                 cbbRank.SelectedIndex = -1;
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã có lỗi xảy ra trong quá trình lấy danh sách hạng khách hàng {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void CustomerForm_Load(object sender, EventArgs e)
         {
-            LoadRank();
+            LoadCustomerRank();
         }
 
         private void cbbRank_SelectedValueChanged(object sender, EventArgs e)
@@ -171,82 +194,90 @@ namespace PL.SalesEmployee
                 }
                 catch (Exception ex)
                 {
-                   return;
+                    return;
                 }
             }
 
         }
         private void LoadCusForDate()
         {
-            if (dateTimePickerStart.Value != null && dateTimePickerEnd.Value != null)
+            DateTime startDate = new DateTime(dtpStartDate.Value.Year, dtpStartDate.Value.Month, 1);
+            DateTime endDate = new DateTime(dtpEndDate.Value.Year, dtpEndDate.Value.Month, 1);
+            DateTime currentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
+            if (startDate < endDate && endDate <= currentDate)
             {
                 try
                 {
-                    using (var db = new FlowerSalesCompanyDbContext())
-                    {
-                        var startDate = dateTimePickerStart.Value;
-                        var endDate = dateTimePickerEnd.Value;
-                        var customerData = db.CustomerRankHistories
-                                             .Join(
-                                                 db.Customers,
-                                                 crh => crh.CustomerId,
-                                                 c => c.CustomerId,
-                                                 (crh, c) => new
-                                                 {
-                                                     c.CustomerId,
-                                                     NameCus = c.LastName + " " + c.MiddleName + " " + c.FirstName,
-                                                     crh.TotalSpending,
-                                                     crh.RankingCycleId
-                                                 }
-                                             )
-                                             .Join(
-                                                 db.RankingCycles,
-                                                 crh => crh.RankingCycleId,
-                                                 rc => rc.RankingCycleId,
-                                                 (crh, rc) => new
-                                                 {
-                                                     crh.CustomerId,
-                                                     crh.NameCus,
-                                                     crh.TotalSpending,
-                                                     rc.StartDateTime,
-                                                     rc.EndDateTime
-                                                 }
-                                             )
-                                             .Where(rc => rc.StartDateTime >= startDate && rc.EndDateTime <= endDate)
-                                              .GroupBy(crh => crh.CustomerId) // Nhóm theo CustomerId
-                                                 .Select(g => new
-                                                 {
-                                                     g.Key, // CustomerId
-                                                     NameCus = g.FirstOrDefault().NameCus, // Lấy tên khách hàng từ nhóm đầu tiên
-                                                     TotalSpending = g.Sum(crh => crh.TotalSpending) // Cộng dồn TotalSpending
-                                                 })
-                                             .OrderByDescending(crh => crh.TotalSpending)
-                                             .ToList();
+                    //using (var db = new FlowerSalesCompanyDbContext())
+                    //{
+                    //    var startDate = dtpStartDate.Value;
+                    //    var endDate = dtpEndDate.Value;
+                    //    var customerData = db.CustomerRankHistories
+                    //                         .Join(
+                    //                             db.Customers,
+                    //                             crh => crh.CustomerId,
+                    //                             c => c.CustomerId,
+                    //                             (crh, c) => new
+                    //                             {
+                    //                                 c.CustomerId,
+                    //                                 NameCus = c.LastName + " " + c.MiddleName + " " + c.FirstName,
+                    //                                 crh.TotalSpending,
+                    //                                 crh.RankingCycleId
+                    //                             }
+                    //                         )
+                    //                         .Join(
+                    //                             db.RankingCycles,
+                    //                             crh => crh.RankingCycleId,
+                    //                             rc => rc.RankingCycleId,
+                    //                             (crh, rc) => new
+                    //                             {
+                    //                                 crh.CustomerId,
+                    //                                 crh.NameCus,
+                    //                                 crh.TotalSpending,
+                    //                                 rc.StartDateTime,
+                    //                                 rc.EndDateTime
+                    //                             }
+                    //                         )
+                    //                         .Where(rc => rc.StartDateTime >= startDate && rc.EndDateTime <= endDate)
+                    //                          .GroupBy(crh => crh.CustomerId) // Nhóm theo CustomerId
+                    //                             .Select(g => new
+                    //                             {
+                    //                                 g.Key, // CustomerId
+                    //                                 NameCus = g.FirstOrDefault().NameCus, // Lấy tên khách hàng từ nhóm đầu tiên
+                    //                                 TotalSpending = g.Sum(crh => crh.TotalSpending) // Cộng dồn TotalSpending
+                    //                             })
+                    //                         .OrderByDescending(crh => crh.TotalSpending)
+                    //                         .ToList();
 
-                        var indexedCustomerData = customerData.Select((item, index) => new
-                        {
-                            STT = index + 1,
-                            item.Key,
-                            item.NameCus,
-                            TotalSpending = Convert.ToDouble(item.TotalSpending).ToString("N0")
-                        }).ToList();
+                    //    var indexedCustomerData = customerData.Select((item, index) => new
+                    //    {
+                    //        STT = index + 1,
+                    //        item.Key,
+                    //        item.NameCus,
+                    //        TotalSpending = Convert.ToDouble(item.TotalSpending).ToString("N0")
+                    //    }).ToList();
 
-                        dgvCustomerData.DataSource = indexedCustomerData;
-                        cbbRank.SelectedIndex = -1;
-                        cbbTop.SelectedIndex = -1;
-                    }
+                    //    dgvCustomerData.DataSource = indexedCustomerData;
+                    //    cbbRank.SelectedIndex = -1;
+                    //    cbbTop.SelectedIndex = -1;
+                    //}
                 }
                 catch (Exception ex)
                 {
                     return;
                 }
             }
+            else
+            {
+                MessageBox.Show("Ngày bắt đầu phải bé hơn ngày kết thúc", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void UpdateChart()
         {
-            var startDate = dateTimePickerStart.Value;
-            var endDate = dateTimePickerEnd.Value;
+            var startDate = dtpStartDate.Value;
+            var endDate = dtpEndDate.Value;
 
             try
             {
@@ -302,7 +333,7 @@ namespace PL.SalesEmployee
                             YValues = new double[] { avgRevenue }
                         });
 
-                        revenueSeries.Points.Last().Label = avgRevenue.ToString("N0"); 
+                        revenueSeries.Points.Last().Label = avgRevenue.ToString("N0");
                     }
 
                     chart1.Series.Add(customerSeries);
@@ -315,10 +346,10 @@ namespace PL.SalesEmployee
                     chart1.ChartAreas[0].AxisY.Title = "Number of Customers";
                     chart1.ChartAreas[0].AxisY2.Title = "Average Revenue";
 
-                
+
                     chart1.ChartAreas[0].AxisY2.LabelStyle.Format = "N0";
 
-                    chart1.Legends.Clear(); 
+                    chart1.Legends.Clear();
                 }
             }
             catch (Exception ex)
@@ -330,7 +361,7 @@ namespace PL.SalesEmployee
 
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnShow_Click(object sender, EventArgs e)
         {
             LoadCusForDate();
             UpdateChart();

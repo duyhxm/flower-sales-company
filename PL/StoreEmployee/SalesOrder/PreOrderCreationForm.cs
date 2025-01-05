@@ -1,19 +1,9 @@
 ﻿using BL;
-using DL.Models;
 using DTO.Material;
 using DTO.Product;
-using DTO.Store;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using static BL.GeneralService;
 
 namespace PL
@@ -65,14 +55,14 @@ namespace PL
 
         private async void PreOrderCreationForm_Load(object sender, EventArgs e)
         {
-            await LoadFlowerListAsync();
-            await LoadAccessoryList();
-            await LoadFloralRepresentation();
+            await LoadAllFlowersAsync();
+            await LoadAllAccessories();
+            await LoadAllFRepresentations();
         }
 
-        private async Task LoadFloralRepresentation()
+        private async Task LoadAllFRepresentations()
         {
-            _fRepresentations = await _materialService.GetFloralRepresentationAsync();
+            _fRepresentations = await _materialService.GetAllFRepresentationsAsync();
 
             if (_fRepresentations != null)
             {
@@ -389,11 +379,11 @@ namespace PL
         //================Xử lý cho tab Flower=========================
 
         //Load dữ liệu flower của cửa hàng
-        private async Task LoadFlowerListAsync()
+        private async Task LoadAllFlowersAsync()
         {
             try
             {
-                var result = await _materialService.GetFlowerListAsync();
+                var result = await _materialService.GetAllFlowersAsync();
 
                 if (result == null)
                 {
@@ -492,11 +482,11 @@ namespace PL
 
         //================Xử lý cho tab Accessory=================
         //Load dữ liệu accessory lên
-        private async Task LoadAccessoryList()
+        private async Task LoadAllAccessories()
         {
             try
             {
-                var result = await _materialService.GetAccessoryListAsync();
+                var result = await _materialService.GetAllAccessoriesAsync();
 
                 if (result == null)
                 {

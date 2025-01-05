@@ -59,7 +59,6 @@ E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.ProductStockD
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.ShippingInformationForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.InvoiceForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.OrderHistoryForm.resources
-E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.PreorderListForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.DailyTaskForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.ProductListForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.CustomerForm.resources
@@ -69,13 +68,12 @@ E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesDeptMainForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.SalesHistoryForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ProductPlan.DetailedProductForm.resources
-E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.PreorderList.DetailedSalesOrder.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.PreOrderCreationForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.OrderHistory.ExtraOrderInfoForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.OrderHistory.OrderStatusAdjustmentForm.resources
-E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.DailyTask.DetailedProductForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.AccesoryHistoryProfitRate.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ChartAccessoryRate.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ChartFlowerRate.resources
-E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.CreateProduct.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.FlowerHistoryProfitRate.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ProductCreationForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.OrderHistory.DetailedProductForm.resources

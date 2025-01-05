@@ -102,8 +102,8 @@ namespace PL
             AccountInformationForm.Initialize();
             formInstances[AccountInformationForm.Instance.Name] = AccountInformationForm.Instance;
 
-            CreateProduct.Initialize();
-            formInstances[CreateProduct.Instance.Name] = CreateProduct.Instance;
+            SalesEmployee.ProductCreationForm.Initialize();
+            formInstances[SalesEmployee.ProductCreationForm.Instance.Name] = SalesEmployee.ProductCreationForm.Instance;
             foreach (var form in formInstances.Values)
             {
                 form.TopLevel = false;
@@ -128,9 +128,9 @@ namespace PL
 
         private void btnCreateProduct_Click(object sender, EventArgs e)
         {
-            if (formInstances.ContainsKey(CreateProduct.Instance.Name))
+            if (formInstances.ContainsKey(SalesEmployee.ProductCreationForm.Instance.Name))
             {
-                AddFormIntoPanel(formInstances[CreateProduct.Instance.Name]);
+                AddFormIntoPanel(formInstances[SalesEmployee.ProductCreationForm.Instance.Name]);
             }
         }
 

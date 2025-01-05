@@ -19,12 +19,14 @@ namespace PL.SalesEmployee
         //Cấu hình khởi tạo đối tượng
         private static MaterialAdjustmentForm? _instance;
         private static readonly object _lock = new object();
-        MaterialService materialService;
-        FlowerSalesCompanyDbContext context = new FlowerSalesCompanyDbContext();
+
+        //Khai báo các dịch vụ sử dụng
+        private MaterialService _materialService;
+        private FlowerSalesCompanyDbContext context = new FlowerSalesCompanyDbContext();
         private MaterialAdjustmentForm()
         {
             InitializeComponent();
-            materialService = new MaterialService();
+            _materialService = new MaterialService();
         }
         public class FlowerListItem
         {
@@ -46,10 +48,10 @@ namespace PL.SalesEmployee
         }
 
         List<FlowerListItem> tempDgv = null;
-        public async void LoadFlower()
+        public async Task LoadFlower()
         {
 
-            List<FlowerDTO> flowerDTOs = await materialService.GetFlowerInventoryAsync();
+            List<FlowerDTO>? flowerDTOs = await _materialService.GetAllFlowersAsync();
             List<FlowerListItem> updatedFlowerList = new List<FlowerListItem>(); // Danh sách đối tượng FlowerListItem
 
             // Duyệt qua từng phần tử trong flowerDTOs
@@ -113,10 +115,10 @@ namespace PL.SalesEmployee
 
 
         }
-        public async void LoadAccessoryProfitRates()
+        public async Task LoadAccessoryProfitRates()
         {
             // Fetch data for Material and AccessoryProfitRateHistory
-            List<MaterialDTO> accessoryProfitRates = await materialService.GetMaterialInventoryAsync();
+            List<MaterialDTO>? accessoryProfitRates = await _materialService.GetAllAccessoriesAsync();
 
             // Query AccessoryProfitRates where UsageStatus is "Đang áp dụng"
             var activeProfitRates = context.AccessoryProfitRates
@@ -155,10 +157,10 @@ namespace PL.SalesEmployee
         }
 
 
-        private void MaterialAdjustmentForm_Load(object sender, EventArgs e)
+        private async void MaterialAdjustmentForm_Load(object sender, EventArgs e)
         {
-            LoadFlower();
-            LoadAccessoryProfitRates();
+            await LoadFlower();
+            await LoadAccessoryProfitRates();
         }
         public static void Initialize()
         {
@@ -184,12 +186,13 @@ namespace PL.SalesEmployee
             {
                 if (_instance == null)
                 {
-                    throw new InvalidOperationException("MaterialAdjustmentForm is not initialized. Call Initialize() first.");
+                    throw new InvalidOperationException("MaterialAdjustmentForm chưa được khởi tạo. Gọi method Initialize() trước.");
                 }
                 return _instance;
             }
         }
 
+        //Hàm này không thấy được sử dụng??
         private void AddNewColToAdjust(DataGridView dgv)
         {
             DataGridViewColumn newCol = new DataGridViewTextBoxColumn();
@@ -200,6 +203,7 @@ namespace PL.SalesEmployee
             dgv.Columns.Add(newCol);
         }
 
+        //Hàm này không thấy được sử dụng??
         private void btnAdjustFPrice_Click(object sender, EventArgs e)
         {
             // Kiểm tra DataGridView và đảm bảo dữ liệu đã được load
@@ -238,6 +242,7 @@ namespace PL.SalesEmployee
             }
         }
 
+        //Hàm này không thấy được sử dụng??
         private void btnAdjustA_Click(object sender, EventArgs e)
         {
 
@@ -267,13 +272,13 @@ namespace PL.SalesEmployee
         {
             if (e.ColumnIndex == dgvFlowerPrice.Columns["HistoryProfitRate"].Index && e.RowIndex >= 0)
             {
-                string productId = dgvFlowerPrice.Rows[e.RowIndex].Cells["FlowerID"].Value.ToString();
+                string productId = dgvFlowerPrice.Rows[e.RowIndex].Cells["FlowerID"].Value.ToString()!;
                 FlowerHistoryProfitRate formDetails = new FlowerHistoryProfitRate(productId);
                 formDetails.ShowDialog();
             }
             if (e.ColumnIndex == dgvFlowerPrice.Columns["HistoryRateFlower"].Index && e.RowIndex >= 0)
             {
-                string productId = dgvFlowerPrice.Rows[e.RowIndex].Cells["FlowerID"].Value.ToString();
+                string productId = dgvFlowerPrice.Rows[e.RowIndex].Cells["FlowerID"].Value.ToString()!;
                 ChartFlowerRate formDetails = new ChartFlowerRate(productId);
                 formDetails.ShowDialog();
             }
@@ -283,13 +288,13 @@ namespace PL.SalesEmployee
         {
             if (e.ColumnIndex == dgvAccessoryPrice.Columns["AccesoryHistoryPrice"].Index && e.RowIndex >= 0)
             {
-                string productId = dgvAccessoryPrice.Rows[e.RowIndex].Cells["MaterialId"].Value.ToString();
+                string productId = dgvAccessoryPrice.Rows[e.RowIndex].Cells["MaterialId"].Value.ToString()!;
                 AccesoryHistoryProfitRate formDetails = new AccesoryHistoryProfitRate(productId);
                 formDetails.ShowDialog();
             }
             if (e.ColumnIndex == dgvAccessoryPrice.Columns["HistoryRateChart"].Index && e.RowIndex >= 0)
             {
-                string productId = dgvAccessoryPrice.Rows[e.RowIndex].Cells["MaterialId"].Value.ToString();
+                string productId = dgvAccessoryPrice.Rows[e.RowIndex].Cells["MaterialId"].Value.ToString()!;
                 ChartAccessoryRate formDetails = new ChartAccessoryRate(productId);
                 formDetails.ShowDialog();
             }

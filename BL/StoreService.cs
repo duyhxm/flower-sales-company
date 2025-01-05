@@ -7,6 +7,8 @@ using DL.Repositories.Implementations;
 using DTO.Store;
 using DTO.SalesOrder;
 using DTO;
+using DL.Repositories.Interfaces;
+using DTO.Material;
 
 namespace BL
 {
@@ -96,12 +98,11 @@ namespace BL
             }
         }
 
-
-        public async Task<PlannedProductDTO?> GetPlannedProductForStoreAsync(DateTimeOffset plannedDateTime)
+        public async Task UpdateProductCreationPlanStatusAsync(PlannedProductDTO plannedProduct, DateTimeOffset createdDateTime, string planStatus)
         {
             try
             {
-                return await _storeRepository.GetPlannedProductForStoreAsync(plannedDateTime);
+                await _storeRepository.UpdateProductCreationPlanStatusAsync(plannedProduct, createdDateTime, planStatus);
             }
             catch (Exception)
             {
@@ -109,11 +110,11 @@ namespace BL
             }
         }
 
-        public async Task UpdateProductCreationPlanStatusAsync(DateTimeOffset plannedDateTime, DateTimeOffset createdDateTime, string planStatus)
+        public async Task<List<PlannedProductDTO>> GetPlannedProductsForStoreAsync(DateTime currentDate, string storeId, string planStatus)
         {
             try
             {
-                await _storeRepository.UpdateProductCreationPlanStatusAsync(plannedDateTime, createdDateTime, planStatus);
+                return await _storeRepository.GetPlannedProductsForStoreAsync(currentDate, storeId, planStatus);
             }
             catch (Exception)
             {
@@ -121,11 +122,40 @@ namespace BL
             }
         }
 
-        public async Task<List<PlannedProductDTO>?> GetPlannedProductsForStoreAsync(DateTimeOffset todayDateTime, string storeId)
+        public async Task<List<FlowerDTO>> GetAllFlowerByStoreAsync(string storeId)
         {
             try
             {
-                return await _storeRepository.GetPlannedProductsForStoreAsync(todayDateTime, storeId);
+                return await _storeRepository.GetAllFlowerByStoreAsync(storeId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<RegionDTO>> GetAllRegionsAsync()
+        {
+            try
+            {
+                return await _storeRepository.GetAllRegionsAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<StoreDTO>> GetAllStoresByRegionId(string? regionId)
+        {
+            if (regionId == null)
+            {
+                throw new ArgumentNullException($"RegionId không được phép null");
+            }
+
+            try
+            {
+                return await _storeRepository.GetAllStoresByRegionId(regionId);
             }
             catch (Exception)
             {

@@ -58,6 +58,7 @@ namespace PL
             //Mặc định đơn hàng là đơn lấy ngay
             ibtnAddPreorderProduct.Visible = false;
             dtpDeliveryDatetime.Visible = false;
+            lblDeliveryDateTime.Visible = false;
 
             //Khởi tạo danh sách purchase method
             _purchaseMethod.Add(PurchaseMethod.Offline);
@@ -402,6 +403,7 @@ namespace PL
                 IsPreorder = true;
                 ibtnAddPreorderProduct.Visible = true;
                 dtpDeliveryDatetime.Visible = true;
+                lblDeliveryDateTime.Visible = true;
 
                 lblProductInfo.Visible = false;
                 lblProductId.Visible = false;
@@ -415,6 +417,7 @@ namespace PL
                 IsPreorder = false;
                 ibtnAddPreorderProduct.Visible = false;
                 dtpDeliveryDatetime.Visible = false;
+                lblDeliveryDateTime.Visible = false;
 
                 lblProductInfo.Visible = true;
                 lblProductId.Visible = true;

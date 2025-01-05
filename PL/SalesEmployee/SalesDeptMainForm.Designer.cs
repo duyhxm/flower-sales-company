@@ -183,7 +183,7 @@
             // btnCreateProductPlan
             // 
             btnCreateProductPlan.ImeMode = ImeMode.NoControl;
-            btnCreateProductPlan.Location = new Point(0, 448);
+            btnCreateProductPlan.Location = new Point(0, 449);
             btnCreateProductPlan.Margin = new Padding(3, 4, 3, 4);
             btnCreateProductPlan.Name = "btnCreateProductPlan";
             btnCreateProductPlan.Size = new Size(186, 59);

@@ -26,7 +26,11 @@ namespace PL.SalesEmployee
         //Cấu hình khởi tạo đối tượng
         private static MaterialDistributionForm? _instance;
         private static readonly object _lock = new object();
+
+        //Khai báo các service được sử dụng
         public NotificationService NotificationService { get; private set; }
+
+        //Load sử dụng vùng vô trong ComboBox
         private void LoadRegionsToComboBox()
         {
             using (var db = new FlowerSalesCompanyDbContext())
@@ -41,14 +45,14 @@ namespace PL.SalesEmployee
                                 .ToList();
 
                 // Gán dữ liệu vào ComboBox
-                cbbRegion.DataSource = regions;
-                cbbRegion.DisplayMember = "RegionName";
-                cbbRegion.ValueMember = "RegionId";
-                cbbRegion.SelectedIndex = -1;
-                cbbStore.SelectedIndex = -1;
+                cmbBxRegions.DataSource = regions;
+                cmbBxRegions.DisplayMember = "RegionName";
+                cmbBxRegions.ValueMember = "RegionId";
+                cmbBxRegions.SelectedIndex = -1;
             }
         }
 
+        //Hàm Constructor
         private MaterialDistributionForm()
         {
             InitializeComponent();
@@ -56,6 +60,8 @@ namespace PL.SalesEmployee
             NotificationService = NotificationService.Instance;
 
         }
+
+        //Method khởi tạo form
         public static void Initialize()
         {
             if (_instance == null)
@@ -73,24 +79,26 @@ namespace PL.SalesEmployee
                 }
             }
         }
+
+        //Property để lấy instance của form
         public static MaterialDistributionForm Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    throw new InvalidOperationException("MaterialDistributionForm is not initialized. Call Initialize() first.");
+                    throw new InvalidOperationException("MaterialDistributionForm chưa được khởi tạo. Gọi Initialize() trước tiên.");
                 }
                 return _instance;
             }
         }
 
-        private void cbbOrderType_SelectedValueChanged(object sender, EventArgs e)
+        private void cmbBxOrderType_SelectedValueChanged(object sender, EventArgs e)
         {
             using (var db = new FlowerSalesCompanyDbContext())
             {
                 // Lấy giá trị được chọn từ combobox
-                string selectedOrderType = cbbOrderType.Text;
+                string selectedOrderType = cmbBxOrderType.Text;
 
                 // Kiểm tra nếu giá trị được chọn không null hoặc rỗng
                 if (!string.IsNullOrEmpty(selectedOrderType))
@@ -111,18 +119,21 @@ namespace PL.SalesEmployee
                                          .ToList();
 
                     // Gán dữ liệu vào DataGridView
-                    dataOrder.DataSource = filteredData;
+                    dgvPurchaseOrders.DataSource = filteredData;
                     dgvOrderDetails.DataSource = null;
                 }
             }
         }
+
+        //Biến này được sử dụng để làm gì??
         string purchaseOrderIdSelect = string.Empty;
-        private void dataOrder_CellClick(object sender, DataGridViewCellEventArgs e)
+
+        private void dgvPurchaseOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                var selectedRow = dataOrder.Rows[e.RowIndex];
-                string purchaseOrderId = selectedRow.Cells["PurchaseOrderId"].Value.ToString();
+                var selectedRow = dgvPurchaseOrders.Rows[e.RowIndex];
+                string purchaseOrderId = selectedRow.Cells["PurchaseOrderId"].Value.ToString()!;
                 purchaseOrderIdSelect = purchaseOrderId;
                 using (var db = new FlowerSalesCompanyDbContext())
                 {
@@ -141,33 +152,8 @@ namespace PL.SalesEmployee
             }
         }
 
-        private void cbbRegion_SelectedValueChanged(object sender, EventArgs e)
-        {
-            if (cbbRegion.SelectedValue != null)
-            {
-
-                string regionId = cbbRegion.SelectedValue.ToString();
-
-                using (var db = new FlowerSalesCompanyDbContext())
-                {
-
-                    var stores = db.Stores
-                                   .Where(s => s.RegionId == regionId)
-                                   .Select(s => new
-                                   {
-                                       s.StoreId,
-                                       s.StoreName
-                                   })
-                                   .ToList();
-
-                    cbbStore.DisplayMember = "StoreName";
-                    cbbStore.ValueMember = "StoreId";
-                    cbbStore.DataSource = stores;
-                }
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        //Xử lý khi nhân viên nhấn phân phối vật liệu
+        private async void btnDistribute_Click(object sender, EventArgs e)
         {
             try
             {
@@ -178,7 +164,7 @@ namespace PL.SalesEmployee
                     if (!string.IsNullOrEmpty(MaterialIDSelect))
                     {
                         string materialID = MaterialIDSelect;
-                        string storeID = cbbStore.SelectedValue.ToString();
+                        string storeID = cmbBxStores.SelectedValue!.ToString()!;
                         int distributedQuantity = Convert.ToInt32(txtDistributedQuantity.Text);
                         DateTimeOffset distributedDate = DateTimeOffset.Now;
 
@@ -196,7 +182,7 @@ namespace PL.SalesEmployee
                         MessageBox.Show("Material distribution has been successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         IDictionary<string, object> applicationProperties = new Dictionary<string, object>()
                         {
-                            {"Message", "Thêm sản phẩm cho cửa hàng"},
+                            {"Message", "Thêm vật liệu cho cửa hàng"},
                             {"OperationName", "U"},
                             {"TableName", "MaterialInventory"}
                         };
@@ -208,7 +194,7 @@ namespace PL.SalesEmployee
                             string numericPart = storeId!.Substring(1);
 
                             string convertedStoreId = "Store" + numericPart;
-                            NotificationService.NotifyDatabaseOperationAsync(message, convertedStoreId);
+                            await NotificationService.NotifyDatabaseOperationAsync(message, convertedStoreId);
                         }
                         catch (Exception ex)
                         {
@@ -230,17 +216,46 @@ namespace PL.SalesEmployee
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        //Biến này được sử dụng để làm gì??
         string MaterialIDSelect = string.Empty;
+
         private void dgvOrderDetails_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 var selectedRow = dgvOrderDetails.Rows[e.RowIndex];
-                string MaterialID = selectedRow.Cells["MaterialId"].Value.ToString();
+                string MaterialID = selectedRow.Cells["MaterialId"].Value.ToString()!;
                 MaterialIDSelect = MaterialID;
 
             }
         }
 
+        //Load danh sách các cửa hàng vô trong ComboBox khi nhân viên chọn vùng
+        private void cmbBxRegions_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (cmbBxRegions.SelectedValue != null)
+            {
+
+                string regionId = cmbBxRegions.SelectedValue.ToString()!;
+
+                using (var db = new FlowerSalesCompanyDbContext())
+                {
+
+                    var stores = db.Stores
+                                   .Where(s => s.RegionId == regionId)
+                                   .Select(s => new
+                                   {
+                                       s.StoreId,
+                                       s.StoreName
+                                   })
+                                   .ToList();
+
+                    cmbBxStores.DisplayMember = "StoreName";
+                    cmbBxStores.ValueMember = "StoreId";
+                    cmbBxStores.DataSource = stores;
+                }
+            }
+        }
     }
 }

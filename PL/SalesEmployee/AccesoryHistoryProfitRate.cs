@@ -40,28 +40,14 @@ namespace PL.SalesEmployee
                               }).ToList();
 
                 // Bind the result to the DataGridView
-                dataGridView1.DataSource = result;
+                dgvAProfitRateHistory.DataSource = result;
             }
         }
+
+
         private void AccesoryHistoryProfitRate_Load(object sender, EventArgs e)
         {
             LoadData();
-        }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
-                var clickedRow = dataGridView1.Rows[e.RowIndex];
-                var accessoryProfitRateID = clickedRow.Cells["AccessoryProfitRateID"].Value.ToString();
-                var accessoryID = clickedRow.Cells["AccessoryID"].Value.ToString();
-                var profitRate = clickedRow.Cells["ProfitRate"].Value.ToString();
-                var usageStatus = clickedRow.Cells["UsageStatus"].Value.ToString();
-                txtAccessoryProfitRateID.Text = accessoryProfitRateID;
-                txtAccessoryID.Text = accessoryID;
-                txtProfitRate.Text = profitRate;
-                txtUsageStatus.Text = usageStatus;
-            }
         }
 
         private void btnAdjustFPrice_Click(object sender, EventArgs e)
@@ -184,6 +170,22 @@ namespace PL.SalesEmployee
         private void btnOk_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dgvAProfitRateHistory_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                var clickedRow = dgvAProfitRateHistory.Rows[e.RowIndex];
+                var accessoryProfitRateID = clickedRow.Cells["AccessoryProfitRateID"].Value.ToString();
+                var accessoryID = clickedRow.Cells["AccessoryID"].Value.ToString();
+                var profitRate = clickedRow.Cells["ProfitRate"].Value.ToString();
+                var usageStatus = clickedRow.Cells["UsageStatus"].Value.ToString();
+                txtAccessoryProfitRateID.Text = accessoryProfitRateID;
+                txtAccessoryID.Text = accessoryID;
+                txtProfitRate.Text = profitRate;
+                txtUsageStatus.Text = usageStatus;
+            }
         }
     }
 }

@@ -9,3 +9,8 @@ DL.Models.SalesOrder,DTO.SalesOrder.SalesOrderDTO
 DL.Models.DetailedSalesOrder,DTO.SalesOrder.DetailedSalesOrderDTO
 DL.Models.ShippingInformation,DTO.SalesOrder.ShippingInformationDTO
 DL.Models.ProductInventory,DTO.Store.ProductInventoryDTO
+DL.Models.Material,DTO.Material.MaterialDTO
+DL.Models.Region,DTO.Store.RegionDTO
+DL.Models.Store,DTO.Store.StoreDTO
+DL.Models.ProductCreationPlanHistory,DTO.Product.ProductCreationPlanHistoryDTO
+DL.Models.CustomerRank,DTO.Customer.CustomerRankDTO

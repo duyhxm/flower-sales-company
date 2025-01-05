@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTO;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DL
 {
@@ -35,5 +36,6 @@ namespace DL
 
             return connectionString ?? throw new Exception("Connection string is null");
         }
+
     }
 }

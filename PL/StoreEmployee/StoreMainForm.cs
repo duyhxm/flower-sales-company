@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DTO.Store;
 using PL.StoreEmployee;
 using static BL.GeneralService;
+using DTO.Enum;
 
 namespace PL
 {
@@ -14,6 +15,8 @@ namespace PL
         public NotificationService NotificationService { get; private set; }
         public string? StoreId { get; private set; }
         public string? StoreName { get; private set; }
+
+        private bool isLoadData = false;
 
         public StoreMainForm()
         {
@@ -49,6 +52,7 @@ namespace PL
 
         private async Task InitializeForms()
         {
+            isLoadData = true;
             //Khởi tạo InventoryForm. Form này sẽ chứa kho vật liệu và sản phẩm của cửa hàng
             InventoryForm.Initialize();
             formInstances[InventoryForm.Instance.Name] = InventoryForm.Instance;
@@ -79,18 +83,17 @@ namespace PL
             //Khởi tạo DailyTask Form. Dùng để xem các sản phẩm cần tạo mỗi ngày mà phòng kinh doanh đưa xuống cho cửa hàng
             DailyTaskForm.Initialize();
             formInstances[DailyTaskForm.Instance.Name] = DailyTaskForm.Instance;
-            DailyTaskForm.Instance.LoadPlannedProducts(LocalDateTimeOffset(), StoreId!);
-
-            //Khởi tạo PreorderListForm
-            PreorderListForm.Initialize();
-            formInstances[PreorderListForm.Instance.Name] = PreorderListForm.Instance;
-            await PreorderListForm.Instance.LoadPreorder(StoreId!);
+            await DailyTaskForm.Instance.LoadPlannedProducts(DateTime.Now.Date, LoginForm.Instance.LoginInformation.StoreID!, PlanStatus.Initialized);
 
             foreach (var form in formInstances.Values)
             {
                 form.TopLevel = false;
                 form.Dock = DockStyle.Fill;
             }
+
+            isLoadData = false;
+
+            MessageBox.Show("Dữ liệu đã được tải lên hoàn tất", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void AddFormIntoPanel(Form form)
@@ -102,6 +105,8 @@ namespace PL
 
         private void btnCreateOrder_Click(object sender, EventArgs e)
         {
+            if (isLoadData) return;
+
             if (formInstances.ContainsKey(SalesOrderForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[SalesOrderForm.Instance.Name]);
@@ -110,6 +115,8 @@ namespace PL
 
         private void btnInventory_Click(object sender, EventArgs e)
         {
+            if (isLoadData) return;
+
             if (formInstances.ContainsKey(InventoryForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[InventoryForm.Instance.Name]);
@@ -118,6 +125,8 @@ namespace PL
 
         private void btnAccountInformation_Click(object sender, EventArgs e)
         {
+            if (isLoadData) return;
+
             if (formInstances.ContainsKey(AccountInformationForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[AccountInformationForm.Instance.Name]);
@@ -128,22 +137,18 @@ namespace PL
 
         private void btnCreateProduct_Click(object sender, EventArgs e)
         {
+            if (isLoadData) return;
+
             if (formInstances.ContainsKey(ProductCreationForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[ProductCreationForm.Instance.Name]);
             }
         }
 
-        private void btnPreOrderList_Click(object sender, EventArgs e)
-        {
-            if (formInstances.ContainsKey(PreorderListForm.Instance.Name))
-            {
-                AddFormIntoPanel(formInstances[PreorderListForm.Instance.Name]);
-            }
-        }
-
         private void btnOrderHistory_Click(object sender, EventArgs e)
         {
+            if (isLoadData) return;
+
             if (formInstances.ContainsKey(OrderHistoryForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[OrderHistoryForm.Instance.Name]);
@@ -152,6 +157,8 @@ namespace PL
 
         private void btnProductList_Click(object sender, EventArgs e)
         {
+            if (isLoadData) return;
+
             if (formInstances.ContainsKey(ProductListForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[ProductListForm.Instance.Name]);
@@ -160,34 +167,12 @@ namespace PL
 
         private void btnDailyTask_Click(object sender, EventArgs e)
         {
+            if (isLoadData) return;
+
             if (formInstances.ContainsKey(DailyTaskForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[DailyTaskForm.Instance.Name]);
             }
-        }
-
-        //Đang thử nghiệm phần này
-        private async void btnTestServiceBus_Click(object sender, EventArgs e)
-        {
-            //await SendMessageToServiceBusTest();
-        }
-        private async Task SendMessageToServiceBusTest()
-        {
-            IDictionary<string, object> applicationProperties = new Dictionary<string, object>()
-            {
-                {"Action", "Insert"}
-            };
-            ServiceBusMessage message = NotificationService.CreateMessage("test", "1234", "Database Change Notification", applicationProperties);
-
-            try
-            {
-                //await NotificationService.NotifyDatabaseOperationAsync(message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Message: {ex.Message} \n Stack trace: {ex.StackTrace}");
-            }
-
         }
 
         public async Task HandleNotification(Dictionary<string, object> message)
@@ -198,6 +183,11 @@ namespace PL
             await InventoryForm.Instance.LoadMaterialInventory(LoginForm.Instance.LoginInformation.StoreID!);
             // Hiển thị thông báo
             MessageBox.Show($"StoreMainForm received message:\n{formattedMessage}");
+        }
+
+        public void NotificationBellVisibility(bool value)
+        {
+            picBoxNotificationBell.Visible = value;
         }
     }
 

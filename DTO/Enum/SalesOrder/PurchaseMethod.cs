@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO.Enum.SalesOrder
 {
-    public class PurchaseMethod
+    public static class PurchaseMethod
     {
         public const string Online = "Trực tuyến";
 

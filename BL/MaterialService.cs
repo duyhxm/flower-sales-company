@@ -19,12 +19,11 @@ namespace BL
             _materialRepository = new MaterialRepository();
         }
 
-        //hàm này đặt sai vị trí, cần phải chuyển vô store service
-        public async Task<List<FlowerDTO>?> GetAllFlowerByStoreAsync(string storeId)
+        public async Task<List<MaterialDTO>> GetAllMaterials()
         {
             try
             {
-                return await _materialRepository.GetAllFlowerByStoreAsync(storeId);
+                return await _materialRepository.GetAllMaterials();
             }
             catch (Exception)
             {
@@ -32,11 +31,11 @@ namespace BL
             }
         }
 
-        public async Task<List<FloralRepresentationDTO>?> GetFloralRepresentationAsync()
+        public async Task<List<FloralRepresentationDTO>> GetAllFRepresentationsAsync()
         {
             try
             {
-                return await _materialRepository.GetFloralRepresentationAsync();
+                return await _materialRepository.GetAllFRepresentationsAsync();
             }
             catch (Exception)
             {
@@ -44,11 +43,11 @@ namespace BL
             }
         }
 
-        public async Task<List<FlowerDTO>?> GetFlowerListAsync()
+        public async Task<List<FlowerDTO>> GetAllFlowersAsync()
         {
             try
             {
-                return await _materialRepository.GetFlowerListAsync();
+                return await _materialRepository.GetAllFlowersAsync();
             }
             catch (Exception)
             {
@@ -56,11 +55,11 @@ namespace BL
             }
         }
 
-        public async Task<List<MaterialDTO>?> GetAccessoryListAsync()
+        public async Task<List<MaterialDTO>?> GetAllAccessoriesAsync()
         {
             try
             {
-               return await _materialRepository.GetAccessoryListAsync();
+               return await _materialRepository.GetAllAccessoriesAsync();
             }
             catch (Exception)
             {
@@ -68,28 +67,39 @@ namespace BL
             }
         }
 
-        public async Task<List<FlowerDTO>> GetFlowerInventoryAsync()
-        {
-            try
-            {
-                return await _materialRepository.GetFlowerInventoryAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
 
-        public async Task<List<MaterialDTO>?> GetMaterialInventoryAsync()
+        /*Method này được sử dụng trước đó ở MaterialAdjustmentForm. Tuy nhiên, hiện tại tạm thời không được sử dụng do đã có method thay thế phía trên là GetAllFlowersAsync*/
+
+        //public async Task<List<FlowerDTO>?> GetFlowerInventoryAsync()
+        //{
+        //    try
+        //    {
+        //        return await _materialRepository.GetFlowerInventoryAsync();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+
+        /*Method này được sử dụng trước đó trong MaterialAdjustmentForm. Tuy nhiên, hiện tại tạm thời không được sử dụng nữa do đã có method thay thế phía trên là GetAllAccessoriesAsync*/
+
+        //public async Task<List<MaterialDTO>?> GetMaterialInventoryAsync()
+        //{
+        //    try
+        //    {
+        //        return await _materialRepository.GetMaterialInventoryAsync();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        public async Task<List<FlowerWithProfitRateDTO>> GetFlowerProfitRates()
         {
-            try
-            {
-                return await _materialRepository.GetMaterialInventoryAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return null;
         }
 
     }

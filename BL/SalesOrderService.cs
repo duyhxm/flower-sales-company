@@ -100,5 +100,17 @@ namespace BL
                 throw;
             }
         }
+
+        public async Task<List<DetailedSalesOrderDTO>> GetDetailedSalesOrderByIdAsync(string salesOrderId)
+        {
+            try
+            {
+                return await _salesOrderRepository.GetDetailedSalesOrderByIdAsync(salesOrderId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

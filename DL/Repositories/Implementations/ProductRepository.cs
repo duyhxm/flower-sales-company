@@ -22,37 +22,42 @@ namespace DL.Repositories.Implementations
             _mapper = SystemRepository.Instance.Mapper;
         }
 
-        public async Task<Product?> FindByIdAsync(string productId)
+        public async Task<ProductDTO?> FindProductByIdAsync(string productId)
         {
             try
             {
-                return await _context.Products.FindAsync(productId);
+                Product? product = await _context.Products.FindAsync(productId);
+
+                return _mapper.Map<ProductDTO>(product);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        public async Task<List<Product>> GetAllProductsAsync()
+        public async Task<List<ProductDTO>> GetAllProductsAsync()
         {
             try
             {
-                return await _context.Products.ToListAsync();
+                List<Product> products = await _context.Products.ToListAsync();
+
+                return _mapper.Map<List<ProductDTO>>(products);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        
-        public void RemoveProduct(Product product)
+
+        public void RemoveProduct(ProductDTO product)
         {
             try
             {
-                _context.Products.Remove(product);
+                Product convertedProduct = _mapper.Map<Product>(product);
+                _context.Products.Remove(convertedProduct);
                 _context.SaveChanges();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
@@ -110,54 +115,186 @@ namespace DL.Repositories.Implementations
             return letters.ToString();
         }
 
+        //public async Task<ReturnedProductDTO> AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string storeId)
+        //{
+        //    bool hasExisted = false;
+        //    using var transaction = await _context.Database.BeginTransactionAsync();
+        //    var strategy = _context.Database.CreateExecutionStrategy();
+
+        //    //try
+        //    //{
+        //    //    if (!string.IsNullOrEmpty(product.ProductId) && !string.IsNullOrEmpty(product.ProductName))
+        //    //    {
+        //    //        // Product already has an ID and Name, proceed with inventory updates
+        //    //        await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+        //    //        await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        // Check if the product already exists in the database
+        //    //        var existingProductInfo = await CheckProductExistence(product);
+
+        //    //        if (existingProductInfo != null)
+        //    //        {
+        //    //            // Product exists, update its ID and proceed with inventory updates
+        //    //            hasExisted = true;
+        //    //            product.ProductId = existingProductInfo.First().Key;
+        //    //            await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+        //    //            await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            // Product does not exist, handle as a new product
+        //    //            ProductDTO newProduct = await HandleNewProduct(product, productCreationHistory, storeId);
+        //    //            product.ProductId = newProduct.ProductId;
+        //    //            await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+        //    //            await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+        //    //        }
+        //    //    }
+
+        //    //    await transaction.CommitAsync();
+
+        //    //    return new ReturnedProductDTO()
+        //    //    {
+        //    //        Product = product,
+        //    //        HasExisted = hasExisted
+        //    //    };
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    await transaction.RollbackAsync();
+        //    //    throw new Exception("Đã xảy ra lỗi trong quá trình thêm sản phẩm. Vui lòng thử lại hoặc liên hệ bộ phận kỹ thuật", ex);
+        //    //}
+
+        //    return await strategy.ExecuteAsync(async () =>
+        //    {
+        //        using var transaction = await _context.Database.BeginTransactionAsync();
+
+        //        try
+        //        {
+        //            if (!string.IsNullOrEmpty(product.ProductId) && !string.IsNullOrEmpty(product.ProductName))
+        //            {
+        //                // Product already has an ID and Name, proceed with inventory updates
+        //                await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+        //                await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+        //            }
+        //            else
+        //            {
+        //                // Check if the product already exists in the database
+        //                var existingProductInfo = await CheckProductExistence(product);
+
+        //                if (existingProductInfo != null)
+        //                {
+        //                    // Product exists, update its ID and proceed with inventory updates
+        //                    hasExisted = true;
+        //                    product.ProductId = existingProductInfo.First().Key;
+        //                    await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+        //                    await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+        //                }
+        //                else
+        //                {
+        //                    // Product does not exist, handle as a new product
+        //                    ProductDTO newProduct = await HandleNewProduct(product, productCreationHistory, storeId);
+        //                    product.ProductId = newProduct.ProductId;
+        //                    await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+        //                    await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+        //                }
+        //            }
+
+        //            await transaction.CommitAsync();
+
+        //            return new ReturnedProductDTO()
+        //            {
+        //                Product = product,
+        //                HasExisted = hasExisted
+        //            };
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            await transaction.RollbackAsync();
+        //            throw new Exception("Đã xảy ra lỗi trong quá trình thêm sản phẩm. Vui lòng thử lại hoặc liên hệ bộ phận kỹ thuật", ex);
+        //        }
+        //    });
+        //}
+
         public async Task<ReturnedProductDTO> AddProductAsync(ProductDTO product, ProductCreationHistoryDTO productCreationHistory, string storeId)
         {
             bool hasExisted = false;
-            using var transaction = await _context.Database.BeginTransactionAsync();
+            var strategy = _context.Database.CreateExecutionStrategy();
 
-            try
+            return await strategy.ExecuteAsync(async () =>
             {
-                if (!string.IsNullOrEmpty(product.ProductId) && !string.IsNullOrEmpty(product.ProductName))
-                {
-                    // Product already has an ID and Name, proceed with inventory updates
-                    await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
-                    await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
-                }
-                else
-                {
-                    // Check if the product already exists in the database
-                    var existingProductInfo = await CheckProductExistence(product);
+                using var transaction = await _context.Database.BeginTransactionAsync();
 
-                    if (existingProductInfo != null)
+                try
+                {
+                    if (!string.IsNullOrEmpty(product.ProductId) && !string.IsNullOrEmpty(product.ProductName))
                     {
-                        // Product exists, update its ID and proceed with inventory updates
-                        hasExisted = true;
-                        product.ProductId = existingProductInfo.First().Key;
+                        //Trường hợp sản phẩm truyền vô đã có ProductId và ProductName thì chỉ cần thêm lịch sử tạo sản phẩm và cập nhật kho vật liệu và kho sản phẩm
+                        await CreateProductHistory(productCreationHistory);
+
                         await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+
                         await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
                     }
                     else
                     {
-                        // Product does not exist, handle as a new product
-                        ProductDTO newProduct = await HandleNewProduct(product, productCreationHistory, storeId);
-                        product.ProductId = newProduct.ProductId;
-                        await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
-                        await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+                        //Kiểm tra nếu mà sản phẩm đã tồn tại trong database
+                        var existingProductInfo = await CheckProductExistence(product);
+
+                        if (existingProductInfo != null)
+                        {
+                            //Nếu đã tồn tại sản phẩm có trong database rồi, thì chỉ cần thêm mới lịch sử tạo sản phẩm, cập nhật kho vật liệu và kho sản phẩm và chèn thêm ProductId đã tìm thấy vào
+                            hasExisted = true;
+                            product.ProductId = existingProductInfo.First().Key;
+                            await CreateProductHistory(productCreationHistory);
+
+                            await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+
+                            await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+                        }
+                        else
+                        {
+                            // Product does not exist, handle as a new product
+                            ProductDTO newProduct = await HandleNewProduct(product, productCreationHistory, storeId);
+
+                            product.ProductId = newProduct.ProductId;
+
+                            await UpdateMaterialInventoryAsync(product, storeId, (int)productCreationHistory.CreatedQuantity!);
+
+                            await UpdateProductInventoryAsync(productCreationHistory.CreatedDateTime, storeId, product.ProductId, (int)productCreationHistory.CreatedQuantity!);
+                        }
                     }
+
+                    await transaction.CommitAsync();
+
+                    return new ReturnedProductDTO()
+                    {
+                        Product = product,
+                        HasExisted = hasExisted
+                    };
                 }
-
-                await transaction.CommitAsync();
-
-                return new ReturnedProductDTO()
+                catch (Exception)
                 {
-                    Product = product,
-                    HasExisted = hasExisted
-                };
-            }
-            catch (Exception ex)
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            });
+        }
+
+        private async Task CreateProductHistory(ProductCreationHistoryDTO productCreationHistory)
+        {
+            try
             {
-                await transaction.RollbackAsync();
-                throw new Exception("Đã xảy ra lỗi trong quá trình thêm sản phẩm. Vui lòng thử lại hoặc liên hệ bộ phận kỹ thuật", ex);
+                productCreationHistory.UnitPrice = Math.Round(productCreationHistory.UnitPrice, 3);
+                ProductCreationHistory history = _mapper.Map<ProductCreationHistory>(productCreationHistory);
+                _context.ProductCreationHistories.Add(history);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Đã xảy ra lỗi trong quá trình ghi lại lịch sử tạo sản phẩm");
             }
         }
 
@@ -165,29 +302,37 @@ namespace DL.Repositories.Implementations
         //Update kho vật liệu của cửa hàng, có kiểm tra xem liệu kho có đủ số lượng vật liệu để tạo sản phẩm hay không
         public async Task UpdateMaterialInventoryAsync(ProductDTO product, string? storeId, int createdQuantity)
         {
-            foreach (var detailedProduct in product.DetailedProducts)
+            using (var context = new FlowerSalesCompanyDbContext())
             {
-                var materialInventory = await _context.MaterialInventories
-                    .FirstOrDefaultAsync(mi => mi.MaterialId == detailedProduct.MaterialId && mi.StoreId == storeId);
-
-                if (materialInventory != null)
+                foreach (var detailedProduct in product.DetailedProducts)
                 {
-                    materialInventory.StockMaterialQuantity -= detailedProduct.UsedQuantity * createdQuantity;
+                    var materialInventory = await context.MaterialInventories
+                        .FirstOrDefaultAsync(mi => mi.MaterialId == detailedProduct.MaterialId && mi.StoreId == storeId);
 
-                    if (materialInventory.StockMaterialQuantity < 0)
+                    if (materialInventory != null)
                     {
-                        throw new Exception($"Số lượng vật liệu {detailedProduct.MaterialId} không đủ để tạo mới sản phẩm.");
+                        var decreasedQuantity = materialInventory.StockMaterialQuantity - detailedProduct.UsedQuantity * createdQuantity;
+
+
+                        if (decreasedQuantity < 0)
+                        {
+                            throw new Exception($"Số lượng vật liệu {detailedProduct.MaterialId} không đủ để tạo mới sản phẩm.");
+                        }
+                        else
+                        {
+                            materialInventory.StockMaterialQuantity -= detailedProduct.UsedQuantity * createdQuantity;
+                        }
+
+                        context.Entry(materialInventory).Property(mi => mi.StockMaterialQuantity).IsModified = true;
                     }
-
-                    _context.Entry(materialInventory).Property(mi => mi.StockMaterialQuantity).IsModified = true;
+                    else
+                    {
+                        throw new Exception($"Vật liệu với ID {detailedProduct.MaterialId} không được tìm thấy ở cửa hàng {storeId}.");
+                    }
                 }
-                else
-                {
-                    throw new Exception($"Vật liệu với ID {detailedProduct.MaterialId} không được tìm thấy ở cửa hàng {storeId}.");
-                }
-            }
 
-            await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
+            }  
         }
 
         //Sử dụng hàm này để update kho sản phẩm của cửa hàng
@@ -207,6 +352,8 @@ namespace DL.Repositories.Implementations
 
 
         //Xử lý thêm mới sản phẩm khi mà sản phẩm này đã tồn tại trong database
+
+        //Không dùng cái này nữa
         private async Task HandleExistingProduct(Dictionary<string, string> existingProductInfo, ProductCreationHistoryDTO productCreationHistory, string? storeId)
         {
             //Lấy ra số tượng sản phẩm đã được tạo
@@ -258,16 +405,16 @@ namespace DL.Repositories.Implementations
             var convertedProduct = _mapper.Map<Product>(product);
             var createdHistory = _mapper.Map<ProductCreationHistory>(productCreationHistory);
 
-            ProductInventory pi = new ProductInventory()
-            {
-                ProductId = convertedProduct.ProductId,
-                StoreId = storeId!,
-                StockProductQuantity = productCreationHistory.CreatedQuantity
-            };
+            //ProductInventory pi = new ProductInventory()
+            //{
+            //    ProductId = convertedProduct.ProductId,
+            //    StoreId = storeId!,
+            //    StockProductQuantity = productCreationHistory.CreatedQuantity
+            //};
 
             _context.Products.Add(convertedProduct);
             _context.ProductCreationHistories.Add(createdHistory);
-            _context.ProductInventories.Add(pi);
+            //_context.ProductInventories.Add(pi);
 
             await _context.SaveChangesAsync();
             return product;
@@ -529,6 +676,23 @@ namespace DL.Repositories.Implementations
                                               }).ToListAsync();
 
                 return detailedProducts;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ProductCreationPlanHistoryDTO> AddProductCreationPlanAsync(ProductCreationPlanHistoryDTO productCreationPlan)
+        {
+            try
+            {
+                ProductCreationPlanHistory convertedProductCreationPlan = _mapper.Map<ProductCreationPlanHistory>(productCreationPlan);
+                _context.Add(convertedProductCreationPlan);
+
+                await _context.SaveChangesAsync();
+
+                return productCreationPlan;
             }
             catch (Exception)
             {

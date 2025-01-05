@@ -11,20 +11,21 @@ namespace DL.Repositories.Implementations
     public class MaterialRepository : IMaterialRepository
     {
         private FlowerSalesCompanyDbContext _context;
-        private IMapper mapper;
+        private IMapper _mapper;
 
         public MaterialRepository()
         {
             _context = new FlowerSalesCompanyDbContext();
             SystemRepository.Initialize();
-            mapper = SystemRepository.Instance.Mapper;
+            _mapper = SystemRepository.Instance.Mapper;
         }
 
-        public void Add(Material material)
+        public void Add(MaterialDTO material)
         {
             try
             {
-                _context.Materials.Add(material);
+                Material convertedMaterial = _mapper.Map<Material>(material);
+                _context.Materials.Add(convertedMaterial);
                 _context.SaveChanges();
             }
             catch (Exception)
@@ -33,23 +34,12 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task<List<Material>> GetAll()
+        public void Update(MaterialDTO material)
         {
             try
             {
-                return await _context.Materials.ToListAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public void Update(Material material)
-        {
-            try
-            {
-                _context.Materials.Update(material);
+                Material convertedMaterial = _mapper.Map<Material>(material);
+                _context.Materials.Update(convertedMaterial);
                 _context.SaveChanges();
             }
             catch (Exception)
@@ -58,11 +48,12 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public void Delete(Material material)
+        public void Delete(MaterialDTO material)
         {
             try
             {
-                _context.Materials.Remove(material);
+                Material convertedMaterial = _mapper.Map<Material>(material);
+                _context.Materials.Remove(convertedMaterial);
                 _context.SaveChanges();
             }
             catch (Exception)
@@ -70,18 +61,14 @@ namespace DL.Repositories.Implementations
                 throw;
             }
         }
-
         //Các hàm trên chưa sử dụng tới
 
-        //Hàm này đang bị đặt sai chỗ
-        public async Task<List<FlowerDTO>?> GetAllFlowerByStoreAsync(string storeId)
+        public async Task<List<MaterialDTO>> GetAllMaterials()
         {
             try
             {
-                //Hàm này sẽ chỉ trả về các flower có số lượng >0 trong bảng MaterialInventory tương ứng với cửa hàng
-                var flowerList = await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM dbo.GetAllFlowerByStore({storeId})").ToListAsync();
-
-                return flowerList;
+                List<Material> materials = await _context.Materials.ToListAsync();
+                return _mapper.Map<List<MaterialDTO>>(materials);
             }
             catch (Exception)
             {
@@ -89,12 +76,13 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        //Lấy ra danh sách toàn bộ phụ liệu
-        public async Task<List<MaterialDTO>?> GetAccessoryListAsync()
+        //Lấy ra danh sách toàn bộ phụ liệu có trong công ty
+        public async Task<List<MaterialDTO>?> GetAllAccessoriesAsync()
         {
             try
             {
-                return await _context.Database.SqlQuery<MaterialDTO>($"SELECT * FROM dbo.GetAllAccessory()").ToListAsync();
+                
+                return await _context.Database.SqlQuery<MaterialDTO>($"SELECT * FROM dbo.GetAllAccessories()").ToListAsync();
             }
             catch (Exception)
             {
@@ -102,12 +90,12 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        //Lấy ra danh sách toàn bộ hoa
-        public async Task<List<FlowerDTO>?> GetFlowerListAsync()
+        //Lấy ra danh sách toàn bộ hoa có trong công ty
+        public async Task<List<FlowerDTO>> GetAllFlowersAsync()
         {
             try
             {
-                return await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM dbo.GetAllFlower()").ToListAsync();
+                return await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM dbo.GetAllFlowers()").ToListAsync();
             }
             catch (Exception)
             {
@@ -115,19 +103,14 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        //Lấy danh sách hình thức sản phẩm
-        public async Task<List<FloralRepresentationDTO>?> GetFloralRepresentationAsync()
+        //Lấy danh sách toàn bộ hình thức sản phẩm
+        public async Task<List<FloralRepresentationDTO>> GetAllFRepresentationsAsync()
         {
             try
             {
-                var result = await _context.FloralRepresentations.ToListAsync();
+                List<FloralRepresentation> result = await _context.FloralRepresentations.ToListAsync();
 
-                if (result != null)
-                {
-                    return mapper.Map<List<FloralRepresentationDTO>>(result);
-                }
-                else
-                    return null;
+                return _mapper.Map<List<FloralRepresentationDTO>>(result);
             }
             catch (Exception)
             {
@@ -135,37 +118,41 @@ namespace DL.Repositories.Implementations
             }
         }
 
-        public async Task<List<FlowerDTO>?> GetFlowerInventoryAsync()
-        {
-            try
-            {
-                //Hàm này sẽ chỉ trả về các flower có số lượng >0 trong bảng MaterialInventory tương ứng với cửa hàng
-                var flowerList = await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM GetAllFlower()").ToListAsync();
 
-                return flowerList;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        /*Method này tạm thời không được sử dụng do đã có method thay thế phía trên là GetAllFlowersAsync*/
 
-        public async Task<List<MaterialDTO>?> GetMaterialInventoryAsync()
-        {
-            try
-            {
-                // Create a new DbContext instance for this async operation
-                using (var context = new FlowerSalesCompanyDbContext())
-                {
-                    var flowerList = await context.Database.SqlQuery<MaterialDTO>($"SELECT * FROM GetAllAccessory()").ToListAsync();
-                    return flowerList;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //public async Task<List<FlowerDTO>?> GetFlowerInventoryAsync()
+        //{
+        //    try
+        //    {
+        //        var flowerList = await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM GetAllFlowers()").ToListAsync();
+
+        //        return flowerList;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        /*Method này tạm thời không được sử dụng do đã có method thay thế phía trên là GetAllAccessoriesAsync*/
+
+        //public async Task<List<MaterialDTO>?> GetMaterialInventoryAsync()
+        //{
+        //    try
+        //    {
+        //        // Create a new DbContext instance for this async operation
+        //        using (var context = new FlowerSalesCompanyDbContext())
+        //        {
+        //            var flowerList = await context.Database.SqlQuery<MaterialDTO>($"SELECT * FROM GetAllAccessories()").ToListAsync();
+        //            return flowerList;
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
     }
 }

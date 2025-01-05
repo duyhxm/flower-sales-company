@@ -140,8 +140,6 @@ namespace PL
                 MaterialInventory = result.Where(x => x.StockMaterialQuantity > 0).ToList();
 
                 FilterMaterialInventory();
-
-                MessageBox.Show("Đã load dữ liệu thành công", "Thông báo");
             }
             catch (Exception ex)
             {

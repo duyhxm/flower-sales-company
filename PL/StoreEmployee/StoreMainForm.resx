@@ -130,7 +130,7 @@
     <value>3, 4, 3, 4</value>
   </data>
   <data name="btnAccountInformation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 715</value>
+    <value>0, 649</value>
   </data>
   <data name="btnAccountInformation.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
@@ -160,7 +160,7 @@
   <data name="&gt;&gt;btnAccountInformation.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="pictureBox_notificationBell.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="picBoxNotificationBell.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAI1SURBVFhHtdc9
@@ -176,31 +176,31 @@
         /Sau4z3sxbzAaSxHwTjOX8qoHfePWGF8AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="pictureBox_notificationBell.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+  <data name="picBoxNotificationBell.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
   </data>
-  <data name="pictureBox_notificationBell.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="picBoxNotificationBell.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 258</value>
   </data>
-  <data name="pictureBox_notificationBell.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="picBoxNotificationBell.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
-  <data name="pictureBox_notificationBell.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="picBoxNotificationBell.Size" type="System.Drawing.Size, System.Drawing">
     <value>30, 38</value>
   </data>
-  <data name="pictureBox_notificationBell.TabIndex" type="System.Int32, mscorlib">
+  <data name="picBoxNotificationBell.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="&gt;&gt;pictureBox_notificationBell.Name" xml:space="preserve">
-    <value>pictureBox_notificationBell</value>
+  <data name="&gt;&gt;picBoxNotificationBell.Name" xml:space="preserve">
+    <value>picBoxNotificationBell</value>
   </data>
-  <data name="&gt;&gt;pictureBox_notificationBell.Type" xml:space="preserve">
+  <data name="&gt;&gt;picBoxNotificationBell.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;pictureBox_notificationBell.Parent" xml:space="preserve">
+  <data name="&gt;&gt;picBoxNotificationBell.Parent" xml:space="preserve">
     <value>splConStoreMainForm.Panel1</value>
   </data>
-  <data name="&gt;&gt;pictureBox_notificationBell.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;picBoxNotificationBell.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="btnDailyTask.Location" type="System.Drawing.Point, System.Drawing">
@@ -258,7 +258,7 @@
     <value>3</value>
   </data>
   <data name="btnOrderHistory.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 648</value>
+    <value>0, 582</value>
   </data>
   <data name="btnOrderHistory.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
@@ -286,36 +286,6 @@
   </data>
   <data name="&gt;&gt;btnOrderHistory.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="btnPreOrderList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 582</value>
-  </data>
-  <data name="btnPreOrderList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="btnPreOrderList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 59</value>
-  </data>
-  <data name="btnPreOrderList.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="btnPreOrderList.Text" xml:space="preserve">
-    <value>Pre-Order List</value>
-  </data>
-  <data name="btnPreOrderList.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;btnPreOrderList.Name" xml:space="preserve">
-    <value>btnPreOrderList</value>
-  </data>
-  <data name="&gt;&gt;btnPreOrderList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnPreOrderList.Parent" xml:space="preserve">
-    <value>splConStoreMainForm.Panel1</value>
-  </data>
-  <data name="&gt;&gt;btnPreOrderList.ZOrder" xml:space="preserve">
-    <value>5</value>
   </data>
   <data name="btnProductList.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 515</value>
@@ -345,7 +315,7 @@
     <value>splConStoreMainForm.Panel1</value>
   </data>
   <data name="&gt;&gt;btnProductList.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="btnInventory.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 449</value>
@@ -375,7 +345,7 @@
     <value>splConStoreMainForm.Panel1</value>
   </data>
   <data name="&gt;&gt;btnInventory.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="btnCreateOrder.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 382</value>
@@ -405,7 +375,7 @@
     <value>splConStoreMainForm.Panel1</value>
   </data>
   <data name="&gt;&gt;btnCreateOrder.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="btnCreateProduct.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 316</value>
@@ -435,7 +405,7 @@
     <value>splConStoreMainForm.Panel1</value>
   </data>
   <data name="&gt;&gt;btnCreateProduct.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;splConStoreMainForm.Panel1.Name" xml:space="preserve">
     <value>splConStoreMainForm.Panel1</value>
@@ -447,30 +417,6 @@
     <value>splConStoreMainForm</value>
   </data>
   <data name="&gt;&gt;splConStoreMainForm.Panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="btnTestServiceBus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>255, 655</value>
-  </data>
-  <data name="btnTestServiceBus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>271, 74</value>
-  </data>
-  <data name="btnTestServiceBus.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnTestServiceBus.Text" xml:space="preserve">
-    <value>Test Service Bus</value>
-  </data>
-  <data name="&gt;&gt;btnTestServiceBus.Name" xml:space="preserve">
-    <value>btnTestServiceBus</value>
-  </data>
-  <data name="&gt;&gt;btnTestServiceBus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnTestServiceBus.Parent" xml:space="preserve">
-    <value>splConStoreMainForm.Panel2</value>
-  </data>
-  <data name="&gt;&gt;btnTestServiceBus.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="&gt;&gt;splConStoreMainForm.Panel2.Name" xml:space="preserve">

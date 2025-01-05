@@ -29,12 +29,16 @@ namespace PL
         private NotificationService _notificationService; //lấy từ bên StoreMainForm hoặc bên SalesDeptMainForm
         private MaterialService _materialService;
         private ProductService _productService;
+        private StoreService _storeService;
 
         //khai báo các biến sẽ sử dụng trong form
         private readonly string? _storeId = LoginForm.Instance.LoginInformation.StoreID;
         private List<FloralRepresentationDTO>? _fRepresentations;
         private List<FlowerDTO> _flowers;
         private List<MaterialInventoryDTO> _accessories;
+
+        private BindingSource _flowerBindingSource = new BindingSource();
+        private BindingSource _accessoryBindingSource = new BindingSource();
 
         private ProductCreationForm(NotificationService notificationService)
         {
@@ -43,26 +47,55 @@ namespace PL
 
             //khởi tạo các service
             _notificationService = notificationService;
-            
+
             _materialService = new MaterialService();
             _productService = new ProductService();
+            _storeService = new StoreService();
+
+            InitializeDataGridView();
 
             //Cấu hình data property name cho flower 
+            SetupFlowerDgv();
+
+            //cấu hình data property name cho accessory
+            SetupAccessoryDgv();
+
+            //Cấu hình cho text box 'số lượng sản phẩm'
+            txtBxCreationQuantity.ReadOnly = true;
+            txtBxCreationQuantity.Enabled = false;
+        }
+
+        private void SetupFlowerDgv()
+        {
             dgvFlowerList.Columns[0].DataPropertyName = "FlowerID";
             dgvFlowerList.Columns[1].DataPropertyName = "FlowerName";
             dgvFlowerList.Columns[2].DataPropertyName = "FTypeName";
             dgvFlowerList.Columns[3].DataPropertyName = "FColorName";
             dgvFlowerList.Columns[4].DataPropertyName = "FCharacteristicName";
             dgvFlowerList.AutoGenerateColumns = false;
+        }
 
-            //cấu hình data property name cho accessory
+        private void SetupAccessoryDgv()
+        {
             dgvAccessoryList.Columns[0].DataPropertyName = "MaterialID";
             dgvAccessoryList.Columns[1].DataPropertyName = "MaterialName";
             dgvAccessoryList.AutoGenerateColumns = false;
+        }
 
-            //Cấu hình cho text box 'số lượng sản phẩm'
-            txtBxCreationQuantity.ReadOnly = true;
-            txtBxCreationQuantity.Enabled = false;
+        private void InitializeDataGridView()
+        {
+            dgvFlowerList.DataSource = _flowerBindingSource;
+            dgvAccessoryList.DataSource = _accessoryBindingSource;
+        }
+
+        public void SetFlowerData(List<FlowerDTO> flowers)
+        {
+            _flowerBindingSource.DataSource = flowers;
+        }
+
+        public void SetAccessoryData(List<MaterialInventoryDTO> accessories)
+        {
+            _accessoryBindingSource.DataSource = accessories;
         }
 
         public static void Initialize(NotificationService notificationService)
@@ -97,18 +130,16 @@ namespace PL
 
         private async void ProductCreationForm_Load(object sender, EventArgs e)
         {
-            await LoadFlowerListAsync();
-            LoadAccessoryList();
-            await LoadFloralRepresentation();
-
-            MessageBox.Show("Form is load");
+            await LoadAllFlowersByStoreAsync();
+            LoadAllAccessories();
+            await LoadAllFRepresentations();
         }
 
         //===================Xử lý cho tab Product Information===================
 
-        private async Task LoadFloralRepresentation()
+        private async Task LoadAllFRepresentations()
         {
-            _fRepresentations = await _materialService.GetFloralRepresentationAsync();
+            _fRepresentations = await _materialService.GetAllFRepresentationsAsync();
 
             if (_fRepresentations != null)
             {
@@ -234,7 +265,7 @@ namespace PL
                 ProductName = productName
             };
 
-            
+
             short createdQuantity = Convert.ToInt16(creationQuantity);
             decimal price = ConvertFromCurrency(unitPrice);
 
@@ -248,13 +279,13 @@ namespace PL
 
             //Xử lý sản phẩm trả về sau khi thêm mới sản phẩm
             ReturnedProductDTO returnedProduct = await _productService.AddProductAsync(product, creationHistory, _storeId!);
-            
+
             //Sau khi thêm sản phẩm thành công, update giao diện bên Inventory
             await UpdateStoreInventory();
 
             //Refresh danh sách hoa và phụ liệu trong form này
             await RefreshFlowerList();
-            RefreshAccessoryList();
+            RefreshAllAccessories();
 
             MessageBox.Show("Đã thêm thành công sản phẩm", "Thông báo");
         }
@@ -329,7 +360,7 @@ namespace PL
         {
             foreach (DataGridViewRow row in dgv.Rows)
             {
-                DataGridViewCell cell = row.Cells[dgv.Columns.Count -1];
+                DataGridViewCell cell = row.Cells[dgv.Columns.Count - 1];
 
                 // Kiểm tra giá trị của ô có phải là true không
                 if (cell.Value != null && cell.Value is bool isChecked && isChecked)
@@ -554,16 +585,16 @@ namespace PL
         //================Xử lý cho tab Flower=========================
 
         //Load dữ liệu flower của cửa hàng
-        private async Task LoadFlowerListAsync()
+        private async Task LoadAllFlowersByStoreAsync()
         {
             try
             {
-                List<FlowerDTO>? flowerDtoInventory = null;
+                List<FlowerDTO> flowerDtoInventory;
 
                 if (_storeId != null)
                 {
-                    flowerDtoInventory = await _materialService.GetAllFlowerByStoreAsync(_storeId);
-                    
+                    flowerDtoInventory = await _storeService.GetAllFlowerByStoreAsync(_storeId);
+
                     var materialInventory = InventoryForm.Instance.MaterialInventory;
 
                     if (flowerDtoInventory == null)
@@ -585,7 +616,8 @@ namespace PL
                                          }
                                     ).ToList();
 
-                    dgvFlowerList.DataSource = _flowers;
+                    //dgvFlowerList.DataSource = _flowers;
+                    SetFlowerData(_flowers);
 
                     LoadComboBoxData(_flowers);
                 }
@@ -598,7 +630,7 @@ namespace PL
 
         private async Task RefreshFlowerList()
         {
-            await LoadFlowerListAsync();
+            await LoadAllFlowersByStoreAsync();
         }
 
         //Lọc dữ liệu theo loại hoa
@@ -679,7 +711,7 @@ namespace PL
 
 
         //Load dữ liệu accessory lên
-        private void LoadAccessoryList()
+        private void LoadAllAccessories()
         {
             try
             {
@@ -689,7 +721,8 @@ namespace PL
 
                     _accessories = accessoryList.Where(al => al.MaterialId.StartsWith("A")).ToList();
 
-                    dgvAccessoryList.DataSource = _accessories;
+                    //dgvAccessoryList.DataSource = _accessories;
+                    SetAccessoryData(_accessories);
                 }
             }
             catch (Exception e)
@@ -698,9 +731,9 @@ namespace PL
             }
         }
 
-        public void RefreshAccessoryList()
+        public void RefreshAllAccessories()
         {
-            LoadAccessoryList();
+            LoadAllAccessories();
         }
 
         //Update dữ liệu bên Product khi user tick vô checkbox

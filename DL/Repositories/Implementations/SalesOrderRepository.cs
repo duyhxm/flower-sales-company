@@ -271,5 +271,21 @@ namespace DL.Repositories.Implementations
                 throw new Exception("Đã xảy ra lỗi trong quá trình lấy thông tin các công ty vận chuyển", ex);
             }
         }
+
+        public async Task<List<DetailedSalesOrderDTO>> GetDetailedSalesOrderByIdAsync(string salesOrderId)
+        {
+            try
+            {
+                var detailedOrders = await _context.DetailedSalesOrders
+                                            .Where(so => so.SalesOrderId == salesOrderId)
+                                            .ToListAsync();
+
+                return _mapper.Map<List<DetailedSalesOrderDTO>>(detailedOrders);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

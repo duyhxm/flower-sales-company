@@ -9,6 +9,7 @@ namespace DTO.Enum.SalesOrder
     public static class OrderType
     {
         public const string ImmediateSalesOrder = "Lấy ngay";
+
         public const string PreSalesOrder = "Đặt trước";
     }
 }

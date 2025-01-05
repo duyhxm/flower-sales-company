@@ -19,7 +19,7 @@
     <Compile Update="SalesEmployee\ChartFlowerRate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="SalesEmployee\CreateProduct.cs">
+    <Compile Update="SalesEmployee\ProductCreationForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SalesEmployee\CustomerForm.cs">
@@ -49,7 +49,7 @@
     <Compile Update="StoreEmployee\DailyTask\DailyTaskForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="StoreEmployee\DailyTask\DetailedProductForm.cs">
+    <Compile Update="StoreEmployee\OrderHistory\DetailedProductForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="StoreEmployee\Inventory\InventoryForm.cs">
@@ -61,16 +61,10 @@
     <Compile Update="StoreEmployee\OrderHistory\OrderStatusAdjustmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="StoreEmployee\PreorderList\DetailedSalesOrder.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="StoreEmployee\SalesOrder\InvoiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="StoreEmployee\OrderHistory\OrderHistoryForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="StoreEmployee\PreorderList\PreorderListForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="StoreEmployee\ProductListForm.cs">

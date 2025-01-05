@@ -81,7 +81,7 @@ namespace PL.StoreEmployee
 
         public async Task LoadSalesOrders(string storeId, DateTimeOffset date)
         {
-            var salesOrders = await _storeService.GetSalesOrdersByStoreAsync(storeId, date);
+            List<SalesOrderDTO> salesOrders = await _storeService.GetSalesOrdersByStoreAsync(storeId, date);
 
             if (salesOrders == null)
             {
@@ -138,10 +138,10 @@ namespace PL.StoreEmployee
         {
             if (e.RowIndex >= 0)
             {
-                if (e.ColumnIndex == 5) //Ấn xem chi tiết đơn hàng
+                if (e.ColumnIndex == dgvOrderHistory.Columns["ColOrderDetails"].Index) //Ấn xem chi tiết đơn hàng
                 {
                     var salesOrder = _salesOrders[e.RowIndex];
-                    var form = new ExtraOrderInfoForm(salesOrder, _storeService);
+                    var form = new ExtraOrderInfoForm(salesOrder);
                     form.ShowDialog();
 
                     if (form.DialogResult == DialogResult.OK)
@@ -229,6 +229,7 @@ namespace PL.StoreEmployee
                     }
                 }
 
+                //Chỉnh sửa trạng thái đơn hàng
                 if (e.ColumnIndex == 7)
                 {
                     var orderType = dgvOrderHistory.Rows[e.RowIndex].Cells["ColOrderType"].Value.ToString();
@@ -237,6 +238,7 @@ namespace PL.StoreEmployee
 
                     if (orderType == OrderType.ImmediateSalesOrder)
                     {
+                        MessageBox.Show("Đơn hàng lấy ngay sẽ chỉ có một trạng thái là thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return; // Đơn hàng lấy ngay chỉ có một trạng thái là success
                     }
 
@@ -263,7 +265,6 @@ namespace PL.StoreEmployee
             {
                 _salesOrders.Add(salesOrder);
 
-                // Ensure the new row has the default value for the checkbox column
                 var newRow = dgvOrderHistory.Rows[dgvOrderHistory.Rows.Count - 1];
 
                 ShippingInformationDTO? shipInfo = await _storeService.GetShippingInfoByOrderIdAsync(salesOrder.SalesOrderId);
@@ -279,7 +280,7 @@ namespace PL.StoreEmployee
             }
             else
             {
-                MessageBox.Show("Sales orders list is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Danh sách đơn hàng chưa được khởi tạo", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

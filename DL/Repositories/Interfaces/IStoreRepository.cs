@@ -13,7 +13,7 @@ namespace DL.Repositories.Interfaces
         //Create
         int AddStore(StoreDTO store);
         //Read
-        Task<List<StoreDTO>> GetAllStoresAsync(string criteria);
+        Task<List<StoreDTO>> GetAllStoresAsync();
         //Update
         int UpdateStore(StoreDTO store);
         //Delete
