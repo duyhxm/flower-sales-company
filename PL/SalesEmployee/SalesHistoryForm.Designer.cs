@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             label1 = new Label();
             tabControl1 = new TabControl();
             tpSalesOrder = new TabPage();
@@ -60,7 +60,7 @@
             label1.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(43, 38);
             label1.Name = "label1";
-            label1.Size = new Size(170, 25);
+            label1.Size = new Size(250, 38);
             label1.TabIndex = 2;
             label1.Text = "Statistics in month";
             // 
@@ -72,7 +72,7 @@
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1653, 944);
+            tabControl1.Size = new Size(1600, 944);
             tabControl1.TabIndex = 6;
             // 
             // tpSalesOrder
@@ -85,43 +85,43 @@
             tpSalesOrder.Controls.Add(dateTimePickerEnd);
             tpSalesOrder.Controls.Add(dateTimePickerStart);
             tpSalesOrder.Controls.Add(label1);
-            tpSalesOrder.Location = new Point(4, 30);
+            tpSalesOrder.Location = new Point(4, 41);
             tpSalesOrder.Name = "tpSalesOrder";
             tpSalesOrder.Padding = new Padding(3);
-            tpSalesOrder.Size = new Size(1645, 910);
+            tpSalesOrder.Size = new Size(1592, 899);
             tpSalesOrder.TabIndex = 0;
             tpSalesOrder.Text = "Sales Order";
             tpSalesOrder.UseVisualStyleBackColor = true;
             // 
             // chart1
             // 
-            chartArea7.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea7);
-            legend7.Name = "Legend1";
-            chart1.Legends.Add(legend7);
-            chart1.Location = new Point(89, 239);
+            chartArea5.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            chart1.Legends.Add(legend5);
+            chart1.Location = new Point(21, 286);
             chart1.Name = "chart1";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            chart1.Series.Add(series7);
-            chart1.Size = new Size(641, 550);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            chart1.Series.Add(series5);
+            chart1.Size = new Size(706, 500);
             chart1.TabIndex = 14;
             chart1.Text = "chart1";
             // 
             // chart2
             // 
-            chartArea8.Name = "ChartArea1";
-            chart2.ChartAreas.Add(chartArea8);
-            legend8.Name = "Legend1";
-            chart2.Legends.Add(legend8);
-            chart2.Location = new Point(783, 239);
+            chartArea6.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            chart2.Legends.Add(legend6);
+            chart2.Location = new Point(733, 286);
             chart2.Name = "chart2";
-            series8.ChartArea = "ChartArea1";
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            chart2.Series.Add(series8);
-            chart2.Size = new Size(641, 550);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            chart2.Series.Add(series6);
+            chart2.Size = new Size(839, 500);
             chart2.TabIndex = 13;
             chart2.Text = "chart1";
             // 
@@ -140,7 +140,7 @@
             lblEndDate.AutoSize = true;
             lblEndDate.Location = new Point(54, 159);
             lblEndDate.Name = "lblEndDate";
-            lblEndDate.Size = new Size(36, 21);
+            lblEndDate.Size = new Size(54, 32);
             lblEndDate.TabIndex = 11;
             lblEndDate.Text = "End";
             // 
@@ -149,7 +149,7 @@
             lblStartDate.AutoSize = true;
             lblStartDate.Location = new Point(54, 101);
             lblStartDate.Name = "lblStartDate";
-            lblStartDate.Size = new Size(42, 21);
+            lblStartDate.Size = new Size(62, 32);
             lblStartDate.TabIndex = 10;
             lblStartDate.Text = "Start";
             // 
@@ -159,7 +159,7 @@
             dateTimePickerEnd.Format = DateTimePickerFormat.Custom;
             dateTimePickerEnd.Location = new Point(145, 154);
             dateTimePickerEnd.Name = "dateTimePickerEnd";
-            dateTimePickerEnd.Size = new Size(300, 29);
+            dateTimePickerEnd.Size = new Size(148, 39);
             dateTimePickerEnd.TabIndex = 7;
             // 
             // dateTimePickerStart
@@ -168,15 +168,15 @@
             dateTimePickerStart.Format = DateTimePickerFormat.Custom;
             dateTimePickerStart.Location = new Point(145, 96);
             dateTimePickerStart.Name = "dateTimePickerStart";
-            dateTimePickerStart.Size = new Size(300, 29);
+            dateTimePickerStart.Size = new Size(148, 39);
             dateTimePickerStart.TabIndex = 6;
             // 
             // tpSalesOrderList
             // 
             tpSalesOrderList.Controls.Add(dgvSalesOrders);
-            tpSalesOrderList.Location = new Point(4, 30);
+            tpSalesOrderList.Location = new Point(4, 41);
             tpSalesOrderList.Name = "tpSalesOrderList";
-            tpSalesOrderList.Size = new Size(1645, 910);
+            tpSalesOrderList.Size = new Size(1592, 899);
             tpSalesOrderList.TabIndex = 2;
             tpSalesOrderList.Text = "Details";
             tpSalesOrderList.UseVisualStyleBackColor = true;
@@ -184,18 +184,20 @@
             // dgvSalesOrders
             // 
             dgvSalesOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvSalesOrders.BackgroundColor = SystemColors.ControlLightLight;
+            dgvSalesOrders.BorderStyle = BorderStyle.None;
             dgvSalesOrders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSalesOrders.Location = new Point(66, 33);
+            dgvSalesOrders.Location = new Point(23, 33);
             dgvSalesOrders.Name = "dgvSalesOrders";
             dgvSalesOrders.RowHeadersWidth = 62;
-            dgvSalesOrders.Size = new Size(1176, 768);
+            dgvSalesOrders.Size = new Size(1545, 836);
             dgvSalesOrders.TabIndex = 0;
             // 
             // SalesHistoryForm
             // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1653, 944);
+            ClientSize = new Size(1600, 944);
             Controls.Add(tabControl1);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;

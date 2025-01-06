@@ -50,8 +50,8 @@
             // 
             // dgvMaterials
             // 
+            dgvMaterials.Anchor = AnchorStyles.None;
             dgvMaterials.BackgroundColor = SystemColors.Control;
-            dgvMaterials.BorderStyle = BorderStyle.None;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -62,11 +62,11 @@
             dgvMaterials.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvMaterials.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvMaterials.Columns.AddRange(new DataGridViewColumn[] { MaterialId, MaterialName, MaterialType, Unit, Quantity, Check });
-            dgvMaterials.Location = new Point(5, 190);
+            dgvMaterials.Location = new Point(81, 190);
             dgvMaterials.Margin = new Padding(4, 5, 4, 5);
             dgvMaterials.Name = "dgvMaterials";
             dgvMaterials.RowHeadersWidth = 62;
-            dgvMaterials.Size = new Size(992, 740);
+            dgvMaterials.Size = new Size(992, 604);
             dgvMaterials.TabIndex = 0;
             // 
             // MaterialId
@@ -122,7 +122,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(1018, 185);
+            label1.Location = new Point(1129, 225);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(111, 32);
@@ -134,16 +134,16 @@
             cbbFr.DropDownStyle = ComboBoxStyle.DropDownList;
             cbbFr.Font = new Font("Segoe UI", 12F);
             cbbFr.FormattingEnabled = true;
-            cbbFr.Location = new Point(1193, 182);
+            cbbFr.Location = new Point(1304, 222);
             cbbFr.Margin = new Padding(4, 5, 4, 5);
             cbbFr.Name = "cbbFr";
-            cbbFr.Size = new Size(225, 40);
+            cbbFr.Size = new Size(143, 40);
             cbbFr.TabIndex = 2;
             // 
             // txtProductName
             // 
             txtProductName.Font = new Font("Segoe UI", 12F);
-            txtProductName.Location = new Point(1191, 232);
+            txtProductName.Location = new Point(1302, 272);
             txtProductName.Margin = new Padding(4, 5, 4, 5);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(296, 39);
@@ -153,7 +153,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(1016, 235);
+            label2.Location = new Point(1127, 275);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(167, 32);
@@ -163,7 +163,7 @@
             // btnCreate
             // 
             btnCreate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCreate.Location = new Point(1159, 318);
+            btnCreate.Location = new Point(1270, 358);
             btnCreate.Margin = new Padding(4, 5, 4, 5);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(100, 50);
@@ -200,7 +200,7 @@
             cmbBxMaterialType.Location = new Point(736, 87);
             cmbBxMaterialType.Margin = new Padding(4, 5, 4, 5);
             cmbBxMaterialType.Name = "cmbBxMaterialType";
-            cmbBxMaterialType.Size = new Size(225, 40);
+            cmbBxMaterialType.Size = new Size(179, 40);
             cmbBxMaterialType.TabIndex = 8;
             cmbBxMaterialType.SelectedValueChanged += cmbBxMaterialType_SelectedValueChanged;
             // 
@@ -219,7 +219,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1500, 944);
+            ClientSize = new Size(1653, 944);
             Controls.Add(lblMaterialType);
             Controls.Add(cmbBxMaterialType);
             Controls.Add(label3);
@@ -233,6 +233,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4, 5, 4, 5);
             Name = "ProductCreationForm";
+            StartPosition = FormStartPosition.Manual;
             Text = "CreateProduct";
             Load += CreateProduct_Load;
             ((System.ComponentModel.ISupportInitialize)dgvMaterials).EndInit();

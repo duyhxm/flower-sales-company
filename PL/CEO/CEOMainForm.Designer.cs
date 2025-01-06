@@ -145,13 +145,13 @@
             chart2.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             chart2.Legends.Add(legend1);
-            chart2.Location = new Point(768, 206);
+            chart2.Location = new Point(612, 206);
             chart2.Name = "chart2";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chart2.Series.Add(series1);
-            chart2.Size = new Size(716, 471);
+            chart2.Size = new Size(1010, 609);
             chart2.TabIndex = 23;
             chart2.Text = "chart3";
             // 
@@ -159,7 +159,7 @@
             // 
             txt_doanhThu.Enabled = false;
             txt_doanhThu.ForeColor = Color.Blue;
-            txt_doanhThu.Location = new Point(210, 762);
+            txt_doanhThu.Location = new Point(219, 812);
             txt_doanhThu.Name = "txt_doanhThu";
             txt_doanhThu.Size = new Size(224, 39);
             txt_doanhThu.TabIndex = 22;
@@ -167,7 +167,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(71, 765);
+            label3.Location = new Point(80, 815);
             label3.Name = "label3";
             label3.Size = new Size(133, 32);
             label3.TabIndex = 21;
@@ -177,7 +177,7 @@
             // 
             txt_chiPhi.Enabled = false;
             txt_chiPhi.ForeColor = Color.Red;
-            txt_chiPhi.Location = new Point(210, 717);
+            txt_chiPhi.Location = new Point(219, 767);
             txt_chiPhi.Name = "txt_chiPhi";
             txt_chiPhi.Size = new Size(224, 39);
             txt_chiPhi.TabIndex = 20;
@@ -185,7 +185,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(93, 720);
+            label2.Location = new Point(102, 770);
             label2.Name = "label2";
             label2.Size = new Size(95, 32);
             label2.TabIndex = 19;
@@ -253,13 +253,13 @@
             chart1.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             chart1.Legends.Add(legend2);
-            chart1.Location = new Point(23, 206);
+            chart1.Location = new Point(37, 257);
             chart1.Name = "chart1";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             chart1.Series.Add(series2);
-            chart1.Size = new Size(600, 471);
+            chart1.Size = new Size(496, 420);
             chart1.TabIndex = 0;
             chart1.Text = "chart1";
             // 
@@ -272,7 +272,9 @@
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
             Name = "CEOMainForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "CEOMainForm";
+            WindowState = FormWindowState.Maximized;
             FormClosing += CEOMainForm_FormClosing;
             Load += CEOMainForm_Load;
             splConStoreMainForm.Panel1.ResumeLayout(false);

@@ -30,6 +30,16 @@ namespace PL.SalesEmployee
         public ProductCreationForm()
         {
             InitializeComponent();
+            dgvMaterials.AutoGenerateColumns = false;
+            this.VisibleChanged += ProductCreationForm_VisibleChanged;
+        }
+
+        private void ProductCreationForm_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                dgvMaterials.Size = new Size(992, 604); // Thiết lập lại kích thước mong muốn
+            }
         }
 
         public static void Initialize()

@@ -94,11 +94,11 @@ namespace PL.SalesEmployee
             dgvOrderDetails.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvOrderDetails.BackgroundColor = SystemColors.Control;
             dgvOrderDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvOrderDetails.Location = new Point(82, 601);
+            dgvOrderDetails.Location = new Point(82, 546);
             dgvOrderDetails.Name = "dgvOrderDetails";
             dgvOrderDetails.ReadOnly = true;
             dgvOrderDetails.RowHeadersWidth = 62;
-            dgvOrderDetails.Size = new Size(840, 407);
+            dgvOrderDetails.Size = new Size(840, 312);
             dgvOrderDetails.TabIndex = 13;
             dgvOrderDetails.CellClick += dgvOrderDetails_CellClick;
             // 
@@ -168,7 +168,7 @@ namespace PL.SalesEmployee
             dgvPurchaseOrders.Name = "dgvPurchaseOrders";
             dgvPurchaseOrders.ReadOnly = true;
             dgvPurchaseOrders.RowHeadersWidth = 62;
-            dgvPurchaseOrders.Size = new Size(840, 420);
+            dgvPurchaseOrders.Size = new Size(840, 344);
             dgvPurchaseOrders.TabIndex = 0;
             dgvPurchaseOrders.CellClick += dgvPurchaseOrders_CellClick;
             // 
@@ -220,7 +220,7 @@ namespace PL.SalesEmployee
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1500, 1050);
+            ClientSize = new Size(1500, 944);
             Controls.Add(dgvOrderDetails);
             Controls.Add(txtDistributedQuantity);
             Controls.Add(lblDisQuantity);

@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BL;
+using DTO.Material;
+using DTO.Product;
+using DTO.Store;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DTO.Material;
-using BL;
-using DTO;
 using System.Diagnostics;
-using DTO.Product;
-using DTO.Store;
 using System.Globalization;
 using static BL.GeneralService;
 
@@ -27,15 +19,15 @@ namespace PL
 
         //khai báo các service sẽ dùng
         private NotificationService _notificationService; //lấy từ bên StoreMainForm hoặc bên SalesDeptMainForm
-        private MaterialService _materialService;
-        private ProductService _productService;
-        private StoreService _storeService;
+        private MaterialService _materialService = new();
+        private ProductService _productService = new();
+        private StoreService _storeService = new();
 
         //khai báo các biến sẽ sử dụng trong form
         private readonly string? _storeId = LoginForm.Instance.LoginInformation.StoreID;
-        private List<FloralRepresentationDTO>? _fRepresentations;
-        private List<FlowerDTO> _flowers;
-        private List<MaterialInventoryDTO> _accessories;
+        private List<FloralRepresentationDTO>? _fRepresentations = new();
+        private List<FlowerDTO> _flowers = new List<FlowerDTO>();
+        private List<MaterialInventoryDTO> _accessories = new();
 
         private BindingSource _flowerBindingSource = new BindingSource();
         private BindingSource _accessoryBindingSource = new BindingSource();
@@ -47,10 +39,6 @@ namespace PL
 
             //khởi tạo các service
             _notificationService = notificationService;
-
-            _materialService = new MaterialService();
-            _productService = new ProductService();
-            _storeService = new StoreService();
 
             InitializeDataGridView();
 
@@ -141,13 +129,16 @@ namespace PL
         {
             _fRepresentations = await _materialService.GetAllFRepresentationsAsync();
 
-            if (_fRepresentations != null)
-            {
-                foreach (var f in _fRepresentations)
-                {
-                    cmbBxFloralRepresentations.Items.Add(f.Frname!);
-                }
-            }
+            cmbBxFloralRepresentations.DataSource = _fRepresentations;
+            cmbBxFloralRepresentations.DisplayMember = "Frname";
+            cmbBxFloralRepresentations.ValueMember = "FrepresentationId";
+            //if (_fRepresentations != null)
+            //{
+            //    foreach (var f in _fRepresentations)
+            //    {
+            //        cmbBxFloralRepresentations.Items.Add(f.Frname!);
+            //    }
+            //}
         }
 
         //xử lý khi user click nút tăng giảm số lượng sản phẩm
@@ -199,7 +190,7 @@ namespace PL
         //Thêm product
         private async void btnAdd_Click(object sender, EventArgs e)
         {
-            //Kiểm tra tính hợp lệ của các thông tin
+            //Kiểm tra số lượng sản phẩm
             string creationQuantity = txtBxCreationQuantity.Text;
             if (creationQuantity == string.Empty)
             {
@@ -207,6 +198,7 @@ namespace PL
                 return;
             }
 
+            //Kiểm tra hình thức sản phẩm
             string floralRepresentation = cmbBxFloralRepresentations.Text;
             if (floralRepresentation == string.Empty)
             {
@@ -214,6 +206,7 @@ namespace PL
                 return;
             }
 
+            //Kiểm tra tên sản phẩm
             string productName = txtBxProductName.Text;
             if (productName == string.Empty)
             {
@@ -227,13 +220,15 @@ namespace PL
             string unitPrice = txtBxUnitPrice.Text;
 
             //Lấy floral representation id
-            string? idFRepresentation = null;
-            if (_fRepresentations != null)
-            {
-                idFRepresentation = _fRepresentations
-                                       .Where(fr => fr.Frname == floralRepresentation)
-                                       .Select(fr => fr.FrepresentationId).FirstOrDefault();
-            }
+            string? frId = cmbBxFloralRepresentations.SelectedValue!.ToString();
+
+
+            //if (_fRepresentations != null)
+            //{
+            //    frId = _fRepresentations
+            //                           .Where(fr => fr.Frname == floralRepresentation)
+            //                           .Select(fr => fr.FrepresentationId).FirstOrDefault();
+            //}
 
             //Tạo list chứa các thông tin chi tiết của sản phẩm, bao gồm mã vật liệu và số lượng
             List<DetailedProductDTO> detailedProduct = new List<DetailedProductDTO>();
@@ -257,18 +252,22 @@ namespace PL
                 }
             }
 
-            //Tạo sản phẩm
+            //Tạo sản phẩm. Ở đây sẽ chỉ tạo 3 thuộc tính, trừ thuộc tính ProductId. Vì thuộc tính ProductId sẽ được tạo ra ở dưới database
             ProductDTO product = new ProductDTO()
             {
                 DetailedProducts = detailedProduct,
-                FrepresentationId = idFRepresentation,
+                FrepresentationId = frId,
                 ProductName = productName
             };
 
 
+            //Số lượng sản phẩm được tạo ra
             short createdQuantity = Convert.ToInt16(creationQuantity);
+
+            //Unit price của sản phẩm
             decimal price = ConvertFromCurrency(unitPrice);
 
+            //Tạo lịch sử tạo sản phẩm
             ProductCreationHistoryDTO creationHistory = new ProductCreationHistoryDTO()
             {
                 CreatedDateTime = LocalDateTimeOffset(),
@@ -280,14 +279,21 @@ namespace PL
             //Xử lý sản phẩm trả về sau khi thêm mới sản phẩm
             ReturnedProductDTO returnedProduct = await _productService.AddProductAsync(product, creationHistory, _storeId!);
 
+            if (returnedProduct.HasExisted)
+            {
+                MessageBox.Show($"Sản phẩm đã tồn tại, tên là {returnedProduct.Product.ProductName}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
             //Sau khi thêm sản phẩm thành công, update giao diện bên Inventory
             await UpdateStoreInventory();
 
             //Refresh danh sách hoa và phụ liệu trong form này
             await RefreshFlowerList();
             RefreshAllAccessories();
+            dgvProductDetails.Rows.Clear();
+            txtBxProductName.Text = string.Empty;
 
-            MessageBox.Show("Đã thêm thành công sản phẩm", "Thông báo");
+            MessageBox.Show("Đã thêm thành công sản phẩm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         //Update store inventory sẽ bao gồm material và product
