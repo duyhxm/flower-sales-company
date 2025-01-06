@@ -21,10 +21,12 @@ namespace PL
         private static readonly object _lock = new object();
 
         //khai báo các dịch vụ 
-        public NotificationService NotificationService;
+        private NotificationService NotificationService;
 
         //khai báo các biến sử dụng
-        public Dictionary<string, Form> formInstances = new();
+        private Dictionary<string, Form> formInstances = new();
+
+        private bool _isLoadData = false;
         private SalesDeptMainForm()
         {
             InitializeComponent();
@@ -74,13 +76,15 @@ namespace PL
 
         private void InitializeForms()
         {
+            _isLoadData = true;
+
             //1. Khởi tạo MaterialDistributionForm
             MaterialDistributionForm.Initialize();
             formInstances[MaterialDistributionForm.Instance.Name] = MaterialDistributionForm.Instance;
 
             //2. Khởi tạo ProductCreationForm, dùng để tạo product
-            ProductCreationForm.Initialize(NotificationService);
-            formInstances[ProductCreationForm.Instance.Name] = ProductCreationForm.Instance;
+            ProductCreationForm1.Initialize();
+            formInstances[ProductCreationForm1.Instance.Name] = ProductCreationForm1.Instance;
 
             //3. Khởi tạo ProductPlanForm
             ProductPlanForm.Initialize();
@@ -102,13 +106,13 @@ namespace PL
             AccountInformationForm.Initialize();
             formInstances[AccountInformationForm.Instance.Name] = AccountInformationForm.Instance;
 
-            SalesEmployee.ProductCreationForm.Initialize();
-            formInstances[SalesEmployee.ProductCreationForm.Instance.Name] = SalesEmployee.ProductCreationForm.Instance;
             foreach (var form in formInstances.Values)
             {
                 form.TopLevel = false;
                 form.Dock = DockStyle.Fill;
             }
+
+            _isLoadData = false;
         }
 
         private void AddFormIntoPanel(Form form)
@@ -120,6 +124,8 @@ namespace PL
 
         private void btnCreateMaterialDistribution_Click(object sender, EventArgs e)
         {
+            if (_isLoadData) return;
+            
             if (formInstances.ContainsKey(MaterialDistributionForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[MaterialDistributionForm.Instance.Name]);
@@ -128,14 +134,18 @@ namespace PL
 
         private void btnCreateProduct_Click(object sender, EventArgs e)
         {
-            if (formInstances.ContainsKey(SalesEmployee.ProductCreationForm.Instance.Name))
+            if (_isLoadData) return;
+
+            if (formInstances.ContainsKey(ProductCreationForm1.Instance.Name))
             {
-                AddFormIntoPanel(formInstances[SalesEmployee.ProductCreationForm.Instance.Name]);
+                AddFormIntoPanel(formInstances[ProductCreationForm1.Instance.Name]);
             }
         }
 
         private void btnCreateProductPlan_Click(object sender, EventArgs e)
         {
+            if (_isLoadData) return;
+
             if (formInstances.ContainsKey(ProductPlanForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[ProductPlanForm.Instance.Name]);
@@ -144,6 +154,8 @@ namespace PL
 
         private void btnAdjustPrice_Click(object sender, EventArgs e)
         {
+            if (_isLoadData) return;
+
             if (formInstances.ContainsKey(MaterialAdjustmentForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[MaterialAdjustmentForm.Instance.Name]);
@@ -152,6 +164,8 @@ namespace PL
 
         private void btnCustomer_Click(object sender, EventArgs e)
         {
+            if (_isLoadData) return;
+
             if (formInstances.ContainsKey(CustomerForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[CustomerForm.Instance.Name]);
@@ -160,6 +174,8 @@ namespace PL
 
         private void btnSalesHistory_Click(object sender, EventArgs e)
         {
+            if (_isLoadData) return;
+
             if (formInstances.ContainsKey(SalesHistoryForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[SalesHistoryForm.Instance.Name]);
@@ -168,6 +184,8 @@ namespace PL
 
         private void btnAccountInformation_Click(object sender, EventArgs e)
         {
+            if (_isLoadData) return;
+
             if (formInstances.ContainsKey(AccountInformationForm.Instance.Name))
             {
                 AddFormIntoPanel(formInstances[AccountInformationForm.Instance.Name]);

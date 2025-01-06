@@ -75,5 +75,5 @@ E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ChartAccessoryRate.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ChartFlowerRate.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.FlowerHistoryProfitRate.resources
-E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ProductCreationForm.resources
 E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.StoreEmployee.OrderHistory.DetailedProductForm.resources
+E:\01 Projects\flower-sales-company\PL\obj\Debug\net8.0-windows\PL.SalesEmployee.ProductCreationForm1.resources

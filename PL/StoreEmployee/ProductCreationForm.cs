@@ -132,13 +132,6 @@ namespace PL
             cmbBxFloralRepresentations.DataSource = _fRepresentations;
             cmbBxFloralRepresentations.DisplayMember = "Frname";
             cmbBxFloralRepresentations.ValueMember = "FrepresentationId";
-            //if (_fRepresentations != null)
-            //{
-            //    foreach (var f in _fRepresentations)
-            //    {
-            //        cmbBxFloralRepresentations.Items.Add(f.Frname!);
-            //    }
-            //}
         }
 
         //xử lý khi user click nút tăng giảm số lượng sản phẩm
@@ -221,14 +214,6 @@ namespace PL
 
             //Lấy floral representation id
             string? frId = cmbBxFloralRepresentations.SelectedValue!.ToString();
-
-
-            //if (_fRepresentations != null)
-            //{
-            //    frId = _fRepresentations
-            //                           .Where(fr => fr.Frname == floralRepresentation)
-            //                           .Select(fr => fr.FrepresentationId).FirstOrDefault();
-            //}
 
             //Tạo list chứa các thông tin chi tiết của sản phẩm, bao gồm mã vật liệu và số lượng
             List<DetailedProductDTO> detailedProduct = new List<DetailedProductDTO>();

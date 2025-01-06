@@ -14,3 +14,4 @@ DL.Models.Region,DTO.Store.RegionDTO
 DL.Models.Store,DTO.Store.StoreDTO
 DL.Models.ProductCreationPlanHistory,DTO.Product.ProductCreationPlanHistoryDTO
 DL.Models.CustomerRank,DTO.Customer.CustomerRankDTO
+DL.Models.Customer,DTO.Customer.CustomerDTO

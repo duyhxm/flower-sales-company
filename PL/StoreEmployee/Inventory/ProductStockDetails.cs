@@ -23,7 +23,7 @@ namespace PL
         {
             dgvProductStockDetails.DataSource = productDetails.Select(p => new
             {
-                p.StockDate,
+                StockDate = p.StockDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                 Quantity = p.StockProductQuantity,
                 p.UnitPrice
             }).ToList();

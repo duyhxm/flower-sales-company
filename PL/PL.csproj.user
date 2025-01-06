@@ -19,7 +19,7 @@
     <Compile Update="SalesEmployee\ChartFlowerRate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="SalesEmployee\ProductCreationForm.cs">
+    <Compile Update="SalesEmployee\ProductCreationForm1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SalesEmployee\CustomerForm.cs">

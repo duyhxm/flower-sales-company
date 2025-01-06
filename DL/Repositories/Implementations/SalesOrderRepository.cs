@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using DTO.Enum;
 using DTO.Enum.SalesOrder;
+using DTO.Customer;
 
 namespace DL.Repositories.Implementations
 {
@@ -51,82 +52,107 @@ namespace DL.Repositories.Implementations
 
         public async Task<SalesOrderDTO?> AddSalesOrderAsync(SalesOrderDTO salesOrder, List<UsedPromotionHistoryDTO> usedPromotion, ShippingInformationDTO? shippingInformation, DateTimeOffset? deliveryDatetime)
         {
-            using var transaction = await _context.Database.BeginTransactionAsync();
-            try
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            return await strategy.ExecuteAsync(async () =>
             {
-                // Lấy SalesOrderId hiện tại
-                string? currentSalesOrderId = GetLastestSalesOrderId();
-                string newSalesOrderId = string.IsNullOrEmpty(currentSalesOrderId) ? "SO00000001" : GenerateId(currentSalesOrderId);
+                using var transaction = await _context.Database.BeginTransactionAsync();
 
-                // Mapping SalesOrderDTO to SalesOrder entity
-                var newSalesOrder = _mapper.Map<SalesOrder>(salesOrder);
-                newSalesOrder.SalesOrderId = newSalesOrderId;
-
-                // Thêm SalesOrder vào context
-                _context.SalesOrders.Add(newSalesOrder);
-
-                // Kiểm tra và thêm UsedPromotionHistory
-                if (usedPromotion != null && usedPromotion.Count > 0)
+                try
                 {
-                    foreach (var promo in usedPromotion)
+                    // Lấy SalesOrderId hiện tại
+                    string? currentSalesOrderId = GetLastestSalesOrderId();
+                    string newSalesOrderId = string.IsNullOrEmpty(currentSalesOrderId) ? "SO00000001" : GenerateId(currentSalesOrderId);
+
+                    salesOrder.SalesOrderId = newSalesOrderId;
+
+                    if (salesOrder.CustomerId == null)
                     {
-                        var newUsedPromotionHistory = _mapper.Map<UsedPromotionHistory>(promo);
-                        newUsedPromotionHistory.SalesOrderId = newSalesOrderId;
-                        _context.UsedPromotionHistories.Add(newUsedPromotionHistory);
+                        string? currentCustomerId = new CustomerRepository().GetLastestCustomerId();
+
+                        string customerId = currentCustomerId == null ? "C000000001" : GenerateId(currentCustomerId);
+
+                        CustomerDTO customerDto = new CustomerDTO()
+                        {
+                            CustomerId = customerId,
+                            CustomerType = CustomerType.Nonmember
+                        };
+
+                        Customer customer = _mapper.Map<Customer>(customerDto);
+                        _context.Add(customer);
+
+                        salesOrder.CustomerId = customerId;
                     }
-                }
+                    // Mapping SalesOrderDTO to SalesOrder entity
+                    var newSalesOrder = _mapper.Map<SalesOrder>(salesOrder);
+                    newSalesOrder.SalesOrderId = newSalesOrderId;
 
-                // Kiểm tra và thêm ShippingInformation
-                if (shippingInformation != null)
-                {
-                    //Tạo id
-                    string? currentShippingId = GetLastestShippingId();
-                    string newShippingId = string.IsNullOrEmpty(currentShippingId) ? "SI00000001" : GenerateId(currentShippingId);
+                    // Thêm SalesOrder vào context
+                    _context.SalesOrders.Add(newSalesOrder);
 
-
-                    //Gán id mới vô biến input và map sang ShippingInformation
-                    shippingInformation.ShippingId = newShippingId;
-                    var newShippingInformation = _mapper.Map<ShippingInformation>(shippingInformation);
-                    newShippingInformation.SalesOrderId = newSalesOrderId;
-
-                    //Thêm mới một row
-                    _context.ShippingInformations.Add(newShippingInformation);
-                }
-
-                // Kiểm tra OrderType và thêm vào bảng tương ứng
-                if (salesOrder.OrderType == OrderType.PreSalesOrder)
-                {
-                    var newPreSalesOrder = new PreSalesOrder
+                    // Kiểm tra và thêm UsedPromotionHistory
+                    if (usedPromotion != null && usedPromotion.Count > 0)
                     {
-                        PreSalesOrderId = newSalesOrderId,
-                        DeliveryDateTime = deliveryDatetime
-                    };
-                    _context.PreSalesOrders.Add(newPreSalesOrder);
-                }
-                else if (salesOrder.OrderType == OrderType.ImmediateSalesOrder)
-                {
-                    var newImmediateSalesOrder = new ImmediateSalesOrder
+                        foreach (var promo in usedPromotion)
+                        {
+                            var newUsedPromotionHistory = _mapper.Map<UsedPromotionHistory>(promo);
+                            newUsedPromotionHistory.SalesOrderId = newSalesOrderId;
+                            _context.UsedPromotionHistories.Add(newUsedPromotionHistory);
+                        }
+                    }
+
+                    // Kiểm tra và thêm ShippingInformation
+                    if (shippingInformation != null)
                     {
-                        IsalesOrderId = newSalesOrderId
-                    };
-                    _context.ImmediateSalesOrders.Add(newImmediateSalesOrder);
+                        //Tạo id
+                        string? currentShippingId = GetLastestShippingId();
+                        string newShippingId = string.IsNullOrEmpty(currentShippingId) ? "SI00000001" : GenerateId(currentShippingId);
+
+
+                        //Gán id mới vô biến input và map sang ShippingInformation
+                        shippingInformation.ShippingId = newShippingId;
+                        var newShippingInformation = _mapper.Map<ShippingInformation>(shippingInformation);
+                        newShippingInformation.SalesOrderId = newSalesOrderId;
+
+                        //Thêm mới một row
+                        _context.ShippingInformations.Add(newShippingInformation);
+                    }
+
+                    // Kiểm tra OrderType và thêm vào bảng tương ứng
+                    if (salesOrder.OrderType == OrderType.PreSalesOrder)
+                    {
+                        var newPreSalesOrder = new PreSalesOrder
+                        {
+                            PreSalesOrderId = newSalesOrderId,
+                            DeliveryDateTime = deliveryDatetime
+                        };
+                        _context.PreSalesOrders.Add(newPreSalesOrder);
+                    }
+                    else if (salesOrder.OrderType == OrderType.ImmediateSalesOrder)
+                    {
+                        var newImmediateSalesOrder = new ImmediateSalesOrder
+                        {
+                            IsalesOrderId = newSalesOrderId
+                        };
+                        _context.ImmediateSalesOrders.Add(newImmediateSalesOrder);
+                    }
+
+                    // Lưu các thay đổi vào cơ sở dữ liệu
+                    await _context.SaveChangesAsync();
+
+                    // Commit transaction
+                    await transaction.CommitAsync();
+
+                    // Trả về SalesOrderDTO đã thêm
+                    return salesOrder;
                 }
-
-                // Lưu các thay đổi vào cơ sở dữ liệu
-                await _context.SaveChangesAsync();
-
-                // Commit transaction
-                await transaction.CommitAsync();
-
-                // Trả về SalesOrderDTO đã thêm
-                return salesOrder;
-            }
-            catch (Exception ex)
-            {
-                // Rollback transaction nếu có lỗi
-                await transaction.RollbackAsync();
-                throw new Exception("An error occurred while adding the sales order", ex);
-            }
+                catch (Exception ex)
+                {
+                    // Rollback transaction nếu có lỗi
+                    await transaction.RollbackAsync();
+                    throw new Exception("An error occurred while adding the sales order", ex);
+                }
+            });
         }
 
         private string? GetLastestShippingId()

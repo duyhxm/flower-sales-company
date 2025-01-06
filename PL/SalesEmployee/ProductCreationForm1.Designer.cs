@@ -1,6 +1,6 @@
 ﻿namespace PL.SalesEmployee
 {
-    partial class ProductCreationForm
+    partial class ProductCreationForm1
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             dgvMaterials = new DataGridView();
             MaterialId = new DataGridViewTextBoxColumn();
             MaterialName = new DataGridViewTextBoxColumn();
@@ -52,21 +52,22 @@
             // 
             dgvMaterials.Anchor = AnchorStyles.None;
             dgvMaterials.BackgroundColor = SystemColors.Control;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvMaterials.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvMaterials.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvMaterials.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvMaterials.Columns.AddRange(new DataGridViewColumn[] { MaterialId, MaterialName, MaterialType, Unit, Quantity, Check });
             dgvMaterials.Location = new Point(81, 190);
             dgvMaterials.Margin = new Padding(4, 5, 4, 5);
             dgvMaterials.Name = "dgvMaterials";
+            dgvMaterials.RowHeadersVisible = false;
             dgvMaterials.RowHeadersWidth = 62;
-            dgvMaterials.Size = new Size(992, 604);
+            dgvMaterials.Size = new Size(855, 604);
             dgvMaterials.TabIndex = 0;
             // 
             // MaterialId
@@ -109,7 +110,7 @@
             Quantity.HeaderText = "Q";
             Quantity.MinimumWidth = 8;
             Quantity.Name = "Quantity";
-            Quantity.Width = 150;
+            Quantity.Width = 80;
             // 
             // Check
             // 
@@ -122,7 +123,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(1129, 225);
+            label1.Location = new Point(987, 237);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(111, 32);
@@ -134,7 +135,7 @@
             cbbFr.DropDownStyle = ComboBoxStyle.DropDownList;
             cbbFr.Font = new Font("Segoe UI", 12F);
             cbbFr.FormattingEnabled = true;
-            cbbFr.Location = new Point(1304, 222);
+            cbbFr.Location = new Point(1162, 234);
             cbbFr.Margin = new Padding(4, 5, 4, 5);
             cbbFr.Name = "cbbFr";
             cbbFr.Size = new Size(143, 40);
@@ -143,7 +144,7 @@
             // txtProductName
             // 
             txtProductName.Font = new Font("Segoe UI", 12F);
-            txtProductName.Location = new Point(1302, 272);
+            txtProductName.Location = new Point(1160, 284);
             txtProductName.Margin = new Padding(4, 5, 4, 5);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(296, 39);
@@ -153,7 +154,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(1127, 275);
+            label2.Location = new Point(985, 287);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(167, 32);
@@ -163,7 +164,7 @@
             // btnCreate
             // 
             btnCreate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCreate.Location = new Point(1270, 358);
+            btnCreate.Location = new Point(1128, 370);
             btnCreate.Margin = new Padding(4, 5, 4, 5);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(100, 50);
@@ -215,7 +216,7 @@
             lblMaterialType.TabIndex = 9;
             lblMaterialType.Text = "Material Type";
             // 
-            // ProductCreationForm
+            // ProductCreationForm1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -232,7 +233,7 @@
             Controls.Add(dgvMaterials);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4, 5, 4, 5);
-            Name = "ProductCreationForm";
+            Name = "ProductCreationForm1";
             StartPosition = FormStartPosition.Manual;
             Text = "CreateProduct";
             Load += CreateProduct_Load;

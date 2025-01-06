@@ -225,22 +225,37 @@ namespace PL
                 return;
             }
 
-            decimal basePrice = CalculateBasePrice();
-            txtBxBasePrice.Text = ConvertToCurrency(basePrice);
+            try
+            {
+                decimal basePrice = CalculateBasePrice();
+                txtBxBasePrice.Text = ConvertToCurrency(basePrice);
 
-            DiscountInfo? customerDiscount = await GetCustomerDiscountInfoAsync(txtBxCustomerRank.Text, basePrice);
-            decimal customerDiscountValue = CalculateDiscountValue(customerDiscount, basePrice);
+                DiscountInfo? customerDiscount = await GetCustomerDiscountInfoAsync(txtBxCustomerRank.Text, basePrice);
+                decimal customerDiscountValue = CalculateDiscountValue(customerDiscount, basePrice);
 
-            DiscountInfos.Add(customerDiscount, customerDiscountValue);
-            txtBxCustomerDiscountValue.Text = ConvertToCurrency(customerDiscountValue);
+                if (customerDiscount != null)
+                {
+                    DiscountInfos.Add(customerDiscount, customerDiscountValue);
+                }
+                
+                txtBxCustomerDiscountValue.Text = ConvertToCurrency(customerDiscountValue);
 
-            DiscountInfo? orderDiscount = await GetOrderDiscountInfoAsync(basePrice);
-            decimal orderDiscountValue = CalculateDiscountValue(orderDiscount, basePrice);
-            DiscountInfos.Add(orderDiscount, orderDiscountValue);
-            txtBxOrderDiscountValue.Text = ConvertToCurrency(orderDiscountValue);
+                DiscountInfo? orderDiscount = await GetOrderDiscountInfoAsync(basePrice);
+                decimal orderDiscountValue = CalculateDiscountValue(orderDiscount, basePrice);
+                if (orderDiscount != null)
+                {
+                    DiscountInfos.Add(orderDiscount, orderDiscountValue);
+                }
+                
+                txtBxOrderDiscountValue.Text = ConvertToCurrency(orderDiscountValue);
 
-            decimal finalPrice = basePrice - customerDiscountValue - orderDiscountValue;
-            txtBxFinalPrice.Text = ConvertToCurrency(finalPrice);
+                decimal finalPrice = basePrice - customerDiscountValue - orderDiscountValue;
+                txtBxFinalPrice.Text = ConvertToCurrency(finalPrice);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private decimal CalculateBasePrice()
@@ -498,45 +513,45 @@ namespace PL
                 if (!ckBxShippingOrder.Checked)
                 {
                     List<UsedPromotionHistoryDTO> usedPromotions = new List<UsedPromotionHistoryDTO>();
-                    DateTimeOffset deliveryDateTime = ConvertStringToDateTimeOffset(dtpDeliveryDatetime.Text, "dd/MM/yyyy HH:mm");
                     List<DetailedSalesOrderDTO> detailedSalesOrders = new List<DetailedSalesOrderDTO>();
                     SalesOrderDTO salesOrder = new SalesOrderDTO();
 
-
-                    foreach (var kvp in DiscountInfos)
+                    if (DiscountInfos.Count != 0)
                     {
-                        if (kvp.Value == 0)
+                        foreach (var kvp in DiscountInfos)
                         {
-                            continue;
-                        }
-
-                        if (kvp.Key != null)
-                        {
-                            if (kvp.Key.PromotionType == PromotionType.ForCustomer)
+                            if (kvp.Value == 0)
                             {
-                                DiscountInfo discountInfo = kvp.Key;
-                                UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
-                                {
-                                    PromotionId = discountInfo.PromotionID,
-                                    CustomerDiscountValue = kvp.Value
-                                };
-                                usedPromotions.Add(usedPromotion);
+                                continue;
                             }
 
-                            if (kvp.Key.PromotionType == PromotionType.ForOrder)
+                            if (kvp.Key != null)
                             {
-                                DiscountInfo discountInfo = kvp.Key;
-                                UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
+                                if (kvp.Key.PromotionType == PromotionType.ForCustomer)
                                 {
-                                    PromotionId = discountInfo.PromotionID,
-                                    OrderDiscountValue = kvp.Value
-                                };
-                                usedPromotions.Add(usedPromotion);
+                                    DiscountInfo discountInfo = kvp.Key;
+                                    UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
+                                    {
+                                        PromotionId = discountInfo.PromotionID,
+                                        CustomerDiscountValue = kvp.Value
+                                    };
+                                    usedPromotions.Add(usedPromotion);
+                                }
+
+                                if (kvp.Key.PromotionType == PromotionType.ForOrder)
+                                {
+                                    DiscountInfo discountInfo = kvp.Key;
+                                    UsedPromotionHistoryDTO usedPromotion = new UsedPromotionHistoryDTO()
+                                    {
+                                        PromotionId = discountInfo.PromotionID,
+                                        OrderDiscountValue = kvp.Value
+                                    };
+                                    usedPromotions.Add(usedPromotion);
+                                }
                             }
                         }
-
                     }
-
+                    
                     foreach (DataGridViewRow row in dgvDetailedOrder.Rows)
                     {
                         string productId = row.Cells[1].Value.ToString()!;
@@ -562,12 +577,14 @@ namespace PL
                     if (IsPreorder)
                     {
                         //Thực hiện add mới sản phẩm đặt trước, không có sử dụng dịch vụ vận chuyển
-                        if (!ValidatePreorderDeliveryDatetime())
+                        if (!ValidatePreorderDeliveryDatetime(dtpDeliveryDatetime.Value))
                         {
                             MessageBox.Show("Đơn hàng đặt trước phải lớn hơn ngày hiện tại và không được vượt quá 7 ngày. Giờ nhận hàng phải từ 05:00 - 20:00", "Thông báo");
                             dtpDeliveryDatetime.Focus();
                             return;
                         }
+
+                        DateTimeOffset deliveryDateTime = ConvertStringToDateTimeOffset(dtpDeliveryDatetime.Text, "dd/MM/yyyy HH:mm");
 
                         salesOrder.OrderStatus = OrderStatus.Confirmed;
                         salesOrder.OrderType = OrderType.PreSalesOrder;
@@ -608,9 +625,8 @@ namespace PL
             }
         }
 
-        private bool ValidatePreorderDeliveryDatetime()
+        private bool ValidatePreorderDeliveryDatetime(DateTime deliveryDatetime)
         {
-            DateTime deliveryDatetime = dtpDeliveryDatetime.Value;
             if (deliveryDatetime.Date > DateTime.Now.Date && deliveryDatetime.Date <= DateTime.Now.Date.AddDays(7))
             {
                 if (deliveryDatetime.TimeOfDay >= TimeSpan.FromHours(5) && deliveryDatetime.TimeOfDay <= TimeSpan.FromHours(20))
@@ -640,9 +656,9 @@ namespace PL
             return txtBxCustomerName.Text;
         }
 
-        public string GetCustomerId()
+        public string? GetCustomerId()
         {
-            return txtBxCustomerID.Text;
+            return txtBxCustomerID.Text == string.Empty && IsNonMember ? null : txtBxCustomerID.Text;
         }
 
         public DataTable GetOrderInformation()
@@ -699,7 +715,7 @@ namespace PL
 
         private void dtpDeliveryDatetime_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidatePreorderDeliveryDatetime())
+            if (!ValidatePreorderDeliveryDatetime(dtpDeliveryDatetime.Value))
             {
                 MessageBox.Show("Đơn hàng đặt trước phải lớn hơn ngày hiện tại và không được vượt quá 7 ngày. Giờ giao hàng phải từ 05:00 - 20:00", "Thông báo");
                 dtpDeliveryDatetime.Focus();

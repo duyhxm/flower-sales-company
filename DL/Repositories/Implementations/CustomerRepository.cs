@@ -39,5 +39,13 @@ namespace DL.Repositories.Implementations
                 throw;
             }
         }
+
+        public string? GetLastestCustomerId()
+        {
+            using (var context = new FlowerSalesCompanyDbContext())
+            {
+                return context.Customers.OrderByDescending(c => c.CustomerId).FirstOrDefault()?.CustomerId;
+            }
+        }
     }
 }

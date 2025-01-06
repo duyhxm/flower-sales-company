@@ -14,10 +14,10 @@ using DTO.Material;
 
 namespace PL.SalesEmployee
 {
-    public partial class ProductCreationForm : Form
+    public partial class ProductCreationForm1 : Form
     {
         //Khai báo khởi tạo form
-        private static ProductCreationForm? _instance;
+        private static ProductCreationForm1? _instance;
         private static readonly object _lock = new object();
 
         //Khai báo các service
@@ -27,7 +27,7 @@ namespace PL.SalesEmployee
         //Khai báo các biến sử dụng
         private List<MaterialDTO> _materials = new List<MaterialDTO>();
 
-        public ProductCreationForm()
+        private ProductCreationForm1()
         {
             InitializeComponent();
             dgvMaterials.AutoGenerateColumns = false;
@@ -39,6 +39,7 @@ namespace PL.SalesEmployee
             if (this.Visible)
             {
                 dgvMaterials.Size = new Size(992, 604); // Thiết lập lại kích thước mong muốn
+                cbbFr.Location = new Point(1304, 222);
             }
         }
 
@@ -50,7 +51,7 @@ namespace PL.SalesEmployee
                 {
                     try
                     {
-                        _instance = new ProductCreationForm();
+                        _instance = new ProductCreationForm1();
                     }
                     catch (Exception)
                     {
@@ -60,7 +61,7 @@ namespace PL.SalesEmployee
             }
         }
 
-        public static ProductCreationForm Instance
+        public static ProductCreationForm1 Instance
         {
             get
             {
