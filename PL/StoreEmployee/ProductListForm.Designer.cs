@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             dgvProductList = new DataGridView();
-            btnCreate = new Button();
-            lblQuantity = new Label();
-            txtBxQuantity = new TextBox();
-            btnClear = new Button();
             ColProductId = new DataGridViewTextBoxColumn();
             ColProductName = new DataGridViewTextBoxColumn();
             ColFRName = new DataGridViewTextBoxColumn();
             ColSelection = new DataGridViewCheckBoxColumn();
+            btnCreate = new Button();
+            lblQuantity = new Label();
+            txtBxQuantity = new TextBox();
+            btnClear = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProductList).BeginInit();
             SuspendLayout();
             // 
@@ -56,6 +56,37 @@
             dgvProductList.RowHeadersWidth = 62;
             dgvProductList.Size = new Size(606, 593);
             dgvProductList.TabIndex = 0;
+            // 
+            // ColProductId
+            // 
+            ColProductId.HeaderText = "ID";
+            ColProductId.MinimumWidth = 8;
+            ColProductId.Name = "ColProductId";
+            ColProductId.ReadOnly = true;
+            ColProductId.Width = 150;
+            // 
+            // ColProductName
+            // 
+            ColProductName.HeaderText = "Name";
+            ColProductName.MinimumWidth = 8;
+            ColProductName.Name = "ColProductName";
+            ColProductName.ReadOnly = true;
+            ColProductName.Width = 250;
+            // 
+            // ColFRName
+            // 
+            ColFRName.HeaderText = "FRName";
+            ColFRName.MinimumWidth = 8;
+            ColFRName.Name = "ColFRName";
+            ColFRName.ReadOnly = true;
+            ColFRName.Width = 120;
+            // 
+            // ColSelection
+            // 
+            ColSelection.HeaderText = "";
+            ColSelection.MinimumWidth = 8;
+            ColSelection.Name = "ColSelection";
+            ColSelection.Width = 50;
             // 
             // btnCreate
             // 
@@ -91,37 +122,7 @@
             btnClear.TabIndex = 4;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
-            // 
-            // ColProductId
-            // 
-            ColProductId.HeaderText = "ID";
-            ColProductId.MinimumWidth = 8;
-            ColProductId.Name = "ColProductId";
-            ColProductId.ReadOnly = true;
-            ColProductId.Width = 150;
-            // 
-            // ColProductName
-            // 
-            ColProductName.HeaderText = "Name";
-            ColProductName.MinimumWidth = 8;
-            ColProductName.Name = "ColProductName";
-            ColProductName.ReadOnly = true;
-            ColProductName.Width = 250;
-            // 
-            // ColFRName
-            // 
-            ColFRName.HeaderText = "FRName";
-            ColFRName.MinimumWidth = 8;
-            ColFRName.Name = "ColFRName";
-            ColFRName.ReadOnly = true;
-            ColFRName.Width = 120;
-            // 
-            // ColSelection
-            // 
-            ColSelection.HeaderText = "";
-            ColSelection.MinimumWidth = 8;
-            ColSelection.Name = "ColSelection";
-            ColSelection.Width = 50;
+            btnClear.Click += btnClear_Click;
             // 
             // ProductListForm
             // 

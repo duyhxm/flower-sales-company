@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using DTO;
 using BL;
 using DTO.Enum;
+using DL.Repositories.Implementations;
+using DTO.Product;
+using static BL.GeneralService;
 
 namespace PL.StoreEmployee
 {
@@ -19,6 +22,7 @@ namespace PL.StoreEmployee
         private static readonly object _lock = new object();
 
         private StoreService _storeService = new StoreService();
+        private ProductService _productService = new ProductService();
 
         private BindingList<PlannedProductDTO> _plannedProducts;
         private BindingSource _bindingSource;
@@ -111,9 +115,111 @@ namespace PL.StoreEmployee
             }
         }
 
-        private void btnCreate_Click(object sender, EventArgs e)
+        private async void btnCreate_Click(object sender, EventArgs e)
         {
+            if (txtBxQuantity.Text == string.Empty || !int.TryParse(txtBxQuantity.Text, out int quantity) || quantity <= 0)
+            {
+                MessageBox.Show("Giá trị ở ô số lượng sản phẩm không hợp lệ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
+            var selectedProductIds = new List<string>();
+
+            foreach (DataGridViewRow row in dgvProductList.Rows)
+            {
+                var isSelected = Convert.ToBoolean(row.Cells["ColSelection"].Value);
+                if (isSelected)
+                {
+                    var productId = row.Cells["ColProductId"].Value.ToString();
+                    selectedProductIds.Add(productId);
+                }
+            }
+
+            if (selectedProductIds.Count == 0)
+            {
+                MessageBox.Show("Không có sản phẩm nào được chọn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var result = MessageBox.Show("Bạn có chắc chắn muốn tạo các sản phẩm đã chọn?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    foreach (var productId in selectedProductIds)
+                    {
+                        var detailedProducts = await GetDetailedProductByIdAsync(productId);
+
+                        decimal unitPrice = await CalculateUnitPriceAsync(detailedProducts);
+
+                        ProductCreationHistoryDTO history = new()
+                        {
+                            CreatedDateTime = LocalDateTimeOffset(),
+                            ProductId = productId,
+                            EmployeeId = LoginForm.Instance.LoginInformation.UserAccount.EmployeeId!,
+                            UnitPrice = unitPrice,
+                        };
+
+                        var product = await _productService.FindProductByIdAsync(productId);
+
+                        await _productService.AddProductAsync(product, history, LoginForm.Instance.LoginInformation.StoreID!);
+                    }
+
+                    MessageBox.Show("Tạo sản phẩm thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private async Task<decimal> CalculateUnitPriceAsync(List<DetailedProductMaterialNameDTO> detailedProducts)
+        {
+            Dictionary<string, int> materialQuantities = new();
+
+            foreach (var dt in detailedProducts)
+            {
+                materialQuantities.Add(dt.MaterialId, Convert.ToInt32(dt.UsedQuantity));
+            }
+            try
+            {
+                return await _productService.CalculateUnitPriceAsync(materialQuantities);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tính giá sản phẩm: {ex.Message}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+
+        private async Task<List<DetailedProductMaterialNameDTO>> GetDetailedProductByIdAsync(string productId)
+        {
+            List<DetailedProductMaterialNameDTO> result = new();
+            try
+            {
+                result = await _productService.GetDetailedProductsByProductIdAsync(productId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return result;
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Bạn có chắc chắn muốn bỏ chọn các sản phẩm đã chọn và xóa số lượng?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                foreach (DataGridViewRow row in dgvProductList.Rows)
+                {
+                    row.Cells["ColSelection"].Value = false;
+                }
+
+                txtBxQuantity.Clear();
+            }
         }
     }
 }

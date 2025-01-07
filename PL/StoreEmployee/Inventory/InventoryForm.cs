@@ -139,7 +139,14 @@ namespace PL
 
                 MaterialInventory = result.Where(x => x.StockMaterialQuantity > 0).ToList();
 
-                FilterMaterialInventory();
+                if (InvokeRequired)
+                {
+                    Invoke(new Action(() => FilterMaterialInventory()));
+                }
+                else
+                {
+                    FilterMaterialInventory();
+                }
             }
             catch (Exception ex)
             {

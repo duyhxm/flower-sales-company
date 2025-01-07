@@ -93,7 +93,7 @@ namespace BL
             }
         }
 
-        public async Task<ProductDTO?> FindProductById(string productId)
+        public async Task<ProductDTO?> FindProductByIdAsync(string productId)
         {
             try
             {

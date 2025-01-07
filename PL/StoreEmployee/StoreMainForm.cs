@@ -178,22 +178,19 @@ namespace PL
 
         public async Task HandleNotification(Dictionary<string, object> message)
         {
-            //var formattedMessage = string.Join(Environment.NewLine,
-            //message.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
-
-            //string? operationName = message["OperatioName"].ToString();
-            //string? tableName = message["TableName"].ToString();
-
-            //if (operationName == "U" && tableName == "MaterialInventory")
-            //{
-                
-            //}
             await InventoryForm.Instance.LoadMaterialInventory(LoginForm.Instance.LoginInformation.StoreID!);
 
-            Debug.WriteLine("Form main đã nhận được message");
-
-            // Hiển thị thông báo
-            //MessageBox.Show($"StoreMainForm received message:\n{formattedMessage}");
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() =>
+                {
+                    MessageBox.Show("Dữ liệu trong kho vật liệu vừa được cập nhật", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }));
+            }
+            else
+            {
+                MessageBox.Show("Dữ liệu trong kho vật liệu vừa được cập nhật", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         public void NotificationBellVisibility(bool value)

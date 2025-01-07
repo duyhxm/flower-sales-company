@@ -31,10 +31,6 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             dgvMaterialInventory = new DataGridView();
-            ColMaterialId = new DataGridViewTextBoxColumn();
-            ColMaterialName = new DataGridViewTextBoxColumn();
-            ColStockMaterialQuantity = new DataGridViewTextBoxColumn();
-            ColUnitPrice = new DataGridViewTextBoxColumn();
             lblFilter = new Label();
             lblMaterialType = new Label();
             cmbBxMaterials = new ComboBox();
@@ -47,6 +43,10 @@
             ColProductName = new DataGridViewTextBoxColumn();
             ColStockProductQuantity = new DataGridViewTextBoxColumn();
             ColDetailedProductInventory = new DataGridViewImageColumn();
+            ColMaterialId = new DataGridViewTextBoxColumn();
+            ColMaterialName = new DataGridViewTextBoxColumn();
+            ColStockMaterialQuantity = new DataGridViewTextBoxColumn();
+            ColUnitPrice = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvMaterialInventory).BeginInit();
             tbCtrlStoreInventory.SuspendLayout();
             tpMaterial.SuspendLayout();
@@ -78,41 +78,6 @@
             dgvMaterialInventory.RowHeadersWidth = 62;
             dgvMaterialInventory.Size = new Size(842, 589);
             dgvMaterialInventory.TabIndex = 1;
-            // 
-            // ColMaterialId
-            // 
-            ColMaterialId.HeaderText = "ID";
-            ColMaterialId.MinimumWidth = 8;
-            ColMaterialId.Name = "ColMaterialId";
-            ColMaterialId.ReadOnly = true;
-            ColMaterialId.Resizable = DataGridViewTriState.False;
-            ColMaterialId.Width = 150;
-            // 
-            // ColMaterialName
-            // 
-            ColMaterialName.HeaderText = "Flower Name";
-            ColMaterialName.MinimumWidth = 8;
-            ColMaterialName.Name = "ColMaterialName";
-            ColMaterialName.ReadOnly = true;
-            ColMaterialName.Resizable = DataGridViewTriState.False;
-            ColMaterialName.Width = 250;
-            // 
-            // ColStockMaterialQuantity
-            // 
-            ColStockMaterialQuantity.HeaderText = "Q";
-            ColStockMaterialQuantity.MinimumWidth = 8;
-            ColStockMaterialQuantity.Name = "ColStockMaterialQuantity";
-            ColStockMaterialQuantity.ReadOnly = true;
-            ColStockMaterialQuantity.Resizable = DataGridViewTriState.False;
-            ColStockMaterialQuantity.Width = 150;
-            // 
-            // ColUnitPrice
-            // 
-            ColUnitPrice.HeaderText = "Unit Price";
-            ColUnitPrice.MinimumWidth = 8;
-            ColUnitPrice.Name = "ColUnitPrice";
-            ColUnitPrice.ReadOnly = true;
-            ColUnitPrice.Width = 200;
             // 
             // lblFilter
             // 
@@ -180,10 +145,10 @@
             // 
             tpProduct.BackColor = Color.White;
             tpProduct.Controls.Add(dgvProductInventory);
-            tpProduct.Location = new Point(4, 41);
+            tpProduct.Location = new Point(4, 34);
             tpProduct.Name = "tpProduct";
             tpProduct.Padding = new Padding(3);
-            tpProduct.Size = new Size(1645, 899);
+            tpProduct.Size = new Size(1645, 906);
             tpProduct.TabIndex = 1;
             tpProduct.Text = "Product";
             // 
@@ -247,6 +212,41 @@
             ColDetailedProductInventory.SortMode = DataGridViewColumnSortMode.Automatic;
             ColDetailedProductInventory.Width = 150;
             // 
+            // ColMaterialId
+            // 
+            ColMaterialId.HeaderText = "ID";
+            ColMaterialId.MinimumWidth = 8;
+            ColMaterialId.Name = "ColMaterialId";
+            ColMaterialId.ReadOnly = true;
+            ColMaterialId.Resizable = DataGridViewTriState.False;
+            ColMaterialId.Width = 150;
+            // 
+            // ColMaterialName
+            // 
+            ColMaterialName.HeaderText = "Name";
+            ColMaterialName.MinimumWidth = 8;
+            ColMaterialName.Name = "ColMaterialName";
+            ColMaterialName.ReadOnly = true;
+            ColMaterialName.Resizable = DataGridViewTriState.False;
+            ColMaterialName.Width = 250;
+            // 
+            // ColStockMaterialQuantity
+            // 
+            ColStockMaterialQuantity.HeaderText = "Q";
+            ColStockMaterialQuantity.MinimumWidth = 8;
+            ColStockMaterialQuantity.Name = "ColStockMaterialQuantity";
+            ColStockMaterialQuantity.ReadOnly = true;
+            ColStockMaterialQuantity.Resizable = DataGridViewTriState.False;
+            ColStockMaterialQuantity.Width = 150;
+            // 
+            // ColUnitPrice
+            // 
+            ColUnitPrice.HeaderText = "Unit Price";
+            ColUnitPrice.MinimumWidth = 8;
+            ColUnitPrice.Name = "ColUnitPrice";
+            ColUnitPrice.ReadOnly = true;
+            ColUnitPrice.Width = 200;
+            // 
             // InventoryForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -276,13 +276,13 @@
         private TabPage tpMaterial;
         private TabPage tpProduct;
         private DataGridView dgvProductInventory;
-        private DataGridViewTextBoxColumn ColMaterialId;
-        private DataGridViewTextBoxColumn ColMaterialName;
-        private DataGridViewTextBoxColumn ColStockMaterialQuantity;
-        private DataGridViewTextBoxColumn ColUnitPrice;
         private DataGridViewTextBoxColumn ColProductId;
         private DataGridViewTextBoxColumn ColProductName;
         private DataGridViewTextBoxColumn ColStockProductQuantity;
         private DataGridViewImageColumn ColDetailedProductInventory;
+        private DataGridViewTextBoxColumn ColMaterialId;
+        private DataGridViewTextBoxColumn ColMaterialName;
+        private DataGridViewTextBoxColumn ColStockMaterialQuantity;
+        private DataGridViewTextBoxColumn ColUnitPrice;
     }
 }
