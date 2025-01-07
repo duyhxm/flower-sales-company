@@ -280,11 +280,14 @@ namespace DL.Repositories.Implementations
         {
             try
             {
-                List<Store> stores = await _context.Stores
-                                            .Where(s => s.RegionId == regionId)
-                                            .ToListAsync();
+                using (var context = new FlowerSalesCompanyDbContext())
+                {
+                    List<Store> stores = await context.Stores
+                                                .Where(s => s.RegionId == regionId)
+                                                .ToListAsync();
 
-                return _mapper.Map<List<StoreDTO>>(stores);
+                    return _mapper.Map<List<StoreDTO>>(stores);
+                }
             }
             catch (Exception)
             {

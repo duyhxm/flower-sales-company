@@ -4,7 +4,11 @@ using DL.Repositories.Interfaces;
 using DTO;
 using DTO.Material;
 using Microsoft.EntityFrameworkCore;
-using DTO.Store;
+using DTO.Enum;
+using DTO.Enum.SalesOrder;
+using System.Globalization;
+using System.Data;
+using Microsoft.Data.SqlClient;
 
 namespace DL.Repositories.Implementations
 {
@@ -77,7 +81,7 @@ namespace DL.Repositories.Implementations
         }
 
         //Lấy ra danh sách toàn bộ phụ liệu có trong công ty
-        public async Task<List<MaterialDTO>?> GetAllAccessoriesAsync()
+        public async Task<List<MaterialDTO>> GetAllAccessoriesAsync()
         {
             try
             {
@@ -118,41 +122,103 @@ namespace DL.Repositories.Implementations
             }
         }
 
+        public async Task<List<PurchaseOrderDTO>> GetAllPurchaseOrdersInStockAsync()
+        {
+            try
+            {
+                using (var context = new FlowerSalesCompanyDbContext())
+                {
+                    var purchaseOrders = await context.PurchaseOrders
+                .Where(po => po.DistributionStatus == DistributionStatus.HaveNotDistributed
+                          || po.DistributionStatus == DistributionStatus.Distributing)
+                .ToListAsync();
 
-        /*Method này tạm thời không được sử dụng do đã có method thay thế phía trên là GetAllFlowersAsync*/
+                    var purchaseOrderDTOs = purchaseOrders.Select(po => new PurchaseOrderDTO
+                    {
+                        PurchaseOrderId = po.PurchaseOrderId,
+                        VendorId = po.VendorId,
+                        OrderType = po.OrderType,
+                        PurchasedDateTime = po.PurchasedDateTime,
+                        TotalCost = po.TotalCost,
+                        DistributionStatus = po.DistributionStatus,
+                        PurchasedDateTimeFormatted = po.PurchasedDateTime.HasValue ? po.PurchasedDateTime.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : string.Empty
+                    }).ToList();
 
-        //public async Task<List<FlowerDTO>?> GetFlowerInventoryAsync()
-        //{
-        //    try
-        //    {
-        //        var flowerList = await _context.Database.SqlQuery<FlowerDTO>($"SELECT * FROM GetAllFlowers()").ToListAsync();
+                    return purchaseOrderDTOs;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-        //        return flowerList;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+        public async Task<List<DetailedPurchaseOrderDTO>> GetDetailedPurchaseOrderByIdAsync(string purchaseOrderId)
+        {
+            try
+            {
+                using (var context = new FlowerSalesCompanyDbContext())
+                {
+                    List<DetailedPurchaseOrder> detailedPurchaseOrder = await context.DetailedPurchaseOrders
+                            .Where(dpo => dpo.PurchaseOrderId == purchaseOrderId)
+                            .ToListAsync();
 
-        /*Method này tạm thời không được sử dụng do đã có method thay thế phía trên là GetAllAccessoriesAsync*/
+                    return _mapper.Map<List<DetailedPurchaseOrderDTO>>(detailedPurchaseOrder);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-        //public async Task<List<MaterialDTO>?> GetMaterialInventoryAsync()
-        //{
-        //    try
-        //    {
-        //        // Create a new DbContext instance for this async operation
-        //        using (var context = new FlowerSalesCompanyDbContext())
-        //        {
-        //            var flowerList = await context.Database.SqlQuery<MaterialDTO>($"SELECT * FROM GetAllAccessories()").ToListAsync();
-        //            return flowerList;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+        public async Task<Dictionary<bool, string>> DistributeMaterialsAsync(string purchaseOrderId, string storeId, DateTimeOffset distributedDateTime, int distributedQuantity, List<string> materialIds)
+        {
+            try
+            {
+                bool isFullyDistributed = false;
+                string message = string.Empty;
 
+                using (var context = new FlowerSalesCompanyDbContext())
+                {
+                    foreach (string materialId in materialIds)
+                    {
+                        //Gọi stored procedure để thêm vật liệu phân phối
+                        await context.Database.ExecuteSqlInterpolatedAsync($@"
+                    EXEC [dbo].[AddGoodsDistribution] 
+                    @PurchaseOrderID = {purchaseOrderId}, 
+                    @StoreID = {storeId}, 
+                    @MaterialID = {materialId}, 
+                    @DistributedQuantity = {distributedQuantity},
+                    @DistributedDate = {distributedDateTime}");
+
+                        //Gọi tiếp stored procedure khác để kiểm tra xem đơn hàng nhập đã phân phối đủ hay chưa
+                        var isFullyDistributedParam = new SqlParameter
+                        {
+                            ParameterName = "@IsFullyDistributed",
+                            SqlDbType = SqlDbType.Bit,
+                            Direction = ParameterDirection.Output
+                        };
+
+                        await context.Database.ExecuteSqlInterpolatedAsync($@"
+                    EXEC [dbo].[CheckAndUpdateDistributionStatus] 
+                    @PurchaseOrderID = {purchaseOrderId}, 
+                    @IsFullyDistributed = {isFullyDistributedParam} OUTPUT");
+
+                        //Kiểm tra giá trị output trả về
+                        isFullyDistributed = (bool)isFullyDistributedParam.Value;
+                        if (isFullyDistributed)
+                        {
+                            message = $"Đơn hàng nhập đã được phân phối đủ. Các vật liệu còn dư: {string.Join(", ", materialIds)}";
+                        }
+                    }
+                }
+                return new Dictionary<bool, string>() { { isFullyDistributed, message } };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Đã xảy ra lỗi trong quá trình phân phối vật liệu: {ex.Message}", ex);
+            }
+        }
     }
 }

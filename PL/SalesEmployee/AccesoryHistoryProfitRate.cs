@@ -28,14 +28,14 @@ namespace PL.SalesEmployee
                               join rate in context.AccessoryProfitRates
                               on history.AccessoryProfitRateId equals rate.AccessoryProfitRateId
                               where history.AccessoryId == accsoryId // Filter by AccessoryID
-                           && (rate.UsageStatus == "Đang áp dụng" || rate.UsageStatus == "Sắp áp dụng")
+
                               select new
                               {
                                   history.AccessoryProfitRateId,
                                   history.AccessoryId,
                                   history.ProfitRate,
-                                  rate.StartDate,
-                                  rate.EndDate,
+                                  StartDate = rate.StartDate.HasValue ? rate.StartDate.Value.ToString("dd-MM-yyyy") : null,
+                                  EndDate = rate.EndDate.HasValue ? rate.EndDate.Value.ToString("dd-MM-yyyy") : null,
                                   rate.UsageStatus
                               }).ToList();
 
@@ -74,21 +74,28 @@ namespace PL.SalesEmployee
 
             using (var context = new FlowerSalesCompanyDbContext())
             {
-                // Find the AccessoryProfitRateHistory entry that matches the AccessoryProfitRateID and AccessoryID
+                // Tìm bản ghi trong AccessoryProfitRateHistory theo AccessoryProfitRateID và AccessoryID
                 var historyRecord = context.AccessoryProfitRateHistories
                     .FirstOrDefault(h => h.AccessoryProfitRateId == accessoryProfitRateId && h.AccessoryId == accessoryId);
 
-                if (historyRecord != null)
+                // Tìm bản ghi trong AccessoryProfitRate theo AccessoryProfitRateID
+                var rateRecord = context.AccessoryProfitRates
+                    .FirstOrDefault(r => r.AccessoryProfitRateId == accessoryProfitRateId);
+
+                if (historyRecord != null && rateRecord != null)
                 {
-                    // Update the ProfitRate
+                    // Cập nhật ProfitRate
                     historyRecord.ProfitRate = profitRate;
 
-                    // Save changes to the database
+                    rateRecord.StartDate = DateOnly.FromDateTime(dateTimePickerStartDate.Value);
+                    rateRecord.EndDate = DateOnly.FromDateTime(dateTimePickerEndDate.Value);
+
+                    // Lưu các thay đổi vào cơ sở dữ liệu
                     context.SaveChanges();
 
-                    MessageBox.Show("Tỷ lệ lợi nhuận đã được cập nhật thành công.");
+                    MessageBox.Show("Dữ liệu đã được cập nhật thành công.");
 
-                    // Optionally, reload the data to reflect the changes in the DataGridView
+                    // Tùy chọn: Tải lại dữ liệu để phản ánh thay đổi trong DataGridView
                     LoadData();
                 }
                 else

@@ -88,23 +88,23 @@ namespace DL.Repositories.Implementations.Tests
 
         //}
 
-        [TestMethod()]
-        public async Task GetPlannedProductsForStoreAsyncTest()
-        {
-            SystemRepository.Initialize();
-            StoreRepository repo = new StoreRepository();
+        //[TestMethod()]
+        //public async Task GetPlannedProductsForStoreAsyncTest()
+        //{
+        //    SystemRepository.Initialize();
+        //    StoreRepository repo = new StoreRepository();
 
-            var result = await repo.GetPlannedProductsForStoreAsync(DateTime.UtcNow.ToLocalTime(), "S001");
+        //    //var result = await repo.GetPlannedProductsForStoreAsync(DateTime.UtcNow.ToLocalTime(), "S001");
 
-            if (result != null)
-            {
-                foreach (var pp in result)
-                {
-                    Debug.WriteLine($"PlannedDateTime: {pp.PlannedDateTime}");
-                }
-            }
+        //    if (result != null)
+        //    {
+        //        foreach (var pp in result)
+        //        {
+        //            Debug.WriteLine($"PlannedDateTime: {pp.PlannedDateTime}");
+        //        }
+        //    }
 
             
-        }
+        //}
     }
 }

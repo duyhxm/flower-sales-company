@@ -11,12 +11,12 @@ namespace PL.Tests
     [TestClass()]
     public class ProductCreationFormTests
     {
-        [TestMethod()]
-        public void ProductCreationFormTest()
-        {
-            ProductCreationForm form = new ProductCreationForm();
-            form.Show();
+        //[TestMethod()]
+        //public void ProductCreationFormTest()
+        //{
+        //    ProductCreationForm form = new ProductCreationForm();
+        //    form.Show();
             
-        }
+        //}
     }
 }

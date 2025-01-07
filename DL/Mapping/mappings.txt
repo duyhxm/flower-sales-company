@@ -15,3 +15,5 @@ DL.Models.Store,DTO.Store.StoreDTO
 DL.Models.ProductCreationPlanHistory,DTO.Product.ProductCreationPlanHistoryDTO
 DL.Models.CustomerRank,DTO.Customer.CustomerRankDTO
 DL.Models.Customer,DTO.Customer.CustomerDTO
+DL.Models.PurchaseOrder,DTO.PurchaseOrderDTO
+DL.Models.DetailedPurchaseOrder,DTO.DetailedPurchaseOrderDTO

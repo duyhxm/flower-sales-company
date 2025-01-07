@@ -10,6 +10,9 @@
     <Compile Update="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="SalesEmployee\AbstractProductCreationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="SalesEmployee\AccesoryHistoryProfitRate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -19,7 +22,7 @@
     <Compile Update="SalesEmployee\ChartFlowerRate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="SalesEmployee\ProductCreationForm1.cs">
+    <Compile Update="SalesEmployee\MaterialDistributionForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SalesEmployee\CustomerForm.cs">
@@ -29,9 +32,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SalesEmployee\MaterialAdjustmentForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="SalesEmployee\MaterialDistributionForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SalesEmployee\ProductPlan\DetailedProductForm.cs">

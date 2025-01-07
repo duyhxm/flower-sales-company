@@ -34,7 +34,6 @@ namespace PL.SalesEmployee
                                    join rate in context.AccessoryProfitRates
                                    on history.AccessoryProfitRateId equals rate.AccessoryProfitRateId
                                    where history.AccessoryId == accessoryId // Filter by accessoryId
-                                   && (rate.UsageStatus == "Đang áp dụng" || rate.UsageStatus == "Sắp áp dụng")
                                    select new
                                    {
                                        StartDate = rate.StartDate,

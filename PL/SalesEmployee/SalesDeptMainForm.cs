@@ -83,8 +83,8 @@ namespace PL
             formInstances[MaterialDistributionForm.Instance.Name] = MaterialDistributionForm.Instance;
 
             //2. Khởi tạo ProductCreationForm, dùng để tạo product
-            ProductCreationForm1.Initialize();
-            formInstances[ProductCreationForm1.Instance.Name] = ProductCreationForm1.Instance;
+            AbstractProductCreationForm.Initialize();
+            formInstances[AbstractProductCreationForm.Instance.Name] = AbstractProductCreationForm.Instance;
 
             //3. Khởi tạo ProductPlanForm
             ProductPlanForm.Initialize();
@@ -136,9 +136,9 @@ namespace PL
         {
             if (_isLoadData) return;
 
-            if (formInstances.ContainsKey(ProductCreationForm1.Instance.Name))
+            if (formInstances.ContainsKey(AbstractProductCreationForm.Instance.Name))
             {
-                AddFormIntoPanel(formInstances[ProductCreationForm1.Instance.Name]);
+                AddFormIntoPanel(formInstances[AbstractProductCreationForm.Instance.Name]);
             }
         }
 

@@ -113,7 +113,7 @@ namespace PL.SalesEmployee
         {
             using (var dbContext = new FlowerSalesCompanyDbContext())
             {
-              
+
                 DateTime startDate = dateTimePickerStart.Value;
                 DateTime endDate = dateTimePickerEnd.Value;
 
@@ -159,16 +159,16 @@ namespace PL.SalesEmployee
                     chart2.ChartAreas[0].AxisX.LabelStyle.Format = "MM/yyyy"; // Định dạng trục X tháng/năm
                     chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Months; // Định dạng theo tháng
                     chart2.ChartAreas[0].AxisX.Interval = 1; // Hiển thị theo tháng
-                
 
-            }
+
+                }
                 else
                 {
                     MessageBox.Show("Không có dữ liệu cho khoảng thời gian này.");
                 }
             }
-        
-    }
+
+        }
 
         private void LoadSalesOrders()
         {
@@ -176,9 +176,9 @@ namespace PL.SalesEmployee
             DateTime startDate = dateTimePickerStart.Value.Date; // Ngày bắt đầu
             DateTime endDate = dateTimePickerEnd.Value.Date.AddDays(1).AddTicks(-1); // Ngày kết thúc (bao gồm hết ngày)
 
-            using (var context = new FlowerSalesCompanyDbContext()) 
+            using (var context = new FlowerSalesCompanyDbContext())
             {
-              
+
                 var query = context.SalesOrders
                                    .Where(order => order.CreatedDateTime.HasValue &&
                                                    order.CreatedDateTime.Value.Date >= startDate &&
@@ -198,20 +198,17 @@ namespace PL.SalesEmployee
                                    .OrderBy(order => order.CreatedDateTime)
                                    .ToList();
 
-          
+
                 dgvSalesOrders.DataSource = query;
             }
         }
 
-
-        private void button1_Click(object sender, EventArgs e)
+        private void btnGetStatistics_Click(object sender, EventArgs e)
         {
             Chart1();
             Chart2();
             LoadSalesOrders();
         }
-
-       
 
         public static SalesHistoryForm Instance
         {
@@ -219,7 +216,7 @@ namespace PL.SalesEmployee
             {
                 if (_instance == null)
                 {
-                    throw new InvalidOperationException("SalesHistoryForm is not initialized. Call Initialize() first.");
+                    throw new InvalidOperationException("SalesHistoryForm chưa được khởi tạo. Gọi Initialize() trước tiên.");
                 }
                 return _instance;
             }

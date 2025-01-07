@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DL.Models;
 using DL.Repositories.Implementations;
 using DTO.Customer;
+using DTO.SalesOrder;
 
 namespace BL
 {
@@ -30,6 +31,28 @@ namespace BL
             }
         }
 
-        
+        public async Task<List<CustomerRankHistoryDTO>> GetCustomerRankHistoryByQuarterAsync(List<int> months, int year)
+        {
+            try
+            {
+                return await _customerRepository.GetCustomerRankHistoryByQuarterAsync(months, year);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<SalesStatisticsDataDTO>> GetSalesDataByQuarterAsync(List<int> months, int year)
+        {
+            try
+            {
+                return await _customerRepository.GetSalesDataByQuarterAsync(months, year);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

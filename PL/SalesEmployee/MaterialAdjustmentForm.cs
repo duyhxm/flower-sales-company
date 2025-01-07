@@ -57,10 +57,14 @@ namespace PL.SalesEmployee
             // Duyệt qua từng phần tử trong flowerDTOs
             foreach (var flower in flowerDTOs)
             {
-                // Tìm ProfitRate tương ứng trong salesTargetHistory
+                // Tìm ProfitRate tương ứng trong FlowerSalesTargetHistory
                 decimal? profitRate = 0; // Giá trị mặc định
 
-                var obj = context.FlowerSalesTargetHistories.Where(a => a.FlowerId == flower.FlowerID).FirstOrDefault();
+                var obj = context.FlowerSalesTargetHistories
+                                 .Where(a => a.FlowerId == flower.FlowerID && a.Target.UsageStatus == "Đang áp dụng") // Lọc theo UsageStatus
+                                 .OrderByDescending(a => a.TargetId) // Sắp xếp để lấy bản ghi mới nhất (nếu có nhiều bản ghi)
+                                 .FirstOrDefault();
+
                 if (obj != null)
                 {
                     profitRate = obj.ProfitRate;

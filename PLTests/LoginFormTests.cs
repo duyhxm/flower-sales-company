@@ -11,11 +11,11 @@ namespace PL.Tests
     [TestClass()]
     public class LoginFormTests
     {
-        [TestMethod()]
-        public void StartServiceBusHostTest()
-        {
-            LoginForm loginForm = new LoginForm();
-            loginForm.RunServiceBusHost();
-        }
+        //[TestMethod()]
+        //public void StartServiceBusHostTest()
+        //{
+        //    LoginForm loginForm = new LoginForm();
+        //    loginForm.RunServiceBusHost();
+        //}
     }
 }

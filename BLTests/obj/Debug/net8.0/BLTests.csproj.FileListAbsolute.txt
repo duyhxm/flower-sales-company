@@ -199,3 +199,16 @@ E:\01 Projects\flower-sales-company\BLTests\obj\Debug\net8.0\refint\BLTests.dll
 E:\01 Projects\flower-sales-company\BLTests\obj\Debug\net8.0\BLTests.pdb
 E:\01 Projects\flower-sales-company\BLTests\obj\Debug\net8.0\BLTests.genruntimeconfig.cache
 E:\01 Projects\flower-sales-company\BLTests\obj\Debug\net8.0\ref\BLTests.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Configuration.CommandLine.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Configuration.UserSecrets.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Hosting.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Logging.Configuration.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Logging.Console.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Logging.Debug.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Logging.EventLog.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Logging.EventSource.dll
+E:\01 Projects\flower-sales-company\BLTests\bin\Debug\net8.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll

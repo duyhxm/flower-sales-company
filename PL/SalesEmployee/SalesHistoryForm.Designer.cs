@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             label1 = new Label();
             tabControl1 = new TabControl();
             tpSalesOrder = new TabPage();
             chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            button1 = new Button();
+            btnGetStatistics = new Button();
             lblEndDate = new Label();
             lblStartDate = new Label();
             dateTimePickerEnd = new DateTimePicker();
@@ -79,7 +79,7 @@
             // 
             tpSalesOrder.Controls.Add(chart1);
             tpSalesOrder.Controls.Add(chart2);
-            tpSalesOrder.Controls.Add(button1);
+            tpSalesOrder.Controls.Add(btnGetStatistics);
             tpSalesOrder.Controls.Add(lblEndDate);
             tpSalesOrder.Controls.Add(lblStartDate);
             tpSalesOrder.Controls.Add(dateTimePickerEnd);
@@ -95,45 +95,45 @@
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            chart1.Legends.Add(legend5);
+            chartArea3.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            chart1.Legends.Add(legend3);
             chart1.Location = new Point(21, 286);
             chart1.Name = "chart1";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            chart1.Series.Add(series5);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            chart1.Series.Add(series3);
             chart1.Size = new Size(706, 500);
             chart1.TabIndex = 14;
             chart1.Text = "chart1";
             // 
             // chart2
             // 
-            chartArea6.Name = "ChartArea1";
-            chart2.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            chart2.Legends.Add(legend6);
+            chartArea4.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            chart2.Legends.Add(legend4);
             chart2.Location = new Point(733, 286);
             chart2.Name = "chart2";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            chart2.Series.Add(series6);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            chart2.Series.Add(series4);
             chart2.Size = new Size(839, 500);
             chart2.TabIndex = 13;
             chart2.Text = "chart1";
             // 
-            // button1
+            // btnGetStatistics
             // 
-            button1.Location = new Point(491, 117);
-            button1.Name = "button1";
-            button1.Size = new Size(131, 44);
-            button1.TabIndex = 12;
-            button1.Text = "Thống kê";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnGetStatistics.Location = new Point(330, 124);
+            btnGetStatistics.Name = "btnGetStatistics";
+            btnGetStatistics.Size = new Size(131, 44);
+            btnGetStatistics.TabIndex = 12;
+            btnGetStatistics.Text = "Thống kê";
+            btnGetStatistics.UseVisualStyleBackColor = true;
+            btnGetStatistics.Click += btnGetStatistics_Click;
             // 
             // lblEndDate
             // 
@@ -174,9 +174,9 @@
             // tpSalesOrderList
             // 
             tpSalesOrderList.Controls.Add(dgvSalesOrders);
-            tpSalesOrderList.Location = new Point(4, 41);
+            tpSalesOrderList.Location = new Point(4, 34);
             tpSalesOrderList.Name = "tpSalesOrderList";
-            tpSalesOrderList.Size = new Size(1592, 899);
+            tpSalesOrderList.Size = new Size(1592, 906);
             tpSalesOrderList.TabIndex = 2;
             tpSalesOrderList.Text = "Details";
             tpSalesOrderList.UseVisualStyleBackColor = true;
@@ -224,7 +224,7 @@
         private DateTimePicker dateTimePickerStart;
         private Label lblEndDate;
         private Label lblStartDate;
-        private Button button1;
+        private Button btnGetStatistics;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }

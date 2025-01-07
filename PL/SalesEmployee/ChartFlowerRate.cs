@@ -13,8 +13,10 @@ namespace PL.SalesEmployee
         public ChartFlowerRate(string flowerId)
         {
             InitializeComponent();
+
             this.flowerId = flowerId;
             LoadDataAndDisplayChart();
+            lblFlowerId.Text = $"FlowerID: {flowerId}";
         }
 
         private void LoadDataAndDisplayChart()
@@ -33,7 +35,7 @@ namespace PL.SalesEmployee
                                    join target in context.FlowerSalesTargets
                                    on history.TargetId equals target.TargetId
                                    where history.FlowerId == flowerId // Filter by flowerId
-                                   && (target.UsageStatus == "Đang áp dụng" || target.UsageStatus == "Sắp áp dụng")
+
                                    select new
                                    {
                                        ApplyMonth = target.ApplyMonth,
@@ -43,8 +45,8 @@ namespace PL.SalesEmployee
                                    .AsEnumerable() // Execute the query and bring data into memory
                                    .Where(data =>
                                        new DateTime(
-                                          (int) data.ApplyYear.GetValueOrDefault(),
-                                          (int) data.ApplyMonth.GetValueOrDefault(), 1
+                                          (int)data.ApplyYear.GetValueOrDefault(),
+                                          (int)data.ApplyMonth.GetValueOrDefault(), 1
                                        ) >= startDate && new DateTime(
                                           (int)data.ApplyYear.GetValueOrDefault(),
                                           (int)data.ApplyMonth.GetValueOrDefault(), 1
