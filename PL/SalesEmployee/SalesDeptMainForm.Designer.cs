@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesDeptMainForm));
             splConSalesDeptMainForm = new SplitContainer();
             btnInventory = new Button();
             btnAccountInformation = new Button();
-            pictureBox_notificationBell = new PictureBox();
             btnCreateMaterialDistribution = new Button();
             txtBx_currentUser = new TextBox();
             btnSalesHistory = new Button();
@@ -43,7 +41,6 @@
             ((System.ComponentModel.ISupportInitialize)splConSalesDeptMainForm).BeginInit();
             splConSalesDeptMainForm.Panel1.SuspendLayout();
             splConSalesDeptMainForm.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox_notificationBell).BeginInit();
             SuspendLayout();
             // 
             // splConSalesDeptMainForm
@@ -58,7 +55,6 @@
             splConSalesDeptMainForm.Panel1.BackColor = SystemColors.ActiveCaption;
             splConSalesDeptMainForm.Panel1.Controls.Add(btnInventory);
             splConSalesDeptMainForm.Panel1.Controls.Add(btnAccountInformation);
-            splConSalesDeptMainForm.Panel1.Controls.Add(pictureBox_notificationBell);
             splConSalesDeptMainForm.Panel1.Controls.Add(btnCreateMaterialDistribution);
             splConSalesDeptMainForm.Panel1.Controls.Add(txtBx_currentUser);
             splConSalesDeptMainForm.Panel1.Controls.Add(btnSalesHistory);
@@ -94,18 +90,6 @@
             btnAccountInformation.TextAlign = ContentAlignment.MiddleLeft;
             btnAccountInformation.UseVisualStyleBackColor = true;
             btnAccountInformation.Click += btnAccountInformation_Click;
-            // 
-            // pictureBox_notificationBell
-            // 
-            pictureBox_notificationBell.BackgroundImage = (Image)resources.GetObject("pictureBox_notificationBell.BackgroundImage");
-            pictureBox_notificationBell.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox_notificationBell.ImeMode = ImeMode.NoControl;
-            pictureBox_notificationBell.Location = new Point(195, 258);
-            pictureBox_notificationBell.Margin = new Padding(3, 4, 3, 4);
-            pictureBox_notificationBell.Name = "pictureBox_notificationBell";
-            pictureBox_notificationBell.Size = new Size(30, 38);
-            pictureBox_notificationBell.TabIndex = 8;
-            pictureBox_notificationBell.TabStop = false;
             // 
             // btnCreateMaterialDistribution
             // 
@@ -210,7 +194,6 @@
             splConSalesDeptMainForm.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)splConSalesDeptMainForm).EndInit();
             splConSalesDeptMainForm.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox_notificationBell).EndInit();
             ResumeLayout(false);
         }
 
@@ -218,7 +201,6 @@
 
         private SplitContainer splConSalesDeptMainForm;
         private Button btnAccountInformation;
-        private PictureBox pictureBox_notificationBell;
         private Button btnCreateMaterialDistribution;
         private TextBox txtBx_currentUser;
         private Button btnSalesHistory;

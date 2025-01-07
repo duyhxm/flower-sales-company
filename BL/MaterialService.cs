@@ -108,5 +108,39 @@ namespace BL
             }
         }
 
+        public async Task<List<FlowerProfitRateDTO>> GetFlowerProfitRatesByIdAsync(string flowerId)
+        {
+            try
+            {
+                return await _materialRepository.GetFlowerProfitRatesByIdAsync(flowerId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task UpdateFlowerProfitRateAsync(string targetId, string flowerId, int expectedQuantity, decimal profitRate)
+        {
+            try
+            {
+                await _materialRepository.UpdateFlowerProfitRateAsync(targetId, flowerId, expectedQuantity, profitRate);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<FlowerProfitRateDTO>> GetFlowerProfitRatesByMonthYearAsync(int applyMonth, int applyYear)
+        {
+            return await _materialRepository.GetFlowerProfitRatesByMonthYearAsync(applyMonth, applyYear);
+        }
+
+        public async Task AddNewFlowerProfitRateAsync(string targetId, string flowerId, int expectedQuantity, decimal profitRate, int applyMonth, int applyYear)
+        {
+            await _materialRepository.AddNewFlowerProfitRateAsync(targetId, flowerId, expectedQuantity, profitRate, applyMonth, applyYear);
+        }
+
     }
 }

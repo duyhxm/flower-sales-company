@@ -9,6 +9,7 @@ using DTO.Enum.SalesOrder;
 using System.Globalization;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using DTO.Enum.Material;
 
 namespace DL.Repositories.Implementations
 {
@@ -218,6 +219,106 @@ namespace DL.Repositories.Implementations
             catch (Exception ex)
             {
                 throw new Exception($"Đã xảy ra lỗi trong quá trình phân phối vật liệu: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<List<FlowerProfitRateDTO>> GetFlowerProfitRatesByIdAsync(string flowerId)
+        {
+            try
+            {
+                using (var context = new FlowerSalesCompanyDbContext())
+                {
+                    return await context.FlowerSalesTargetHistories
+                                        .Where(f => f.FlowerId == flowerId)
+                                        .Join(context.FlowerSalesTargets,
+                                              f => f.TargetId,
+                                              fst => fst.TargetId,
+                                              (f, fst) => new FlowerProfitRateDTO
+                                              {
+                                                  TargetId = f.TargetId,
+                                                  FlowerId = f.FlowerId,
+                                                  ExpectedQuantity = f.ExpectedQuantity,
+                                                  ProfitRate = f.ProfitRate,
+                                                  ApplyMonth = fst.ApplyMonth,
+                                                  ApplyYear = fst.ApplyYear,
+                                                  UsageStatus = fst.UsageStatus
+                                              })
+                                        .Where(i => i.UsageStatus == UsageStatus.Applying || i.UsageStatus == UsageStatus.ApplyingSoon)
+                                        .ToListAsync();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task UpdateFlowerProfitRateAsync(string targetId, string flowerId, int expectedQuantity, decimal profitRate)
+        {
+            try
+            {
+                var flowerProfitRate = await _context.FlowerSalesTargetHistories.FirstOrDefaultAsync(f => f.TargetId == targetId && f.FlowerId == flowerId);
+
+                if (flowerProfitRate != null)
+                {
+                    flowerProfitRate.ExpectedQuantity = expectedQuantity;
+                    flowerProfitRate.ProfitRate = profitRate;
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<FlowerProfitRateDTO>> GetFlowerProfitRatesByMonthYearAsync(int applyMonth, int applyYear)
+        {
+            return await _context.FlowerSalesTargets
+                                 .Where(fst => fst.ApplyMonth == applyMonth && fst.ApplyYear == applyYear)
+                                 .Join(_context.FlowerSalesTargetHistories,
+                                       fst => fst.TargetId,
+                                       fsth => fsth.TargetId,
+                                       (fst, fsth) => new FlowerProfitRateDTO
+                                       {
+                                           TargetId = fsth.TargetId,
+                                           FlowerId = fsth.FlowerId,
+                                           ExpectedQuantity = fsth.ExpectedQuantity,
+                                           ProfitRate = fsth.ProfitRate,
+                                           ApplyMonth = fst.ApplyMonth,
+                                           ApplyYear = fst.ApplyYear,
+                                           UsageStatus = fst.UsageStatus
+                                       })
+                                 .ToListAsync();
+        }
+
+        public async Task AddNewFlowerProfitRateAsync(string targetId, string flowerId, int expectedQuantity, decimal profitRate, int applyMonth, int applyYear)
+        {
+            try
+            {
+                var newTarget = new FlowerSalesTarget
+                {
+                    TargetId = targetId,
+                    ApplyMonth = applyMonth,
+                    ApplyYear = applyYear,
+                    UsageStatus = UsageStatus.ApplyingSoon
+                };
+
+                var newRecord = new FlowerSalesTargetHistory
+                {
+                    TargetId = targetId,
+                    FlowerId = flowerId,
+                    ExpectedQuantity = expectedQuantity,
+                    ProfitRate = profitRate
+                };
+
+                _context.FlowerSalesTargets.Add(newTarget);
+                _context.FlowerSalesTargetHistories.Add(newRecord);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

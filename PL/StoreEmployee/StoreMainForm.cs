@@ -5,6 +5,7 @@ using DTO.Store;
 using PL.StoreEmployee;
 using static BL.GeneralService;
 using DTO.Enum;
+using System.Diagnostics;
 
 namespace PL
 {
@@ -177,12 +178,22 @@ namespace PL
 
         public async Task HandleNotification(Dictionary<string, object> message)
         {
-            var formattedMessage = string.Join(Environment.NewLine,
-            message.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
+            //var formattedMessage = string.Join(Environment.NewLine,
+            //message.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
 
+            //string? operationName = message["OperatioName"].ToString();
+            //string? tableName = message["TableName"].ToString();
+
+            //if (operationName == "U" && tableName == "MaterialInventory")
+            //{
+                
+            //}
             await InventoryForm.Instance.LoadMaterialInventory(LoginForm.Instance.LoginInformation.StoreID!);
+
+            Debug.WriteLine("Form main đã nhận được message");
+
             // Hiển thị thông báo
-            MessageBox.Show($"StoreMainForm received message:\n{formattedMessage}");
+            //MessageBox.Show($"StoreMainForm received message:\n{formattedMessage}");
         }
 
         public void NotificationBellVisibility(bool value)

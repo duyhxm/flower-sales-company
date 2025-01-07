@@ -3,44 +3,73 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using BL;
+using DTO.Material;
 
 namespace PL.SalesEmployee
 {
     public partial class FlowerHistoryProfitRate : System.Windows.Forms.Form
     {
-        private string flowerID { get; set; }
+        private string _flowerId;
 
-        public FlowerHistoryProfitRate(string flowerID)
+        private List<FlowerProfitRateDTO> _flowerProfitRates = new();
+
+        private MaterialService _materialService = new();
+
+        private decimal selectedApplyMonth = 0;
+        private decimal selectedApplyYear = 0;
+
+        public FlowerHistoryProfitRate(string flowerId)
         {
             InitializeComponent();
-            this.flowerID = flowerID;
-            LoadData();
+            _flowerId = flowerId;
+            txtBxFlowerId.Text = _flowerId;
+
+            SetupFlowerProfitRates();
         }
 
-        private void LoadData()
+        private void SetupFlowerProfitRates()
         {
-            using (var context = new FlowerSalesCompanyDbContext())
+            dgvFlowerProfitRates.AutoGenerateColumns = false;
+
+            dgvFlowerProfitRates.Columns["ColApplyMonth"].Width = 100;
+            dgvFlowerProfitRates.Columns["ColApplyMonth"].DataPropertyName = "ApplyMonth";
+
+            dgvFlowerProfitRates.Columns["ColApplyYear"].Width = 100;
+            dgvFlowerProfitRates.Columns["ColApplyYear"].DataPropertyName = "ApplyYear";
+
+            dgvFlowerProfitRates.Columns["ColExpectedQuantity"].Width = 80;
+            dgvFlowerProfitRates.Columns["ColExpectedQuantity"].DataPropertyName = "ExpectedQuantity";
+
+            dgvFlowerProfitRates.Columns["ColProfitRate"].Width = 100;
+            dgvFlowerProfitRates.Columns["ColProfitRate"].DataPropertyName = "ProfitRate";
+
+            dgvFlowerProfitRates.Columns["ColUsageStatus"].Width = 200;
+            dgvFlowerProfitRates.Columns["ColUsageStatus"].DataPropertyName = "UsageStatus";
+        }
+        private async void FlowerHistoryProfitRate_Load(object sender, EventArgs e)
+        {
+            await LoadFlowerProfitRateHistoryAsync();
+        }
+
+        private async Task LoadFlowerProfitRateHistoryAsync()
+        {
+            try
             {
+                List<FlowerProfitRateDTO> result = await _materialService.GetFlowerProfitRatesByIdAsync(_flowerId);
 
-                var result = (from history in context.FlowerSalesTargetHistories
-                              join target in context.FlowerSalesTargets
-                              on history.TargetId equals target.TargetId
-                              where history.FlowerId == flowerID // Điều kiện lọc FlowerId
-                              && (target.UsageStatus == "Đang áp dụng" || target.UsageStatus == "Sắp áp dụng") // Điều kiện UsageStatus
-                              select new
-                              {
-                                  history.TargetId,
-                                  history.FlowerId,
-                                  history.ExpectedQuantity,
-                                  history.ProfitRate,
-                                  target.ApplyMonth,
-                                  target.ApplyYear,
-                                  target.UsageStatus
-                              }).ToList();
+                if (result.Count == 0)
+                {
+                    MessageBox.Show($"Dữ hiện tỉ lệ lợi nhuận cho hoa {_flowerId} hiện đang trống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
-                // Hiển thị kết quả lên DataGridView
-                dataGridViewHistory.DataSource = result;
+                _flowerProfitRates = result;
 
+                dgvFlowerProfitRates.DataSource = _flowerProfitRates;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -49,43 +78,38 @@ namespace PL.SalesEmployee
             this.Close();
         }
 
-        private void btnAdjustFPrice_Click(object sender, EventArgs e)
+        private async void btnAdjustFPrice_Click(object sender, EventArgs e)
         {
             try
             {
-                using (var context = new FlowerSalesCompanyDbContext())
+                if (selectedApplyMonth == 0 || selectedApplyYear == 0)
                 {
-                    // Lấy TargetId và FlowerId từ TextBox
-                    var targetId = txtTargetId.Text.Trim();
-                    var flowerId = txtFlowerId.Text.Trim();
-
-                    if (string.IsNullOrEmpty(targetId) || string.IsNullOrEmpty(flowerId))
-                    {
-                        MessageBox.Show("Vui lòng chọn dòng để cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    // Tìm bản ghi cần cập nhật
-                    var historyRecord = context.FlowerSalesTargetHistories
-                        .FirstOrDefault(h => h.TargetId == targetId && h.FlowerId == flowerId);
-
-                    if (historyRecord != null)
-                    {
-                        historyRecord.ProfitRate = decimal.Parse(txtProfitRate.Text.Trim());
-
-                        // Lưu thay đổi vào database
-                        context.SaveChanges();
-
-                        MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        // Cập nhật lại DataGridView
-                        LoadData();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không tìm thấy bản ghi để cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show("Bạn cần chọn một row để thực hiện thay đổi dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
+
+                if (!int.TryParse(txtExpectedQuantity.Text.Trim(), out int expectedQuantity))
+                {
+                    MessageBox.Show("Expected Quantity phải là số nguyên hợp lệ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!decimal.TryParse(txtProfitRate.Text.Trim(), out decimal profitRate) || profitRate < 0 || profitRate > 999.9m)
+                {
+                    MessageBox.Show("Profit Rate phải là số thập phân hợp lệ với tối đa 5 chữ số và 1 chữ số thập phân", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var flowerProfitRate = _flowerProfitRates.FirstOrDefault(f => f.ApplyMonth == selectedApplyMonth && f.ApplyYear == selectedApplyYear);
+
+                if (flowerProfitRate != null)
+                {
+                    await _materialService.UpdateFlowerProfitRateAsync(flowerProfitRate.TargetId, _flowerId, expectedQuantity, profitRate);
+
+                    await LoadFlowerProfitRateHistoryAsync();
+                }
+
+                MessageBox.Show("Đã cập nhật thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -93,93 +117,61 @@ namespace PL.SalesEmployee
             }
         }
 
-        private void dataGridViewHistory_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void btnAddNewFPrice_Click(object sender, EventArgs e)
         {
-            if (e.RowIndex >= 0 && e.RowIndex < dataGridViewHistory.Rows.Count)
+            try
+            {
+                if (!int.TryParse(txtExpectedQuantity.Text.Trim(), out int expectedQuantity))
+                {
+                    MessageBox.Show("Expected Quantity phải là số nguyên hợp lệ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!decimal.TryParse(txtProfitRate.Text.Trim(), out decimal profitRate) || profitRate < 0 || profitRate > 999.9m)
+                {
+                    MessageBox.Show("Profit Rate phải là số thập phân hợp lệ với tối đa 5 chữ số và 1 chữ số thập phân", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                DateTime currentDate = DateTime.Now;
+                int nextMonth = currentDate.Month == 12 ? 1 : currentDate.Month + 1;
+                int nextYear = currentDate.Month == 12 ? currentDate.Year + 1 : currentDate.Year;
+
+                string targetId = new DateTime(nextYear, nextMonth, 1).AddDays(-1).ToString("yyyyMMdd");
+
+                var existingTarget = await _materialService.GetFlowerProfitRatesByMonthYearAsync(nextMonth, nextYear);
+
+                if (existingTarget.Any())
+                {
+                    MessageBox.Show("Đã tồn tại TargetID cho tháng và năm này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                await _materialService.AddNewFlowerProfitRateAsync(targetId, _flowerId, expectedQuantity, profitRate, nextMonth, nextYear);
+
+                MessageBox.Show("Thêm mới thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                await LoadFlowerProfitRateHistoryAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvFlowerProfitRates_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < dgvFlowerProfitRates.Rows.Count)
             {
                 // Lấy dữ liệu từ hàng được chọn
-                var selectedRow = dataGridViewHistory.Rows[e.RowIndex];
+                var selectedRow = dgvFlowerProfitRates.Rows[e.RowIndex];
 
-                // Gán dữ liệu từ DataGridView vào các TextBox
-                txtTargetId.Text = selectedRow.Cells["TargetId"].Value?.ToString();
-                txtFlowerId.Text = selectedRow.Cells["FlowerId"].Value?.ToString();
-                txtExpectedQuantity.Text = selectedRow.Cells["ExpectedQuantity"].Value?.ToString();
-                txtProfitRate.Text = selectedRow.Cells["ProfitRate"].Value?.ToString();
+                selectedApplyMonth = Convert.ToDecimal(selectedRow.Cells["ColApplyMonth"].Value.ToString());
+                selectedApplyYear = Convert.ToDecimal(selectedRow.Cells["ColApplyYear"].Value.ToString());
+
+                txtExpectedQuantity.Text = selectedRow.Cells["ColExpectedQuantity"].Value?.ToString();
+                txtProfitRate.Text = selectedRow.Cells["ColProfitRate"].Value?.ToString();
             }
         }
-
-        private void btnAddNewFPrice_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                using (var context = new FlowerSalesCompanyDbContext())
-                {
-                    // Lấy tháng và năm hiện tại
-                    int currentMonth = DateTime.Now.Month;
-                    int currentYear = DateTime.Now.Year;
-                    int currentDay = DateTime.Now.Day;
-                    // Kiểm tra TargetID có tồn tại với tháng và năm hiện tại chưa
-                    var existingTarget = context.FlowerSalesTargets
-                        .FirstOrDefault(t => t.ApplyMonth == currentMonth && t.ApplyYear == currentYear);
-
-                    if (existingTarget == null)
-                    {
-                        // Nếu không tìm thấy, tạo TargetID mới
-                        var newTarget = new FlowerSalesTarget
-                        {
-                            TargetId = $"{currentYear}{currentMonth:D2}{currentDay:D2}",
-                            ApplyMonth = currentMonth,
-                            ApplyYear = currentYear,
-                            UsageStatus = "Đang áp dụng" // Gán trạng thái mặc định
-                        };
-
-                        // Thêm TargetID mới vào database
-                        context.FlowerSalesTargets.Add(newTarget);
-                        context.SaveChanges();
-
-                        // Cập nhật lại đối tượng `existingTarget` để sử dụng tiếp
-                        existingTarget = newTarget;
-
-                        MessageBox.Show("TargetID mới đã được tạo cho tháng và năm hiện tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-
-                    // Lấy TargetID từ bản ghi tìm thấy hoặc vừa tạo
-                    string targetId = existingTarget.TargetId;
-
-                    // Kiểm tra FlowerID đã được thêm vào TargetID chưa
-                    var existingFlower = context.FlowerSalesTargetHistories
-                        .FirstOrDefault(h => h.TargetId == targetId && h.FlowerId == flowerID);
-
-                    if (existingFlower != null)
-                    {
-                        MessageBox.Show("FlowerID này đã được thêm vào TargetID hiện tại!",
-                                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-
-                    // Nếu chưa tồn tại, thêm bản ghi mới
-                    var newRecord = new FlowerSalesTargetHistory
-                    {
-                        TargetId = targetId,
-                        FlowerId = flowerID,
-                        ExpectedQuantity = int.Parse(txtExpectedQuantity.Text.Trim()),
-                        ProfitRate = decimal.Parse(txtProfitRate.Text.Trim())
-                    };
-
-                    context.FlowerSalesTargetHistories.Add(newRecord);
-                    context.SaveChanges();
-
-                    MessageBox.Show("Thêm mới thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Làm mới DataGridView
-                    LoadData();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
     }
 }

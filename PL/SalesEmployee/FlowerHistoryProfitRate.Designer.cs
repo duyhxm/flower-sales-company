@@ -28,37 +28,105 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridViewHistory = new DataGridView();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            dgvFlowerProfitRates = new DataGridView();
+            ColApplyMonth = new DataGridViewTextBoxColumn();
+            ColApplyYear = new DataGridViewTextBoxColumn();
+            ColExpectedQuantity = new DataGridViewTextBoxColumn();
+            ColProfitRate = new DataGridViewTextBoxColumn();
+            ColUsageStatus = new DataGridViewTextBoxColumn();
             btnOk = new Button();
-            txtTargetId = new TextBox();
-            label1 = new Label();
-            label2 = new Label();
+            lblExpectedQuantity = new Label();
             txtExpectedQuantity = new TextBox();
             label5 = new Label();
             txtProfitRate = new TextBox();
             label6 = new Label();
-            txtFlowerId = new TextBox();
+            txtBxFlowerId = new TextBox();
             btnAddNewFPrice = new Button();
             btnAdjustFPrice = new Button();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewHistory).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvFlowerProfitRates).BeginInit();
             SuspendLayout();
             // 
-            // dataGridViewHistory
+            // dgvFlowerProfitRates
             // 
-            dataGridViewHistory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewHistory.Dock = DockStyle.Top;
-            dataGridViewHistory.Location = new Point(0, 0);
-            dataGridViewHistory.Margin = new Padding(4, 5, 4, 5);
-            dataGridViewHistory.Name = "dataGridViewHistory";
-            dataGridViewHistory.RowHeadersWidth = 62;
-            dataGridViewHistory.Size = new Size(1623, 500);
-            dataGridViewHistory.TabIndex = 0;
-            dataGridViewHistory.CellClick += dataGridViewHistory_CellClick;
+            dgvFlowerProfitRates.AllowUserToAddRows = false;
+            dgvFlowerProfitRates.AllowUserToDeleteRows = false;
+            dgvFlowerProfitRates.AllowUserToResizeColumns = false;
+            dgvFlowerProfitRates.AllowUserToResizeRows = false;
+            dgvFlowerProfitRates.BackgroundColor = SystemColors.Control;
+            dgvFlowerProfitRates.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvFlowerProfitRates.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dgvFlowerProfitRates.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvFlowerProfitRates.Columns.AddRange(new DataGridViewColumn[] { ColApplyMonth, ColApplyYear, ColExpectedQuantity, ColProfitRate, ColUsageStatus });
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvFlowerProfitRates.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvFlowerProfitRates.Dock = DockStyle.Top;
+            dgvFlowerProfitRates.Location = new Point(0, 0);
+            dgvFlowerProfitRates.Margin = new Padding(4, 5, 4, 5);
+            dgvFlowerProfitRates.Name = "dgvFlowerProfitRates";
+            dgvFlowerProfitRates.RowHeadersWidth = 62;
+            dgvFlowerProfitRates.Size = new Size(754, 334);
+            dgvFlowerProfitRates.TabIndex = 0;
+            dgvFlowerProfitRates.CellClick += dgvFlowerProfitRates_CellClick;
+            // 
+            // ColApplyMonth
+            // 
+            ColApplyMonth.HeaderText = "Month";
+            ColApplyMonth.MinimumWidth = 8;
+            ColApplyMonth.Name = "ColApplyMonth";
+            ColApplyMonth.ReadOnly = true;
+            ColApplyMonth.Width = 150;
+            // 
+            // ColApplyYear
+            // 
+            ColApplyYear.HeaderText = "Year";
+            ColApplyYear.MinimumWidth = 8;
+            ColApplyYear.Name = "ColApplyYear";
+            ColApplyYear.ReadOnly = true;
+            ColApplyYear.Width = 150;
+            // 
+            // ColExpectedQuantity
+            // 
+            ColExpectedQuantity.HeaderText = "Q";
+            ColExpectedQuantity.MinimumWidth = 8;
+            ColExpectedQuantity.Name = "ColExpectedQuantity";
+            ColExpectedQuantity.ReadOnly = true;
+            ColExpectedQuantity.Width = 150;
+            // 
+            // ColProfitRate
+            // 
+            ColProfitRate.HeaderText = "Rate";
+            ColProfitRate.MinimumWidth = 8;
+            ColProfitRate.Name = "ColProfitRate";
+            ColProfitRate.ReadOnly = true;
+            ColProfitRate.Width = 150;
+            // 
+            // ColUsageStatus
+            // 
+            ColUsageStatus.HeaderText = "Status";
+            ColUsageStatus.MinimumWidth = 8;
+            ColUsageStatus.Name = "ColUsageStatus";
+            ColUsageStatus.ReadOnly = true;
+            ColUsageStatus.Width = 200;
             // 
             // btnOk
             // 
-            btnOk.Location = new Point(676, 670);
+            btnOk.Font = new Font("Segoe UI", 12F);
+            btnOk.Location = new Point(418, 492);
             btnOk.Margin = new Padding(4, 5, 4, 5);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(100, 40);
@@ -67,83 +135,72 @@
             btnOk.UseVisualStyleBackColor = true;
             btnOk.Click += btnOk_Click;
             // 
-            // txtTargetId
+            // lblExpectedQuantity
             // 
-            txtTargetId.Enabled = false;
-            txtTargetId.Location = new Point(129, 600);
-            txtTargetId.Margin = new Padding(4, 5, 4, 5);
-            txtTargetId.Name = "txtTargetId";
-            txtTargetId.Size = new Size(188, 31);
-            txtTargetId.TabIndex = 3;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(35, 600);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(83, 25);
-            label1.TabIndex = 4;
-            label1.Text = "Target ID";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(344, 603);
-            label2.Margin = new Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(102, 25);
-            label2.TabIndex = 6;
-            label2.Text = "Expected Q";
+            lblExpectedQuantity.AutoSize = true;
+            lblExpectedQuantity.Font = new Font("Segoe UI", 12F);
+            lblExpectedQuantity.Location = new Point(410, 381);
+            lblExpectedQuantity.Margin = new Padding(4, 0, 4, 0);
+            lblExpectedQuantity.Name = "lblExpectedQuantity";
+            lblExpectedQuantity.Size = new Size(32, 32);
+            lblExpectedQuantity.TabIndex = 6;
+            lblExpectedQuantity.Text = "Q";
             // 
             // txtExpectedQuantity
             // 
-            txtExpectedQuantity.Location = new Point(451, 600);
+            txtExpectedQuantity.Font = new Font("Segoe UI", 12F);
+            txtExpectedQuantity.Location = new Point(450, 378);
             txtExpectedQuantity.Margin = new Padding(4, 5, 4, 5);
             txtExpectedQuantity.Name = "txtExpectedQuantity";
-            txtExpectedQuantity.Size = new Size(188, 31);
+            txtExpectedQuantity.Size = new Size(188, 39);
             txtExpectedQuantity.TabIndex = 5;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(344, 644);
+            label5.Font = new Font("Segoe UI", 12F);
+            label5.Location = new Point(381, 426);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(57, 25);
+            label5.Size = new Size(61, 32);
             label5.TabIndex = 12;
-            label5.Text = "PRate";
+            label5.Text = "Rate";
             // 
             // txtProfitRate
             // 
-            txtProfitRate.Location = new Point(451, 641);
+            txtProfitRate.Font = new Font("Segoe UI", 12F);
+            txtProfitRate.Location = new Point(450, 423);
             txtProfitRate.Margin = new Padding(4, 5, 4, 5);
             txtProfitRate.Name = "txtProfitRate";
-            txtProfitRate.Size = new Size(188, 31);
+            txtProfitRate.Size = new Size(188, 39);
             txtProfitRate.TabIndex = 11;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(35, 644);
+            label6.Font = new Font("Segoe UI", 12F);
+            label6.Location = new Point(58, 382);
             label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(87, 25);
+            label6.Size = new Size(114, 32);
             label6.TabIndex = 10;
             label6.Text = "Flower ID";
             // 
-            // txtFlowerId
+            // txtBxFlowerId
             // 
-            txtFlowerId.Enabled = false;
-            txtFlowerId.Location = new Point(129, 641);
-            txtFlowerId.Margin = new Padding(4, 5, 4, 5);
-            txtFlowerId.Name = "txtFlowerId";
-            txtFlowerId.Size = new Size(188, 31);
-            txtFlowerId.TabIndex = 9;
+            txtBxFlowerId.Enabled = false;
+            txtBxFlowerId.Font = new Font("Segoe UI", 12F);
+            txtBxFlowerId.Location = new Point(180, 378);
+            txtBxFlowerId.Margin = new Padding(4, 5, 4, 5);
+            txtBxFlowerId.Name = "txtBxFlowerId";
+            txtBxFlowerId.ReadOnly = true;
+            txtBxFlowerId.Size = new Size(188, 39);
+            txtBxFlowerId.TabIndex = 9;
             // 
             // btnAddNewFPrice
             // 
-            btnAddNewFPrice.Location = new Point(676, 617);
+            btnAddNewFPrice.Font = new Font("Segoe UI", 12F);
+            btnAddNewFPrice.Location = new Point(310, 492);
             btnAddNewFPrice.Margin = new Padding(4, 5, 4, 5);
             btnAddNewFPrice.Name = "btnAddNewFPrice";
             btnAddNewFPrice.Size = new Size(100, 40);
@@ -154,7 +211,8 @@
             // 
             // btnAdjustFPrice
             // 
-            btnAdjustFPrice.Location = new Point(676, 564);
+            btnAdjustFPrice.Font = new Font("Segoe UI", 12F);
+            btnAdjustFPrice.Location = new Point(202, 492);
             btnAdjustFPrice.Margin = new Padding(4, 5, 4, 5);
             btnAdjustFPrice.Name = "btnAdjustFPrice";
             btnAdjustFPrice.Size = new Size(100, 40);
@@ -167,42 +225,44 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1623, 800);
+            ClientSize = new Size(754, 575);
             Controls.Add(btnAddNewFPrice);
             Controls.Add(btnAdjustFPrice);
             Controls.Add(label5);
             Controls.Add(txtProfitRate);
             Controls.Add(label6);
-            Controls.Add(txtFlowerId);
-            Controls.Add(label2);
+            Controls.Add(txtBxFlowerId);
+            Controls.Add(lblExpectedQuantity);
             Controls.Add(txtExpectedQuantity);
-            Controls.Add(label1);
-            Controls.Add(txtTargetId);
             Controls.Add(btnOk);
-            Controls.Add(dataGridViewHistory);
+            Controls.Add(dgvFlowerProfitRates);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4, 5, 4, 5);
             Name = "FlowerHistoryProfitRate";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FlowerHistoryProfitRate";
-            ((System.ComponentModel.ISupportInitialize)dataGridViewHistory).EndInit();
+            Load += FlowerHistoryProfitRate_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvFlowerProfitRates).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private DataGridView dataGridViewHistory;
+        private DataGridView dgvFlowerProfitRates;
         private Button btnOk;
-        private TextBox txtTargetId;
-        private Label label1;
-        private Label label2;
+        private Label lblExpectedQuantity;
         private TextBox txtExpectedQuantity;
         private Label label5;
         private TextBox txtProfitRate;
         private Label label6;
-        private TextBox txtFlowerId;
+        private TextBox txtBxFlowerId;
         private Button btnAddNewFPrice;
         private Button btnAdjustFPrice;
+        private DataGridViewTextBoxColumn ColApplyMonth;
+        private DataGridViewTextBoxColumn ColApplyYear;
+        private DataGridViewTextBoxColumn ColExpectedQuantity;
+        private DataGridViewTextBoxColumn ColProfitRate;
+        private DataGridViewTextBoxColumn ColUsageStatus;
     }
 }
