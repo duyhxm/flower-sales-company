@@ -132,7 +132,7 @@
             // lblShippingCompanyName
             // 
             lblShippingCompanyName.AutoSize = true;
-            lblShippingCompanyName.Location = new Point(883, 207);
+            lblShippingCompanyName.Location = new Point(769, 210);
             lblShippingCompanyName.Name = "lblShippingCompanyName";
             lblShippingCompanyName.Size = new Size(166, 32);
             lblShippingCompanyName.TabIndex = 3;
@@ -141,7 +141,7 @@
             // lblPhoneNumber
             // 
             lblPhoneNumber.AutoSize = true;
-            lblPhoneNumber.Location = new Point(883, 425);
+            lblPhoneNumber.Location = new Point(769, 428);
             lblPhoneNumber.Name = "lblPhoneNumber";
             lblPhoneNumber.Size = new Size(177, 32);
             lblPhoneNumber.TabIndex = 5;
@@ -150,7 +150,7 @@
             // lblCustomerName
             // 
             lblCustomerName.AutoSize = true;
-            lblCustomerName.Location = new Point(883, 367);
+            lblCustomerName.Location = new Point(769, 370);
             lblCustomerName.Name = "lblCustomerName";
             lblCustomerName.Size = new Size(188, 32);
             lblCustomerName.TabIndex = 6;
@@ -159,7 +159,7 @@
             // lblAddress
             // 
             lblAddress.AutoSize = true;
-            lblAddress.Location = new Point(883, 480);
+            lblAddress.Location = new Point(769, 483);
             lblAddress.Name = "lblAddress";
             lblAddress.Size = new Size(98, 32);
             lblAddress.TabIndex = 7;
@@ -168,7 +168,7 @@
             // lblDeliveryTime
             // 
             lblDeliveryTime.AutoSize = true;
-            lblDeliveryTime.Location = new Point(883, 311);
+            lblDeliveryTime.Location = new Point(769, 314);
             lblDeliveryTime.Name = "lblDeliveryTime";
             lblDeliveryTime.Size = new Size(161, 32);
             lblDeliveryTime.TabIndex = 8;
@@ -177,7 +177,7 @@
             // lblOrderTime
             // 
             lblOrderTime.AutoSize = true;
-            lblOrderTime.Location = new Point(883, 254);
+            lblOrderTime.Location = new Point(769, 257);
             lblOrderTime.Name = "lblOrderTime";
             lblOrderTime.Size = new Size(135, 32);
             lblOrderTime.TabIndex = 9;
@@ -186,7 +186,7 @@
             // txtBxCustomerName
             // 
             txtBxCustomerName.Enabled = false;
-            txtBxCustomerName.Location = new Point(1089, 364);
+            txtBxCustomerName.Location = new Point(975, 367);
             txtBxCustomerName.Name = "txtBxCustomerName";
             txtBxCustomerName.ReadOnly = true;
             txtBxCustomerName.Size = new Size(251, 39);
@@ -195,7 +195,7 @@
             // txtBxCustomerPhoneNumber
             // 
             txtBxCustomerPhoneNumber.Enabled = false;
-            txtBxCustomerPhoneNumber.Location = new Point(1090, 422);
+            txtBxCustomerPhoneNumber.Location = new Point(976, 425);
             txtBxCustomerPhoneNumber.Name = "txtBxCustomerPhoneNumber";
             txtBxCustomerPhoneNumber.ReadOnly = true;
             txtBxCustomerPhoneNumber.Size = new Size(251, 39);
@@ -204,7 +204,7 @@
             // txtBxDeliveryTime
             // 
             txtBxDeliveryTime.Enabled = false;
-            txtBxDeliveryTime.Location = new Point(1089, 308);
+            txtBxDeliveryTime.Location = new Point(975, 311);
             txtBxDeliveryTime.Name = "txtBxDeliveryTime";
             txtBxDeliveryTime.ReadOnly = true;
             txtBxDeliveryTime.Size = new Size(251, 39);
@@ -212,7 +212,7 @@
             // 
             // txtBxAddress
             // 
-            txtBxAddress.Location = new Point(1089, 477);
+            txtBxAddress.Location = new Point(975, 480);
             txtBxAddress.Name = "txtBxAddress";
             txtBxAddress.Size = new Size(251, 39);
             txtBxAddress.TabIndex = 13;
@@ -221,7 +221,7 @@
             // 
             dtpOrderDateTime.CustomFormat = "dd/MM/yyyy HH:mm";
             dtpOrderDateTime.Format = DateTimePickerFormat.Custom;
-            dtpOrderDateTime.Location = new Point(1089, 249);
+            dtpOrderDateTime.Location = new Point(975, 252);
             dtpOrderDateTime.Name = "dtpOrderDateTime";
             dtpOrderDateTime.Size = new Size(252, 39);
             dtpOrderDateTime.TabIndex = 14;
@@ -229,7 +229,7 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(1049, 681);
+            btnSave.Location = new Point(935, 684);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(108, 45);
             btnSave.TabIndex = 15;
@@ -239,7 +239,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(1163, 681);
+            btnCancel.Location = new Point(1049, 684);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(119, 44);
             btnCancel.TabIndex = 16;
@@ -249,14 +249,14 @@
             // 
             // txtBxDistrict
             // 
-            txtBxDistrict.Location = new Point(1090, 528);
+            txtBxDistrict.Location = new Point(976, 531);
             txtBxDistrict.Name = "txtBxDistrict";
             txtBxDistrict.Size = new Size(251, 39);
             txtBxDistrict.TabIndex = 17;
             // 
             // txtBxCity
             // 
-            txtBxCity.Location = new Point(1090, 586);
+            txtBxCity.Location = new Point(976, 589);
             txtBxCity.Name = "txtBxCity";
             txtBxCity.Size = new Size(251, 39);
             txtBxCity.TabIndex = 18;
@@ -264,7 +264,7 @@
             // lblDistrict
             // 
             lblDistrict.AutoSize = true;
-            lblDistrict.Location = new Point(883, 531);
+            lblDistrict.Location = new Point(769, 534);
             lblDistrict.Name = "lblDistrict";
             lblDistrict.Size = new Size(88, 32);
             lblDistrict.TabIndex = 19;
@@ -273,7 +273,7 @@
             // lblCity
             // 
             lblCity.AutoSize = true;
-            lblCity.Location = new Point(883, 589);
+            lblCity.Location = new Point(769, 592);
             lblCity.Name = "lblCity";
             lblCity.Size = new Size(55, 32);
             lblCity.TabIndex = 20;
@@ -293,7 +293,7 @@
             // 
             cmbBxShippingCompany.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbBxShippingCompany.FormattingEnabled = true;
-            cmbBxShippingCompany.Location = new Point(1088, 199);
+            cmbBxShippingCompany.Location = new Point(974, 202);
             cmbBxShippingCompany.Name = "cmbBxShippingCompany";
             cmbBxShippingCompany.Size = new Size(252, 40);
             cmbBxShippingCompany.TabIndex = 22;
@@ -312,7 +312,7 @@
             // 
             lblShippingInfo.AutoSize = true;
             lblShippingInfo.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblShippingInfo.Location = new Point(1049, 105);
+            lblShippingInfo.Location = new Point(935, 108);
             lblShippingInfo.Name = "lblShippingInfo";
             lblShippingInfo.Size = new Size(188, 38);
             lblShippingInfo.TabIndex = 24;

@@ -17,3 +17,4 @@ DL.Models.CustomerRank,DTO.Customer.CustomerRankDTO
 DL.Models.Customer,DTO.Customer.CustomerDTO
 DL.Models.PurchaseOrder,DTO.PurchaseOrderDTO
 DL.Models.DetailedPurchaseOrder,DTO.DetailedPurchaseOrderDTO
+DL.Models.ShippingCompany,DTO.SalesOrder.ShippingCompanyDTO

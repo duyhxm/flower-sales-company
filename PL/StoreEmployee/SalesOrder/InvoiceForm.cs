@@ -77,8 +77,20 @@ namespace PL.StoreEmployee
 
             if (result == DialogResult.Yes)
             {
-                ShippingInformationDTO shippingInfo = _shippingInformationForm.GetShippingInfo();
-                await _salesOrderForm.AddSalesOrderWithShippingInfo(shippingInfo);
+                try
+                {
+                    ShippingInformationDTO shippingInfo = _shippingInformationForm.GetShippingInfo();
+                    await _salesOrderForm.AddSalesOrderWithShippingInfo(shippingInfo);
+
+                    MessageBox.Show("Đã thêm thành công đơn hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    _shippingInformationForm.Close();
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {

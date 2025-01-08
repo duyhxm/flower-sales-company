@@ -16,7 +16,7 @@ namespace PL.StoreEmployee
     {
         private ErrorProvider _errorProvider = new ErrorProvider();
         private SalesOrderForm _salesOrderForm;
-        private InvoiceForm _invoiceForm;
+        private InvoiceForm? _invoiceForm;
 
         public ShippingInformationForm(SalesOrderForm salesOrderForm)
         {
@@ -41,6 +41,7 @@ namespace PL.StoreEmployee
             this.Hide();
         }
 
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Bạn có chắc muốn huỷ thông tin giao hàng?", "Xác nhận", MessageBoxButtons.YesNo);
@@ -56,14 +57,9 @@ namespace PL.StoreEmployee
             if (!decimal.TryParse(txtBxShippingCost.Text, out _))
             {
                 e.Cancel = true;
-                
                 MessageBox.Show("Chi phí vận chuyển phải là một số", "Thông báo");
+                txtBxShippingCost.Focus();
                 return;
-            }
-            else
-            {
-                e.Cancel = false;
-                _errorProvider.SetError(txtBxShippingCost, null);
             }
         }
 
@@ -75,6 +71,7 @@ namespace PL.StoreEmployee
                 {
                     MessageBox.Show("Đơn hàng đặt trước phải lớn hơn ngày hiện tại và không được vượt quá 7 ngày. Giờ giao hàng phải từ 05:00 - 20:00", "Thông báo");
                     e.Cancel = true;
+                    dtpDeliveryDatetime.Focus();
                     return;
                 }
             }
@@ -83,10 +80,8 @@ namespace PL.StoreEmployee
                 if (!ValidateImmediateOrderDeliveryDatetime())
                 {
                     e.Cancel = true;
-                    _errorProvider.SetError(dtpDeliveryDatetime, "Đơn hàng lấy ngay phải được giao trong ngày và giờ giao hàng phải từ 05:00 - 20:00");
-                    //MessageBox.Show("Đơn hàng lấy ngay phải được giao trong ngày và giờ giao hàng phải từ 05:00 - 20:00", "Thông báo");
-                    //e.Cancel = false;
-                    //return;
+                    MessageBox.Show("Đơn hàng lấy ngay phải được giao trong ngày và giờ giao hàng phải từ 05:00 - 20:00", "Thông báo");
+                    dtpDeliveryDatetime.Focus();
                     return;
                 }
             }
@@ -97,26 +92,18 @@ namespace PL.StoreEmployee
             if (!System.Text.RegularExpressions.Regex.IsMatch(txtBxConsigneePhoneNumber.Text, @"^0\d{9,10}$"))
             {
                 e.Cancel = true;
-                _errorProvider.SetError(txtBxConsigneePhoneNumber, "Phone number must start with 0 and contain 10-11 digits.");
-            }
-            else
-            {
-                e.Cancel = false;
-                _errorProvider.SetError(txtBxConsigneePhoneNumber, null);
+                MessageBox.Show("Số điện thoại phải bắt đầu bằng 0 và từ 10-11 chữ số", "Thông báo");
+                txtBxConsigneePhoneNumber.Focus();
             }
         }
 
         private void txtBxConsigneeName_Validating(object sender, CancelEventArgs e)
         {
-            if (!System.Text.RegularExpressions.Regex.IsMatch(txtBxConsigneeName.Text, @"^[a-zA-Z\s]+$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(txtBxConsigneeName.Text, @"^[\p{L}\s]+$"))
             {
                 e.Cancel = true;
-                _errorProvider.SetError(txtBxConsigneeName, "Consignee name must contain only letters.");
-            }
-            else
-            {
-                e.Cancel = false;
-                _errorProvider.SetError(txtBxConsigneeName, null);
+                MessageBox.Show("Tên người nhậnc chỉ được chứa ký tự và khoảng trắng", "Thông báo");
+                txtBxConsigneeName.Focus();
             }
         }
 

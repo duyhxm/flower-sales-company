@@ -157,13 +157,29 @@ namespace PL.StoreEmployee
                             CreatedDateTime = LocalDateTimeOffset(),
                             ProductId = productId,
                             EmployeeId = LoginForm.Instance.LoginInformation.UserAccount.EmployeeId!,
+                            CreatedQuantity = Convert.ToInt16(txtBxQuantity.Text),
                             UnitPrice = unitPrice,
                         };
 
                         var product = await _productService.FindProductByIdAsync(productId);
 
+                        foreach (var detailedProduct in detailedProducts)
+                        {
+                            DetailedProductDTO detailedProductDTO = new()
+                            {
+                                ProductId = productId,
+                                MaterialId = detailedProduct.MaterialId,
+                                UsedQuantity = detailedProduct.UsedQuantity
+                            };
+
+                            product.DetailedProducts.Add(detailedProductDTO);
+                        }
+
                         await _productService.AddProductAsync(product, history, LoginForm.Instance.LoginInformation.StoreID!);
                     }
+
+                    await InventoryForm.Instance.LoadMaterialInventory(LoginForm.Instance.LoginInformation.StoreID!);
+                    await InventoryForm.Instance.LoadProductInventory(LoginForm.Instance.LoginInformation.StoreID!);
 
                     MessageBox.Show("Tạo sản phẩm thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

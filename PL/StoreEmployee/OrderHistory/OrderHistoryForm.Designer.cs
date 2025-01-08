@@ -37,7 +37,7 @@
             ColOrderDetails = new DataGridViewImageColumn();
             ColSave = new DataGridViewImageColumn();
             ColEditStatus = new DataGridViewImageColumn();
-            ColShip = new DataGridViewCheckBoxColumn();
+            ColShip = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvOrderHistory).BeginInit();
             SuspendLayout();
             // 
@@ -139,7 +139,8 @@
             ColShip.MinimumWidth = 8;
             ColShip.Name = "ColShip";
             ColShip.ReadOnly = true;
-            ColShip.Width = 150;
+            ColShip.Resizable = DataGridViewTriState.True;
+            ColShip.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // OrderHistoryForm
             // 
@@ -167,6 +168,6 @@
         private DataGridViewImageColumn ColOrderDetails;
         private DataGridViewImageColumn ColSave;
         private DataGridViewImageColumn ColEditStatus;
-        private DataGridViewCheckBoxColumn ColShip;
+        private DataGridViewTextBoxColumn ColShip;
     }
 }

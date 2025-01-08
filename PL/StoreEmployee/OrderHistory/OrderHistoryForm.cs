@@ -98,7 +98,7 @@ namespace PL.StoreEmployee
             foreach (DataGridViewRow row in dgvOrderHistory.Rows)
             {
                 var orderType = row.Cells["ColOrderType"].Value.ToString();
-                var hasShipping = row.Cells["ColShip"].Value != null && (bool)row.Cells["ColShip"].Value;
+                var hasShipping = row.Cells["ColShip"].Value != null && row.Cells["ColShip"].Value.ToString() == "1";
 
                 if (orderType == OrderType.ImmediateSalesOrder)
                 {
@@ -116,15 +116,15 @@ namespace PL.StoreEmployee
 
             foreach (DataGridViewRow row in dgvOrderHistory.Rows)
             {
-                ShippingInformationDTO? shipInfo = await _storeService.GetShippingInfoByOrderIdAsync(row.Cells[0].Value.ToString()!);
+                ShippingInformationDTO? shipInfo = await _storeService.GetShippingInfoByOrderIdAsync(row.Cells["ColSalesOrderId"].Value.ToString()!);
 
                 if (shipInfo != null)
                 {
-                    row.Cells[8].Value = true;
+                    row.Cells["ColShip"].Value = "1";
                 }
                 else
                 {
-                    row.Cells[8].Value = false;
+                    row.Cells["ColShip"].Value = "0";
                 }
             }
         }
@@ -150,7 +150,7 @@ namespace PL.StoreEmployee
                     }
                 }
 
-                if (e.ColumnIndex == 6) //Nhấn lưu lại thông tin đã chỉnh sửa
+                if (e.ColumnIndex == dgvOrderHistory.Columns["ColSave"].Index) //Nhấn lưu lại thông tin đã chỉnh sửa
                 {
                     try
                     {
@@ -160,7 +160,7 @@ namespace PL.StoreEmployee
                         string id = salesOrder.SalesOrderId;
                         
 
-                        if (thisRow.Cells["ColShip"].Value != null && (bool)thisRow.Cells["ColShip"].Value == true && thisRow.Cells["ColOrderType"].Value.ToString() == OrderType.ImmediateSalesOrder && thisRow.Cells["ColOrderStatus"].Value.ToString() != orderStatus)
+                        if (thisRow.Cells["ColShip"].Value != null && thisRow.Cells["ColShip"].Value.ToString() == "1" && thisRow.Cells["ColOrderType"].Value.ToString() == OrderType.ImmediateSalesOrder && thisRow.Cells["ColOrderStatus"].Value.ToString() != orderStatus)
                         {
                             string editedStatus = thisRow.Cells["ColOrderStatus"].Value.ToString()!;
                             //Xử lý đơn hàng lấy ngay có ship
@@ -230,13 +230,17 @@ namespace PL.StoreEmployee
                 }
 
                 //Chỉnh sửa trạng thái đơn hàng
-                if (e.ColumnIndex == 7)
+                if (e.ColumnIndex == dgvOrderHistory.Columns["ColEditStatus"].Index)
                 {
+                    //var orderType = dgvOrderHistory.Rows[e.RowIndex].Cells["ColOrderType"].Value.ToString();
+                    //var hasShipping = dgvOrderHistory.Rows[e.RowIndex].Cells["ColShip"].Value != null && dgvOrderHistory.Rows[e.RowIndex].Cells["ColShip"].Value.ToString();
+                    //var currentStatus = dgvOrderHistory.Rows[e.RowIndex].Cells["ColOrderStatus"].Value.ToString();
+
                     var orderType = dgvOrderHistory.Rows[e.RowIndex].Cells["ColOrderType"].Value.ToString();
-                    var hasShipping = dgvOrderHistory.Rows[e.RowIndex].Cells["ColShip"].Value != null && (bool)dgvOrderHistory.Rows[e.RowIndex].Cells["ColShip"].Value;
+                    var hasShipping = dgvOrderHistory.Rows[e.RowIndex].Cells["ColShip"].Value != null && dgvOrderHistory.Rows[e.RowIndex].Cells["ColShip"].Value.ToString() == "1";
                     var currentStatus = dgvOrderHistory.Rows[e.RowIndex].Cells["ColOrderStatus"].Value.ToString();
 
-                    if (orderType == OrderType.ImmediateSalesOrder)
+                    if (orderType == OrderType.ImmediateSalesOrder && !hasShipping)
                     {
                         MessageBox.Show("Đơn hàng lấy ngay sẽ chỉ có một trạng thái là thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return; // Đơn hàng lấy ngay chỉ có một trạng thái là success
