@@ -7,3 +7,7 @@
 bin/
 /PL/App.config
 /Infrastructure/appsettings.json
+/DLTests/DLTests.csproj
+/BLTests/BLTests.csproj
+/InfrastructureTests/InfrastructureTests.csproj
+/PLTests/PLTests.csproj
